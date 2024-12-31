@@ -13,6 +13,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.62.11",
     "@tanstack/react-query-devtools": "^5.62.11",
+    "@vercel/speed-insights": "^1.1.0",
     "jotai": "^2.11.0",
     "jotai-devtools": "^0.10.1",
     "motion": "^11.15.0",
