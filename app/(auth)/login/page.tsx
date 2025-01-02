@@ -1,19 +1,58 @@
 // app/login/page.tsx
 'use client';
 
+import {login} from '@/app/apis/authApi';
+import clsx from 'clsx';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState({
+    email: '',
+    password: '',
+  });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const loginRes = await login(formData.email, formData.password);
+    if (loginRes === undefined) {
+      alert('로그인 과정에 문제가 발생했습니다.');
+      return;
+    }
+    if ('token' in loginRes) {
+      // todo: token 저장
+      alert('로그인 성공');
+      setErrorMessage({email: '', password: ''});
+
+      // router.push('/');
+    } else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
+      setErrorMessage(prev => ({
+        email: loginRes.message,
+        password: '',
+      }));
+    } else if (loginRes.code === 'INVALID_CREDENTIALS') {
+      setErrorMessage(prev => ({
+        email: '',
+        password: loginRes.message,
+      }));
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {name, value} = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
     <div className="max-w-[340px] sm:max-w-[600px] xl:max-w-[510px] px-4 py-8 sm:px-14 sm:py-8 flex items-center justify-center flex-col bg-white rounded-3xl w-full">
@@ -32,12 +71,18 @@ export default function LoginPage() {
             // value={''}
             defaultValue={''}
             onChange={handleChange}
-            className="w-full px-4 py-2 rounded-lg bg-gray-50 text-base font-medium placeholder-gray-400"
+            className={clsx(
+              'w-full px-4 py-2  border border-transparent rounded-lg  bg-gray-50 text-base font-medium placeholder-gray-400',
+              {'border border-red-600': errorMessage.email},
+            )}
             placeholder="이메일을 입력해주세요"
           />
+          {errorMessage.email && (
+            <p className="text-sm font-semibold text-red-600">{errorMessage.email}</p>
+          )}
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           <label htmlFor="password" className="text-sm font-semibold ">
             비밀번호
           </label>
@@ -50,7 +95,10 @@ export default function LoginPage() {
               // value={formData.password}
               defaultValue={''}
               onChange={handleChange}
-              className="w-full px-4 py-2  rounded-lg  bg-gray-50 text-base font-medium placeholder-gray-400"
+              className={clsx(
+                'w-full px-4 py-2  rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
+                {'border border-red-600': errorMessage.password},
+              )}
               placeholder="비밀번호를 입력해주세요"
             />
             <button
@@ -61,11 +109,16 @@ export default function LoginPage() {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
+          {errorMessage.password && (
+            <p className="  text-sm font-semibold text-red-600">{errorMessage.password}</p>
+          )}
         </div>
 
         <button
           type="submit"
-          className="w-full py-[10px] bg-gray-400 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 text-base"
+          className={
+            'w-full py-[10px] bg-gray-400 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 text-base'
+          }
         >
           로그인
         </button>
