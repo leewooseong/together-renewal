@@ -1,4 +1,4 @@
-export interface IReview {
+export interface IReviews {
   data: {
     teamId: number;
     id: number;
