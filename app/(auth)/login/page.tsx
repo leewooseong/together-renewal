@@ -16,7 +16,7 @@ export default function LoginPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   return (
-    <div className="max-w-5xl px-14 py-8 flex items-center justify-center flex-col bg-white rounded-3xl">
+    <div className="max-w-[340px] sm:max-w-[600px] xl:max-w-[510px] px-4 py-8 sm:px-14 sm:py-8 flex items-center justify-center flex-col bg-white rounded-3xl w-full">
       <h1 className="text-2xl font-bold text-center mb-8">로그인</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
