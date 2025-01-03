@@ -8,6 +8,7 @@ import Image from "next/image";
 
 export default function Review({ gatheringImg, score, comment, gatheringType, gatheringLocation, userImg, userName, createdAt }: IReviewComponentType) {
 
+    let createDate: string = createdAt.slice(0, 10).replaceAll("-", ".")
 
     return (
         <div className="grid grid-rows-1 w-[311px] md:w-full md:grid-cols-[280px_minmax(0px,_1fr)] gap-6 ">
@@ -25,7 +26,7 @@ export default function Review({ gatheringImg, score, comment, gatheringType, ga
                         <span className="pl-2">{userName}</span>
                     </div>
                     <div className="pl-2 pr-3">|</div>
-                    <div className="text-gray-500">{createdAt}</div>
+                    <div className="text-gray-500">{createDate}</div>
                 </div>
 
             </div>
