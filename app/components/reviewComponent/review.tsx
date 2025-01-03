@@ -22,8 +22,9 @@ export default function Review({ gatheringImg, score, comment, gatheringType, ga
                         <Image
                             src={gatheringImg}
                             alt="모임 이미지"
-                            layout="fill"
-                            objectFit="cover"
+                            fill
+                            sizes="(max-width: 768px) 311px, 280px"
+                            className="object-cover"
                         />
                     </div>
                 )
