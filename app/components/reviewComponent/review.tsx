@@ -8,7 +8,7 @@ import Image from "next/image";
 // 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
 //모임 상세 페에지는 pageName = "GATHERING"을 보내야함.
 
-export default function Review({ gatheringImg, score, comment, gatheringType, gatheringLocation, userImg, userName, createdAt, pageName }: IReviewComponentType) {
+export default function Review({ gatheringImg, score, comment, gatheringType, gatheringLocation, userImg, userName, createdAt, pageName = "MY_PAGE" }: IReviewComponentType) {
 
     let createDate: string = createdAt.slice(0, 10).replaceAll("-", ".")
 
@@ -18,11 +18,14 @@ export default function Review({ gatheringImg, score, comment, gatheringType, ga
                 !gatheringImg ? (
                     <div className="bg-neutral-800 w-[311px] md:w-[280px] h-[156px] rounded-3xl"></div>
                 ) : (
-                    <img
-                        src={gatheringImg}
-                        alt="모임 이미지"
-                        className="w-[311px] md:w-[280px] h-[156px] rounded-3xl"
-                    />
+                    <div className="relative w-[311px] md:w-[280px] h-[156px] rounded-3xl overflow-hidden">
+                        <Image
+                            src={gatheringImg}
+                            alt="모임 이미지"
+                            layout="fill"
+                            objectFit="cover"
+                        />
+                    </div>
                 )
             )}
             {/* {!gatheringImg ? <div className="bg-neutral-800 w-[311px] md:w-[280px] h-[156px] rounded-3xl"></div> : <img src={gatheringImg} alt="모임 이미지" className="w-[311px] md:w-[280px] h-[156px] rounded-3xl" />} */}
@@ -44,3 +47,12 @@ export default function Review({ gatheringImg, score, comment, gatheringType, ga
         </div>
     );
 }
+
+
+{/* <Image
+src={gatheringImg}
+alt="모임 이미지"
+width={311}
+height={156}
+className="w-[311px] md:w-[280px] h-[156px] rounded-3xl"
+/> */}
