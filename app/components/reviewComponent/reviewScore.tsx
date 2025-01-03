@@ -2,7 +2,7 @@ const hearts = [false, false, false, false, false];
 
 
 export function ReviewScore({ score }: { score: number }) {
-  const heartScore = hearts.fill(true, 5 - score)
+  const heartScore = hearts.fill(true, 0, score)
 
   return (
     <div className=" flex gap-1">
