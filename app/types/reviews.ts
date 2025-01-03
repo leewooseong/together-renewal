@@ -25,3 +25,14 @@ export interface IReviews {
   currentPage: number;
   totalPages: number;
 }
+
+export interface IReviewComponentType {
+  gatheringImg: string;
+  score: number;
+  comment: string;
+  gatheringType: string;
+  gatheringLocation: string;
+  userImg: string;
+  userName: string;
+  createdAt: string;
+}

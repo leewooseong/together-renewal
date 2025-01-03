@@ -18,10 +18,6 @@ export default function RivewsPage() {
     }, [])
 
 
-
-    console.log("hi")
-
-
     return (
         <div>
             {reviews.map((review) => (
