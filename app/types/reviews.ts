@@ -35,4 +35,5 @@ export interface IReviewComponentType {
   userImg: string;
   userName: string;
   createdAt: string;
+  pageName?: 'MY_PAGE' | 'GATHERING';
 }
