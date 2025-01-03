@@ -8,7 +8,7 @@ import Image from "next/image";
 // 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
 //모임 상세 페에지는 pageName = "GATHERING"을 보내야함.
 
-export default function Review({ gatheringImg, score, comment, gatheringType, gatheringLocation, userImg, userName, createdAt, pageName = "MY_PAGE" }: IReviewComponentType) {
+export default function Review({ gatheringImg, score, comment, gatheringType, gatheringLocation, userImg, userName, createdAt, pageName }: IReviewComponentType) {
 
     let createDate: string = createdAt.slice(0, 10).replaceAll("-", ".")
 
