@@ -3,26 +3,42 @@
 
 import {login} from '@/app/apis/authApi';
 import clsx from 'clsx';
+import _ from 'lodash';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
+import {useForm} from 'react-hook-form';
+
+type TLoginInputs = {
+  email: string;
+  password: string;
+};
 
 export default function LoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+
+  const {
+    register,
+    trigger,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<TLoginInputs>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    mode: 'onBlur',
   });
-  const [errorMessage, setErrorMessage] = useState({
+
+  const [serverErrorMessage, setServerErrorMessage] = useState({
     email: '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const loginRes = await login(formData.email, formData.password);
+  // form 제출 시
+  const onSubmit = async (data: TLoginInputs) => {
+    const loginRes = await login(data.email, data.password);
     if (loginRes === undefined) {
       alert('로그인 과정에 문제가 발생했습니다.');
       return;
@@ -30,55 +46,67 @@ export default function LoginPage() {
     if ('token' in loginRes) {
       // todo: token 저장
       alert('로그인 성공');
-      setErrorMessage({email: '', password: ''});
-
+      setServerErrorMessage({email: '', password: ''});
       // router.push('/');
     } else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
-      setErrorMessage(prev => ({
+      setServerErrorMessage(prev => ({
         email: loginRes.message,
         password: '',
       }));
     } else if (loginRes.code === 'INVALID_CREDENTIALS') {
-      setErrorMessage(prev => ({
+      setServerErrorMessage(prev => ({
         email: '',
         password: loginRes.message,
       }));
     }
   };
 
+  const debounceEmailValidate = useCallback(
+    _.debounce(async (field: keyof TLoginInputs) => {
+      await trigger(field);
+    }, 1000),
+    [],
+  );
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
+    const {name} = e.target;
+    if (name !== 'email' && name !== 'password') {
+      return;
+    }
+    debounceEmailValidate(name as keyof TLoginInputs);
   };
 
   return (
     <div className="max-w-[340px] sm:max-w-[600px] xl:max-w-[510px] px-4 py-8 sm:px-14 sm:py-8 flex items-center justify-center flex-col bg-white rounded-3xl w-full">
       <h1 className="text-2xl font-bold text-center mb-8">로그인</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-semibold">
             아이디
           </label>
           <input
             id="email"
-            name="email"
-            type="email"
-            required
-            // value={''}
-            defaultValue={''}
-            onChange={handleChange}
+            {...register('email', {
+              required: '이메일을 입력해주세요',
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: '유효한 이메일 주소를 입력하세요',
+              },
+              onChange: handleChange,
+            })}
+            placeholder="이메일을 입력해주세요"
             className={clsx(
               'w-full px-4 py-2  border border-transparent rounded-lg  bg-gray-50 text-base font-medium placeholder-gray-400',
-              {'border border-red-600': errorMessage.email},
+              {'border border-red-600': serverErrorMessage.email || errors.email?.message},
             )}
-            placeholder="이메일을 입력해주세요"
           />
-          {errorMessage.email && (
-            <p className="text-sm font-semibold text-red-600">{errorMessage.email}</p>
+          {errors.email?.message ? (
+            <p className="text-sm font-semibold text-red-600">{errors.email.message}</p>
+          ) : (
+            serverErrorMessage.email && (
+              <p className="text-sm font-semibold text-red-600">{serverErrorMessage.email}</p>
+            )
           )}
         </div>
 
@@ -89,17 +117,20 @@ export default function LoginPage() {
           <div className="relative">
             <input
               id="password"
-              name="password"
+              {...register('password', {
+                required: '비밀번호를 입력해주세요',
+                minLength: {
+                  value: 8,
+                  message: '비밀번호는 8자 이상이어야 합니다',
+                },
+                onChange: handleChange,
+              })}
               type={showPassword ? 'text' : 'password'}
-              required
-              // value={formData.password}
-              defaultValue={''}
-              onChange={handleChange}
+              placeholder="비밀번호를 입력해주세요"
               className={clsx(
                 'w-full px-4 py-2  rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-                {'border border-red-600': errorMessage.password},
+                {'border border-red-600': serverErrorMessage.password || errors.password?.message},
               )}
-              placeholder="비밀번호를 입력해주세요"
             />
             <button
               type="button"
@@ -109,8 +140,12 @@ export default function LoginPage() {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
-          {errorMessage.password && (
-            <p className="  text-sm font-semibold text-red-600">{errorMessage.password}</p>
+          {errors.password?.message ? (
+            <p className="  text-sm font-semibold text-red-600">{errors.password.message}</p>
+          ) : (
+            serverErrorMessage.password && (
+              <p className="  text-sm font-semibold text-red-600">{serverErrorMessage.password}</p>
+            )
           )}
         </div>
 
