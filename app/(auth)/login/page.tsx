@@ -79,7 +79,6 @@ export default function LoginPage() {
   return (
     <div className="max-w-[340px] sm:max-w-[600px] xl:max-w-[510px] px-4 py-8 sm:px-14 sm:py-8 flex items-center justify-center flex-col bg-white rounded-3xl w-full">
       <h1 className="text-2xl font-bold text-center mb-8">로그인</h1>
-
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-semibold">
@@ -129,7 +128,9 @@ export default function LoginPage() {
               placeholder="비밀번호를 입력해주세요"
               className={clsx(
                 'w-full px-4 py-2  rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-                {'border border-red-600': serverErrorMessage.password || errors.password?.message},
+                {
+                  'border border-red-600': serverErrorMessage.password || errors.password?.message,
+                },
               )}
             />
             <button
@@ -158,7 +159,6 @@ export default function LoginPage() {
           로그인
         </button>
       </form>
-
       <p className="mt-6 text-center text-sm text-gray-800">
         길이 달램이 처음이신가요?{' '}
         <button
