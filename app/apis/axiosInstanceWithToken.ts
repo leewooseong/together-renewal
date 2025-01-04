@@ -1,6 +1,8 @@
 'use client';
 // :: Production Axios Instance
 import axios, {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import {useAtom} from 'jotai';
+import {tokenWithStorageStore} from '../store/client-states/useUserStore';
 
 // :: create Instance
 const baseConfig = {
@@ -23,6 +25,7 @@ const tokenMultipartInstance = axios.create(multipartConfig);
 // 1. request
 // - 요청이 전달되기 전에 작업 수행
 const tokenReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+  const [token, setToken] = useAtom(tokenWithStorageStore);
   return config;
 };
 const tokenMultipartReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {

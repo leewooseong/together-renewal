@@ -2,13 +2,16 @@
 'use client';
 
 import {login} from '@/app/apis/authApi';
+import {tokenWithStorageStore} from '@/app/store/client-states/useUserStore';
 import clsx from 'clsx';
+import {useAtom} from 'jotai';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 
 export default function LoginPage() {
-  const router = useRouter();
+  // state & store definition
+  const [, setTokenWithStorage] = useAtom(tokenWithStorageStore);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -19,6 +22,10 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
+  // hooks definition
+  const router = useRouter();
+
+  // event handlers
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -27,10 +34,11 @@ export default function LoginPage() {
       alert('로그인 과정에 문제가 발생했습니다.');
       return;
     }
+
     if ('token' in loginRes) {
-      // todo: token 저장
       alert('로그인 성공');
       setErrorMessage({email: '', password: ''});
+      setTokenWithStorage(loginRes.token); // jotai + sessionStorage에 token 저장
 
       // router.push('/');
     } else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
@@ -54,6 +62,7 @@ export default function LoginPage() {
     }));
   };
 
+  // render
   return (
     <div className="max-w-[340px] sm:max-w-[600px] xl:max-w-[510px] px-4 py-8 sm:px-14 sm:py-8 flex items-center justify-center flex-col bg-white rounded-3xl w-full">
       <h1 className="text-2xl font-bold text-center mb-8">로그인</h1>
