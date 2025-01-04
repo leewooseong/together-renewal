@@ -2,32 +2,43 @@
 'use client';
 
 import {login} from '@/app/apis/authApi';
+import {zodResolver} from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import _ from 'lodash';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useCallback, useState} from 'react';
 import {useForm} from 'react-hook-form';
+import {z} from 'zod';
 
-type TLoginInputs = {
-  email: string;
-  password: string;
-};
+// zod를 통해 validation schema 정의
+const LoginSchema = z.object({
+  email: z.string().trim().min(1, '이메일을 입력해주세요').email({
+    message: '유효한 이메일 주소를 입력하세요',
+  }),
+  password: z.string().trim().min(1, '비밀번호를 입력해주세요').min(8, {
+    message: '비밀번호는 8자 이상이어야 합니다',
+  }),
+});
+
+type TLoginInputs = z.infer<typeof LoginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
 
+  // useForm을 통해서 form state 관리 + validation 시점을 정의 + zod schema를 통한 validation
   const {
     register,
     trigger,
     handleSubmit,
     formState: {errors},
-  } = useForm<TLoginInputs>({
+  } = useForm<z.infer<typeof LoginSchema>>({
     defaultValues: {
       email: '',
       password: '',
     },
     mode: 'onBlur',
+    resolver: zodResolver(LoginSchema),
   });
 
   const [serverErrorMessage, setServerErrorMessage] = useState({
@@ -87,11 +98,6 @@ export default function LoginPage() {
           <input
             id="email"
             {...register('email', {
-              required: '이메일을 입력해주세요',
-              pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                message: '유효한 이메일 주소를 입력하세요',
-              },
               onChange: handleChange,
             })}
             placeholder="이메일을 입력해주세요"
@@ -117,11 +123,6 @@ export default function LoginPage() {
             <input
               id="password"
               {...register('password', {
-                required: '비밀번호를 입력해주세요',
-                minLength: {
-                  value: 8,
-                  message: '비밀번호는 8자 이상이어야 합니다',
-                },
                 onChange: handleChange,
               })}
               type={showPassword ? 'text' : 'password'}
