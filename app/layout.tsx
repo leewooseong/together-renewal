@@ -2,6 +2,7 @@ import {SpeedInsights} from '@vercel/speed-insights/next';
 
 import localFont from 'next/font/local';
 import './globals.css';
+import GNB from './components/GNB';
 
 // 폰트 적용
 const pretendardSubset = localFont({
@@ -62,7 +63,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${pretendardSubset.variable}`}>{children}</body>
+      <body className={`${pretendardSubset.variable}`}>
+        <GNB />
+        {children}
+      </body>
       <SpeedInsights />
     </html>
   );
