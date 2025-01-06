@@ -6,10 +6,18 @@ import Review from "../components/reviewComponent/review";
 import { IReviews } from "../types/reviews";
 
 
-export default function RivewsPage({ userId, gatheringId }: { userId?: number; gatheringId?: number }) {
+// export default function RivewsPage({ userId, gatheringId }: { userId?: number; gatheringId?: number }) {
+//     const { data: reviews, isError, isPending } = useQuery<IReviews>({
+//         queryKey: ["reviews", { userId, gatheringId }],
+//         queryFn: () => getReviews(userId, gatheringId),
+//         staleTime: 1 * 60 * 5000, //5분
+//         gcTime: 60 * 1000 * 10, //10분
+//     })
+
+export default function RivewsPage() {
     const { data: reviews, isError, isPending } = useQuery<IReviews>({
-        queryKey: ["reviews", { userId, gatheringId }],
-        queryFn: () => getReviews(userId, gatheringId),
+        queryKey: ["reviews"],
+        queryFn: () => getReviews(),
         staleTime: 1 * 60 * 5000, //5분
         gcTime: 60 * 1000 * 10, //10분
     })
