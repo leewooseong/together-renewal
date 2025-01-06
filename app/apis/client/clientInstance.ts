@@ -1,34 +1,32 @@
 'use client';
+
 // :: Production Axios Instance
 import axios, {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
-import {useAtom} from 'jotai';
-import {tokenWithStorageStore} from '../store/client-states/useUserStore';
 
 // :: create Instance
 const baseConfig = {
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}`,
   timeout: 10 * 1000,
   headers: {'Content-Type': 'application/json'},
-  withCredentials: true,
 };
+
 const multipartConfig = {
   baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}`,
   timeout: 10 * 1000,
   headers: {'Content-Type': 'multipart/form-data'},
-  withCredentials: true,
 };
 
-const tokenInstance = axios.create(baseConfig);
-const tokenMultipartInstance = axios.create(multipartConfig);
+const instance = axios.create(baseConfig);
+const multipartInstance = axios.create(multipartConfig);
 
 // :: interceptor setting
 // 1. request
 // - 요청이 전달되기 전에 작업 수행
-const tokenReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  const [token, setToken] = useAtom(tokenWithStorageStore);
+const requestPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   return config;
 };
-const tokenMultipartReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+
+const multipartReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   return config;
 };
 
@@ -48,15 +46,15 @@ const responseError = (error: AxiosError): Promise<never> => {
   return Promise.reject(error);
 };
 
-tokenInstance.interceptors.request.use(tokenReqPrev, requestError);
-tokenInstance.interceptors.response.use(resolveResponse, responseError);
+instance.interceptors.request.use(requestPrev, requestError);
+instance.interceptors.response.use(resolveResponse, responseError);
 
-tokenMultipartInstance.interceptors.request.use(tokenMultipartReqPrev, requestError);
-tokenMultipartInstance.interceptors.response.use(resolveResponse, responseError);
+multipartInstance.interceptors.request.use(multipartReqPrev, requestError);
+multipartInstance.interceptors.response.use(resolveResponse, responseError);
 
 // :: axios Error 여부 판단
 const isAxiosError = <E,>(err: unknown | AxiosError<E>): err is AxiosError => {
   return axios.isAxiosError(err);
 };
 
-export {isAxiosError, tokenInstance, tokenMultipartInstance};
+export {instance, isAxiosError, multipartInstance};

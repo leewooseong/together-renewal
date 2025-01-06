@@ -2,7 +2,7 @@
 'use client';
 
 import {login} from '@/app/apis/user/userApi';
-import {tokenWithStorageStore} from '@/app/store/atoms/userAtoms';
+import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
 import {zodResolver} from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import {useAtom} from 'jotai';
@@ -13,7 +13,8 @@ import {useCallback, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
-// zod를 통해 validation schema 정의
+// zod schema
+// - zod를 이용해 form의 validation schema 정의
 const LoginSchema = z.object({
   email: z.string().trim().min(1, '이메일을 입력해주세요').email({
     message: '유효한 이메일 주소를 입력하세요',
@@ -25,11 +26,10 @@ const LoginSchema = z.object({
 
 type TLoginInputs = z.infer<typeof LoginSchema>;
 
+// Login Page Component
 export default function LoginPage() {
-  const router = useRouter();
-
-  const [, setTokenWithStorage] = useAtom(tokenWithStorageStore);
-
+  // States and hooks
+  const [, setToken] = useAtom(tokenWithStorageAtom);
   // useForm을 통해서 form state 관리 + validation 시점을 정의 + zod schema를 통한 validation
   const {
     register,
@@ -44,12 +44,13 @@ export default function LoginPage() {
     mode: 'onBlur',
     resolver: zodResolver(LoginSchema),
   });
-
   const [serverErrorMessage, setServerErrorMessage] = useState({
     email: '',
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  // Todo: cookie에 token이 없으면 현재 storage 및 jotai 토큰 제거
 
   // form 제출 시
   const onSubmit = async (data: TLoginInputs) => {
@@ -62,8 +63,8 @@ export default function LoginPage() {
     if ('token' in loginRes) {
       alert('로그인 성공');
       setServerErrorMessage({email: '', password: ''});
-      setTokenWithStorage(loginRes.token); // jotai + sessionStorage에 token 저장
-      // router.push('/');
+      setToken(loginRes.token); // jotai + sessionStorage에 token 저장
+      router.push('/');
     } else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
       setServerErrorMessage(prev => ({
         email: loginRes.message,

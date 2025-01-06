@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {instance} from '../client/axiosInstance';
+import {instance} from '../client/clientInstance';
 
 interface ILoginResponse {
   token: string;
