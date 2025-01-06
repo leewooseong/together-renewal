@@ -1,26 +1,36 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getReviews } from "../apis/reviews";
 import Review from "../components/reviewComponent/review";
 import { IReviews } from "../types/reviews";
 
-export default function RivewsPage() {
-    const [reviews, setReviews] = useState<IReviews["data"]>([])
 
-    const getReviewsAPI = async () => {
-        const { data } = await getReviews();
-        setReviews(data);
-    }
+export default function RivewsPage({ userId, gatheringId }: { userId?: number; gatheringId?: number }) {
+    const { data: reviews } = useQuery<IReviews>({
+        queryKey: ["reviews", { userId, gatheringId }],
+        queryFn: () => getReviews(userId, gatheringId),
+        staleTime: 1 * 60 * 5000, //5분
+        gcTime: 60 * 1000 * 10, //10분분
 
-    useEffect(() => {
-        getReviewsAPI();
-    }, [])
+    })
+
+    //tanstack 적용 전
+    // const [reviews, setReviews] = useState<IReviews["data"]>([])
+
+    // const getReviewsAPI = async () => {
+    //     const { data } = await getReviews();
+    //     setReviews(data);
+    // }
+
+    // useEffect(() => {
+    //     getReviewsAPI();
+    // }, [])
 
 
     return (
         <div>
-            {reviews.map((review) => (
+            {reviews?.data.map((review) => (
                 <Review
                     key={review.id}
                     gatheringImg={review.Gathering.image}
