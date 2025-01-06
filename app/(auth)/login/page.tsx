@@ -1,17 +1,14 @@
 // app/login/page.tsx
 'use client';
 
-import {login} from '@/app/apis/authApi';
-import {tokenWithStorageStore} from '@/app/store/client-states/useUserStore';
+import {login} from '@/app/apis/user/userApi';
 import clsx from 'clsx';
-import {useAtom} from 'jotai';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 
 export default function LoginPage() {
   // state & store definition
-  const [, setTokenWithStorage] = useAtom(tokenWithStorageStore);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -38,7 +35,6 @@ export default function LoginPage() {
     if ('token' in loginRes) {
       alert('로그인 성공');
       setErrorMessage({email: '', password: ''});
-      setTokenWithStorage(loginRes.token); // jotai + sessionStorage에 token 저장
 
       // router.push('/');
     } else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
