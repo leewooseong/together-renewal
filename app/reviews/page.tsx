@@ -11,7 +11,7 @@ export default function RivewsPage({ userId, gatheringId }: { userId?: number; g
         queryKey: ["reviews", { userId, gatheringId }],
         queryFn: () => getReviews(userId, gatheringId),
         staleTime: 1 * 60 * 5000, //5분
-        gcTime: 60 * 1000 * 10, //10분분
+        gcTime: 60 * 1000 * 10, //10분
 
     })
 
