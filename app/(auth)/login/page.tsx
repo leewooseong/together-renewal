@@ -10,7 +10,7 @@ import {useAtom} from 'jotai';
 import _ from 'lodash';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useCallback, useState} from 'react';
+import {useCallback, useLayoutEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
@@ -29,9 +29,16 @@ type TLoginInputs = z.infer<typeof LoginSchema>;
 
 // Login Page Component
 export default function LoginPage() {
-  // States and hooks
+  // with auth
+  // - 페이지 들어올 때 관련 기능을 초기화
   const [, setToken] = useAtom(tokenWithStorageAtom);
-  // useForm을 통해서 form state 관리 + validation 시점을 정의 + zod schema를 통한 validation
+  const {clearAuth} = useClearAuth();
+  useLayoutEffect(() => {
+    clearAuth(); // cookie check를 못하기 때문에 무조건 실행
+  }, []);
+
+  // with form
+  // - form state 관리 + validation 시점을 정의 + zod schema를 통한 validation
   const {
     register,
     trigger,
@@ -50,9 +57,9 @@ export default function LoginPage() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+
+  // with navigation
   const router = useRouter();
-  const {clearAuth} = useClearAuth();
-  // Todo: cookie에 token이 없으면 현재 storage 및 jotai 토큰 제거
 
   // Event handlers
   // Form Event
@@ -97,6 +104,7 @@ export default function LoginPage() {
     }
   };
 
+  // Change Event
   const debounceEmailValidate = useCallback(
     _.debounce(async (field: keyof TLoginInputs) => {
       await trigger(field);

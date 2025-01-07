@@ -19,7 +19,7 @@ export default function Home() {
     setUserInfo(userInfo);
   };
   useEffect(() => {
-    // setToken(null);
+    // setToken(null); // api 요청시 token이 빠져있을 경우 테스트를 위한 코드
     fetchUserInfo();
   }, []);
   return (
