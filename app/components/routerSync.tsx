@@ -2,13 +2,13 @@
 
 import {useEffect} from 'react';
 import {AUTH_ERROR_EVENT} from '../constants/event';
-import {useLogout} from '../hooks/useAuth';
+import {useClearAuth} from '../hooks/useAuth';
 
 function RouterSync() {
-  const {logout} = useLogout();
+  const {clearAuth} = useClearAuth();
 
   const handleAuthError = async () => {
-    await logout();
+    await clearAuth();
   };
 
   useEffect(() => {
@@ -17,7 +17,7 @@ function RouterSync() {
     return () => {
       window.removeEventListener(AUTH_ERROR_EVENT, handleAuthError);
     };
-  }, [logout]);
+  }, [clearAuth]);
 
   return <></>;
 }

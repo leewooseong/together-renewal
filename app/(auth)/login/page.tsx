@@ -2,6 +2,7 @@
 'use client';
 
 import {login, setCookie} from '@/app/apis/user/userApi';
+import {useClearAuth} from '@/app/hooks/useAuth';
 import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
 import {zodResolver} from '@hookform/resolvers/zod';
 import clsx from 'clsx';
@@ -50,6 +51,7 @@ export default function LoginPage() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const {clearAuth} = useClearAuth();
   // Todo: cookie에 token이 없으면 현재 storage 및 jotai 토큰 제거
 
   // Event handlers
@@ -74,7 +76,7 @@ export default function LoginPage() {
         setServerErrorMessage({email: '', password: ''});
         router.push('/');
       } else {
-        setToken(null);
+        clearAuth();
         alert('로그인 과정에 문제가 발생했습니다.');
         return;
       }
