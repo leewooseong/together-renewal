@@ -1,3 +1,4 @@
+import {TOKEN_NAME} from '@/app/constants/auth';
 import {atom} from 'jotai';
 import {atomWithStorage, createJSONStorage} from 'jotai/utils';
 
@@ -23,7 +24,7 @@ userInfoAtom.debugLabel = 'userInfo';
 const sessionStorageProvider = createJSONStorage<string | null>(() => sessionStorage);
 
 const tokenWithStorageAtom = atomWithStorage<string | null>(
-  'auth-token',
+  TOKEN_NAME,
   null,
   sessionStorageProvider,
 );

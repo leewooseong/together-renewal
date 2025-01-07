@@ -1,7 +1,7 @@
 // app/login/page.tsx
 'use client';
 
-import {login} from '@/app/apis/user/userApi';
+import {login, setCookie} from '@/app/apis/user/userApi';
 import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
 import {zodResolver} from '@hookform/resolvers/zod';
 import clsx from 'clsx';
@@ -52,7 +52,9 @@ export default function LoginPage() {
   const router = useRouter();
   // Todo: cookie에 token이 없으면 현재 storage 및 jotai 토큰 제거
 
-  // form 제출 시
+  // Event handlers
+  // Form Event
+  // Todo: api 처리 로직에 에러 처리 적용하기
   const onSubmit = async (data: TLoginInputs) => {
     const loginRes = await login(data.email, data.password);
     if (loginRes === undefined) {
@@ -60,12 +62,26 @@ export default function LoginPage() {
       return;
     }
 
+    // 로그인 성공
+    // - 1. 토큰 셋팅
+    // - 2. cookie 셋팅
+    // - 3. 메세지 초기화
+    // - 4. router push
     if ('token' in loginRes) {
-      alert('로그인 성공');
-      setServerErrorMessage({email: '', password: ''});
-      setToken(loginRes.token); // jotai + sessionStorage에 token 저장
-      router.push('/');
-    } else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
+      const cookieRes = await setCookie();
+      if (cookieRes.status === 200) {
+        setToken(loginRes.token); // jotai + sessionStorage에 token 저장
+        setServerErrorMessage({email: '', password: ''});
+        router.push('/');
+      } else {
+        setToken(null);
+        alert('로그인 과정에 문제가 발생했습니다.');
+        return;
+      }
+    }
+    // 로그인 실패
+    // - 서버에서 보내준 에러를 표시
+    else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
       setServerErrorMessage(prev => ({
         email: loginRes.message,
         password: '',
