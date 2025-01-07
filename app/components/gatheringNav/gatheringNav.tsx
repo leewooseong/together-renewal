@@ -11,7 +11,10 @@ export default function GatheringNav() {
 
     const whatIsClicked = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
         const getElementId = event.currentTarget.id as TwhatGatheringTypeAtom;
-
+        if (getElementId === "ALL") {
+            setGatheringType("DALLAEMFIT")
+            return;
+        }
         setGatheringType(getElementId)
 
     }
