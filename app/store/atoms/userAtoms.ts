@@ -1,20 +1,10 @@
 import {TOKEN_NAME} from '@/app/constants/auth';
 import {atom} from 'jotai';
 import {atomWithStorage, createJSONStorage} from 'jotai/utils';
+import {User} from '../types/user.types';
 
 // userInfoAtom
 // - 유저 정보 저자용 atom
-export interface User {
-  teamId: number;
-  id: number;
-  email: string;
-  name: string;
-  companyName: string;
-  image: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 const userInfoAtom = atom<User | null>(null);
 userInfoAtom.debugLabel = 'userInfo';
 

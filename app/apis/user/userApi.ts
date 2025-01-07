@@ -1,7 +1,9 @@
 import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
+import {User} from '@/app/store/types/user.types';
 import axios, {AxiosResponse} from 'axios';
 import {getDefaultStore} from 'jotai';
 import {instance} from '../client/clientInstance';
+import {tokenInstance} from '../client/clientInstanceWithToken';
 
 interface ILoginResponse {
   token: string;
@@ -45,4 +47,10 @@ export const setCookie = async (): Promise<AxiosResponse> => {
 export const deleteCookie = async (): Promise<AxiosResponse> => {
   const res = await axios.delete(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`);
   return res;
+};
+
+export const getUserInfo = async (): Promise<User> => {
+  const res = await tokenInstance.get('/auths/user');
+
+  return res.data;
 };

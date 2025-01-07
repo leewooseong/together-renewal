@@ -1,14 +1,30 @@
-import {Metadata} from 'next';
-import LogoutButton from './components/logoutButton';
+'use client';
 
-export const metadata: Metadata = {
-  title: '서비스 명',
-  description: '서비스 메인 페이지 설명',
-};
+import {useAtom} from 'jotai';
+import {useEffect} from 'react';
+import {getUserInfo} from './apis/user/userApi';
+import LogoutButton from './components/logoutButton';
+import {tokenWithStorageAtom, userInfoAtom} from './store/atoms/userAtoms';
+
+// export const metadata: Metadata = {
+//   title: '서비스 명',
+//   description: '서비스 메인 페이지 설명',
+// };
 
 export default function Home() {
+  const [userInfo, setUserInfo] = useAtom(userInfoAtom);
+  const [, setToken] = useAtom(tokenWithStorageAtom);
+  const fetchUserInfo = async () => {
+    const userInfo = await getUserInfo();
+    setUserInfo(userInfo);
+  };
+  useEffect(() => {
+    // setToken(null);
+    fetchUserInfo();
+  }, []);
   return (
     <div>
+      {userInfo && <p>{userInfo.name}</p>}
       <p>메인 페이지</p>
       <LogoutButton />
     </div>
