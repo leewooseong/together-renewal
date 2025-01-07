@@ -2,6 +2,7 @@
 // 나중에 모든 리뷰 페이지 구현 해야함.
 import { useQuery } from "@tanstack/react-query";
 import { getReviews } from "../apis/reviews";
+import GatheringNav from "../components/gatheringNav/gatheringNav";
 import PageInfo from "../components/pageInfo";
 import Review from "../components/reviewComponent/review";
 import { IReviews } from "../types/reviews";
@@ -59,7 +60,9 @@ export default function RivewsPage() {
                         createdAt={review.createdAt} />
                 ))}
             </div>
-
+            <div>
+                <GatheringNav />
+            </div>
         </>
 
 
