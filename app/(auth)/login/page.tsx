@@ -70,11 +70,12 @@ export default function LoginPage() {
     // - 3. 메세지 초기화
     // - 4. router push
     if ('token' in loginRes) {
+      setToken(loginRes.token); // jotai + sessionStorage에 token 저장
       const cookieRes = await setCookie();
       if (cookieRes.status === 200) {
-        setToken(loginRes.token); // jotai + sessionStorage에 token 저장
         setServerErrorMessage({email: '', password: ''});
         router.push('/');
+        return;
       } else {
         clearAuth();
         alert('로그인 과정에 문제가 발생했습니다.');
