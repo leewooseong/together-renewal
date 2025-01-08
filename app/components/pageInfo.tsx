@@ -3,7 +3,7 @@ import { IpageInfoType } from "../types/pageInfo";
 export default function PageInfo({ pageName }: IpageInfoType) {
     return (
         <div className={`flex items-center gap-4 xs:gap-[7px]`}>
-            <img src={`/${pageName}-page-head.png`} alt="연필 모양 이미지" />
+            <img src={`/${pageName}-page-head.png`} alt="페이지 로고" />
             <div className={`flex  gap-2 h-[60px] ${pageName === "gatherings" ? "flex-col-reverse" : "flex-col"}`}>
                 <h1 className="text-lg font-semibold text-gray-900 xs:text-2xl">
                     {pageName === "gatherings" && "지금 모임에 참여해보세요"}
