@@ -1,14 +1,14 @@
 import {isClosedUtil} from '@/app/utils/isClosedUtil';
-import {ApproveCheck} from '../common/ApproveCheck';
+import {ApproveCheck} from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
 import {CloseTag} from '../common/chips/tag';
-import {ProgressBar} from '../common/ProgressBar';
-import {RenderOverlay} from '../common/RenderOverlay';
+import {ProgressBar} from '../common/progressBar';
+import {RenderOverlay} from '../common/renderOverlay';
 
-export default function ListCard(props: IGetJoinedGatherings) {
+export default function ListCard(param: IGetJoinedGatherings) {
   function isClose() {
-    if (isClosedUtil(props.registrationEnd, props.participantCount, props.capacity)) {
-      return RenderOverlay('마감', 'full');
+    if (isClosedUtil(param.registrationEnd, param.participantCount, param.capacity)) {
+      return RenderOverlay('마감', 'full', 0);
     }
     return null;
   }
@@ -20,8 +20,8 @@ export default function ListCard(props: IGetJoinedGatherings) {
 
       {/* 모임 이미지 */}
       <div className="w-[343px] sm:w-[280px] h-[156px] flex items-center justify-center overflow-hidden relative">
-        <img src={props.image} alt="모임 대표 이미지" className="object-cover" />
-        <CloseTag registrationEnd={props.registrationEnd} />
+        <img src={param.image} alt="모임 대표 이미지" className="object-cover" />
+        <CloseTag registrationEnd={param.registrationEnd} />
       </div>
 
       {/* 모임 정보 */}
@@ -34,13 +34,13 @@ export default function ListCard(props: IGetJoinedGatherings) {
           <div className="w-[270px] h-[60px] flex flex-col">
             <div className="flex">
               <p className="w-[180px] font-semibold overflow-hidden truncate mt-0.5">
-                {props.name}
+                {param.name}
               </p>
               <span className="font-semibold mx-1">{'|'}</span>
-              <p className="font-medium text-xs mt-1.5">{props.location}</p>
+              <p className="font-medium text-xs mt-1.5">{param.location}</p>
             </div>
             <div className="mt-2">
-              <DateTimeInfoChip dateTime={props.dateTime} />
+              <DateTimeInfoChip dateTime={param.dateTime} />
             </div>
           </div>
         </div>
@@ -50,12 +50,12 @@ export default function ListCard(props: IGetJoinedGatherings) {
           <div className="w-full h-1/2 flex">
             <span className="flex gap-[4px] mt-1">
               <img src="/personIcon.svg" className="w-4 h-4 mt-1" alt="참여자 아이콘" />
-              {`${props.participantCount}/${props.capacity}`}
+              {`${param.participantCount}/${param.capacity}`}
             </span>
-            {ApproveCheck(props.participantCount)}
+            {ApproveCheck(param.participantCount)}
           </div>
           <div className="w-full h-2 flex items-center">
-            {ProgressBar(props.participantCount, props.capacity)}
+            {ProgressBar(param.participantCount, param.capacity)}
           </div>
         </div>
 

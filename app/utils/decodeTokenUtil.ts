@@ -1,14 +1,16 @@
-/** JWT 디코딩 */
-function decodeToken(token: string): any {
-  const [header, payload, signature] = token.split('.');
+import {jwtDecode} from 'jwt-decode'; // jwt-decode 패키지 사용
 
-  if (!payload) {
-    throw new Error('유효하지 않은 형식입니다.');
+export function getUserIdFromToken() {
+  const token = localStorage.getItem('authToken');
+
+  if (!token) {
+    throw new Error('토큰이 없습니다.');
   }
 
-  try {
-    return JSON.parse(atob(payload));
-  } catch {
-    throw new Error('디코딩 실패');
+  const decoded: any = jwtDecode(token);
+  if (!decoded || !decoded.userId) {
+    throw new Error('유효하지 않은 토큰입니다.');
   }
+
+  return decoded.userId;
 }

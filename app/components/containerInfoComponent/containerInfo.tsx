@@ -1,8 +1,8 @@
-import {ApproveCheck} from '../common/ApproveCheck';
+import {ApproveCheck} from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
-import {ProgressBar} from '../common/ProgressBar';
+import {ProgressBar} from '../common/progressBar';
 
-export default function ContainerInfo(props: IGatherings) {
+export default function ContainerInfo(param: IGetGatherings) {
   return (
     <div className="w-[486px] h-[270px] bg-white rounded-2xl flex items-center justify-center">
       <div className="w-full h-[222px] flex flex-col justify-center items-center">
@@ -12,28 +12,28 @@ export default function ContainerInfo(props: IGatherings) {
               <img src="/emptyHeart.svg" className="w-[48px] h-[48px]" />
             </button>
             <div className="w-[390px] h-[28px] font-semibold text-lg">
-              <p>{props.name}</p>
+              <p>{param.name}</p>
             </div>
-            <div className="w-[390px] h-[20px] font-medium text-sm">{props.location}</div>
+            <div className="w-[390px] h-[20px] font-medium text-sm">{param.location}</div>
             <div className="w-[390px] h-[24px] mt-[14px]">
-              <DateTimeInfoChip dateTime={props.dateTime} />
+              <DateTimeInfoChip dateTime={param.dateTime} />
             </div>
           </div>
         </div>
         <div className="w-[438px] h-[69px] mt-[24px] flex flex-col">
           <div className="w-full h-[29px] text-sm font-semibold flex items-center relative">
-            <p>{`모집 정원 ${props.capacity}명`}</p>
+            <p>{`모집 정원 ${param.capacity}명`}</p>
             <div className="ml-[12px]">//아이콘//</div>
             <div className="h-[24px] text-sm font-medium absolute right-0 bottom-0">
-              {ApproveCheck(props.participantCount)}
+              {ApproveCheck(param.participantCount)}
             </div>
           </div>
           <div className="w-full h-[4px] mt-[12px]">
-            {ProgressBar(props.participantCount, props.capacity)}
+            {ProgressBar(param.participantCount, param.capacity)}
           </div>
           <div className="w-full h-[16px] mt-[8px] text-xs font-medium flex items-center relative">
             <p>{`최소인원 5명`}</p>
-            <p className="absolute right-0">{`최대인원 ${props.capacity}명`}</p>
+            <p className="absolute right-0">{`최대인원 ${param.capacity}명`}</p>
           </div>
         </div>
       </div>

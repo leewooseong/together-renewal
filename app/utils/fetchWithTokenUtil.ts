@@ -1,13 +1,13 @@
-export const fetchWithToken = async (req: string, options: RequestInit = {}) => {
+export async function fetchWithToken(req: string, options: RequestInit = {}) {
   const token = localStorage.getItem('authToken');
 
-  // if (!token) {
-  //   window.location.href = '/login'; ///////////////로그인 페이지로 이동 or 인증 토큰 문제니까 일단 로그아웃 처리?
-  //   throw new Error('인증 토큰이 없습니다.');
-  // }
+  if (!token) {
+    window.location.href = '/login';
+    throw new Error('인증 토큰이 없습니다.');
+  }
 
   const headers = new Headers(options.headers || {});
-  // headers.set('Authorization', `Bearer ${token}`);
+  headers.set('Authorization', `Bearer ${token}`);
   headers.set('Content-Type', 'application/json');
 
   const resp = await fetch(req, {
@@ -28,4 +28,4 @@ export const fetchWithToken = async (req: string, options: RequestInit = {}) => 
   } catch (err: any) {
     throw new Error(`응답 처리 실패: ${err.message}`);
   }
-};
+}

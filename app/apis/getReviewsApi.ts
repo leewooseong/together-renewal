@@ -1,8 +1,9 @@
+import { IReviews } from '../types/reviews';
 import {fetchWithToken} from '../utils/fetchWithTokenUtil';
 import {validationUtil} from '../utils/validationUtil';
 import {BASE_API_URL, LOCATIONS, SORT_BY, TYPES} from './../constants/commonConstants';
 
-export const GetReviewsApi = async (filters: {
+export async function GetReviewsApi(filters: {
   gatheringId?: number;
   userId?: number;
   type?: (typeof TYPES)[number];
@@ -13,7 +14,7 @@ export const GetReviewsApi = async (filters: {
   sortOrder?: 'asc' | 'desc';
   limit?: number;
   offset?: number;
-}) => {
+}): Promise<IReviews> {
   const queryParams = new URLSearchParams();
 
   if (filters.sortBy) {
@@ -38,4 +39,4 @@ export const GetReviewsApi = async (filters: {
   const req = `${BASE_API_URL}/reviews${queryParams ? `?${queryParams.toString()}` : ''}`;
 
   return fetchWithToken(req, {method: 'GET'});
-};
+}

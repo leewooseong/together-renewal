@@ -3,14 +3,14 @@ import {fetchWithToken} from '../utils/fetchWithTokenUtil';
 import {validationUtil} from '../utils/validationUtil';
 
 /** 로그인된 사용자가 참석한 모임 목록 조회 */
-export const joinedGatheringsApi = async (filters: {
+export async function joinedGatheringsApi(filters: {
   completed?: boolean;
   reviewed?: boolean;
   limit?: number;
   offset?: number;
   sortBy?: (typeof SORT_BY)[number];
   sortOrder?: 'asc' | 'desc';
-}) => {
+}): Promise<IGetJoinedGatherings[]> {
   const queryParams = new URLSearchParams();
 
   if (filters.sortBy) {
@@ -29,4 +29,4 @@ export const joinedGatheringsApi = async (filters: {
   const req = `${BASE_API_URL}/${TEAM_ID}/gathering/joined${queryParams ? `?${queryParams.toString()}` : ''}`;
 
   return fetchWithToken(req, {method: 'GET'});
-};
+}
