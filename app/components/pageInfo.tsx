@@ -1,4 +1,4 @@
-import { IpageInfoType } from "../types/pageInfo";
+import { IpageInfoType } from "../types/pageInfo.types";
 
 export default function PageInfo({ pageName }: IpageInfoType) {
     return (
