@@ -1,4 +1,4 @@
-import {jwtDecode} from 'jwt-decode'; // jwt-decode 패키지 사용
+import jwtDecode from 'jwt-decode'; // jwt-decode 패키지 사용
 
 export function getUserIdFromToken() {
   const token = localStorage.getItem('authToken');

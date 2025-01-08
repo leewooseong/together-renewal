@@ -76,7 +76,7 @@ export default function myPage() {
     if (userId) {
       fetchData();
     }
-  }, []);
+  }, [userId]);
 
   if (isLoading) {
     return <div className="text-center">로딩 중...</div>;
