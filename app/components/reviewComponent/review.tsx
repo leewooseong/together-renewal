@@ -1,6 +1,3 @@
-"use client"
-
-
 import { ReviewScore } from "@/app/components/reviewComponent/reviewScore";
 import { IReviewComponentType } from "@/app/types/reviews";
 import Image from "next/image";
@@ -29,7 +26,6 @@ export default function Review({ gatheringImg, score, comment, gatheringType, ga
                     </div>
                 )
             )}
-            {/* {!gatheringImg ? <div className="bg-neutral-800 w-[311px] sm:w-[280px] h-[156px] rounded-3xl"></div> : <img src={gatheringImg} alt="모임 이미지" className="w-[311px] sm:w-[280px] h-[156px] rounded-3xl" />} */}
             <div className=" flex flex-col pb-5 border-b-2 border-gray-200 border-dashed sm:px-0">
                 <ReviewScore score={score} />
                 <p className="text-sm pt-2.5">{comment}</p>
@@ -48,12 +44,3 @@ export default function Review({ gatheringImg, score, comment, gatheringType, ga
         </div>
     );
 }
-
-
-{/* <Image
-src={gatheringImg}
-alt="모임 이미지"
-width={311}
-height={156}
-className="w-[311px] sm:w-[280px] h-[156px] rounded-3xl"
-/> */}

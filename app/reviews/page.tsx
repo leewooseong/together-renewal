@@ -10,14 +10,6 @@ import { getWhatGatheringTypeAtom } from "../store/atoms/gatheringNavAtoms";
 import { IReviews } from "../types/reviews";
 
 
-// export default function RivewsPage({ userId, gatheringId }: { userId?: number; gatheringId?: number }) {
-//     const { data: reviews, isError, isPending } = useQuery<IReviews>({
-//         queryKey: ["reviews", { userId, gatheringId }],
-//         queryFn: () => getReviews(userId, gatheringId),
-//         staleTime: 1 * 60 * 5000, //5분
-//         gcTime: 60 * 1000 * 10, //10분
-//     })
-
 export default function RivewsPage() {
     const [gatheringType] = useAtom(getWhatGatheringTypeAtom);
     const { data: reviews, isError, isPending } = useQuery<IReviews>({
@@ -28,24 +20,11 @@ export default function RivewsPage() {
     })
 
 
-
-
     if (isPending) {
         console.log("로딩중...")
-        return
+        return <div>로딩중!</div>
 
     }
-    //tanstack 적용 전
-    // const [reviews, setReviews] = useState<IReviews["data"]>([])
-
-    // const getReviewsAPI = async () => {
-    //     const { data } = await getReviews();
-    //     setReviews(data);
-    // }
-
-    // useEffect(() => {
-    //     getReviewsAPI();
-    // }, [])
 
 
     return (
