@@ -1,14 +1,16 @@
 'use client';
 
+import {useCallback} from 'react';
+
 import {useAtom} from 'jotai';
 import {useRouter} from 'next/navigation';
-import {useCallback} from 'react';
+
 import {deleteCookie} from '../apis/user/userApi';
 import {AUTH_TOKEN} from '../constants/auth';
 import {tokenWithStorageAtom} from '../store/atoms/userAtoms';
 
 // Todo: 실패 시 에러 핸들링 제대로 적용하기
-export const useClearAuth = () => {
+const useClearAuth = () => {
   const [token, setToken] = useAtom(tokenWithStorageAtom);
   const router = useRouter();
 
@@ -26,3 +28,5 @@ export const useClearAuth = () => {
 
   return {clearAuth};
 };
+
+export default useClearAuth;

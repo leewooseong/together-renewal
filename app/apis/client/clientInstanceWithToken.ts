@@ -1,9 +1,10 @@
 'use client';
 
+import axios, {AxiosError, AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+import {getDefaultStore} from 'jotai';
+
 import {AUTH_ERROR_EVENT} from '@/app/constants/event';
 import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
-import axios, {AxiosError, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
-import {getDefaultStore} from 'jotai';
 
 // :: create Instance
 const baseConfig = {
@@ -21,18 +22,26 @@ const tokenMultipartInstance = axios.create(baseConfig);
 const tokenReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   const tokenStore = getDefaultStore();
   const token = tokenStore.get(tokenWithStorageAtom);
-  config.headers.Authorization = `Bearer ${token}`;
-  config.headers['Content-Type'] = 'application/json';
 
-  return config;
+  const headers = new AxiosHeaders(config.headers);
+  headers.set('Authorization', `Bearer ${token}`);
+  headers.set('Content-Type', 'application/json');
+  return {
+    ...config,
+    headers,
+  };
 };
 const tokenMultipartReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   const tokenStore = getDefaultStore();
   const token = tokenStore.get(tokenWithStorageAtom);
-  config.headers.Authorization = `Bearer ${token}`;
-  config.headers['Content-Type'] = 'multipart/form-data';
+  const headers = new AxiosHeaders(config.headers);
+  headers.set('Authorization', `Bearer ${token}`);
+  headers.set('Content-Type', 'multipart/form-data');
 
-  return config;
+  return {
+    ...config,
+    headers,
+  };
 };
 
 // 요청 오류가 있는 작업 수행
@@ -63,9 +72,4 @@ tokenInstance.interceptors.response.use(resolveResponse, responseError);
 tokenMultipartInstance.interceptors.request.use(tokenMultipartReqPrev, requestError);
 tokenMultipartInstance.interceptors.response.use(resolveResponse, responseError);
 
-// :: axios Error 여부 판단
-const isAxiosError = <E,>(err: unknown | AxiosError<E>): err is AxiosError => {
-  return axios.isAxiosError(err);
-};
-
-export {isAxiosError, tokenInstance, tokenMultipartInstance};
+export {tokenInstance, tokenMultipartInstance};

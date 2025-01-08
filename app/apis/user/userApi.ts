@@ -1,7 +1,9 @@
-import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
-import {User} from '@/app/store/types/user.types';
 import axios, {AxiosResponse} from 'axios';
 import {getDefaultStore} from 'jotai';
+
+import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
+import {User} from '@/app/store/types/user.types';
+
 import {instance} from '../client/clientInstance';
 import {tokenInstance} from '../client/clientInstanceWithToken';
 
@@ -29,6 +31,7 @@ export const login = async (
     if (axios.isAxiosError(error) && error.response) {
       return error.response.data;
     }
+    return undefined; // 명시적 반환 추가
   }
 };
 

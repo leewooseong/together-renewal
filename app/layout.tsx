@@ -1,4 +1,5 @@
 import localFont from 'next/font/local';
+
 import RouterSync from './components/routerSync';
 import './globals.css';
 

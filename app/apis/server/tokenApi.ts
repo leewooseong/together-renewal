@@ -1,8 +1,6 @@
 import axios from 'axios';
 
-export const verifyToken = async (
-  token: {name: string; value: string} | undefined,
-): Promise<boolean> => {
+const verifyToken = async (token: {name: string; value: string} | undefined): Promise<boolean> => {
   try {
     await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/auths/user`,
@@ -17,3 +15,5 @@ export const verifyToken = async (
     return false;
   }
 };
+
+export default verifyToken;

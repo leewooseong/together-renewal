@@ -1,18 +1,21 @@
 // app/login/page.tsx
+
 'use client';
 
-import {login, setCookie} from '@/app/apis/user/userApi';
-import {useClearAuth} from '@/app/hooks/useAuth';
-import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
+import {useCallback, useLayoutEffect, useState} from 'react';
+import {useForm} from 'react-hook-form';
+
 import {zodResolver} from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import {useAtom} from 'jotai';
 import _ from 'lodash';
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useCallback, useLayoutEffect, useState} from 'react';
-import {useForm} from 'react-hook-form';
 import {z} from 'zod';
+
+import {login, setCookie} from '@/app/apis/user/userApi';
+import useClearAuth from '@/app/hooks/useAuth';
+import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
 
 // zod schema
 // - zod를 이용해 form의 validation schema 정의
@@ -82,25 +85,23 @@ export default function LoginPage() {
       if (cookieRes.status === 200) {
         setServerErrorMessage({email: '', password: ''});
         router.push('/');
-        return;
       } else {
         clearAuth();
         alert('로그인 과정에 문제가 발생했습니다.');
-        return;
       }
     }
     // 로그인 실패
     // - 서버에서 보내준 에러를 표시
     else if (loginRes.code === 'USER_NOT_FOUND' || loginRes.code === 'VALIDATION_ERROR') {
-      setServerErrorMessage(prev => ({
+      setServerErrorMessage({
         email: loginRes.message,
         password: '',
-      }));
+      });
     } else if (loginRes.code === 'INVALID_CREDENTIALS') {
-      setServerErrorMessage(prev => ({
+      setServerErrorMessage({
         email: '',
         password: loginRes.message,
-      }));
+      });
     }
   };
 
@@ -187,9 +188,7 @@ export default function LoginPage() {
 
         <button
           type="submit"
-          className={
-            'w-full py-[10px] bg-gray-400 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 text-base'
-          }
+          className="w-full py-[10px] bg-gray-400 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 text-base"
         >
           로그인
         </button>
@@ -197,6 +196,7 @@ export default function LoginPage() {
       <p className="mt-6 text-center text-sm text-gray-800">
         길이 달램이 처음이신가요?{' '}
         <button
+          type="submit"
           onClick={() => router.push('/signup')}
           className="text-orange-600 border-b border-transparent hover:border-orange-600 box-border  hover:border-b font-medium transition duration-200"
         >

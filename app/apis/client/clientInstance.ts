@@ -52,9 +52,4 @@ instance.interceptors.response.use(resolveResponse, responseError);
 multipartInstance.interceptors.request.use(multipartReqPrev, requestError);
 multipartInstance.interceptors.response.use(resolveResponse, responseError);
 
-// :: axios Error 여부 판단
-const isAxiosError = <E,>(err: unknown | AxiosError<E>): err is AxiosError => {
-  return axios.isAxiosError(err);
-};
-
-export {instance, isAxiosError, multipartInstance};
+export {instance, multipartInstance};

@@ -1,6 +1,8 @@
-import {AUTH_TOKEN} from '@/app/constants/auth';
 import {atom} from 'jotai';
 import {atomWithStorage, createJSONStorage} from 'jotai/utils';
+
+import {AUTH_TOKEN} from '@/app/constants/auth';
+
 import {User} from '../types/user.types';
 
 // userInfoAtom

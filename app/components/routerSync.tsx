@@ -1,8 +1,9 @@
 'use client';
 
 import {useEffect} from 'react';
+
 import {AUTH_ERROR_EVENT} from '../constants/event';
-import {useClearAuth} from '../hooks/useAuth';
+import useClearAuth from '../hooks/useAuth';
 
 function RouterSync() {
   const {clearAuth} = useClearAuth();
@@ -19,7 +20,7 @@ function RouterSync() {
     };
   }, [clearAuth]);
 
-  return <></>;
+  return null;
 }
 
 export default RouterSync;
