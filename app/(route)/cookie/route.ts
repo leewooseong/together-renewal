@@ -1,4 +1,4 @@
-import {TOKEN_EXPIRE_TIME, TOKEN_NAME} from '@/app/constants/auth';
+import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '@/app/constants/auth';
 
 // Todo: 배포 환경에 따라 쿠키 설정 및 env 파일 적용 다르게 처리
 // Cookie 생성
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     {
       status: 200,
       headers: {
-        'Set-Cookie': `${TOKEN_NAME}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${TOKEN_EXPIRE_TIME}`,
+        'Set-Cookie': `${AUTH_TOKEN}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${TOKEN_EXPIRE_TIME}`,
         // 배포 후 https 환경에서 사용하도록
         // 'Set-Cookie': `auth-token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${60 * 60 * 24 * 7}`,
       },
