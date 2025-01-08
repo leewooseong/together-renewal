@@ -53,7 +53,7 @@ export default function RivewsPage() {
             <div>
                 <PageInfo pageName={"reviews"} />
             </div>
-            <div>
+            <div className="m-7">
                 <GatheringNav />
             </div>
             <div>
