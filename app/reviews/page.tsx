@@ -7,7 +7,7 @@ import GatheringNav from "../components/gatheringNav/gatheringNav";
 import PageInfo from "../components/pageInfo";
 import Review from "../components/reviewComponent/review";
 import { getWhatGatheringTypeAtom } from "../store/atoms/gatheringNavAtoms";
-import { IReviews } from "../types/reviews";
+import { IReviews } from "../types/reviews.types";
 
 
 export default function RivewsPage() {

@@ -1,4 +1,4 @@
-import {IReviews} from '../types/reviews';
+import {IReviews} from '../types/reviews.types';
 
 const BASE_URL = 'https://fe-adv-project-together-dallaem.vercel.app/6-6/reviews';
 // 마이페이지-나의 리뷰는 userId를 보내야함.

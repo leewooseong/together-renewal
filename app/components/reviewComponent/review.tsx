@@ -1,5 +1,5 @@
 import { ReviewScore } from "@/app/components/reviewComponent/reviewScore";
-import { IReviewComponentType } from "@/app/types/reviews";
+import { IReviewComponentType } from "@/app/types/reviews.types";
 import Image from "next/image";
 
 // 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
