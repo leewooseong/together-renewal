@@ -18,6 +18,9 @@ const config: Config = {
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
       },
+      screens: {
+        xs: '375px',
+      },
     },
   },
   plugins: [],
