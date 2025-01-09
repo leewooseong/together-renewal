@@ -26,7 +26,9 @@ export default async function joinedGatheringsApi(filters: {
     }
   });
 
-  const req = `${BASE_API_URL}/${TEAM_ID}/gathering/joined${queryParams ? `?${queryParams.toString()}` : ''}`;
+  const req = `${BASE_API_URL}/${TEAM_ID}/gathering/joined${
+    queryParams ? `?${queryParams.toString()}` : ''
+  }`;
 
   return fetchWithToken(req, {method: 'GET'});
 }

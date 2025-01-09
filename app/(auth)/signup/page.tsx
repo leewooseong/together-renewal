@@ -1,50 +1,54 @@
 'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useRouter } from 'next/navigation';
-import { Eye, EyeOff } from 'lucide-react';
-import { useCallback, useState } from 'react';
+import {useCallback, useState} from 'react';
+import {useForm} from 'react-hook-form';
+
+import {zodResolver} from '@hookform/resolvers/zod';
 import clsx from 'clsx';
 import _ from 'lodash';
+import {Eye, EyeOff} from 'lucide-react';
+import {useRouter} from 'next/navigation';
+import {z} from 'zod';
 
-const SignupSchema = z.object({
-  name: z.string().trim()
-    .min(1, '이름을 입력해주세요'),
-  
-  email: z.string().trim()
-    .min(1, '이메일을 입력해주세요')
-    .email('유효한 이메일 주소를 입력하세요'),
-  
-  companyName: z.string().trim()
-    .min(1, '회사명을 입력해주세요'),
-  
-  password: z.string().trim()
-    .min(1, '비밀번호를 입력해주세요')
-    .min(8, '비밀번호는 8자 이상이어야 합니다')
-    .regex(
-      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
-      "비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다"
-    ),
-  
-  passwordCheck: z.string().trim()
-    .min(1, '비밀번호 확인을 입력해주세요')
-}).refine((data) => data.password === data.passwordCheck, {
-  message: "비밀번호가 일치하지 않습니다",
-  path: ["passwordCheck"]
-});
+const SignupSchema = z
+  .object({
+    name: z.string().trim().min(1, '이름을 입력해주세요'),
+
+    email: z
+      .string()
+      .trim()
+      .min(1, '이메일을 입력해주세요')
+      .email('유효한 이메일 주소를 입력하세요'),
+
+    companyName: z.string().trim().min(1, '회사명을 입력해주세요'),
+
+    password: z
+      .string()
+      .trim()
+      .min(1, '비밀번호를 입력해주세요')
+      .min(8, '비밀번호는 8자 이상이어야 합니다')
+      .regex(
+        /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+        '비밀번호는 영문, 숫자, 특수문자를 포함해야 합니다',
+      ),
+
+    passwordCheck: z.string().trim().min(1, '비밀번호 확인을 입력해주세요'),
+  })
+  .refine(data => data.password === data.passwordCheck, {
+    message: '비밀번호가 일치하지 않습니다',
+    path: ['passwordCheck'],
+  });
 
 type TSignupInputs = z.infer<typeof SignupSchema>;
 
 export default function SignupPage() {
   const router = useRouter();
-  
+
   const {
     register,
     trigger,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
   } = useForm<TSignupInputs>({
     defaultValues: {
       name: '',
@@ -72,7 +76,7 @@ export default function SignupPage() {
 
   const onSubmit = async (data: TSignupInputs) => {
     try {
-      const { passwordCheck, ...signupData } = data;
+      const {passwordCheck, ...signupData} = data;
       const response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
@@ -82,19 +86,19 @@ export default function SignupPage() {
       });
 
       const result = await response.json();
-      
+
       if (response.ok) {
         router.push('/login');
       } else {
         setServerErrorMessage(prev => ({
           ...prev,
-          email: result.message
+          email: result.message,
         }));
       }
     } catch (error) {
       setServerErrorMessage(prev => ({
         ...prev,
-        email: '회원가입 중 오류가 발생했습니다.'
+        email: '회원가입 중 오류가 발생했습니다.',
       }));
     }
   };
@@ -107,7 +111,7 @@ export default function SignupPage() {
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
+    const {name} = e.target;
     const schemaShape = SignupSchema.innerType().shape;
     if (!Object.keys(schemaShape).includes(name)) return;
     debounceValidate(name as keyof TSignupInputs);
@@ -118,7 +122,9 @@ export default function SignupPage() {
       <h1 className="text-2xl font-bold text-center mb-8">회원가입</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
         <div className="space-y-2">
-          <label htmlFor="name" className="text-sm font-semibold">이름</label>
+          <label htmlFor="name" className="text-sm font-semibold">
+            이름
+          </label>
           <input
             id="name"
             {...register('name', {
@@ -126,7 +132,7 @@ export default function SignupPage() {
             })}
             className={clsx(
               'w-full px-4 py-2 rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-              {'border border-red-600': serverErrorMessage.name || errors.name?.message}
+              {'border border-red-600': serverErrorMessage.name || errors.name?.message},
             )}
             placeholder="이름을 입력해주세요"
           />
@@ -140,7 +146,9 @@ export default function SignupPage() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-semibold">아이디</label>
+          <label htmlFor="email" className="text-sm font-semibold">
+            아이디
+          </label>
           <input
             id="email"
             {...register('email', {
@@ -148,7 +156,7 @@ export default function SignupPage() {
             })}
             className={clsx(
               'w-full px-4 py-2 rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-              {'border border-red-600': serverErrorMessage.email || errors.email?.message}
+              {'border border-red-600': serverErrorMessage.email || errors.email?.message},
             )}
             placeholder="이메일을 입력해주세요"
           />
@@ -162,7 +170,9 @@ export default function SignupPage() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="companyName" className="text-sm font-semibold">회사명</label>
+          <label htmlFor="companyName" className="text-sm font-semibold">
+            회사명
+          </label>
           <input
             id="companyName"
             {...register('companyName', {
@@ -170,7 +180,10 @@ export default function SignupPage() {
             })}
             className={clsx(
               'w-full px-4 py-2 rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-              {'border border-red-600': serverErrorMessage.companyName || errors.companyName?.message}
+              {
+                'border border-red-600':
+                  serverErrorMessage.companyName || errors.companyName?.message,
+              },
             )}
             placeholder="회사명을 입력해주세요"
           />
@@ -184,7 +197,9 @@ export default function SignupPage() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="password" className="text-sm font-semibold">비밀번호</label>
+          <label htmlFor="password" className="text-sm font-semibold">
+            비밀번호
+          </label>
           <div className="relative">
             <input
               id="password"
@@ -194,16 +209,18 @@ export default function SignupPage() {
               })}
               className={clsx(
                 'w-full px-4 py-2 rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-                {'border border-red-600': serverErrorMessage.password || errors.password?.message}
+                {'border border-red-600': serverErrorMessage.password || errors.password?.message},
               )}
               placeholder="비밀번호를 입력해주세요"
             />
             <button
               type="button"
-              onClick={() => setShowPassword(prevState => ({
-                ...prevState,
-                password: !prevState.password
-              }))}
+              onClick={() =>
+                setShowPassword(prevState => ({
+                  ...prevState,
+                  password: !prevState.password,
+                }))
+              }
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-900 h-5 w-5"
             >
               {showPassword.password ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -219,7 +236,9 @@ export default function SignupPage() {
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="passwordCheck" className="text-sm font-semibold">비밀번호 확인</label>
+          <label htmlFor="passwordCheck" className="text-sm font-semibold">
+            비밀번호 확인
+          </label>
           <div className="relative">
             <input
               id="passwordCheck"
@@ -229,16 +248,21 @@ export default function SignupPage() {
               })}
               className={clsx(
                 'w-full px-4 py-2 rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
-                {'border border-red-600': serverErrorMessage.passwordCheck || errors.passwordCheck?.message}
+                {
+                  'border border-red-600':
+                    serverErrorMessage.passwordCheck || errors.passwordCheck?.message,
+                },
               )}
               placeholder="비밀번호를 다시 한 번 입력해주세요"
             />
             <button
               type="button"
-              onClick={() => setShowPassword(prevState => ({
-                ...prevState,
-                passwordCheck: !prevState.passwordCheck
-              }))}
+              onClick={() =>
+                setShowPassword(prevState => ({
+                  ...prevState,
+                  passwordCheck: !prevState.passwordCheck,
+                }))
+              }
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-900 h-5 w-5"
             >
               {showPassword.passwordCheck ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -253,10 +277,11 @@ export default function SignupPage() {
           확인
         </button>
       </form>
-      
+
       <p className="mt-6 text-center text-sm text-gray-800">
         이미 회원이신가요?{' '}
         <button
+          type="button"
           onClick={() => router.push('/login')}
           className="text-orange-600 border-b border-transparent hover:border-orange-600 box-border hover:border-b font-medium transition duration-200"
         >
@@ -266,4 +291,3 @@ export default function SignupPage() {
     </div>
   );
 }
-
