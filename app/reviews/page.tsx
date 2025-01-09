@@ -5,6 +5,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useAtom} from 'jotai';
 
 import {getReviews} from '../apis/reviews';
+import DropDown from '../components/dropDown/dropDown';
 import GatheringNav from '../components/gatheringNav/gatheringNav';
 import PageInfo from '../components/pageInfo';
 import Review from '../components/reviewComponent/review';
@@ -51,6 +52,7 @@ export default function ReviewsPage() {
           />
         ))}
       </div>
+      <DropDown />
     </div>
   );
 }
