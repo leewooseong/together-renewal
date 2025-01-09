@@ -2,6 +2,7 @@ import localFont from 'next/font/local';
 
 import RouterSync from './components/routerSync';
 import './globals.css';
+import Providers from './providers';
 
 // 폰트 적용
 const pretendardSubset = localFont({
@@ -60,7 +61,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="en">
       <body className={`${pretendardSubset.variable}`}>
         <RouterSync />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

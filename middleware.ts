@@ -1,8 +1,9 @@
-import {AUTH_TOKEN} from '@/app/constants/auth';
 import {cookies} from 'next/headers';
 import {NextResponse, type NextRequest} from 'next/server';
-import {verifyToken} from './app/apis/server/tokenApi';
-import {getPageType} from './app/utils/server';
+
+import verifyToken from '@/app/apis/server/tokenApi';
+import {AUTH_TOKEN} from '@/app/constants/auth';
+import getPageType from '@/app/utils/server';
 
 // This function can be marked `async` if using `await` inside
 export default async function middleware(request: NextRequest) {
