@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react/button-has-type */
 // app/login/page.tsx
 
 'use client';

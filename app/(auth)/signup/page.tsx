@@ -281,6 +281,7 @@ export default function SignupPage() {
       <p className="mt-6 text-center text-sm text-gray-800">
         이미 회원이신가요?{' '}
         <button
+          type="button"
           onClick={() => router.push('/login')}
           className="text-orange-600 border-b border-transparent hover:border-orange-600 box-border hover:border-b font-medium transition duration-200"
         >
