@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 /** 이용 예정 chip */
 export function UpcomingReservationChip() {
   return (
@@ -29,7 +31,7 @@ export function WaitingForApproval() {
 export function EventApproved() {
   return (
     <div className="flex items-center justify-center w-[93px] h-[32px] bg-white border border-orange-100 text-orange-500 text-[14px] font-medium leading-none rounded-[24px]">
-      <img src="/orangeCheckIcon.svg " />
+      <Image src="/orangeCheckIcon.svg " alt="check icon" />
       <p className="ml-1">개설확정</p>
     </div>
   );
