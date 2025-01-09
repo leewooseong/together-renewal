@@ -11,7 +11,7 @@ import Review from '../components/reviewComponent/review';
 import {getWhatGatheringTypeAtom} from '../store/atoms/gatheringNavAtoms';
 import {IReviews} from '../types/reviews.types';
 
-export default function RivewsPage() {
+export default function ReviewsPage() {
   const [gatheringType] = useAtom(getWhatGatheringTypeAtom);
   const {
     data: reviews,
