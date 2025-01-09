@@ -1,6 +1,6 @@
-import { SpeedInsights } from '@vercel/speed-insights/next';
-
+import {SpeedInsights} from '@vercel/speed-insights/next';
 import localFont from 'next/font/local';
+
 import './globals.css';
 import Providers from './providers';
 
@@ -56,7 +56,6 @@ const pretendardSubset = localFont({
   variable: '--font-pretendard',
 });
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -65,9 +64,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${pretendardSubset.variable}`}>
-        <Providers>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
         <SpeedInsights />
       </body>
     </html>
