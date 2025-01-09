@@ -12,6 +12,8 @@ export function ReviewScore({score}: {score: number}) {
     <div className=" flex gap-1">
       {heartScore.map((heart, index) => (
         <Image
+          width={24}
+          height={24}
           key={`score-${score}-${index}`}
           src={heart ? '/heart-active.svg' : '/heart-default.svg'}
           alt={heart ? '찬 하트' : '빈 하트'}

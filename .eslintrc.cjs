@@ -24,6 +24,8 @@ module.exports = {
   ],
   rules: {
     'import/prefer-default-export': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
     'react-hooks/rules-of-hooks': 'off',
     'react-hooks/exhaustive-deps': 'off',
     'react/react-in-jsx-scope': 'off', // react 17부턴 import 안해도돼서 기능 끔

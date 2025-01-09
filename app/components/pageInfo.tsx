@@ -5,7 +5,7 @@ import {IpageInfoType} from '../types/pageInfo.types';
 export default function PageInfo({pageName}: IpageInfoType) {
   return (
     <div className="flex items-center gap-4 xs:gap-[7px]">
-      <Image src={`/${pageName}-page-head.png`} alt="페이지 로고" />
+      <Image width={72} height={72} src={`/${pageName}-page-head.png`} alt="페이지 로고" />
       <div
         className={`flex  gap-2 h-[60px] ${pageName === 'gatherings' ? 'flex-col-reverse' : 'flex-col'}`}
       >

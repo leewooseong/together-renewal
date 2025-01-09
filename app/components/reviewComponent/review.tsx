@@ -56,6 +56,8 @@ export default function Review({
                 <Image
                   src={userImg}
                   alt="프로필 이미지지"
+                  width={24}
+                  height={24}
                   className="bg-yellow-400 w-6 h-6 rounded-full"
                 />
               )}

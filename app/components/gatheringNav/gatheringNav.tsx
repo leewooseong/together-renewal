@@ -66,7 +66,7 @@ export default function GatheringNav() {
                   : 0.4,
             }}
             transition={{
-              duration: 1,
+              duration: 0.5,
               ease: 'easeInOut',
             }}
             onHoverStart={() => setIsFirstDivHovered(true)}
@@ -91,7 +91,7 @@ export default function GatheringNav() {
                   : 0.4,
             }}
             transition={{
-              duration: 1,
+              duration: 0.5,
               ease: 'easeInOut',
             }}
             onHoverStart={() => setIsSecondDivHovered(true)}
@@ -126,7 +126,7 @@ export default function GatheringNav() {
                   : firstDivWidth,
           }}
           transition={{
-            duration: 1,
+            duration: 0.5,
             ease: 'easeInOut',
           }}
           className={`w-[90px] h-[2px] bg-gray-900 `}
@@ -137,7 +137,7 @@ export default function GatheringNav() {
           opacity: gatheringType === 'WORKATION' ? 0 : 1,
         }}
         transition={{
-          duration: 1,
+          duration: 0.5,
           ease: 'easeInOut',
         }}
         onAnimationComplete={() => {
