@@ -1,12 +1,13 @@
 'use client';
 
 import {useEffect, useState} from 'react';
-import {getUserInfoApi} from '../apis/getUserInfoApi';
-import {joinedGatheringsApi} from '../apis/joinedGatheringsApi';
+
+import getUserInfoApi from '../apis/getUserInfoApi';
+import joinedGatheringsApi from '../apis/joinedGatheringsApi';
 import MyPageCard from '../components/mypageComponent/myPageCard';
 import ProfileLayout from '../components/profileComponent/profileLayout';
 import Review from '../components/reviewComponent/review';
-import {getUserIdFromToken} from '../utils/decodeTokenUtil';
+import getUserIdFromToken from '../utils/decodeTokenUtil';
 
 export default function myPage() {
   const [userId, setUserId] = useState<number>(0);
@@ -20,18 +21,22 @@ export default function myPage() {
   const [reviewed, setReviewed] = useState(false);
 
   useEffect(() => {
-    ///////////// 인증 만료 or 비정상적 접근 시 재인증 진행
+    /// ////////// 인증 만료 or 비정상적 접근 시 재인증 진행
     // 인증 성공 -> 사용자 정보 불러옴
     // 인증 실패 -> 로그인 화면으로 이동
     const checkLogin = async () => {
       try {
-        setUserId(getUserIdFromToken());
+        setUserId(Number(getUserIdFromToken()));
         console.log('로그인된 유저 ID:', userId);
 
-        const fetchUserInfo = await getUserInfoApi(userId);
+        const fetchUserInfo = await getUserInfoApi();
         setUserInfo(fetchUserInfo);
-      } catch (error: any) {
-        console.error('오류: ', error.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          console.error('오류: ', err.message);
+        } else {
+          console.error('오류: ', err);
+        }
         window.location.href = '/login';
       }
     };
@@ -100,6 +105,7 @@ export default function myPage() {
     return (
       <div className="gap-[8px] flex w-[228px] h-[40px] mt-[16px] ml-[24px]">
         <button
+          type="button"
           className={`w-[124px] h-[40px] rounded-xl font-medium text-xs ${
             !reviewed ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
           }`}
@@ -108,6 +114,7 @@ export default function myPage() {
           작성 가능한 리뷰
         </button>
         <button
+          type="button"
           className={`w-[96px] h-[40px] rounded-xl font-medium text-xs ${
             reviewed ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
           }`}
@@ -154,17 +161,17 @@ export default function myPage() {
 
     if (activeTab === 'myReviews' && reviewed === true) {
       return (
-        //////////////// 작성한 리뷰 없으면 아직 작성한 리뷰가 없어요 출력
+        /// ///////////// 작성한 리뷰 없으면 아직 작성한 리뷰가 없어요 출력
         <div className="w-full flex flex-col gap-[24px]">
           <Review
-            gatheringImg={''}
+            gatheringImg=""
             score={2}
-            comment={'좋아용'}
-            gatheringType={'test11111'}
-            gatheringLocation={'을지로3가'}
-            userImg={''}
-            userName={'testUser'}
-            createdAt={'2025-01-10T14:00:00'}
+            comment="좋아용"
+            gatheringType="test11111"
+            gatheringLocation="을지로3가"
+            userImg=""
+            userName="testUser"
+            createdAt="2025-01-10T14:00:00"
           />
         </div>
       );
@@ -179,23 +186,21 @@ export default function myPage() {
     }
 
     return (
-      <>
-        {Array.isArray(filteredGatherings) &&
-          filteredGatherings.map(joinedGathering => (
-            <MyPageCard
-              key={joinedGathering.id}
-              {...joinedGathering}
-              isMyGathering={activeTab === 'myGatherings'}
-            />
-          ))}
-      </>
+      Array.isArray(filteredGatherings) &&
+      filteredGatherings.map(joinedGathering => (
+        <MyPageCard
+          key={joinedGathering.id}
+          {...joinedGathering}
+          isMyGathering={activeTab === 'myGatherings'}
+        />
+      ))
     );
   };
 
   return (
     <div className="w-full max-w-[1200px] min-w-[360px] bg-gray-50 flex flex-col items-center justify-center py-[24px] sm:px-[24px] px-[16px]">
       <h2 className="w-full max-w-[996px] font-semibold text-gray-900 text-left text-2xl">
-        {'마이 페이지'}
+        마이 페이지
       </h2>
       <div className="w-full max-w-[996px] mt-[24px]">
         {userInfo && <ProfileLayout {...userInfo} />}
@@ -204,6 +209,7 @@ export default function myPage() {
         <div className="gap-[12px] h-[34px] w-[300px] flex text-gray-400 ml-[24px] mt-[24px]">
           {tabOptions.map(tab => (
             <button
+              type="button"
               key={tab.key}
               className={`text-sm font-semibold ${
                 activeTab === tab.key ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-400'

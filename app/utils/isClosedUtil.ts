@@ -1,4 +1,4 @@
-export function isClosedUtil(
+export default function isClosedUtil(
   registrationEnd: string,
   participantCount: number,
   capacity: number,

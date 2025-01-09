@@ -1,4 +1,4 @@
-export async function fetchWithToken(req: string, options: RequestInit = {}) {
+export default async function fetchWithToken(req: string, options: RequestInit = {}) {
   const token = localStorage.getItem('authToken');
 
   if (!token) {
@@ -22,10 +22,14 @@ export async function fetchWithToken(req: string, options: RequestInit = {}) {
   try {
     const contentType = resp.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
-      return resp.json();
+      return await resp.json();
     }
     throw new Error('JSON 형식이 아닌 응답입니다.');
-  } catch (err: any) {
-    throw new Error(`응답 처리 실패: ${err.message}`);
+  } catch (err) {
+    if (err instanceof Error) {
+      throw new Error(`응답 처리 실패: ${err.message}`);
+    } else {
+      throw new Error('응답 처리 실패: 알 수 없는 오류');
+    }
   }
 }

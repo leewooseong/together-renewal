@@ -1,4 +1,4 @@
-export function formatDateUtil(dateTime: string) {
+export default function formatDateUtil(dateTime: string) {
   const date = new Date(dateTime);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;

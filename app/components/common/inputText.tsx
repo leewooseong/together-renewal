@@ -1,4 +1,4 @@
-export function InputTextBox({
+export default function InputTextBox({
   placeholder,
   value,
   onChange,

@@ -7,7 +7,8 @@ export async function getReviews(userId?: number, gatheringId?: number): Promise
   if (userId) {
     const response = await fetch(`${BASE_URL}?userId=${userId}`);
     return response.json();
-  } else if (gatheringId) {
+  }
+  if (gatheringId) {
     const response = await fetch(`${BASE_URL}?gatheringId=${gatheringId}`);
     return response.json();
   }

@@ -1,9 +1,9 @@
-import { IReviews } from '../types/reviews';
-import {fetchWithToken} from '../utils/fetchWithTokenUtil';
-import {validationUtil} from '../utils/validationUtil';
-import {BASE_API_URL, LOCATIONS, SORT_BY, TYPES} from './../constants/commonConstants';
+import {BASE_API_URL, LOCATIONS, SORT_BY, TYPES} from '../constants/commonConstants';
+import {IReviews} from '../types/reviews';
+import fetchWithToken from '../utils/fetchWithTokenUtil';
+import validationUtil from '../utils/validationUtil';
 
-export async function GetReviewsApi(filters: {
+export default async function GetReviewsApi(filters: {
   gatheringId?: number;
   userId?: number;
   type?: (typeof TYPES)[number];

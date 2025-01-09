@@ -1,7 +1,7 @@
 import {BASE_API_URL, TEAM_ID} from '../constants/commonConstants';
-import {fetchWithToken} from '../utils/fetchWithTokenUtil';
+import fetchWithToken from '../utils/fetchWithTokenUtil';
 
-export async function createGatheringApi(props: ICreateGathering): Promise<void> {
+export default async function createGatheringApi(props: ICreateGathering): Promise<void> {
   const queryParams = new URLSearchParams();
   Object.entries(props).forEach(([key, value]) => {
     if (value !== undefined) {

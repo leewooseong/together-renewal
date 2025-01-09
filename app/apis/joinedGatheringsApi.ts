@@ -1,9 +1,9 @@
 import {BASE_API_URL, SORT_BY, TEAM_ID} from '../constants/commonConstants';
-import {fetchWithToken} from '../utils/fetchWithTokenUtil';
-import {validationUtil} from '../utils/validationUtil';
+import fetchWithToken from '../utils/fetchWithTokenUtil';
+import validationUtil from '../utils/validationUtil';
 
 /** 로그인된 사용자가 참석한 모임 목록 조회 */
-export async function joinedGatheringsApi(filters: {
+export default async function joinedGatheringsApi(filters: {
   completed?: boolean;
   reviewed?: boolean;
   limit?: number;

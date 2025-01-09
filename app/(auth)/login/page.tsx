@@ -1,9 +1,11 @@
 // app/login/page.tsx
+
 'use client';
+
+import {useState} from 'react';
 
 import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
-import {useState} from 'react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,7 +32,7 @@ export default function LoginPage() {
             type="email"
             required
             // value={''}
-            defaultValue={''}
+            defaultValue=""
             onChange={handleChange}
             className="w-full px-4 py-2 rounded-lg bg-gray-50 text-base font-medium placeholder-gray-400"
             placeholder="이메일을 입력해주세요"
@@ -48,7 +50,7 @@ export default function LoginPage() {
               type={showPassword ? 'text' : 'password'}
               required
               // value={formData.password}
-              defaultValue={''}
+              defaultValue=""
               onChange={handleChange}
               className="w-full px-4 py-2  rounded-lg  bg-gray-50 text-base font-medium placeholder-gray-400"
               placeholder="비밀번호를 입력해주세요"

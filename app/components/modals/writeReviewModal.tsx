@@ -1,8 +1,12 @@
-import {writeReviewsApi} from '@/app/apis/writeReviewsApi';
 import {useState} from 'react';
-import {InputTextBox} from '../common/inputText';
 
-export function WriteReviewModal({
+import Image from 'next/image';
+
+import writeReviewsApi from '@/app/apis/writeReviewsApi';
+
+import InputTextBox from '../common/inputText';
+
+export default function WriteReviewModal({
   onClose,
   gatheringId,
 }: {
@@ -13,6 +17,7 @@ export function WriteReviewModal({
   const [rating, setRating] = useState(0);
 
   const handleSubmit = async () => {
+    /// ////////////////////////////////////모달로 변경
     try {
       if (!comment.trim()) {
         alert('리뷰를 입력해주세요!');
@@ -39,13 +44,20 @@ export function WriteReviewModal({
             <p className="font-semibold">만족스러운 경험이었나요?</p>
             <div className="mt-[12px] flex">
               {[1, 2, 3, 4, 5].map(heart => (
-                <span key={heart} onClick={() => setRating(heart)} style={{cursor: 'pointer'}}>
-                  <img
+                <button
+                  key={heart}
+                  type="button"
+                  onClick={() => setRating(heart)}
+                  style={{cursor: 'pointer', background: 'none', border: 'none', padding: 0}}
+                  aria-label={`Rate ${heart} hearts`}
+                >
+                  <Image
                     src={heart <= rating ? '/heart-active.svg' : '/heart-default.svg'}
                     alt="하트"
-                    style={{width: '24px', height: '24px'}}
+                    width={24}
+                    height={24}
                   />
-                </span>
+                </button>
               ))}
             </div>
           </div>
@@ -59,12 +71,14 @@ export function WriteReviewModal({
           </div>
           <div className="w-full h-[44px] gap-[16px] flex">
             <button
+              type="button"
               className="flex items-center justify-center w-[228px] h-full font-semibold text-orange-600 border-2 border-orange-600 rounded-md"
               onClick={onClose}
             >
               취소
             </button>
             <button
+              type="button"
               className="flex items-center justify-center w-[228px] h-full font-semibold text-white bg-gray-400 rounded-md"
               onClick={handleSubmit}
             >
