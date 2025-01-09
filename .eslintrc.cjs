@@ -17,21 +17,20 @@ module.exports = {
     'airbnb',
     'airbnb-typescript',
     // 'airbnb/hooks',
-    'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended', // ts 권장
     'plugin:prettier/recommended', // eslint의 포매팅을 prettier로 사용.
     'prettier', // eslint-config-prettier prettier와 중복된 eslint 규칙 제거
+    'next/core-web-vitals',
   ],
   rules: {
+    'import/prefer-default-export': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'jsx-a11y/label-has-associated-control': 'off',
+    'react-hooks/rules-of-hooks': 'off',
+    'react-hooks/exhaustive-deps': 'off',
     'react/react-in-jsx-scope': 'off', // react 17부턴 import 안해도돼서 기능 끔
     // 경고표시, 파일 확장자를 .ts나 .tsx 모두 허용함
     'react/jsx-filename-extension': ['warn', {extensions: ['.ts', '.tsx']}],
-    // Airbnb의 react-hooks 규칙 비활성화
-    'react-hooks/rules-of-hooks': 'off',
-    'react-hooks/exhaustive-deps': 'off',
-    'react/jsx-props-no-spreading': 'off',
-    'jsx-a11y/label-has-associated-control': 'off',
-    'import/prefer-default-export': 'off',
     'no-useless-catch': 'off', // 불필요한 catch 못쓰게 하는 기능 끔
     // import 정렬 순서
     'import/order': [
@@ -54,6 +53,16 @@ module.exports = {
         alphabetize: {
           order: 'asc',
         },
+      },
+    ],
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        semi: true,
+        trailingComma: 'all',
+        printWidth: 100,
+        endOfLine: 'auto',
       },
     ],
   },

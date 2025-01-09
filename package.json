@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
-    "@hookform/resolvers": "^3.9.1",
     "@tanstack/react-query": "^5.62.11",
     "@tanstack/react-query-devtools": "^5.62.11",
     "@vercel/speed-insights": "^1.1.0",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
+    "eslint-config-airbnb": "^19.0.4",
     "jotai": "^2.11.0",
     "jotai-devtools": "^0.10.1",
     "lodash": "^4.17.21",
@@ -41,10 +41,9 @@
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb": "^19.0.4",
+    "eslint": "^8",
     "eslint-config-airbnb-typescript": "^18.0.0",
-    "eslint-config-next": "^14.2.23",
+    "eslint-config-next": "14.2.20",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -55,6 +54,7 @@
     "postcss": "^8",
     "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "typescript": "5.5"
   }
 }
