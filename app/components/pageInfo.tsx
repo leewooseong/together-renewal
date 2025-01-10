@@ -7,7 +7,7 @@ export default function PageInfo({pageName}: IpageInfoType) {
     <div className="flex items-center gap-4 xs:gap-[7px]">
       <Image width={72} height={72} src={`/${pageName}-page-head.png`} alt="페이지 로고" />
       <div
-        className={`flex  gap-2 h-[60px] ${pageName === 'gatherings' ? 'flex-col-reverse' : 'flex-col'}`}
+        className={`flex h-[60px] gap-2 ${pageName === 'gatherings' ? 'flex-col-reverse' : 'flex-col'}`}
       >
         <h1 className="text-lg font-semibold text-gray-900 xs:text-2xl">
           {pageName === 'gatherings' && '지금 모임에 참여해보세요'}

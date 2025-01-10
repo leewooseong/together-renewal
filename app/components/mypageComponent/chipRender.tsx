@@ -19,7 +19,7 @@ export default function RenderChips({
   }
 
   return (
-    <div className="flex w-full h-[50px] pt-[8px] gap-[8px] justify-start">
+    <div className="flex h-[50px] w-full justify-start gap-[8px] pt-[8px]">
       {isCompleted ? (
         <ReservationFinishedChip />
       ) : (

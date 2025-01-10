@@ -1,5 +1,8 @@
 export default async function fetchWithToken(req: string, options: RequestInit = {}) {
-  const token = localStorage.getItem('authToken');
+  // const token = localStorage.getItem('authToken');
+
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZWFtSWQiOiI2LTYiLCJ1c2VySWQiOjEwMjMsImlhdCI6MTczNjUyNTAwMywiZXhwIjoxNzM2NTI4NjAzfQ.EpHxRSvA9F8oVUN_8NoY1A9xTk6hac1FYJ6Hp2u7sso';
 
   if (!token) {
     window.location.href = '/login';

@@ -1,9 +1,8 @@
-import {BASE_API_URL, TEAM_ID} from '../constants/commonConstants';
 import fetchWithToken from '../utils/fetchWithTokenUtil';
 
 /** 모임 참여 취소 */
 export default async function leaveGatheringsApi(gatheringId: number): Promise<void> {
-  const req = `${BASE_API_URL}/${TEAM_ID}/gathering/${gatheringId}/leave`;
+  const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gathering/${gatheringId}/leave`;
 
   fetchWithToken(req, {method: 'DELETE'});
 }

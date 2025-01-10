@@ -31,7 +31,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
     setIsModalOpen(true); // 모달 열기 상태로 변경
   };
   return (
-    <div className="relative flex flex-col sm:flex-col justify-between w-[311px] sm:w-full max-w-[996px] h-[352px] sm:h-[180px]">
+    <div className="relative flex h-[352px] w-[311px] max-w-[996px] flex-col justify-between sm:h-[180px] sm:w-full sm:flex-col">
       {/* 리뷰 작성 모달 */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -42,13 +42,13 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
       {/* 모임 취소 오버레이 */}
       {isCanceled()}
 
-      <div className="flex flex-col justify-between sm:flex-row w-full h-[328px] sm:w-[545px] sm:h-[156px]">
+      <div className="flex h-[328px] w-full flex-col justify-between sm:h-[156px] sm:w-[545px] sm:flex-row">
         {/* 모임 이미지 */}
-        <div className="sm:w-[280px] w-full h-full flex items-center justify-center overflow-hidden border border-dashed rounded-3xl">
+        <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]">
           <Image src={props.image} alt="모임 대표 이미지" className="object-cover" />
         </div>
 
-        <div className="w-[249px] h-full flex flex-col justify-between">
+        <div className="flex h-full w-[249px] flex-col justify-between">
           {/* 상태 Chips */}
           <RenderChips
             isCompleted={props.isCompleted}
@@ -57,18 +57,18 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
           />
 
           {/* 모임 정보 */}
-          <div className="w-full h-[54px] flex flex-col justify-between">
+          <div className="flex h-[54px] w-full flex-col justify-between">
             {/* 모임 이름, 장소 */}
-            <div className="h-[28px] flex justify-between items-center">
-              <div className="w-[170px] font-semibold overflow-hidden truncate">{props.name}</div>
-              <div className="w-[76px] flex justify-between">
+            <div className="flex h-[28px] items-center justify-between">
+              <div className="w-[170px] overflow-hidden truncate font-semibold">{props.name}</div>
+              <div className="flex w-[76px] justify-between">
                 <span className="font-semibold">|</span>
-                <p className="font-medium text-sm">{props.location}</p>
+                <p className="text-sm font-medium">{props.location}</p>
               </div>
             </div>
 
             {/* 날짜, 참여 인원 */}
-            <div className="h-[20px] w-[160px] flex justify-between text-sm">
+            <div className="flex h-[20px] w-[160px] justify-between text-sm">
               <span>{`${dateFormat.date} ${dateFormat.time}`}</span>
               <span className="flex gap-[4px]">
                 <Image src="/personIcon.svg" className="pt-0.5" alt="사람 아이콘" />
@@ -78,7 +78,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
           </div>
 
           {/* 취소, 리뷰 버튼 */}
-          <div className="h-[40px] mt-[12px]">
+          <div className="mt-[12px] h-[40px]">
             <RenderButton
               id={props.id}
               state={props.isCompleted}
@@ -90,7 +90,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
       </div>
 
       {/* 하단 점선 */}
-      <div className="w-full custom-dotted-line" />
+      <div className="custom-dotted-line w-full" />
     </div>
   );
 }

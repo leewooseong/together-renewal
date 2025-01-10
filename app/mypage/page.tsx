@@ -103,10 +103,10 @@ export default function myPage() {
     }
 
     return (
-      <div className="gap-[8px] flex w-[228px] h-[40px] mt-[16px] ml-[24px]">
+      <div className="ml-[24px] mt-[16px] flex h-[40px] w-[228px] gap-[8px]">
         <button
           type="button"
-          className={`w-[124px] h-[40px] rounded-xl font-medium text-xs ${
+          className={`h-[40px] w-[124px] rounded-xl text-xs font-medium ${
             !reviewed ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
           }`}
           onClick={() => setReviewed(false)}
@@ -115,7 +115,7 @@ export default function myPage() {
         </button>
         <button
           type="button"
-          className={`w-[96px] h-[40px] rounded-xl font-medium text-xs ${
+          className={`h-[40px] w-[96px] rounded-xl text-xs font-medium ${
             reviewed ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
           }`}
           onClick={() => setReviewed(true)}
@@ -162,7 +162,7 @@ export default function myPage() {
     if (activeTab === 'myReviews' && reviewed === true) {
       return (
         /// ///////////// 작성한 리뷰 없으면 아직 작성한 리뷰가 없어요 출력
-        <div className="w-full flex flex-col gap-[24px]">
+        <div className="flex w-full flex-col gap-[24px]">
           <Review
             gatheringImg=""
             score={2}
@@ -179,8 +179,8 @@ export default function myPage() {
 
     if (filteredGatherings.length === 0) {
       return (
-        <div className="w-[220px] h-[20px] absolute top-[180px] left-1/2 translate-x-[-50%]">
-          <p className="text-gray-500 font-medium text-sm">{getComment()}모임이 없어요.</p>
+        <div className="absolute left-1/2 top-[180px] h-[20px] w-[220px] translate-x-[-50%]">
+          <p className="text-sm font-medium text-gray-500">{getComment()}모임이 없어요.</p>
         </div>
       );
     }
@@ -198,21 +198,21 @@ export default function myPage() {
   };
 
   return (
-    <div className="w-full max-w-[1200px] min-w-[360px] bg-gray-50 flex flex-col items-center justify-center py-[24px] sm:px-[24px] px-[16px]">
-      <h2 className="w-full max-w-[996px] font-semibold text-gray-900 text-left text-2xl">
+    <div className="flex w-full min-w-[360px] max-w-[1200px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px] sm:px-[24px]">
+      <h2 className="w-full max-w-[996px] text-left text-2xl font-semibold text-gray-900">
         마이 페이지
       </h2>
-      <div className="w-full max-w-[996px] mt-[24px]">
+      <div className="mt-[24px] w-full max-w-[996px]">
         {userInfo && <ProfileLayout {...userInfo} />}
       </div>
-      <div className="bg-white mt-[30px] flex flex-col w-full min-w-sm max-w-[996px] items-start justify-start border-t-2 border-gray-900 sm:min-h-[720px]">
-        <div className="gap-[12px] h-[34px] w-[300px] flex text-gray-400 ml-[24px] mt-[24px]">
+      <div className="min-w-sm mt-[30px] flex w-full max-w-[996px] flex-col items-start justify-start border-t-2 border-gray-900 bg-white sm:min-h-[720px]">
+        <div className="ml-[24px] mt-[24px] flex h-[34px] w-[300px] gap-[12px] text-gray-400">
           {tabOptions.map(tab => (
             <button
               type="button"
               key={tab.key}
               className={`text-sm font-semibold ${
-                activeTab === tab.key ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-400'
+                activeTab === tab.key ? 'border-b-2 border-gray-900 text-gray-900' : 'text-gray-400'
               }`}
               onClick={() => setActiveTab(tab.key as typeof activeTab)}
             >
@@ -221,7 +221,7 @@ export default function myPage() {
           ))}
         </div>
         {renderButton()}
-        <div className="w-full flex flex-col items-center justify-center gap-[24px] px-[24px] mt-[24px] relative">
+        <div className="relative mt-[24px] flex w-full flex-col items-center justify-center gap-[24px] px-[24px]">
           {renderContents()}
         </div>
       </div>

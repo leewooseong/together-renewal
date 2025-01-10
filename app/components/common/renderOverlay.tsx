@@ -22,13 +22,13 @@ export default function RenderOverlay(message: string, height: string, gathering
 
   return (
     <div className={`${baseStyle} h-${height}`}>
-      <div className="absolute sm:top-5 sm:right-5 top-1/2 sm:w-12 sm:h-12 w-28 h-9 bg-orange-50 sm:rounded-full rounded-xl text-orange-600 flex items-center justify-center">
+      <div className="absolute top-1/2 flex h-9 w-28 items-center justify-center rounded-xl bg-orange-50 text-orange-600 sm:right-5 sm:top-5 sm:h-12 sm:w-12 sm:rounded-full">
         <button type="button" className="flex items-center gap-1" onClick={buttonHandler}>
-          <Image src="/handIcon.svg" className="w-6 h-6" alt="손 아이콘" />
-          <p className="font-semibold sm:hidden text-xs pt-[5px]">모임 보내주기</p>
+          <Image src="/handIcon.svg" className="h-6 w-6" alt="손 아이콘" />
+          <p className="pt-[5px] text-xs font-semibold sm:hidden">모임 보내주기</p>
         </button>
       </div>
-      <div className="absolute text-white text-xs top-1/3 flex flex-col items-center">
+      <div className="absolute top-1/3 flex flex-col items-center text-xs text-white">
         <p>{`${message}된 챌린지에요,`}</p>
         <p>다음 기회에 만나요🙏</p>
       </div>

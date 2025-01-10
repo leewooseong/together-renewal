@@ -1,4 +1,4 @@
-import {BASE_API_URL, SORT_BY, TEAM_ID} from '../constants/commonConstants';
+import {SORT_BY} from '../constants/commonConstants';
 import fetchWithToken from '../utils/fetchWithTokenUtil';
 import validationUtil from '../utils/validationUtil';
 
@@ -26,7 +26,7 @@ export default async function joinedGatheringsApi(filters: {
     }
   });
 
-  const req = `${BASE_API_URL}/${TEAM_ID}/gathering/joined${
+  const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gathering/joined${
     queryParams ? `?${queryParams.toString()}` : ''
   }`;
 

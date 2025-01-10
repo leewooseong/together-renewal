@@ -4,8 +4,8 @@ import Image from 'next/image';
 export default function ApproveCheck(participantCount: number): React.ReactNode {
   if (participantCount >= 5) {
     return (
-      <div className="text-orange-500 font-medium ml-3 flex items-center">
-        <Image className="w-[24px] h-[24px]" src="/orangeCheckIcon.svg" alt="확정 아이콘" />
+      <div className="ml-3 flex items-center font-medium text-orange-500">
+        <Image className="h-[24px] w-[24px]" src="/orangeCheckIcon.svg" alt="확정 아이콘" />
         <p className="mt-1">개설확정</p>
       </div>
     );

@@ -9,7 +9,7 @@ export function ReviewScore({score}: {score: number}) {
   const heartScore = hearts.fill(true, 0, score);
 
   return (
-    <div className=" flex gap-1">
+    <div className="flex gap-1">
       {heartScore.map((heart, index) => (
         <Image
           width={24}

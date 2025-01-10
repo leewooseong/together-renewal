@@ -9,7 +9,7 @@ export default function InputTextBox({
 }) {
   return (
     <textarea
-      className="w-full h-[120px] resize-none overflow-auto bg-gray-50 rounded-md font-medium text-sm mt-[12px] p-[10px]"
+      className="mt-[12px] h-[120px] w-full resize-none overflow-auto rounded-md bg-gray-50 p-[10px] text-sm font-medium"
       placeholder={placeholder}
       value={value}
       onChange={onChange}

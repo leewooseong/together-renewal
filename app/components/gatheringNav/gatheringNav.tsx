@@ -52,8 +52,8 @@ export default function GatheringNav() {
 
   return (
     <div>
-      <nav className=" w-fit flex flex-col ">
-        <div className="flex justify-between gap-3 w-fit">
+      <nav className="flex w-fit flex-col">
+        <div className="flex w-fit justify-between gap-3">
           <motion.div
             ref={firstDivRef}
             animate={{
@@ -73,9 +73,9 @@ export default function GatheringNav() {
             onHoverEnd={() => setIsFirstDivHovered(false)}
             onClick={whatIsClicked}
             id="DALLAEMFIT"
-            className="flex items-center pb-[6px]  "
+            className="flex items-center pb-[6px]"
           >
-            <h3 className={`text-lg font-semibold pr-1 text-gray-900 `}>달램핏</h3>
+            <h3 className="pr-1 text-lg font-semibold text-gray-900">달램핏</h3>
             <DalaemfitSvg className="text-gray-900" />
           </motion.div>
 
@@ -101,7 +101,7 @@ export default function GatheringNav() {
             id="WORKATION"
             className="flex items-center pb-[6px]"
           >
-            <h3 className={`text-lg font-semibold pr-1 text-gray-900 `}>워케이션</h3>
+            <h3 className="pr-1 text-lg font-semibold text-gray-900">워케이션</h3>
             <WorkationSvg className="text-gray-900" />
           </motion.div>
         </div>
@@ -129,7 +129,7 @@ export default function GatheringNav() {
             duration: 0.5,
             ease: 'easeInOut',
           }}
-          className={`w-[90px] h-[2px] bg-gray-900 `}
+          className="h-[2px] w-[90px] bg-gray-900"
         />
       </nav>
       <motion.nav
@@ -145,7 +145,7 @@ export default function GatheringNav() {
             setIsVisible(false);
           }
         }}
-        className="flex gap-2 mt-[10px] xs:mt-[14px]"
+        className="mt-[10px] flex gap-2 xs:mt-[14px]"
       >
         <button
           type="button"
@@ -153,7 +153,7 @@ export default function GatheringNav() {
           id="ALL"
           className={`${
             isAllActive ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
-          } py-2 px-3 rounded-xl text-sm`}
+          } rounded-xl px-3 py-2 text-sm`}
         >
           전체
         </button>
@@ -165,7 +165,7 @@ export default function GatheringNav() {
             gatheringType === 'OFFICE_STRETCHING'
               ? 'bg-gray-900 text-white'
               : 'bg-gray-200 text-gray-900'
-          } py-2 px-3 rounded-xl text-sm`}
+          } rounded-xl px-3 py-2 text-sm`}
         >
           오피스 스트레칭
         </button>
@@ -175,7 +175,7 @@ export default function GatheringNav() {
           id="MINDFULNESS"
           className={`${
             gatheringType === 'MINDFULNESS' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
-          } py-2 px-3 rounded-xl text-sm`}
+          } rounded-xl px-3 py-2 text-sm`}
         >
           마인드풀니스
         </button>
