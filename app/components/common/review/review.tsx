@@ -58,7 +58,7 @@ export function Review({
                   alt="프로필 이미지"
                   width={24}
                   height={24}
-                  className="h-6 w-6 rounded-full bg-yellow-400"
+                  className="size-6 rounded-full bg-yellow-400"
                 />
               )}
               <span className="pl-2">{userName}</span>

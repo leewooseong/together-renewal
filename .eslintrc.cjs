@@ -20,7 +20,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended', // ts 권장
     'plugin:prettier/recommended', // eslint의 포매팅을 prettier로 사용.
     'prettier', // eslint-config-prettier prettier와 중복된 eslint 규칙 제거
-    'plugin:tailwindcss/recommended', // Tailwind CSS 플러그인 추가
     'next/core-web-vitals',
   ],
   rules: {

@@ -1,4 +1,5 @@
 import {useState} from 'react';
+
 import {Gathering} from '../types/gatheringFilter.types';
 
 export function useGatheringFilter() {

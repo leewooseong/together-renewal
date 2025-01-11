@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from 'react';
 import {motion} from 'motion/react';
 
 import {Gathering, GatheringFilterProps} from '@/app/types/gatheringFilter.types';
+
 import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';
 
@@ -140,7 +141,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
             setIsVisible(false);
           }
         }}
-        className="xs:mt-[14px] mt-[10px] flex gap-2"
+        className="mt-[10px] flex gap-2 xs:mt-[14px]"
       >
         <button
           type="button"
