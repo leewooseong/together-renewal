@@ -1,11 +1,8 @@
 import axios, {AxiosResponse} from 'axios';
-import {getDefaultStore} from 'jotai';
 
-import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
 import {User} from '@/app/store/types/user.types';
 
-import {instance} from '../client/clientInstance';
-import {tokenInstance} from '../client/clientInstanceWithToken';
+import {instance} from '../client';
 
 interface ILoginResponse {
   token: string;
@@ -35,25 +32,13 @@ export const login = async (
   }
 };
 
-// baseURL이 tokenInstance와 달라서 개별적으로 처리
-export const setCookie = async (): Promise<AxiosResponse> => {
-  const token = getDefaultStore().get(tokenWithStorageAtom);
-
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return res;
-};
-
 export const deleteCookie = async (): Promise<AxiosResponse> => {
   const res = await axios.delete(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`);
   return res;
 };
 
 export const getUserInfo = async (): Promise<User> => {
-  const res = await tokenInstance.get('/auths/user');
+  const res = await instance.get('/auths/user');
 
   return res.data;
 };
