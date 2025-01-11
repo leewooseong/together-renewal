@@ -6,7 +6,8 @@ import Image from 'next/image';
 import {howToSortReviewDropdownList, reviewDropdownList} from '@/app/store/atoms/dropDownAtom';
 import {Tlocation, TreviewSort} from '@/app/store/types/dropDown.types';
 
-import DropDownList from './dropDownList';
+import Date from './date';
+import {DropDownList} from './dropDownList';
 
 const locations = ['지역 전체', '건대입구', '을지로 3가', '신림', '홍대입구'];
 const howToSortReview = ['최신 순', '리뷰 높은 순', '참여 인원 순'];
@@ -39,6 +40,15 @@ export default function DropDown() {
     setIsHowToSortClicked(false);
   }
 
+  // Date클릭
+  // function handleDateBtnClick() {
+  //   setIsHowToSortClicked(prev => !prev);
+  // }
+  // function handleDateClick(event: React.MouseEvent<HTMLButtonElement>) {
+  //   const getDate = event.currentTarget.value;
+  //   console.log(typeof getDate);
+  // }
+
   return (
     <div>
       <div>{isLocationClicked ? 'Location: true' : 'Location: false'}</div>
@@ -68,8 +78,6 @@ export default function DropDown() {
             width={112}
           />
         )}
-
-        <div>날짜</div>
       </div>
       <div>
         <button
@@ -95,6 +103,7 @@ export default function DropDown() {
           />
         )}
       </div>
+      <Date />
     </div>
   );
 }

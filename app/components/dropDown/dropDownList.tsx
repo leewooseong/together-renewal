@@ -1,6 +1,6 @@
 import {IdropDownListProps} from '@/app/store/types/dropDown.types';
 
-export default function DropDownList({lists, onclick, selectedItem, width}: IdropDownListProps) {
+export function DropDownList({lists, onclick, selectedItem, width}: IdropDownListProps) {
   return (
     <ul className={` flex flex-col justify-between w-[${width}px] rounded-xl shadow-xl`}>
       {lists.map(list => (
