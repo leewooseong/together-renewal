@@ -2,17 +2,17 @@
 
 // 나중에 모든 리뷰 페이지 구현 해야함.
 import {useQuery} from '@tanstack/react-query';
-import {useAtom} from 'jotai';
 
 import {getReviews} from '../apis/reviews';
+import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
 import {Review} from '../components/common/review/review';
-import GatheringNav from '../components/gatheringNav/gatheringNav';
 import PageInfo from '../components/pageInfo';
-import {getWhatGatheringTypeAtom} from '../store/atoms/gatheringNavAtoms';
+import {useGatheringFilter} from '../hooks/useGatheringFilter';
 import {ReviewListType} from '../types/reviews.types';
 
 export default function ReviewsPage() {
-  const [gatheringType] = useAtom(getWhatGatheringTypeAtom);
+  const {gatheringType, setGatheringType} = useGatheringFilter();
+
   const {
     data: reviewList,
 
@@ -34,7 +34,7 @@ export default function ReviewsPage() {
         <PageInfo pageName="reviews" />
       </div>
       <div className="m-7">
-        <GatheringNav />
+        <GatheringFilter gatheringType={gatheringType} setGatheringType={setGatheringType} />
       </div>
       <div>
         {reviewList?.data.map(review => (

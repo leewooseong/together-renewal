@@ -51,18 +51,11 @@ export function Review({
           ) : (
             <div className="flex items-center">
               {!userImg ? (
-                <Image
-                  src="/profile-default.svg"
-                  alt="기본 프로필 이미지"
-                  layout="fixed"
-                  width={24}
-                  height={24}
-                />
+                <Image src="/profile-default.svg" alt="기본 프로필 이미지" width={24} height={24} />
               ) : (
                 <Image
                   src={userImg}
                   alt="프로필 이미지"
-                  layout="fixed"
                   width={24}
                   height={24}
                   className="h-6 w-6 rounded-full bg-yellow-400"

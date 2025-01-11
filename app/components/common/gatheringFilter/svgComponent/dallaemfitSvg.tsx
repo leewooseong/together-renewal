@@ -1,6 +1,6 @@
 import {IiconProps} from '@/app/types/svgComponentType.type';
 
-export default function DalaemfitSvg({className}: IiconProps) {
+export default function DallaemfitSvg({className}: IiconProps) {
   return (
     <svg
       className={`${className}`}
