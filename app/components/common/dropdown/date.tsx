@@ -5,7 +5,7 @@ export default function Date() {
   }
   return (
     <div>
-      <label htmlFor="date-input" className="bg-slate-800 w-28 h-6">
+      <label htmlFor="date-input" className="h-6 w-28 bg-slate-800">
         hi
       </label>
       <input id="date-input" type="date" onChange={handleDateClick} />
