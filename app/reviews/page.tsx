@@ -5,20 +5,20 @@ import {useQuery} from '@tanstack/react-query';
 import {useAtom} from 'jotai';
 
 import {getReviews} from '../apis/reviews';
+import {Review} from '../components/common/review/review';
 import GatheringNav from '../components/gatheringNav/gatheringNav';
 import PageInfo from '../components/pageInfo';
-import Review from '../components/reviewComponent/review';
 import {getWhatGatheringTypeAtom} from '../store/atoms/gatheringNavAtoms';
-import {IReviews} from '../types/reviews.types';
+import {ReviewListType} from '../types/reviews.types';
 
 export default function ReviewsPage() {
   const [gatheringType] = useAtom(getWhatGatheringTypeAtom);
   const {
-    data: reviews,
+    data: reviewList,
 
     isPending,
-  } = useQuery<IReviews>({
-    queryKey: ['reviews', gatheringType],
+  } = useQuery<ReviewListType>({
+    queryKey: ['reviewList', gatheringType],
     queryFn: () => getReviews(undefined, undefined, gatheringType),
     staleTime: 1 * 60 * 5000, // 5분
     gcTime: 60 * 1000 * 10, // 10분
@@ -37,7 +37,7 @@ export default function ReviewsPage() {
         <GatheringNav />
       </div>
       <div>
-        {reviews?.data.map(review => (
+        {reviewList?.data.map(review => (
           <Review
             key={review.id}
             gatheringImg={review.Gathering.image}

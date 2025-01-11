@@ -18,6 +18,7 @@
   "filepath": "",
   "requirePragma": false,
   "insertPragma": false,
+  "plugins": ["prettier-plugin-tailwindcss"],
   "overrides": [ 
     {
       "files": "*.json",

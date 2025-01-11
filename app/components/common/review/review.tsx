@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
-import {ReviewScore} from '@/app/components/reviewComponent/reviewScore';
-import {IReviewComponentType} from '@/app/types/reviews.types';
+import {ReviewScore} from '@/app/components/common/review/reviewScore';
+import {ReviewType} from '@/app/types/reviews.types';
 
 // 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
 // 모임 상세 페에지는 pageName = "GATHERING"을 보내야함.
 
-export default function Review({
+export function Review({
   gatheringImg,
   score,
   comment,
@@ -16,18 +16,18 @@ export default function Review({
   userName,
   createdAt,
   pageName,
-}: IReviewComponentType) {
+}: ReviewType) {
   const createDate: string = createdAt.slice(0, 10).replaceAll('-', '.');
 
   return (
     <div
-      className={`grid grid-rows-1 w-[311px] sm:w-full  ${pageName === 'GATHERING' ? 'sm:grid-cols-1' : 'sm:grid-cols-[280px_minmax(0,_1fr)]'} gap-6 box-border`}
+      className={`grid w-[311px] grid-rows-1 sm:w-full ${pageName === 'GATHERING' ? 'sm:grid-cols-1' : 'sm:grid-cols-[280px_minmax(0,_1fr)]'} box-border gap-6`}
     >
       {pageName !== 'GATHERING' &&
         (!gatheringImg ? (
-          <div className="bg-neutral-800 w-[311px] sm:w-[280px] h-[156px] rounded-3xl" />
+          <div className="h-[156px] w-[311px] rounded-3xl bg-neutral-800 sm:w-[280px]" />
         ) : (
-          <div className="relative w-[311px] sm:w-[280px] h-[156px] rounded-3xl overflow-hidden">
+          <div className="relative h-[156px] w-[311px] overflow-hidden rounded-3xl sm:w-[280px]">
             <Image
               src={gatheringImg}
               alt="모임 이미지"
@@ -37,28 +37,35 @@ export default function Review({
             />
           </div>
         ))}
-      <div className=" flex flex-col pb-5 border-b-2 border-gray-200 border-dashed sm:px-0">
+      <div className="flex flex-col border-b-2 border-dashed border-gray-200 pb-5 sm:px-0">
         <ReviewScore score={score} />
-        <p className="text-sm pt-2.5">{comment}</p>
+        <p className="pt-2.5 text-sm">{comment}</p>
         {pageName === 'GATHERING' ? (
           ''
         ) : (
           <div className="pt-2.5 text-sm">{`${gatheringType} · ${gatheringLocation}`}</div>
         )}
-        <div className="pt-2 flex  items-center text-sm">
+        <div className="flex items-center pt-2 text-sm">
           {pageName === 'MY_PAGE' ? (
             ''
           ) : (
             <div className="flex items-center">
               {!userImg ? (
-                <Image src="/profile-default.svg" alt="기본 프로필 이미지" width={24} height={24} />
+                <Image
+                  src="/profile-default.svg"
+                  alt="기본 프로필 이미지"
+                  layout="responsive"
+                  width={24}
+                  height={24}
+                />
               ) : (
                 <Image
                   src={userImg}
-                  alt="프로필 이미지지"
+                  alt="프로필 이미지"
+                  layout="responsive"
                   width={24}
                   height={24}
-                  className="bg-yellow-400 w-6 h-6 rounded-full"
+                  className="h-6 w-6 rounded-full bg-yellow-400"
                 />
               )}
               <span className="pl-2">{userName}</span>
