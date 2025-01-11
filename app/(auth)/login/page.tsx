@@ -10,9 +10,9 @@ import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 
 import {login} from '@/app/apis/user/userApi';
-import useClearAuth from '@/app/hooks/useAuth';
 import {useDebounce} from '@/app/hooks/useForm';
 import {TLoginInputs} from '@/app/types/auth.types';
+import {AuthError} from '@/app/types/error.types';
 import {LoginSchema} from '@/app/utils/schema';
 
 export default function LoginPage() {
@@ -34,20 +34,27 @@ export default function LoginPage() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
-  const {debounceEmailValidate} = useDebounce();
+  const {debounceValidate} = useDebounce();
   const router = useRouter();
 
-  // Event handlers
   // Form Event
-  // Todo: api 처리 로직에 에러 처리 적용하기
   const onSubmit = async (data: TLoginInputs) => {
     try {
       await login(data.email, data.password);
       setServerErrorMessage({email: '', password: ''});
       router.push('/');
     } catch (error) {
-      useClearAuth();
-      alert('로그인 과정에 문제가 발생했습니다.');
+      if (error instanceof AuthError) {
+        if (error.code === 'USER_NOT_FOUND' || error.code === 'INVALID_CREDENTIALS') {
+          setServerErrorMessage({
+            email: error.code === 'USER_NOT_FOUND' ? error.message : '',
+            password: error.code === 'INVALID_CREDENTIALS' ? error.message : '',
+          });
+          return;
+        }
+
+        alert('로그인 과정에 문제가 발생했습니다.');
+      }
     }
   };
 
@@ -57,7 +64,7 @@ export default function LoginPage() {
     if (name !== 'email' && name !== 'password') {
       return;
     }
-    debounceEmailValidate(name, trigger);
+    debounceValidate(name, trigger);
   };
 
   // Render

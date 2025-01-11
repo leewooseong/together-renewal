@@ -4,7 +4,7 @@ import axios, {AxiosError, AxiosHeaders, AxiosResponse, InternalAxiosRequestConf
 
 // :: create Instance
 const baseConfig = {
-  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}`,
+  baseURL: `${process.env.NEXT_PUBLIC_FRONT_URL}`,
   timeout: 10 * 1000,
   withCredentials: true,
 };

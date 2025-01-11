@@ -1,34 +1,25 @@
 import axios, {AxiosResponse} from 'axios';
 
 import {User} from '@/app/store/types/user.types';
+import {AuthError} from '@/app/types/error.types';
 
 import {instance} from '../client';
 
-interface ILoginResponse {
-  token: string;
-}
-
-interface IErrorResponse {
-  code: string;
-  message: string;
-}
-
-export const login = async (
-  email: string,
-  password: string,
-): Promise<ILoginResponse | IErrorResponse | undefined> => {
+export const login = async (email: string, password: string) => {
   try {
-    const res = await instance.post('/auths/signin', {
+    await instance.post('/route/login', {
       email,
       password,
     });
-
-    return res.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return error.response.data;
+    if (axios.isAxiosError(error) && error.response?.data) {
+      // 서버에서 보낸 에러 정보 유지
+      throw new AuthError(
+        error.response.data.message,
+        error.response.data.code,
+        error.response.data.status,
+      );
     }
-    return undefined; // 명시적 반환 추가
   }
 };
 

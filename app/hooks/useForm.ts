@@ -6,12 +6,12 @@ import _ from 'lodash';
 import {TLoginInputs} from '../types/auth.types';
 
 export const useDebounce = () => {
-  const debounceEmailValidate = useCallback(
+  const debounceValidate = useCallback(
     _.debounce(async (field: keyof TLoginInputs, trigger: UseFormTrigger<TLoginInputs>) => {
       await trigger(field);
     }, 1000),
     [],
   );
 
-  return {debounceEmailValidate};
+  return {debounceValidate};
 };
