@@ -5,8 +5,9 @@ import {useQuery} from '@tanstack/react-query';
 
 import {getReviews} from '../apis/reviews';
 import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
+
+import {PageInfo} from '../components/common/pageInfo';
 import {Review} from '../components/common/review/review';
-import PageInfo from '../components/pageInfo';
 import {useGatheringFilter} from '../hooks/useGatheringFilter';
 import {ReviewListType} from '../types/reviews.types';
 

@@ -4,8 +4,8 @@ import {useEffect, useRef, useState} from 'react';
 import {motion} from 'motion/react';
 
 import {Gathering, GatheringFilterProps} from '@/app/types/gatheringFilter.types';
-import DallaemfitSvg from './svgComponent/dallaemfitSvg';
-import WorkationSvg from './svgComponent/workationSvg';
+import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
+import {WorkationSvg} from './svgComponent/workationSvg';
 
 export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilterProps) {
   const dallaemfitRef = useRef<HTMLDivElement>(null);
