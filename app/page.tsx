@@ -6,5 +6,9 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  return <div>메인 페이지</div>;
+  return (
+    <div>
+      <p>메인 페이지</p>
+    </div>
+  );
 }
