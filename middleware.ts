@@ -22,5 +22,5 @@ export default async function middleware(request: NextRequest) {
 
 // 변수로 선언하면 반영이 되지 않으니 주의!
 export const config = {
-  matcher: ['/login', '/signup', '/mypage'],
+  matcher: ['/login', '/signup', '/mypage', '/route/token'],
 };
