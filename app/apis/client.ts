@@ -1,61 +1,198 @@
-'use client';
+import {CodeitError, CodeitErrorStatus} from '../types/error.types';
 
-import axios, {AxiosError, AxiosHeaders, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
+/** token: 서버 컴포넌트에서 데이터 요청 시 필요한 변수, 서버 컴포넌트에서는 fetch를 요청할 때는  */
+interface FetchOptions extends RequestInit {
+  baseURL: string;
+  timeout?: number;
+  contentType?: 'formData' | 'json';
+}
 
-// :: create Instance
-const baseConfig = {
+// Todo: error 관련해서 수정하기
+// Todo: timeout 관련해서 공부하고 적용하기
+class FetchInstance {
+  private timeout: number;
+
+  private baseURL: string;
+
+  private token: string | undefined;
+
+  private contentType: 'formData' | 'json';
+
+  private defaultHeaders: HeadersInit;
+
+  constructor(options: FetchOptions) {
+    this.timeout = options.timeout || 30000;
+    this.contentType = options.contentType || 'json';
+    this.baseURL = options.baseURL;
+    this.defaultHeaders = {
+      ...options.headers,
+    };
+  }
+
+  private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+    console.log(url);
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
+  }
+
+  private getHeaders(): Headers {
+    const requestHeaders = new Headers(this.defaultHeaders);
+    if (this.token) {
+      requestHeaders.set('Authorization', `Bearer ${this.token}`);
+    }
+    if (this.contentType) {
+      const contentType = this.contentType === 'json' ? 'application/json' : 'multipart/form-data';
+      requestHeaders.set('Content-type', contentType);
+    }
+    return requestHeaders;
+  }
+
+  async request<T>(
+    method: string,
+    path?: string,
+    options: RequestInit = {},
+    token?: string | undefined,
+    contentType?: 'json' | 'formData',
+  ): Promise<T> {
+    this.token = token;
+    this.contentType = contentType || 'json';
+    const url = this.baseURL + path;
+    const requestHeaders = this.getHeaders();
+
+    try {
+      const response = await this.fetchWithTimeout(url.toString(), {
+        ...options,
+        method,
+        headers: requestHeaders,
+      });
+
+      if (!response.ok) {
+        throw await FetchInstance.handleError(response);
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Request timeout');
+        }
+      }
+      throw error;
+    }
+  }
+
+  private static async handleError(response: Response): Promise<Error> {
+    console.log(response);
+    try {
+      const data = await response.json();
+      return new CodeitError(
+        data.message,
+        response.status as CodeitErrorStatus,
+        data.code,
+        data?.parameter,
+      );
+    } catch (error) {
+      return new Error();
+    }
+  }
+
+  // HTTP method helpers
+  async get<T>({
+    path,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>('GET', path, options, token, contentType);
+  }
+
+  async post<T>({
+    path,
+    body,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    body?: unknown;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>(
+      'POST',
+      path,
+      {
+        ...options,
+        body: JSON.stringify(body),
+      },
+      token,
+      contentType,
+    );
+  }
+
+  async put<T>({
+    path,
+    body,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    body?: unknown;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>(
+      'PUT',
+      path,
+      {
+        ...options,
+        body: JSON.stringify(body),
+      },
+      token,
+      contentType,
+    );
+  }
+
+  async delete<T>({
+    path,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>('DELETE', path, options, token, contentType);
+  }
+}
+
+const clientInstance = new FetchInstance({
   baseURL: `${process.env.NEXT_PUBLIC_FRONT_URL}`,
-  timeout: 10 * 1000,
-  withCredentials: true,
-};
+});
 
-const instance = axios.create(baseConfig);
-const multipartInstance = axios.create(baseConfig);
+const serverInstance = new FetchInstance({
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}`,
+});
 
-// :: interceptor setting
-// 1. request
-// - 요청이 전달되기 전에 작업 수행
-const reqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  const headers = new AxiosHeaders(config.headers);
-  headers.set('Content-Type', 'application/json');
-
-  return {
-    ...config,
-    headers,
-  };
-};
-const multipartReqPrev = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-  const headers = new AxiosHeaders(config.headers);
-  headers.set('Content-Type', 'multipart/form-data');
-
-  return {
-    ...config,
-    headers,
-  };
-};
-
-// 요청 오류가 있는 작업 수행
-const requestError = (error: unknown): Promise<never> => {
-  return Promise.reject(error);
-};
-
-// 2. response
-// 2.1. response success
-// - 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-// - 응답 데이터가 있는 작업 수행
-const resolveResponse = (response: AxiosResponse): AxiosResponse => response;
-// 2.2. response error
-// - 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-// - 401 권한 에러일 경우, auth 관련 부분 모두 제거
-
-const responseError = async (error: AxiosError): Promise<never> => {
-  return Promise.reject(error);
-};
-
-instance.interceptors.request.use(reqPrev, requestError);
-instance.interceptors.response.use(resolveResponse, responseError);
-
-multipartInstance.interceptors.request.use(multipartReqPrev, requestError);
-multipartInstance.interceptors.response.use(resolveResponse, responseError);
-
-export {instance, multipartInstance};
+export {clientInstance, serverInstance};

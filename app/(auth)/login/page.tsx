@@ -12,7 +12,7 @@ import {z} from 'zod';
 import {login} from '@/app/apis/user/userApi';
 import {useDebounce} from '@/app/hooks/useForm';
 import {TLoginInputs} from '@/app/types/auth.types';
-import {AuthError} from '@/app/types/error.types';
+import {CodeitError} from '@/app/types/error.types';
 import {LoginSchema} from '@/app/utils/schema';
 
 export default function LoginPage() {
@@ -44,7 +44,7 @@ export default function LoginPage() {
       setServerErrorMessage({email: '', password: ''});
       router.push('/');
     } catch (error) {
-      if (error instanceof AuthError) {
+      if (error instanceof CodeitError) {
         if (error.code === 'USER_NOT_FOUND' || error.code === 'INVALID_CREDENTIALS') {
           setServerErrorMessage({
             email: error.code === 'USER_NOT_FOUND' ? error.message : '',
@@ -64,6 +64,10 @@ export default function LoginPage() {
     if (name !== 'email' && name !== 'password') {
       return;
     }
+    setServerErrorMessage(prev => ({
+      email: name === 'email' ? '' : prev.email,
+      password: name === 'password' ? '' : prev.password,
+    }));
     debounceValidate(name, trigger);
   };
 

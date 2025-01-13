@@ -2,9 +2,8 @@ import {cookies} from 'next/headers';
 import {type NextRequest} from 'next/server';
 
 import {AUTH_TOKEN} from '@/app/constants/auth';
-import getRequestType from '@/app/utils/server';
+import {getRequestType, isPageType} from '@/app/utils/server';
 
-import {isPageType} from './app/utils/type';
 import {handleApiRequest} from './middlewares/apiHandler';
 import {protectRoute} from './middlewares/routeProtection';
 
