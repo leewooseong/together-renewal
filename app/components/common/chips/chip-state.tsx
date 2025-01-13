@@ -3,7 +3,7 @@ import Image from 'next/image';
 /** 이용 예정 chip */
 export function UpcomingReservationChip() {
   return (
-    <div className="flex items-center justify-center w-[76px] h-[32px] bg-orange-100 text-orange-600 text-[14px] font-medium leading-none rounded-[24px]">
+    <div className="flex h-[32px] w-[76px] items-center justify-center rounded-[24px] bg-orange-100 text-[14px] font-medium leading-none text-orange-600">
       <p>이용 예정</p>
     </div>
   );
@@ -12,7 +12,7 @@ export function UpcomingReservationChip() {
 /** 이용 완료 chip */
 export function ReservationFinishedChip() {
   return (
-    <div className="flex items-center justify-center w-[76px] h-[32px] bg-gray-200 text-gray-500 text-[14px] font-medium leading-none rounded-[24px]">
+    <div className="flex h-[32px] w-[76px] items-center justify-center rounded-[24px] bg-gray-200 text-[14px] font-medium leading-none text-gray-500">
       <p>이용 완료</p>
     </div>
   );
@@ -21,7 +21,7 @@ export function ReservationFinishedChip() {
 /** 개설 대기 chip */
 export function WaitingForApproval() {
   return (
-    <div className="flex items-center justify-center w-[76px] h-[32px] bg-white border border-gray-200 text-gray-500 text-[14px] font-medium leading-none rounded-[24px]">
+    <div className="flex h-[32px] w-[76px] items-center justify-center rounded-[24px] border border-gray-200 bg-white text-[14px] font-medium leading-none text-gray-500">
       <p>개설대기</p>
     </div>
   );
@@ -30,8 +30,8 @@ export function WaitingForApproval() {
 /** 개설 확정 chip */
 export function EventApproved() {
   return (
-    <div className="flex items-center justify-center w-[93px] h-[32px] bg-white border border-orange-100 text-orange-500 text-[14px] font-medium leading-none rounded-[24px]">
-      <Image src="/orangeCheckIcon.svg " alt="check icon" />
+    <div className="flex h-[32px] w-[93px] items-center justify-center rounded-[24px] border border-orange-100 bg-white text-[14px] font-medium leading-none text-orange-500">
+      <Image src="/orangeCheckIcon.svg " alt="check icon" width={16} height={16} />
       <p className="ml-1">개설확정</p>
     </div>
   );

@@ -5,10 +5,10 @@ export function DateTimeInfoChip({dateTime}: {dateTime: string}) {
 
   return (
     <div className="flex space-x-2">
-      <div className="w-[58px] h-[24px] rounded-md bg-gray-900 text-white text-xs font-medium flex items-center justify-center">
+      <div className="flex h-[24px] w-[58px] items-center justify-center rounded-md bg-gray-900 text-xs font-medium text-white">
         <p>{date}</p>
       </div>
-      <div className="w-[51px] h-[24px] rounded-md bg-gray-900 text-orange-600 font-medium text-xs flex items-center justify-center">
+      <div className="flex h-[24px] w-[51px] items-center justify-center rounded-md bg-gray-900 text-xs font-medium text-orange-600">
         <p>{time}</p>
       </div>
     </div>

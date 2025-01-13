@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import isClosedUtil from '@/app/utils/isClosedUtil';
 
 import ApproveCheck from '../common/approveCheck';
@@ -29,14 +31,15 @@ export default function ListCard({
 
       {/* 모임 이미지 */}
       <div className="relative flex h-[156px] w-[343px] items-center justify-center overflow-hidden sm:w-[280px]">
-        <img src={image} alt="모임 대표 이미지" className="object-cover" />
+        <Image src={image} alt="모임 대표 이미지" className="object-cover" layout="fill" />
         <CloseTag registrationEnd={registrationEnd} />
       </div>
 
       {/* 모임 정보 */}
       <div className="relative h-[156px] w-full pl-2 sm:w-[716px] sm:pl-6">
         <button type="button" className="absolute right-5 top-5">
-          <img src="/emptyHeart.svg" alt="찜 버튼" /> {/* 기능 구현 필요함(찜하기) */}
+          <Image src="/emptyHeart.svg" alt="찜 버튼" width={48} height={48} />
+          {/* 기능 구현 필요함(찜하기) */}
         </button>
 
         <div className="flex h-[96px] items-center">
@@ -56,7 +59,13 @@ export default function ListCard({
         <div className="h-[60px] max-w-[calc(100%-120px)]">
           <div className="flex h-1/2 w-full">
             <span className="mt-1 flex gap-[4px]">
-              <img src="/personIcon.svg" className="mt-1 h-4 w-4" alt="참여자 아이콘" />
+              <Image
+                src="/personIcon.svg"
+                className="mt-1 h-4 w-4"
+                alt="참여자 아이콘"
+                width={16}
+                height={16}
+              />
               {`${participantCount}/${capacity}`}
             </span>
             {ApproveCheck(participantCount)}
@@ -72,7 +81,13 @@ export default function ListCard({
           className="absolute bottom-5 right-5 flex font-semibold text-orange-600"
         >
           <p>join now</p>
-          <img className="ml-2 mt-1 h-4 w-4" src="/arrowIcon.svg" alt="화살표 아이콘" />
+          <Image
+            className="ml-2 mt-1"
+            src="/arrowIcon.svg"
+            alt="화살표 아이콘"
+            width={18}
+            height={18}
+          />
         </button>
       </div>
     </div>

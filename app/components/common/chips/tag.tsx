@@ -17,9 +17,9 @@ export function CloseTag({registrationEnd}: {registrationEnd: string}) {
 
   const closeTime = time.split(':')[0];
   return (
-    <div className="absolute top-0 right-0 w-[117px] h-[32px] bg-orange-600 text-white flex items-center justify-center rounded-bl-xl pr-1">
-      <Image src="/clockIcon.svg" className="w-[24px] h-[24px]" alt="시계 아이콘" />
-      <p className="font-medium text-xs">오늘 {closeTime}시 마감</p>
+    <div className="absolute right-0 top-0 flex h-[32px] w-[117px] items-center justify-center rounded-bl-xl bg-orange-600 pr-1 text-white">
+      <Image src="/clockIcon.svg" alt="시계 아이콘" width={24} height={24} />
+      <p className="text-xs font-medium">오늘 {closeTime}시 마감</p>
     </div>
   );
 }

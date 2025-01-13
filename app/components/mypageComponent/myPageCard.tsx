@@ -2,6 +2,8 @@
 
 import {useState} from 'react';
 
+import Image from 'next/image';
+
 import formatDateUtil from '../../utils/formatDateUtil';
 import RenderOverlay from '../common/renderOverlay';
 import WriteReviewModal from '../modals/writeReviewModal';
@@ -30,6 +32,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
   const handleOpenModal = () => {
     setIsModalOpen(true); // 모달 열기 상태로 변경
   };
+
   return (
     <div className="relative flex h-[352px] w-[311px] max-w-[996px] flex-col justify-between sm:h-[180px] sm:w-full sm:flex-col">
       {/* 리뷰 작성 모달 */}
@@ -44,8 +47,8 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
 
       <div className="flex h-[328px] w-full flex-col justify-between sm:h-[156px] sm:w-[545px] sm:flex-row">
         {/* 모임 이미지 */}
-        <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]">
-          <img src={props.image} alt="모임 대표 이미지" className="object-cover" />
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]">
+          <Image src={props.image} alt="모임 대표 이미지" className="object-cover" layout="fill" />
         </div>
 
         <div className="flex h-full w-[249px] flex-col justify-between">
@@ -71,7 +74,13 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
             <div className="flex h-[20px] w-[160px] justify-between text-sm">
               <span>{`${dateFormat.date} ${dateFormat.time}`}</span>
               <span className="flex gap-[4px]">
-                <img src="/personIcon.svg" className="pt-0.5" alt="사람 아이콘" />
+                <Image
+                  src="/personIcon.svg"
+                  className="pt-0.5"
+                  alt="사람 아이콘"
+                  width={16}
+                  height={16}
+                />
                 {`${props.participantCount}/${props.capacity}`}
               </span>
             </div>

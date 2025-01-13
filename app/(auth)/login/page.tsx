@@ -86,7 +86,7 @@ export default function LoginPage() {
       const cookieRes = await setCookie();
       if (cookieRes.status === 200) {
         setServerErrorMessage({email: '', password: ''});
-        // router.push('/');
+        router.push('/');
       } else {
         clearAuth();
         alert('로그인 과정에 문제가 발생했습니다.');
