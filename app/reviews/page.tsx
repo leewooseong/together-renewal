@@ -4,7 +4,7 @@
 import {useQuery} from '@tanstack/react-query';
 
 import {getReviews} from '../apis/reviews';
-import {Dropdown} from '../components/common/dropdown/dropdown';
+import {Filter} from '../components/common/filter/filter';
 import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../components/common/pageInfo';
 import {Review} from '../components/common/review/review';
@@ -52,7 +52,9 @@ export default function ReviewsPage() {
           />
         ))}
       </div>
-      <Dropdown />
+      <div>
+        <Filter />
+      </div>
     </div>
   );
 }
