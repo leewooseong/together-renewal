@@ -1,13 +1,21 @@
-import Image from 'next/image';
+'use client';
 
 import leaveGatheringsApi from '@/app/apis/leaveGatheringsApi';
 
 /** 모임 취소, 마감 오버레이 */
-export default function RenderOverlay(message: string, height: string, gatheringId: number) {
+export default function RenderOverlay({
+  message,
+  gatheringId,
+}: {
+  message: string;
+  gatheringId: number;
+}) {
   const baseStyle =
-    'absolute bg-black bg-opacity-80 z-10 top-0 left-0 flex items-center justify-center sm:h-full w-full rounded-xl sm:rounded-3xl';
+    'absolute bg-black bg-opacity-80 z-10 top-0 left-0 flex items-center justify-center sm:h-full w-full rounded-xl sm:rounded-3xl h-[328px]';
 
   const buttonHandler = async () => {
+    if (typeof window === 'undefined') return;
+
     if (!gatheringId || gatheringId === 0) {
       // 모임 찾기 페이지에서는 작동 X
       return;
@@ -21,10 +29,10 @@ export default function RenderOverlay(message: string, height: string, gathering
   };
 
   return (
-    <div className={`${baseStyle} h-${height}`}>
+    <div className={baseStyle}>
       <div className="absolute top-1/2 flex h-9 w-28 items-center justify-center rounded-xl bg-orange-50 text-orange-600 sm:right-5 sm:top-5 sm:h-12 sm:w-12 sm:rounded-full">
         <button type="button" className="flex items-center gap-1" onClick={buttonHandler}>
-          <Image src="/handIcon.svg" className="h-6 w-6" alt="손 아이콘" />
+          <img src="/handIcon.svg" className="h-6 w-6" alt="손 아이콘" />
           <p className="pt-[5px] text-xs font-semibold sm:hidden">모임 보내주기</p>
         </button>
       </div>

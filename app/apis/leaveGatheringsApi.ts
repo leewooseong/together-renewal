@@ -4,5 +4,5 @@ import fetchWithToken from '../utils/fetchWithTokenUtil';
 export default async function leaveGatheringsApi(gatheringId: number): Promise<void> {
   const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gathering/${gatheringId}/leave`;
 
-  fetchWithToken(req, {method: 'DELETE'});
+  fetchWithToken(req, 'DELETE');
 }

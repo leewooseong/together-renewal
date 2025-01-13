@@ -1,6 +1,6 @@
-import {SpeedInsights} from '@vercel/speed-insights/next';
 import localFont from 'next/font/local';
 
+import RouterSync from './components/routerSync';
 import './globals.css';
 import Providers from './providers';
 
@@ -56,16 +56,12 @@ const pretendardSubset = localFont({
   variable: '--font-pretendard',
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${pretendardSubset.variable}`}>
+        <RouterSync />
         <Providers>{children}</Providers>
-        <SpeedInsights />
       </body>
     </html>
   );

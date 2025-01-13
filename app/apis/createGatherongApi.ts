@@ -9,5 +9,5 @@ export default async function createGatheringApi(props: ICreateGathering): Promi
   });
   const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gathering?${queryParams.toString()}`;
 
-  fetchWithToken(req, {method: 'POST'});
+  fetchWithToken(req, 'POST');
 }

@@ -4,5 +4,5 @@ import fetchWithToken from '../utils/fetchWithTokenUtil';
 export default function writeReviewsApi(gatheringId: number, score: number, comment: string) {
   const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/reviews?gatheringId=${gatheringId}&score=${score}&comment=${comment}`;
 
-  fetchWithToken(req, {method: 'POST'});
+  fetchWithToken(req, 'POST');
 }

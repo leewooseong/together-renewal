@@ -1,10 +1,20 @@
-import {Metadata} from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  title: '서비스 명',
-  description: '서비스 메인 페이지 설명',
-};
+import {useRouter} from 'next/navigation';
 
 export default function Home() {
-  return <div>메인페이지</div>;
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push('/mypage'); // /mypage로 이동
+  };
+
+  return (
+    <div>
+      <p>메인 페이지</p>
+      <button type="button" onClick={handleClick}>
+        마이페이지
+      </button>
+    </div>
+  );
 }

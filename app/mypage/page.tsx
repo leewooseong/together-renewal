@@ -2,18 +2,15 @@
 
 import {useEffect, useState} from 'react';
 
-import getUserInfoApi from '../apis/getUserInfoApi';
 import joinedGatheringsApi from '../apis/joinedGatheringsApi';
 import MyPageCard from '../components/mypageComponent/myPageCard';
 import ProfileLayout from '../components/profileComponent/profileLayout';
-import Review from '../components/reviewComponent/review';
 import getUserIdFromToken from '../utils/decodeTokenUtil';
 
-export default function myPage() {
-  const [userId, setUserId] = useState<number>(0);
-  const [userInfo, setUserInfo] = useState<IGetUserInfo>();
+export default function MyPage() {
+  const [userId, setUserId] = useState<number | null>(null);
   const [joinedGatherings, setJoinedGatherings] = useState<IGetJoinedGatherings[] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [activeTab, setActiveTab] = useState<'myGatherings' | 'myReviews' | 'createdGatherings'>(
     'myGatherings',
@@ -21,49 +18,40 @@ export default function myPage() {
   const [reviewed, setReviewed] = useState(false);
 
   useEffect(() => {
-    /// ////////// 인증 만료 or 비정상적 접근 시 재인증 진행
-    // 인증 성공 -> 사용자 정보 불러옴
-    // 인증 실패 -> 로그인 화면으로 이동
     const checkLogin = async () => {
       try {
-        setUserId(Number(getUserIdFromToken()));
-        console.log('로그인된 유저 ID:', userId);
-
-        const fetchUserInfo = await getUserInfoApi();
-        setUserInfo(fetchUserInfo);
+        const id = getUserIdFromToken();
+        console.log('로그인된 유저 ID:', id);
+        setUserId(id);
       } catch (err) {
-        if (err instanceof Error) {
-          console.error('오류: ', err.message);
-        } else {
-          console.error('오류: ', err);
-        }
-        window.location.href = '/login';
+        console.error('인증 실패:', err);
       }
     };
 
+    checkLogin();
+  }, []);
+
+  useEffect(() => {
+    if (userId === null) return; // userId가 null인 경우 API 호출 방지
+
     const fetchData = async () => {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
         setIsError(false);
-        const data = await joinedGatheringsApi({sortBy: 'dateTime'});
+        const data = await joinedGatheringsApi({sortBy: 'dateTime', sortOrder: 'asc'});
 
         const now = new Date();
-
-        // 정렬 로직
         const sortedData = data.sort((a, b) => {
-          // 취소된 모임
-          if (a.canceledAt && !b.canceledAt) return 1;
-          if (!a.canceledAt && b.canceledAt) return -1;
+          if (a.canceledAt && !b.canceledAt) return -1;
+          if (!a.canceledAt && b.canceledAt) return 1;
 
-          // 참여 시간이 지난 모임
           const aIsPast = new Date(a.dateTime) < now;
           const bIsPast = new Date(b.dateTime) < now;
-          if (aIsPast && !bIsPast) return 1;
-          if (!aIsPast && bIsPast) return -1;
+          if (aIsPast && !bIsPast) return -1;
+          if (!aIsPast && bIsPast) return 1;
 
-          // 참여 완료 여부
-          if (a.isCompleted && !b.isCompleted) return 1;
-          if (!a.isCompleted && b.isCompleted) return -1;
+          if (a.isCompleted && !b.isCompleted) return -1;
+          if (!a.isCompleted && b.isCompleted) return 1;
 
           return 0;
         });
@@ -77,10 +65,7 @@ export default function myPage() {
       }
     };
 
-    checkLogin();
-    if (userId) {
-      fetchData();
-    }
+    fetchData();
   }, [userId]);
 
   if (isLoading) {
@@ -159,24 +144,6 @@ export default function myPage() {
       }
     })();
 
-    if (activeTab === 'myReviews' && reviewed === true) {
-      return (
-        /// ///////////// 작성한 리뷰 없으면 아직 작성한 리뷰가 없어요 출력
-        <div className="flex w-full flex-col gap-[24px]">
-          <Review
-            gatheringImg=""
-            score={2}
-            comment="좋아용"
-            gatheringType="test11111"
-            gatheringLocation="을지로3가"
-            userImg=""
-            userName="testUser"
-            createdAt="2025-01-10T14:00:00"
-          />
-        </div>
-      );
-    }
-
     if (filteredGatherings.length === 0) {
       return (
         <div className="absolute left-1/2 top-[180px] h-[20px] w-[220px] translate-x-[-50%]">
@@ -185,16 +152,13 @@ export default function myPage() {
       );
     }
 
-    return (
-      Array.isArray(filteredGatherings) &&
-      filteredGatherings.map(joinedGathering => (
-        <MyPageCard
-          key={joinedGathering.id}
-          {...joinedGathering}
-          isMyGathering={activeTab === 'myGatherings'}
-        />
-      ))
-    );
+    return filteredGatherings.map(joinedGathering => (
+      <MyPageCard
+        key={joinedGathering.id}
+        {...joinedGathering}
+        isMyGathering={activeTab === 'myGatherings'}
+      />
+    ));
   };
 
   return (
@@ -203,7 +167,7 @@ export default function myPage() {
         마이 페이지
       </h2>
       <div className="mt-[24px] w-full max-w-[996px]">
-        {userInfo && <ProfileLayout {...userInfo} />}
+        <ProfileLayout />
       </div>
       <div className="min-w-sm mt-[30px] flex w-full max-w-[996px] flex-col items-start justify-start border-t-2 border-gray-900 bg-white sm:min-h-[720px]">
         <div className="ml-[24px] mt-[24px] flex h-[34px] w-[300px] gap-[12px] text-gray-400">

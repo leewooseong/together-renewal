@@ -2,8 +2,6 @@
 
 import {useState} from 'react';
 
-import Image from 'next/image';
-
 import formatDateUtil from '../../utils/formatDateUtil';
 import RenderOverlay from '../common/renderOverlay';
 import WriteReviewModal from '../modals/writeReviewModal';
@@ -20,8 +18,9 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function isCanceled() {
-    if (props.canceledAt) return RenderOverlay('모집 취소', '[328px]', props.id);
-    if (new Date(props.dateTime) < new Date()) return RenderOverlay('마감', '[328px]', props.id);
+    if (props.canceledAt) return <RenderOverlay message="모집 취소" gatheringId={props.id} />;
+    if (new Date(props.registrationEnd) < new Date())
+      return <RenderOverlay message="마감" gatheringId={props.id} />;
     return null;
   }
 
@@ -45,7 +44,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
       <div className="flex h-[328px] w-full flex-col justify-between sm:h-[156px] sm:w-[545px] sm:flex-row">
         {/* 모임 이미지 */}
         <div className="flex h-full w-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]">
-          <Image src={props.image} alt="모임 대표 이미지" className="object-cover" />
+          <img src={props.image} alt="모임 대표 이미지" className="object-cover" />
         </div>
 
         <div className="flex h-full w-[249px] flex-col justify-between">
@@ -71,7 +70,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
             <div className="flex h-[20px] w-[160px] justify-between text-sm">
               <span>{`${dateFormat.date} ${dateFormat.time}`}</span>
               <span className="flex gap-[4px]">
-                <Image src="/personIcon.svg" className="pt-0.5" alt="사람 아이콘" />
+                <img src="/personIcon.svg" className="pt-0.5" alt="사람 아이콘" />
                 {`${props.participantCount}/${props.capacity}`}
               </span>
             </div>
