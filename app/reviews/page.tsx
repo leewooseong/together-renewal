@@ -38,6 +38,9 @@ export default function ReviewsPage() {
         <GatheringFilter gatheringType={gatheringType} setGatheringType={setGatheringType} />
       </div>
       <div>
+        <Filter pageName="REVIEW" />
+      </div>
+      <div>
         {reviewList?.data.map(review => (
           <Review
             key={review.id}
@@ -51,9 +54,6 @@ export default function ReviewsPage() {
             createdAt={review.createdAt}
           />
         ))}
-      </div>
-      <div>
-        <Filter />
       </div>
     </div>
   );
