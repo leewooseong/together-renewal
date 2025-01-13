@@ -18,9 +18,10 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function isCanceled() {
-    if (props.canceledAt) return <RenderOverlay message="모집 취소" gatheringId={props.id} />;
+    if (props.canceledAt)
+      return <RenderOverlay message="모집 취소" height="[328px]" gatheringId={props.id} />;
     if (new Date(props.registrationEnd) < new Date())
-      return <RenderOverlay message="마감" gatheringId={props.id} />;
+      return <RenderOverlay message="마감" height="[328px]" gatheringId={props.id} />;
     return null;
   }
 

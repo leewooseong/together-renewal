@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import ApproveCheck from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
 import ProgressBar from '../common/progressBar';
@@ -17,7 +15,7 @@ export default function ContainerInfo({
         <div className="flex h-[129px] w-full justify-center border-b-2 border-dashed border-gray-200">
           <div className="relative flex h-[86px] w-[438px] flex-col">
             <button type="button" className="absolute right-0 top-0">
-              <Image src="/emptyHeart.svg" className="h-[48px] w-[48px]" alt="찜 아이콘" />
+              <img src="/emptyHeart.svg" className="h-[48px] w-[48px]" alt="찜 아이콘" />
             </button>
             <div className="h-[28px] w-[390px] text-lg font-semibold">
               <p>{name}</p>

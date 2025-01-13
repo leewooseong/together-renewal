@@ -1,7 +1,5 @@
 import {useState} from 'react';
 
-import Image from 'next/image';
-
 import writeReviewsApi from '@/app/apis/writeReviewsApi';
 
 import InputTextBox from '../common/inputText';
@@ -51,7 +49,7 @@ export default function WriteReviewModal({
                   style={{cursor: 'pointer', background: 'none', border: 'none', padding: 0}}
                   aria-label={`Rate ${heart} hearts`}
                 >
-                  <Image
+                  <img
                     src={heart <= rating ? '/heart-active.svg' : '/heart-default.svg'}
                     alt="하트"
                     width={24}

@@ -5,13 +5,14 @@ import leaveGatheringsApi from '@/app/apis/leaveGatheringsApi';
 /** 모임 취소, 마감 오버레이 */
 export default function RenderOverlay({
   message,
+  height,
   gatheringId,
 }: {
   message: string;
+  height: string;
   gatheringId: number;
 }) {
-  const baseStyle =
-    'absolute bg-black bg-opacity-80 z-10 top-0 left-0 flex items-center justify-center sm:h-full w-full rounded-xl sm:rounded-3xl h-[328px]';
+  const baseStyle = `absolute bg-black bg-opacity-80 z-10 top-0 left-0 flex items-center justify-center sm:h-full w-full rounded-xl sm:rounded-3xl h-${height}`;
 
   const buttonHandler = async () => {
     if (typeof window === 'undefined') return;
