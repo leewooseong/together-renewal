@@ -10,10 +10,6 @@ export const getRequestType = (pathname: string): RequestType => {
   const firstPath = `/${firstPathName}`; // 슬래시를 추가하여 배열의 형식과 맞춤
   const secondPath = `/${secondPathName}`;
 
-  if (firstPath === '/route' && secondPath !== '/token') {
-    return 'api';
-  }
-
   if (firstPath === '/route' && secondPath === '/token') {
     return 'tokenApi';
   }
@@ -30,6 +26,6 @@ export const getRequestType = (pathname: string): RequestType => {
 };
 
 export const isPageType = (typeName: RequestType): typeName is PageType => {
-  if (typeName !== 'api' && typeName !== 'tokenApi') return true;
+  if (typeName !== 'tokenApi') return true;
   return false;
 };
