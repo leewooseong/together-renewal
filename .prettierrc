@@ -25,5 +25,6 @@
         "printWidth": 200
       }
     }
-  ]
+  ],
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
