@@ -7,7 +7,7 @@ import {getRequestType, isPageType} from '@/app/utils/server';
 import {handleApiRequest} from './middlewares/apiHandler';
 import {protectRoute} from './middlewares/routeProtection';
 
-export default async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const cookieStore = cookies();
   const token = cookieStore.get(AUTH_TOKEN);
 

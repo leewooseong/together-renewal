@@ -9,11 +9,11 @@ import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 
-import {login} from '@/app/apis/user/userApi';
-import {useDebounce} from '@/app/hooks/useForm';
-import {TLoginInputs} from '@/app/types/auth.types';
-import {CodeitError} from '@/app/types/error.types';
-import {LoginSchema} from '@/app/utils/schema';
+import {login} from '../../apis/user/userApi';
+import {useDebounce} from '../../hooks/useForm';
+import {TLoginInputs} from '../../types/auth.types';
+import {CodeitError} from '../../types/error.types';
+import {LoginSchema} from '../../utils/schema';
 
 export default function LoginPage() {
   const {
@@ -73,9 +73,9 @@ export default function LoginPage() {
 
   // Render
   return (
-    <div className="max-w-[340px] sm:max-w-[600px] xl:max-w-[510px] px-4 py-8 sm:px-14 sm:py-8 flex items-center justify-center flex-col bg-white rounded-3xl w-full">
-      <h1 className="text-2xl font-bold text-center mb-8">로그인</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
+    <div className="flex w-full max-w-[340px] flex-col items-center justify-center rounded-3xl bg-white px-4 py-8 sm:max-w-[600px] sm:px-14 sm:py-8 xl:max-w-[510px]">
+      <h1 className="mb-8 text-center text-2xl font-bold">로그인</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-6">
         <div className="space-y-2">
           <label htmlFor="email" className="text-sm font-semibold">
             아이디
@@ -87,7 +87,7 @@ export default function LoginPage() {
             })}
             placeholder="이메일을 입력해주세요"
             className={clsx(
-              'w-full px-4 py-2  border border-transparent rounded-lg  bg-gray-50 text-base font-medium placeholder-gray-400',
+              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
               {'border border-red-600': serverErrorMessage.email || errors.email?.message},
             )}
           />
@@ -100,8 +100,8 @@ export default function LoginPage() {
           )}
         </div>
 
-        <div className="space-y-2 ">
-          <label htmlFor="password" className="text-sm font-semibold ">
+        <div className="space-y-2">
+          <label htmlFor="password" className="text-sm font-semibold">
             비밀번호
           </label>
           <div className="relative">
@@ -113,7 +113,7 @@ export default function LoginPage() {
               type={showPassword ? 'text' : 'password'}
               placeholder="비밀번호를 입력해주세요"
               className={clsx(
-                'w-full px-4 py-2  rounded-lg border border-transparent bg-gray-50 text-base font-medium placeholder-gray-400',
+                'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
                 {
                   'border border-red-600': serverErrorMessage.password || errors.password?.message,
                 },
@@ -122,23 +122,23 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-900 h-5 w-5"
+              className="absolute right-4 top-1/2 size-5 -translate-y-1/2 text-gray-900"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
           {errors.password?.message ? (
-            <p className="  text-sm font-semibold text-red-600">{errors.password.message}</p>
+            <p className="text-sm font-semibold text-red-600">{errors.password.message}</p>
           ) : (
             serverErrorMessage.password && (
-              <p className="  text-sm font-semibold text-red-600">{serverErrorMessage.password}</p>
+              <p className="text-sm font-semibold text-red-600">{serverErrorMessage.password}</p>
             )
           )}
         </div>
 
         <button
           type="submit"
-          className="w-full py-[10px] bg-gray-400 hover:bg-gray-600 text-white font-semibold rounded-lg transition duration-200 text-base"
+          className="w-full rounded-lg bg-gray-400 py-[10px] text-base font-semibold text-white transition duration-200 hover:bg-gray-600"
         >
           로그인
         </button>
@@ -148,7 +148,7 @@ export default function LoginPage() {
         <button
           type="submit"
           onClick={() => router.push('/signup')}
-          className="text-orange-600 border-b border-transparent hover:border-orange-600 box-border  hover:border-b font-medium transition duration-200"
+          className="box-border border-b border-transparent font-medium text-orange-600 transition duration-200 hover:border-b hover:border-orange-600"
         >
           회원가입
         </button>

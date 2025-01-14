@@ -7,7 +7,7 @@ import {useRouter} from 'next/navigation';
 import {deleteCookie} from '../apis/user/userApi';
 
 // Todo: 실패 시 에러 핸들링 제대로 적용하기
-const useClearAuth = () => {
+export const useClearAuth = () => {
   const router = useRouter();
 
   const clearAuth = useCallback(async () => {
@@ -20,5 +20,3 @@ const useClearAuth = () => {
 
   return {clearAuth};
 };
-
-export default useClearAuth;

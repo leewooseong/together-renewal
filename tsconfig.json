@@ -22,9 +22,6 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
     }
   },
   "include": [
@@ -33,7 +30,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".eslintrc.cjs",
-    "next.config.mjs" 
+    "next.config.mjs",
+    "prettier.config.cjs"
   ],
   "exclude": [
     "node_modules",

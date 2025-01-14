@@ -1,6 +1,5 @@
 import localFont from 'next/font/local';
 
-import RouterSync from './components/routerSync';
 import './globals.css';
 import Providers from './providers';
 
@@ -60,7 +59,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
       <body className={`${pretendardSubset.variable}`}>
-        <RouterSync />
         <Providers>{children}</Providers>
       </body>
     </html>

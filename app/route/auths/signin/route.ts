@@ -1,8 +1,8 @@
 import {NextRequest, NextResponse} from 'next/server';
 
-import {serverInstance} from '@/app/apis/client';
-import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '@/app/constants/auth';
-import {CodeitError} from '@/app/types/error.types';
+import {serverInstance} from '../../../apis/client';
+import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '../../../constants/auth';
+import {CodeitError} from '../../../types/error.types';
 
 type LoginResponse = {
   token: string;

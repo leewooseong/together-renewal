@@ -1,8 +1,8 @@
 import {NextRequest, NextResponse} from 'next/server';
 
-import {getUserInfoInServer} from '@/app/apis/user/userApi';
-import {AUTH_TOKEN} from '@/app/constants/auth';
-import {CodeitError} from '@/app/types/error.types';
+import {getUserInfoInServer} from '../../../../apis/user/userApi';
+import {AUTH_TOKEN} from '../../../../constants/auth';
+import {CodeitError} from '../../../../types/error.types';
 
 export async function GET(request: NextRequest) {
   const token = request.cookies.get(AUTH_TOKEN);
