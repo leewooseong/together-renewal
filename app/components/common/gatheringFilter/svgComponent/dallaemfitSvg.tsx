@@ -1,6 +1,6 @@
-import {IiconProps} from '@/app/types/svgComponentType.type';
+import {GatheringIconProps} from '@/app/types/svgComponent.type';
 
-export default function DalaemfitSvg({className}: IiconProps) {
+export function DallaemfitSvg({className}: GatheringIconProps) {
   return (
     <svg
       className={`${className}`}
