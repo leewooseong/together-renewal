@@ -1,39 +1,35 @@
 /* eslint-disable no-nested-ternary */
 import {useEffect, useRef, useState} from 'react';
 
-import {useAtom} from 'jotai';
 import {motion} from 'motion/react';
 
-import {whatGatheringTypeAtom} from '@/app/store/atoms/gatheringNavAtoms';
-import {TwhatGatheringTypeAtom} from '@/app/store/types/gatheringNav.types';
+import {Gathering, GatheringFilterProps} from '@/app/types/gatheringFilter.types';
 
-import DalaemfitSvg from '../svgComponent/dalaemfitSvg';
-import WorkationSvg from '../svgComponent/workationSvg';
+import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
+import {WorkationSvg} from './svgComponent/workationSvg';
 
-export default function GatheringNav() {
-  const [gatheringType, setGatheringType] = useAtom(whatGatheringTypeAtom);
+export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilterProps) {
+  const dallaemfitRef = useRef<HTMLDivElement>(null);
+  const workationRef = useRef<HTMLDivElement>(null);
 
-  const firstDivRef = useRef<HTMLDivElement>(null);
-  const secondDivRef = useRef<HTMLDivElement>(null);
-
-  const [isSecondDivHovered, setIsSecondDivHovered] = useState(false);
-  const [isFirstDivHovered, setIsFirstDivHovered] = useState(false);
-  const [firstDivWidth, setFirstDivWidth] = useState(0);
-  const [secondDivWidth, setSecondDivWidth] = useState(0);
+  const [isDallaemfitHovered, setIsDallaemfitHovered] = useState(false);
+  const [isWorkationHovered, setIsWorkationHovered] = useState(false);
+  const [dallaemfitWidth, setDallaemfitWidth] = useState(0);
+  const [workationWidth, setWorkationWidth] = useState(0);
 
   const [, setIsVisible] = useState(true);
 
   useEffect(() => {
-    if (firstDivRef.current) {
-      setFirstDivWidth(firstDivRef.current.offsetWidth);
+    if (dallaemfitRef.current) {
+      setDallaemfitWidth(dallaemfitRef.current.offsetWidth);
     }
-    if (secondDivRef.current) {
-      setSecondDivWidth(secondDivRef.current.offsetWidth);
+    if (workationRef.current) {
+      setWorkationWidth(workationRef.current.offsetWidth);
     }
   }, []);
 
-  const whatIsClicked = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
-    const getElementId = event.currentTarget.id as TwhatGatheringTypeAtom;
+  const handleElementClick = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
+    const getElementId = event.currentTarget.id as Gathering;
     if (getElementId === 'ALL') {
       setGatheringType('DALLAEMFIT');
       return;
@@ -52,16 +48,16 @@ export default function GatheringNav() {
 
   return (
     <div>
-      <nav className=" w-fit flex flex-col ">
-        <div className="flex justify-between gap-3 w-fit">
+      <nav className="flex w-fit flex-col">
+        <div className="flex w-fit justify-between gap-3">
           <motion.div
-            ref={firstDivRef}
+            ref={dallaemfitRef}
             animate={{
               opacity: isDallaemfitActive
-                ? isSecondDivHovered
+                ? isWorkationHovered
                   ? 0.4
                   : 1
-                : isFirstDivHovered
+                : isDallaemfitHovered
                   ? 1
                   : 0.4,
             }}
@@ -69,24 +65,24 @@ export default function GatheringNav() {
               duration: 0.5,
               ease: 'easeInOut',
             }}
-            onHoverStart={() => setIsFirstDivHovered(true)}
-            onHoverEnd={() => setIsFirstDivHovered(false)}
-            onClick={whatIsClicked}
+            onHoverStart={() => setIsDallaemfitHovered(true)}
+            onHoverEnd={() => setIsDallaemfitHovered(false)}
+            onClick={handleElementClick}
             id="DALLAEMFIT"
-            className="flex items-center pb-[6px]  "
+            className="flex items-center pb-[6px]"
           >
-            <h3 className={`text-lg font-semibold pr-1 text-gray-900 `}>달램핏</h3>
-            <DalaemfitSvg className="text-gray-900" />
+            <h3 className="pr-1 text-lg font-semibold text-gray-900">달램핏</h3>
+            <DallaemfitSvg className="text-gray-900" />
           </motion.div>
 
           <motion.div
             initial={false}
             animate={{
               opacity: !isDallaemfitActive
-                ? isFirstDivHovered
+                ? isDallaemfitHovered
                   ? 0.4
                   : 1
-                : isSecondDivHovered
+                : isWorkationHovered
                   ? 1
                   : 0.4,
             }}
@@ -94,14 +90,14 @@ export default function GatheringNav() {
               duration: 0.5,
               ease: 'easeInOut',
             }}
-            onHoverStart={() => setIsSecondDivHovered(true)}
-            onHoverEnd={() => setIsSecondDivHovered(false)}
-            ref={secondDivRef}
-            onClick={whatIsClicked}
+            onHoverStart={() => setIsWorkationHovered(true)}
+            onHoverEnd={() => setIsWorkationHovered(false)}
+            ref={workationRef}
+            onClick={handleElementClick}
             id="WORKATION"
             className="flex items-center pb-[6px]"
           >
-            <h3 className={`text-lg font-semibold pr-1 text-gray-900 `}>워케이션</h3>
+            <h3 className="pr-1 text-lg font-semibold text-gray-900">워케이션</h3>
             <WorkationSvg className="text-gray-900" />
           </motion.div>
         </div>
@@ -110,26 +106,26 @@ export default function GatheringNav() {
           animate={{
             x:
               gatheringType === 'WORKATION'
-                ? isFirstDivHovered
+                ? isDallaemfitHovered
                   ? 0
-                  : firstDivWidth + 12
-                : isSecondDivHovered
-                  ? firstDivWidth + 12
+                  : dallaemfitWidth + 12
+                : isWorkationHovered
+                  ? dallaemfitWidth + 12
                   : 0,
             width:
               gatheringType === 'WORKATION'
-                ? isFirstDivHovered
-                  ? firstDivWidth
-                  : secondDivWidth
-                : isSecondDivHovered
-                  ? secondDivWidth
-                  : firstDivWidth,
+                ? isDallaemfitHovered
+                  ? dallaemfitWidth
+                  : workationWidth
+                : isWorkationHovered
+                  ? workationWidth
+                  : dallaemfitWidth,
           }}
           transition={{
             duration: 0.5,
             ease: 'easeInOut',
           }}
-          className={`w-[90px] h-[2px] bg-gray-900 `}
+          className="h-[2px] w-[90px] bg-gray-900"
         />
       </nav>
       <motion.nav
@@ -145,37 +141,37 @@ export default function GatheringNav() {
             setIsVisible(false);
           }
         }}
-        className="flex gap-2 mt-[10px] xs:mt-[14px]"
+        className="mt-[10px] flex gap-2 xs:mt-[14px]"
       >
         <button
           type="button"
-          onClick={whatIsClicked}
+          onClick={handleElementClick}
           id="ALL"
           className={`${
             isAllActive ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
-          } py-2 px-3 rounded-xl text-sm`}
+          } rounded-xl px-3 py-2 text-sm`}
         >
           전체
         </button>
         <button
           type="button"
-          onClick={whatIsClicked}
+          onClick={handleElementClick}
           id="OFFICE_STRETCHING"
           className={`${
             gatheringType === 'OFFICE_STRETCHING'
               ? 'bg-gray-900 text-white'
               : 'bg-gray-200 text-gray-900'
-          } py-2 px-3 rounded-xl text-sm`}
+          } rounded-xl px-3 py-2 text-sm`}
         >
           오피스 스트레칭
         </button>
         <button
           type="button"
-          onClick={whatIsClicked}
+          onClick={handleElementClick}
           id="MINDFULNESS"
           className={`${
             gatheringType === 'MINDFULNESS' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
-          } py-2 px-3 rounded-xl text-sm`}
+          } rounded-xl px-3 py-2 text-sm`}
         >
           마인드풀니스
         </button>

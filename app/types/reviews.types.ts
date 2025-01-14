@@ -1,4 +1,4 @@
-export interface IReviews {
+export type ReviewListType = {
   data: {
     teamId: number;
     id: number;
@@ -24,9 +24,9 @@ export interface IReviews {
   totalItemCount: number;
   currentPage: number;
   totalPages: number;
-}
+};
 
-export interface IReviewComponentType {
+export type ReviewType = {
   gatheringImg: string;
   score: number;
   comment: string;
@@ -36,4 +36,4 @@ export interface IReviewComponentType {
   userName: string;
   createdAt: string;
   pageName?: 'MY_PAGE' | 'GATHERING';
-}
+};
