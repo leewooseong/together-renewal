@@ -1,8 +1,7 @@
 import axios, {AxiosResponse} from 'axios';
 
-import {User} from '@/app/store/types/user.types';
-import {CodeitError} from '@/app/types/error.types';
-
+import {User} from '../../store/types/user.types';
+import {CodeitError} from '../../types/error.types';
 import {clientInstance, serverInstance} from '../client';
 
 export const login = async (email: string, password: string) => {
