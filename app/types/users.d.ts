@@ -1,4 +1,4 @@
-interface IGetUserInfo {
+type GetUserInfo = {
   id: number;
   email: string;
   name: string;
@@ -6,4 +6,4 @@ interface IGetUserInfo {
   image: string;
   createdAt: string;
   updatedAt: string;
-}
+};

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default async function getGatheringApi(): Promise<IGetGatherings[]> {
+export default async function getGatheringApi(): Promise<GetGatherings[]> {
   const resp = await axios(
     `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gatherings`,
   );

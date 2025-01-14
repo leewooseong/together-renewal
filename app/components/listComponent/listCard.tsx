@@ -16,7 +16,7 @@ export default function ListCard({
   name,
   location,
   dateTime,
-}: IGetJoinedGatherings) {
+}: GetJoinedGatherings) {
   function isClose() {
     if (isClosedUtil(registrationEnd, participantCount, capacity)) {
       return <RenderOverlay message="모집 취소" height="full" gatheringId={0} />;
@@ -38,7 +38,7 @@ export default function ListCard({
       {/* 모임 정보 */}
       <div className="relative h-[156px] w-full pl-2 sm:w-[716px] sm:pl-6">
         <button type="button" className="absolute right-5 top-5">
-          <Image src="/emptyHeart.svg" alt="찜 버튼" width={48} height={48} />
+          <Image src="/emptyHeart.svg" alt="찜 버튼" width={48} height={48} unoptimized />
           {/* 기능 구현 필요함(찜하기) */}
         </button>
 
@@ -60,11 +60,12 @@ export default function ListCard({
           <div className="flex h-1/2 w-full">
             <span className="mt-1 flex gap-[4px]">
               <Image
-                src="/personIcon.svg"
+                src="icons/personIcon.svg"
                 className="mt-1 h-4 w-4"
                 alt="참여자 아이콘"
                 width={16}
                 height={16}
+                unoptimized
               />
               {`${participantCount}/${capacity}`}
             </span>
@@ -83,10 +84,11 @@ export default function ListCard({
           <p>join now</p>
           <Image
             className="ml-2 mt-1"
-            src="/arrowIcon.svg"
+            src="icons/arrowIcon.svg"
             alt="화살표 아이콘"
             width={18}
             height={18}
+            unoptimized
           />
         </button>
       </div>

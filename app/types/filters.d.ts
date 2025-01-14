@@ -1,4 +1,4 @@
-interface IGatheringsFilter {
+type GatheringsFilter = {
   teamId: string;
   // 필터링 조건
   id?: string; // 모임 ID
@@ -11,18 +11,18 @@ interface IGatheringsFilter {
   sortOrder?: 'asc' | 'desc'; // 정렬 순서
   limit?: number; // 한 번에 조회할 모임 수
   offset?: number; // 조회 시작 위치
-}
+};
 
-interface IJoinedGatheringsFilter {
+type JoinedGatheringsFilter = {
   completed?: boolean;
   reviewed?: boolean;
   limit?: number;
   offset?: number;
   sortBy?: (typeof SORT_BY)[number];
   sortOrder?: 'asc' | 'desc';
-}
+};
 
-interface IGetReviewsFilter {
+type GetReviewsFilter = {
   gatheringId?: number;
   userId?: number;
   type?: (typeof TYPES)[number];
@@ -33,4 +33,4 @@ interface IGetReviewsFilter {
   sortOrder?: 'asc' | 'desc';
   limit?: number;
   offset?: number;
-}
+};

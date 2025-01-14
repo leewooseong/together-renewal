@@ -17,7 +17,6 @@ export default function WriteReviewModal({
   const [rating, setRating] = useState(0);
 
   const handleSubmit = async () => {
-    /// ////////////////////////////////////모달로 변경
     try {
       if (!comment.trim()) {
         alert('리뷰를 입력해주세요!');
@@ -27,8 +26,12 @@ export default function WriteReviewModal({
         alert('별점을 선택해주세요!');
         return;
       }
+
+      console.log(comment);
+      console.log(rating);
       await writeReviewsApi(gatheringId, rating, comment);
       alert('리뷰가 등록되었습니다.');
+      window.location.href = '/mypage';
       onClose();
     } catch (error) {
       console.error('리뷰 등록 중 오류 발생:', error);
@@ -52,10 +55,11 @@ export default function WriteReviewModal({
                   aria-label={`Rate ${heart} hearts`}
                 >
                   <Image
-                    src={heart <= rating ? '/heart-active.svg' : '/heart-default.svg'}
+                    src={heart <= rating ? 'icons/heart-active.svg' : 'icons/heart-default.svg'}
                     alt="하트"
                     width={24}
                     height={24}
+                    unoptimized
                   />
                 </button>
               ))}

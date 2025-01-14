@@ -7,11 +7,11 @@ import Image from 'next/image';
 import getUserInfoApi from '@/app/apis/getUserInfoApi';
 
 export default function ProfileLayout() {
-  const [userInfo, setUserInfo] = useState<IGetUserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<GetUserInfo | null>(null);
 
   function userImg(img: string | undefined) {
     if (!img) {
-      return '/defaultProfileIcon.svg';
+      return 'icons/defaultProfileIcon.svg';
     }
     return img;
   }
@@ -47,19 +47,21 @@ export default function ProfileLayout() {
         <p className="ml-[24px] mt-[15px] text-lg font-semibold">내 프로필</p>
         <button type="button" aria-label="Edit Profile">
           <Image
-            src="/editIcon.svg"
+            src="icons/editIcon.svg"
             className="absolute right-[18px] top-[18px] z-10"
             alt="수정 아이콘"
             width={32}
             height={32}
+            unoptimized
           />
         </button>
         <Image
-          src="/profileBar.svg"
+          src="icons/profileBar.svg"
           className="absolute left-[60%] mt-[13px] -translate-x-1/2 md:left-[70%]"
           alt="프로필 상단 이미지"
           width={156}
           height={46}
+          unoptimized
         />
         <div className="absolute mt-[60px] w-full border border-orange-600" />
       </div>

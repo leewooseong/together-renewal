@@ -10,14 +10,14 @@ export default function ContainerInfo({
   dateTime,
   capacity,
   participantCount,
-}: IGetGatherings) {
+}: GetGatherings) {
   return (
     <div className="flex h-[270px] w-[486px] items-center justify-center rounded-2xl bg-white">
       <div className="flex h-[222px] w-full flex-col items-center justify-center">
         <div className="flex h-[129px] w-full justify-center border-b-2 border-dashed border-gray-200">
           <div className="relative flex h-[86px] w-[438px] flex-col">
             <button type="button" className="absolute right-0 top-0">
-              <Image src="/emptyHeart.svg" alt="찜 아이콘" width={48} height={48} />
+              <Image src="/emptyHeart.svg" alt="찜 아이콘" width={48} height={48} unoptimized />
             </button>
             <div className="h-[28px] w-[390px] text-lg font-semibold">
               <p>{name}</p>

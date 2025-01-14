@@ -2,7 +2,13 @@ import fetchWithToken from '../utils/fetchWithTokenUtil';
 
 /** 리뷰 추가 */
 export default function writeReviewsApi(gatheringId: number, score: number, comment: string) {
-  const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/reviews?gatheringId=${gatheringId}&score=${score}&comment=${comment}`;
+  const req = `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/reviews`;
 
-  fetchWithToken(req, 'POST');
+  const review = {
+    gatheringId,
+    score,
+    comment,
+  };
+
+  fetchWithToken(req, 'POST', review);
 }

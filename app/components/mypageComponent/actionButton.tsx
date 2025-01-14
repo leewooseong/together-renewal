@@ -1,37 +1,36 @@
 import leaveGatheringsApi from '../../apis/leaveGatheringsApi';
-import BadReqErr from '../controller/error/BadRequestErr';
 
-export default function RenderButton({
-  state,
-  review,
+export default function ActionButton({
+  isCompleted,
+  isReviewed,
   id,
   onOpenModal,
 }: {
-  state: boolean;
-  review: boolean;
+  isCompleted: boolean;
+  isReviewed: boolean;
   id: number;
   onOpenModal: () => void;
 }) {
   const baseStyle = 'w-[120px] h-[40px] rounded-xl font-semibold text-sm';
 
-  if (state && review) {
+  if (isCompleted && isReviewed) {
     return null;
   }
 
-  const label = state ? '리뷰 작성하기' : '예약 취소하기';
+  const label = isCompleted ? '리뷰 작성하기' : '예약 취소하기';
   const handleButton = async () => {
     try {
-      if (state) {
+      if (isCompleted) {
         onOpenModal();
       } else {
         await leaveGatheringsApi(id);
         window.location.href = '/mypage';
       }
     } catch {
-      throw new BadReqErr('API 요청 오류');
+      throw new Error('API 요청 오류');
     }
   };
-  const style = state
+  const style = isCompleted
     ? 'bg-orange-600 text-white'
     : 'bg-white text-orange-600 border-2 border-orange-500';
 

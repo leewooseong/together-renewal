@@ -31,7 +31,7 @@ export function WaitingForApproval() {
 export function EventApproved() {
   return (
     <div className="flex h-[32px] w-[93px] items-center justify-center rounded-[24px] border border-orange-100 bg-white text-[14px] font-medium leading-none text-orange-500">
-      <Image src="/orangeCheckIcon.svg " alt="check icon" width={16} height={16} />
+      <Image src="icons/orangeCheckIcon.svg " alt="check icon" width={16} height={16} unoptimized />
       <p className="ml-1">개설확정</p>
     </div>
   );

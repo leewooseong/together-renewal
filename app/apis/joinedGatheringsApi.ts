@@ -8,7 +8,7 @@ export default async function joinedGatheringsApi(filters: {
   offset?: number;
   sortBy?: 'dateTime' | 'registrationEnd' | 'participantCount';
   sortOrder?: 'asc' | 'desc';
-}): Promise<IGetJoinedGatherings[]> {
+}): Promise<GetJoinedGatherings[]> {
   const queryParams = new URLSearchParams();
 
   Object.entries(filters).forEach(([key, value]) => {

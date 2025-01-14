@@ -1,4 +1,4 @@
-interface IGetGatherings {
+type GetGatherings = {
   id: number; // 모임 ID
   type: (typeof TYPES)[number]; // 모임 종류
   name: string; // 모임 이름
@@ -10,14 +10,14 @@ interface IGetGatherings {
   image: string; // 모임 대표 이미지
   createdBy: number; // 모임 생성자 ID
   canceledAt: string; // 모임 취소일
-}
+};
 
-interface IGetJoinedGatherings extends IGetGatherings {
+type GetJoinedGatherings = GetGatherings & {
   isCompleted: boolean; // 모임 완료 여부
   isReviewed: boolean; // 리뷰 작성 여부
-}
+};
 
-interface ICreateGathering {
+type CreateGathering = {
   location: (typeof LOCATIONS)[number];
   type: (typeof TYPES)[number];
   name: string;
@@ -25,4 +25,4 @@ interface ICreateGathering {
   capacity: number;
   image: string;
   registrationEnd: string;
-}
+};

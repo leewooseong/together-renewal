@@ -8,8 +8,8 @@ import ProfileLayout from '../components/profileComponent/profileLayout';
 import getUserIdFromToken from '../utils/decodeTokenUtil';
 
 export default function MyPage() {
-  const [userId, setUserId] = useState<number | null>(null);
-  const [joinedGatherings, setJoinedGatherings] = useState<IGetJoinedGatherings[] | null>(null);
+  const [userId, setUserId] = useState<number>(0);
+  const [joinedGatherings, setJoinedGatherings] = useState<GetJoinedGatherings[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [activeTab, setActiveTab] = useState<'myGatherings' | 'myReviews' | 'createdGatherings'>(
@@ -42,16 +42,16 @@ export default function MyPage() {
 
         const now = new Date();
         const sortedData = data.sort((a, b) => {
-          if (a.canceledAt && !b.canceledAt) return -1;
-          if (!a.canceledAt && b.canceledAt) return 1;
+          if (a.canceledAt && !b.canceledAt) return 1;
+          if (!a.canceledAt && b.canceledAt) return -1;
 
-          const aIsPast = new Date(a.dateTime) < now;
-          const bIsPast = new Date(b.dateTime) < now;
-          if (aIsPast && !bIsPast) return -1;
-          if (!aIsPast && bIsPast) return 1;
+          const aIsPast = new Date(a.registrationEnd) < now;
+          const bIsPast = new Date(b.registrationEnd) < now;
+          if (aIsPast && !bIsPast) return 1;
+          if (!aIsPast && bIsPast) return -1;
 
-          if (a.isCompleted && !b.isCompleted) return -1;
-          if (!a.isCompleted && b.isCompleted) return 1;
+          if (a.isCompleted && !b.isCompleted) return 1;
+          if (!a.isCompleted && b.isCompleted) return -1;
 
           return 0;
         });

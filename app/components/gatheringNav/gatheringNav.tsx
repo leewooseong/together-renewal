@@ -145,7 +145,7 @@ export default function GatheringNav() {
             setIsVisible(false);
           }
         }}
-        className="mt-[10px] flex gap-2 xs:mt-[14px]"
+        className="xs:mt-[14px] mt-[10px] flex gap-2"
       >
         <button
           type="button"

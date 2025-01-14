@@ -3,6 +3,7 @@ import axios from 'axios';
 export default async function fetchWithToken(
   req: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+  data?: Record<string, unknown>,
 ) {
   const rawToken = sessionStorage.getItem('auth-token');
   const token = rawToken ? rawToken.replace(/"/g, '') : null;
@@ -13,13 +14,19 @@ export default async function fetchWithToken(
   }
 
   try {
-    const response = await axios(req, {
+    const config: Record<string, unknown> = {
       method,
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
-    });
+    };
+
+    if ((method === 'POST' || method === 'PUT') && data) {
+      config.data = data;
+    }
+
+    const response = await axios(req, config);
 
     console.log(response.data);
 

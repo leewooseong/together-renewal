@@ -35,7 +35,7 @@ export default function RenderOverlay({
     <div className={baseStyle}>
       <div className="absolute top-1/2 flex h-9 w-28 items-center justify-center rounded-xl bg-orange-50 text-orange-600 sm:right-5 sm:top-5 sm:h-12 sm:w-12 sm:rounded-full">
         <button type="button" className="flex items-center gap-1" onClick={buttonHandler}>
-          <Image src="/handIcon.svg" alt="손 아이콘" width={24} height={24} />
+          <Image src="icons/handIcon.svg" alt="손 아이콘" width={24} height={24} unoptimized />
           <p className="pt-[5px] text-xs font-semibold sm:hidden">모임 보내주기</p>
         </button>
       </div>

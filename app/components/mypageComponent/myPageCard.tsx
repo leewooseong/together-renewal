@@ -8,26 +8,35 @@ import formatDateUtil from '../../utils/formatDateUtil';
 import RenderOverlay from '../common/renderOverlay';
 import WriteReviewModal from '../modals/writeReviewModal';
 
-import RenderButton from './actionButton';
+import ActionButton from './actionButton';
 import RenderChips from './chipRender';
 
-interface MyPageCardProps extends IGetJoinedGatherings {
+type MyPageCardProps = GetJoinedGatherings & {
   isMyGathering: boolean;
-}
+};
 
 /** 마이페이지 - 나의모임 card */
-export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
+export default function MyPageCard({
+  id,
+  image,
+  name,
+  location,
+  participantCount,
+  capacity,
+  isCompleted,
+  isReviewed,
+  dateTime,
+  canceledAt,
+  isMyGathering,
+}: MyPageCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function isCanceled() {
-    if (props.canceledAt)
-      return <RenderOverlay message="모집 취소" height="[328px]" gatheringId={props.id} />;
-    if (new Date(props.registrationEnd) < new Date())
-      return <RenderOverlay message="마감" height="[328px]" gatheringId={props.id} />;
+    if (canceledAt) return <RenderOverlay message="모집 취소" height="[328px]" gatheringId={id} />;
     return null;
   }
 
-  const dateFormat = formatDateUtil(props.dateTime);
+  const dateFormat = formatDateUtil(dateTime);
 
   const handleOpenModal = () => {
     setIsModalOpen(true); // 모달 열기 상태로 변경
@@ -38,7 +47,7 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
       {/* 리뷰 작성 모달 */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <WriteReviewModal onClose={() => setIsModalOpen(false)} gatheringId={props.id} />
+          <WriteReviewModal onClose={() => setIsModalOpen(false)} gatheringId={id} />
         </div>
       )}
 
@@ -48,14 +57,14 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
       <div className="flex h-[328px] w-full flex-col justify-between sm:h-[156px] sm:w-[545px] sm:flex-row">
         {/* 모임 이미지 */}
         <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]">
-          <Image src={props.image} alt="모임 대표 이미지" className="object-cover" layout="fill" />
+          <Image src={image || ''} alt="모임 대표 이미지" className="object-cover" layout="fill" />
         </div>
 
         <div className="flex h-full w-[249px] flex-col justify-between">
           {/* 상태 Chips */}
           <RenderChips
-            isCompleted={props.isCompleted}
-            participantCount={props.participantCount}
+            isCompleted={isCompleted}
+            participantCount={participantCount}
             isMyGathering={isMyGathering}
           />
 
@@ -63,10 +72,10 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
           <div className="flex h-[54px] w-full flex-col justify-between">
             {/* 모임 이름, 장소 */}
             <div className="flex h-[28px] items-center justify-between">
-              <div className="w-[170px] overflow-hidden truncate font-semibold">{props.name}</div>
+              <div className="w-[170px] overflow-hidden truncate font-semibold">{name}</div>
               <div className="flex w-[76px] justify-between">
                 <span className="font-semibold">|</span>
-                <p className="text-sm font-medium">{props.location}</p>
+                <p className="text-sm font-medium">{location}</p>
               </div>
             </div>
 
@@ -75,23 +84,24 @@ export default function MyPageCard({isMyGathering, ...props}: MyPageCardProps) {
               <span>{`${dateFormat.date} ${dateFormat.time}`}</span>
               <span className="flex gap-[4px]">
                 <Image
-                  src="/personIcon.svg"
+                  src="icons/personIcon.svg"
                   className="pt-0.5"
                   alt="사람 아이콘"
                   width={16}
                   height={16}
+                  unoptimized
                 />
-                {`${props.participantCount}/${props.capacity}`}
+                {`${participantCount}/${capacity}`}
               </span>
             </div>
           </div>
 
           {/* 취소, 리뷰 버튼 */}
           <div className="mt-[12px] h-[40px]">
-            <RenderButton
-              id={props.id}
-              state={props.isCompleted}
-              review={props.isReviewed}
+            <ActionButton
+              id={id}
+              isCompleted={isCompleted}
+              isReviewed={isReviewed}
               onOpenModal={handleOpenModal}
             />
           </div>
