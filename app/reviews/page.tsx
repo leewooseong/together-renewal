@@ -7,6 +7,7 @@ import {getReviews} from '../apis/reviews';
 import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../components/common/pageInfo';
 import {Review} from '../components/common/review/review';
+import Scores from '../components/reviews/scores';
 import {useGatheringFilter} from '../hooks/useGatheringFilter';
 import {ReviewListType} from '../types/reviews.types';
 
@@ -50,6 +51,9 @@ export default function ReviewsPage() {
             createdAt={review.createdAt}
           />
         ))}
+      </div>
+      <div>
+        <Scores />
       </div>
     </div>
   );
