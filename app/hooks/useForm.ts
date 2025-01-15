@@ -3,11 +3,11 @@ import {UseFormTrigger} from 'react-hook-form';
 
 import _ from 'lodash';
 
-import {TLoginInputs} from '../types/auth.types';
+import {LoginInputsType} from '../types/auth.types';
 
 export const useDebounce = () => {
   const debounceValidate = useCallback(
-    _.debounce(async (field: keyof TLoginInputs, trigger: UseFormTrigger<TLoginInputs>) => {
+    _.debounce(async (field: keyof LoginInputsType, trigger: UseFormTrigger<LoginInputsType>) => {
       await trigger(field);
     }, 1000),
     [],
