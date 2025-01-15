@@ -6,7 +6,7 @@ import {LogoutButton} from '../user/logoutButton';
 export function GNB() {
   return (
     <section className="fixed top-0 w-full border-b-2 border-gray-900 bg-orange-600">
-      <nav className="tablet:px-6 mx-auto flex h-14 max-w-screen-desktop px-4 desktop:p-0">
+      <nav className="mx-auto flex h-14 max-w-screen-desktop px-4 tablet:px-6 desktop:p-0">
         <Link href="/" className="self-center">
           {/* <Image
             src="/images/size=small.svg"
@@ -23,7 +23,7 @@ export function GNB() {
             unoptimized
           />
         </Link>
-        <ul className="tablet:px-5 tablet:text-base flex grow items-center gap-3 px-3 text-sm font-semibold text-orange-50">
+        <ul className="flex grow items-center gap-3 px-3 text-sm font-semibold text-orange-50 tablet:px-5 tablet:text-base">
           <li className="hover:text-orange-200">
             <Link href="/">모임 찾기</Link>
           </li>
