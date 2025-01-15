@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from 'react';
 
 import {motion} from 'motion/react';
 
-import {Gathering, GatheringFilterProps} from '@/app/types/gatheringFilter.types';
+import {Gathering, GatheringFilterProps} from '../../../types/common/gatheringFilter.types';
 
 import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';

@@ -1,4 +1,4 @@
-import {GatheringIconProps} from '@/app/types/svgComponent.type';
+import {GatheringIconProps} from '../../../../types/common/svgComponent.type';
 
 export function DallaemfitSvg({className}: GatheringIconProps) {
   return (

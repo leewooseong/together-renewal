@@ -1,4 +1,4 @@
-import {PageInfoProps} from '../../types/pageInfo.types';
+import {PageInfoProps} from '../../types/common/pageInfo.types';
 
 export function PageInfo({pageName}: PageInfoProps) {
   return (
