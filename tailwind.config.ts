@@ -1,4 +1,4 @@
-import {DESKTOP, TABLET} from './app/constants/mediaQuery';
+import {DESKTOP, PROFILE_DROPDOWN, TABLET} from './app/constants/style';
 
 import type {Config} from 'tailwindcss';
 
@@ -24,6 +24,9 @@ const config: Config = {
       colors: COLOR_PALLETTE,
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
+      },
+      width: {
+        profileDropdown: PROFILE_DROPDOWN,
       },
     },
   },

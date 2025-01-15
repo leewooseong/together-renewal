@@ -1,21 +1,45 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
-import {TABLET} from '../../constants/mediaQuery';
 import {PATH_LIST} from '../../constants/route';
+import {PROFILE_DROPDOWN, TABLET} from '../../constants/style';
 import {useClearAuth} from '../../hooks/useAuth';
 
-// Todo: intersection observer를 이용해서 모달이 잘릴 것 같으면 위치 재조정하기
 export function GNB() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasDropdownSpace, setHasDropdownSpace] = useState(true);
+  const profileButtonRef = useRef<HTMLButtonElement>(null);
   const currentPath = usePathname();
   const {clearAuth} = useClearAuth();
+
+  useEffect(() => {
+    if (!isOpen || !profileButtonRef.current) return undefined;
+
+    const dropdownObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setHasDropdownSpace(true);
+          } else {
+            setHasDropdownSpace(false);
+          }
+        });
+      },
+      {rootMargin: `0px -${PROFILE_DROPDOWN} 0px 0px `},
+    );
+
+    dropdownObserver.observe(profileButtonRef.current);
+
+    return () => {
+      dropdownObserver.disconnect();
+    };
+  }, [isOpen]);
 
   const handleDropDownClick = () => {
     setIsOpen(prev => !prev);
@@ -79,7 +103,12 @@ export function GNB() {
               aria-hidden="true"
             />
           )}
-          <button type="button" onClick={handleDropDownClick} className="z-40">
+          <button
+            type="button"
+            ref={profileButtonRef}
+            onClick={handleDropDownClick}
+            className="z-40"
+          >
             <Image
               src="/images/profile/size=Large, state=Default.svg"
               alt="큰 로고 이미지"
@@ -89,7 +118,13 @@ export function GNB() {
             />
           </button>
           {isOpen && (
-            <ul className="absolute right-0 top-[calc(100%+6px)] z-40 w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:left-0 desktop:w-[142px] desktop:text-base">
+            <ul
+              className={clsx(
+                'desktop:w-profileDropdown absolute top-[calc(100%+6px)] z-40 w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:text-base',
+                {'left-0': hasDropdownSpace},
+                {'right-0': !hasDropdownSpace},
+              )}
+            >
               <li className="px-4 py-[10px] hover:bg-gray-100">
                 <Link href="/mypage" onClick={handleDropDownClick}>
                   마이페이지
