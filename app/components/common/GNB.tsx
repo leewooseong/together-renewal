@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import {TABLET} from '../../constants/mediaQuery';
 import {LogoutButton} from '../user/logoutButton';
 
 export function GNB() {
@@ -8,20 +9,21 @@ export function GNB() {
     <section className="fixed top-0 w-full border-b-2 border-gray-900 bg-orange-600">
       <nav className="mx-auto flex h-14 max-w-screen-desktop px-4 tablet:px-6 desktop:p-0">
         <Link href="/" className="self-center">
-          {/* <Image
-            src="/images/size=small.svg"
-            alt="작은 로고 이미지"
-            width={56}
-            height={27}
-            unoptimized
-          /> */}
-          <Image
-            src="/images/logo/size=large.svg"
-            alt="큰 로고 이미지"
-            width={73}
-            height={35}
-            unoptimized
-          />
+          <picture>
+            <source
+              media={`(min-width: ${TABLET})`}
+              srcSet="/images/logo/size=large.svg"
+              width={73}
+              height={35}
+            />
+            <Image
+              src="/images/logo/size=small.svg"
+              alt="큰 로고 이미지"
+              width={56}
+              height={27}
+              unoptimized
+            />
+          </picture>
         </Link>
         <ul className="flex grow items-center gap-3 px-3 text-sm font-semibold text-orange-50 tablet:px-5 tablet:text-base">
           <li className="hover:text-orange-200">
