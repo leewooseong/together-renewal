@@ -1,3 +1,4 @@
+import {useRouter} from 'next/navigation';
 import leaveGatheringsApi from '../../apis/leaveGatheringsApi';
 
 export default function ActionButton({
@@ -12,7 +13,7 @@ export default function ActionButton({
   onOpenModal: () => void;
 }) {
   const baseStyle = 'w-[120px] h-[40px] rounded-xl font-semibold text-sm';
-
+  const router = useRouter();
   if (isCompleted && isReviewed) {
     return null;
   }
@@ -24,7 +25,7 @@ export default function ActionButton({
         onOpenModal();
       } else {
         await leaveGatheringsApi(id);
-        window.location.href = '/mypage';
+        router.push('/mypage');
       }
     } catch {
       throw new Error('API 요청 오류');

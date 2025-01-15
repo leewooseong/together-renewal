@@ -1,21 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-
-import Image from 'next/image';
-
 /* eslint-disable react/no-array-index-key */
-const hearts = [false, false, false, false, false];
-
+const heartStateList = [false, false, false, false, false];
 export function ReviewScore({score}: {score: number}) {
-  const heartScore = hearts.fill(true, 0, score);
+  const heartList = heartStateList.fill(true, 0, score);
 
   return (
     <div className="flex gap-1">
-      {heartScore.map((heart, index) => (
-        <Image
-          width={24}
-          height={24}
+      {heartList.map((heart, index) => (
+        <img
           key={`score-${score}-${index}`}
-          src={heart ? '/heart-active.svg' : '/heart-default.svg'}
+          src={heart ? '/icons/heart-active.svg' : '/icons/heart-default.svg'}
           alt={heart ? '찬 하트' : '빈 하트'}
         />
       ))}

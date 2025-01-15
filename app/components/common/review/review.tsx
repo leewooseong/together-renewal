@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
-import {ReviewScore} from '@/app/components/reviewComponent/reviewScore';
-import {IReviewComponentType} from '@/app/types/reviews.types';
+import {ReviewScore} from '@/app/components/common/review/reviewScore';
+import {ReviewType} from '@/app/types/reviews.types';
 
 // 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
 // 모임 상세 페에지는 pageName = "GATHERING"을 보내야함.
 
-export default function Review({
+export function Review({
   gatheringImg,
   score,
   comment,
@@ -16,7 +16,7 @@ export default function Review({
   userName,
   createdAt,
   pageName,
-}: IReviewComponentType) {
+}: ReviewType) {
   const createDate: string = createdAt.slice(0, 10).replaceAll('-', '.');
 
   return (
@@ -55,10 +55,10 @@ export default function Review({
               ) : (
                 <Image
                   src={userImg}
-                  alt="프로필 이미지지"
+                  alt="프로필 이미지"
                   width={24}
                   height={24}
-                  className="h-6 w-6 rounded-full bg-yellow-400"
+                  className="size-6 rounded-full bg-yellow-400"
                 />
               )}
               <span className="pl-2">{userName}</span>

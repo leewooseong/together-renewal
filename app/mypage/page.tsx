@@ -5,7 +5,6 @@ import {useEffect, useState} from 'react';
 import joinedGatheringsApi from '../apis/joinedGatheringsApi';
 import MyPageCard from '../components/mypageComponent/myPageCard';
 import ProfileLayout from '../components/profileComponent/profileLayout';
-import getUserIdFromToken from '../utils/decodeTokenUtil';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(0);
@@ -17,19 +16,19 @@ export default function MyPage() {
   );
   const [reviewed, setReviewed] = useState(false);
 
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const id = getUserIdFromToken();
-        console.log('로그인된 유저 ID:', id);
-        setUserId(id);
-      } catch (err) {
-        console.error('인증 실패:', err);
-      }
-    };
+  // useEffect(() => {
+  //   const checkLogin = async () => {
+  //     try {
+  //       const id = getUserIdFromToken();
+  //       console.log('로그인된 유저 ID:', id);
+  //       setUserId(id);
+  //     } catch (err) {
+  //       console.error('인증 실패:', err);
+  //     }
+  //   };
 
-    checkLogin();
-  }, []);
+  //   checkLogin();
+  // }, []);
 
   useEffect(() => {
     if (userId === null) return; // userId가 null인 경우 API 호출 방지
