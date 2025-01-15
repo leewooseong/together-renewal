@@ -7,10 +7,20 @@ import {getReviews} from '../apis/reviews';
 import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../components/common/pageInfo';
 import {Review} from '../components/common/review/review';
-import Scores from '../components/reviews/scores';
+import {Scores} from '../components/reviews/scores';
 import {useGatheringFilter} from '../hooks/useGatheringFilter';
 import {ReviewListType} from '../types/reviews.types';
 
+const mock = {
+  teamId: '6-6',
+  type: 'DALLAEMFIT',
+  oneStar: 0,
+  twoStars: 0,
+  threeStars: 1,
+  fourStars: 1,
+  fiveStars: 1,
+  averageScore: 4,
+};
 export default function ReviewsPage() {
   const {gatheringType, setGatheringType} = useGatheringFilter();
 
@@ -53,7 +63,7 @@ export default function ReviewsPage() {
         ))}
       </div>
       <div>
-        <Scores />
+        <Scores data={mock} />
       </div>
     </div>
   );

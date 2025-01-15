@@ -2,7 +2,7 @@
 /* eslint-disable react/no-array-index-key */
 const heartStateList = [false, false, false, false, false];
 export function ReviewScore({score}: {score: number}) {
-  const heartList = heartStateList.fill(true, 0, score);
+  const heartList = heartStateList.map((_, index) => index < score);
 
   return (
     <div className="flex gap-1">
