@@ -1,5 +1,7 @@
 'use client';
 
+import {useState} from 'react';
+
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,10 +9,26 @@ import {usePathname} from 'next/navigation';
 
 import {TABLET} from '../../constants/mediaQuery';
 import {PATH_LIST} from '../../constants/route';
-import {LogoutButton} from '../user/logoutButton';
+import {useClearAuth} from '../../hooks/useAuth';
 
+// Todo: intersection observer를 이용해서 모달이 잘릴 것 같으면 위치 재조정하기
 export function GNB() {
+  const [isOpen, setIsOpen] = useState(false);
   const currentPath = usePathname();
+  const {clearAuth} = useClearAuth();
+
+  const handleDropDownClick = () => {
+    setIsOpen(prev => !prev);
+  };
+
+  const handleBackdropClick = () => {
+    setIsOpen(false);
+  };
+
+  const handleLogout = async () => {
+    await clearAuth();
+    setIsOpen(false);
+  };
 
   return (
     <section className="fixed top-0 w-full border-b-2 border-gray-900 bg-orange-600">
@@ -54,7 +72,14 @@ export function GNB() {
           로그인
         </Link> */}
         <div className="relative size-10 self-center">
-          <button type="button" className="">
+          {isOpen && (
+            <div
+              className="fixed inset-0 z-30 bg-transparent"
+              onClick={handleBackdropClick}
+              aria-hidden="true"
+            />
+          )}
+          <button type="button" onClick={handleDropDownClick} className="z-40">
             <Image
               src="/images/profile/size=Large, state=Default.svg"
               alt="큰 로고 이미지"
@@ -63,15 +88,20 @@ export function GNB() {
               unoptimized
             />
           </button>
-          {/* Todo: intersection observer를 이용해서 모달이 잘릴 것 같으면 위치 재조정하기 */}
-          <ul className="absolute right-0 top-[calc(100%+6px)] w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:w-[142px] desktop:text-base">
-            <li className="px-4 py-[10px] hover:bg-gray-100">
-              <Link href="/mypage">마이페이지</Link>
-            </li>
-            <li className="px-4 py-[10px] hover:bg-gray-100">
-              <LogoutButton />
-            </li>
-          </ul>
+          {isOpen && (
+            <ul className="absolute right-0 top-[calc(100%+6px)] z-40 w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:left-0 desktop:w-[142px] desktop:text-base">
+              <li className="px-4 py-[10px] hover:bg-gray-100">
+                <Link href="/mypage" onClick={handleDropDownClick}>
+                  마이페이지
+                </Link>
+              </li>
+              <li className="px-4 py-[10px] hover:bg-gray-100">
+                <button type="button" onClick={handleLogout}>
+                  로그아웃
+                </button>
+              </li>
+            </ul>
+          )}
         </div>
       </nav>
     </section>

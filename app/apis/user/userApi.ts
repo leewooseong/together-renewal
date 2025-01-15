@@ -15,7 +15,7 @@ export const login = async (email: string, password: string) => {
 };
 
 export const deleteCookie = async (): Promise<AxiosResponse> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`);
+  const res = await axios.delete(`${process.env.NEXT_PUBLIC_FRONT_URL}/route/cookie`);
   return res;
 };
 

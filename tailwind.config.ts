@@ -1,3 +1,5 @@
+import {DESKTOP, TABLET} from './app/constants/mediaQuery';
+
 import type {Config} from 'tailwindcss';
 
 // 사용자 추가 색상 팔레트
@@ -15,8 +17,8 @@ const config: Config = {
   theme: {
     screens: {
       xs: '375px',
-      tablet: '405px', // navbar font 깨짐 때문에 405px 기준 추가
-      desktop: '1200px',
+      tablet: TABLET, // navbar font 깨짐 때문에 405px 기준 추가
+      desktop: DESKTOP,
     },
     extend: {
       colors: COLOR_PALLETTE,
