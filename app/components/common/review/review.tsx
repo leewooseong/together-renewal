@@ -1,7 +1,8 @@
 import Image from 'next/image';
 
-import {ReviewScore} from '@/app/components/common/review/reviewScore';
-import {ReviewType} from '@/app/types/reviews.types';
+import {ReviewType} from '../../../types/reviews.types';
+
+import {ReviewScore} from './reviewScore';
 
 // 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
 // 모임 상세 페에지는 pageName = "GATHERING"을 보내야함.

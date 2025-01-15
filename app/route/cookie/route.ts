@@ -1,6 +1,7 @@
-import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '@/app/constants/auth';
-
 // Todo: 배포 환경에 따라 쿠키 설정 및 env 파일 적용 다르게 처리
+
+import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '../../constants/auth';
+
 // Cookie 생성
 export async function GET(request: Request) {
   const token = request.headers.get('Authorization')?.split(' ')[1];
