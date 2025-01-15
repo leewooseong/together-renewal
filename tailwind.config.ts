@@ -19,7 +19,8 @@ const config: Config = {
         pretendard: ['var(--font-pretendard)'],
       },
       screens: {
-        xs: '406px', // 375px -> 406px: navbar font 깨짐 때문에 406px로 변경
+        xs: '375px',
+        tablet: '405px', // navbar font 깨짐 때문에 405px 기준 추가
         desktop: '1200px',
       },
     },
