@@ -78,7 +78,7 @@ function ProfileSection() {
       {isOpen && (
         <ul
           className={clsx(
-            'desktop:w-profileDropdown absolute top-[calc(100%+6px)] z-40 w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:text-base',
+            'absolute top-[calc(100%+6px)] z-40 w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:w-[profileDropdown] desktop:text-base',
             {'left-0': hasDropdownSpace},
             {'right-0': !hasDropdownSpace},
           )}

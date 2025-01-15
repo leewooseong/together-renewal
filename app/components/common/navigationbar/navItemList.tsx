@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 
-import {PATH_LIST} from '../../../constants/route';
+import {PATH_LIST} from '../../../constants/routing';
 
 function NavItemList() {
   const currentPath = usePathname();
