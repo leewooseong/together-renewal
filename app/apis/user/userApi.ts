@@ -1,5 +1,3 @@
-import axios, {AxiosResponse} from 'axios';
-
 import {User} from '../../store/types/user.types';
 import {CodeitError} from '../../types/error.types';
 import {clientInstance, serverInstance} from '../client';
@@ -14,9 +12,8 @@ export const login = async (email: string, password: string) => {
   }
 };
 
-export const deleteCookie = async (): Promise<AxiosResponse> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`);
-  return res;
+export const deleteCookie = async () => {
+  await clientInstance.delete({path: '/route/cookie'});
 };
 
 export const getUserInfo = async (): Promise<User | undefined> => {
