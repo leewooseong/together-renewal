@@ -1,10 +1,17 @@
+'use client';
+
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import {usePathname} from 'next/navigation';
 
 import {TABLET} from '../../constants/mediaQuery';
+import {PATH_LIST} from '../../constants/route';
 import {LogoutButton} from '../user/logoutButton';
 
 export function GNB() {
+  const currentPath = usePathname();
+
   return (
     <section className="fixed top-0 w-full border-b-2 border-gray-900 bg-orange-600">
       <nav className="mx-auto flex h-14 max-w-screen-desktop px-4 tablet:px-6 desktop:p-0">
@@ -26,15 +33,18 @@ export function GNB() {
           </picture>
         </Link>
         <ul className="flex grow items-center gap-3 px-3 text-sm font-semibold text-orange-50 tablet:px-5 tablet:text-base">
-          <li className="hover:text-orange-200">
-            <Link href="/">모임 찾기</Link>
-          </li>
-          <li className="hover:text-orange-200">
-            <Link href="/zzim">찜한 모임</Link>
-          </li>
-          <li className="hover:text-orange-200">
-            <Link href="reviews">모든 리뷰</Link>
-          </li>
+          {PATH_LIST.map(navItem => (
+            <li key={navItem.path}>
+              <Link
+                href={navItem.path}
+                className={clsx('hover:text-orange-200', {
+                  'text-gray-900 hover:text-gray-900': currentPath === navItem.path,
+                })}
+              >
+                {navItem.label}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         {/* <Link
