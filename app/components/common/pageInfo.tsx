@@ -1,9 +1,17 @@
+import Image from 'next/image';
+
 import {PageInfoProps} from '../../types/common/pageInfo.types';
 
 export function PageInfo({pageName}: PageInfoProps) {
   return (
     <div className="flex items-center gap-4 xs:gap-[7px]">
-      <img src={`/icons/${pageName}-page-head.svg`} alt={`${pageName} 페이지 로고`} />
+      <Image
+        unoptimized
+        width={72}
+        height={72}
+        src={`/icons/${pageName}-page-head.svg`}
+        alt={`${pageName} 페이지 로고`}
+      />
       <div
         className={`flex h-[60px] gap-2 ${pageName === 'gatherings' ? 'flex-col-reverse' : 'flex-col'}`}
       >
