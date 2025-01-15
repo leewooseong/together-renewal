@@ -79,8 +79,9 @@ export function GNB() {
             <li key={navItem.path}>
               <Link
                 href={navItem.path}
-                className={clsx('hover:text-orange-200', {
+                className={clsx({
                   'text-gray-900 hover:text-gray-900': currentPath === navItem.path,
+                  'hover:text-orange-200': currentPath !== navItem.path,
                 })}
               >
                 {navItem.label}
