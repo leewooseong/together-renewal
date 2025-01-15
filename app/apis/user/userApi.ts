@@ -1,59 +1,44 @@
-import axios, {AxiosResponse} from 'axios';
-import {getDefaultStore} from 'jotai';
+import {User} from '../../store/types/user.types';
+import {CodeitError} from '../../types/error.types';
+import {clientInstance, serverInstance} from '../client';
 
-import {tokenWithStorageAtom} from '@/app/store/atoms/userAtoms';
-import {User} from '@/app/store/types/user.types';
-
-import {instance} from '../client/clientInstance';
-import {tokenInstance} from '../client/clientInstanceWithToken';
-
-interface ILoginResponse {
-  token: string;
-}
-
-interface IErrorResponse {
-  code: string;
-  message: string;
-}
-
-export const login = async (
-  email: string,
-  password: string,
-): Promise<ILoginResponse | IErrorResponse | undefined> => {
+export const login = async (email: string, password: string) => {
   try {
-    const res = await instance.post('/auths/signin', {
-      email,
-      password,
-    });
-
-    return res.data;
+    await clientInstance.post({path: '/route/auths/signin', body: {email, password}});
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return error.response.data;
+    if (error instanceof CodeitError) {
+      throw new CodeitError(error.message, error.status, error.code, error.parameter);
     }
-    return undefined; // 명시적 반환 추가
   }
 };
 
-// baseURL이 tokenInstance와 달라서 개별적으로 처리
-export const setCookie = async (): Promise<AxiosResponse> => {
-  const token = getDefaultStore().get(tokenWithStorageAtom);
-
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return res;
+export const deleteCookie = async () => {
+  await clientInstance.delete({path: '/route/cookie'});
 };
 
-export const deleteCookie = async (): Promise<AxiosResponse> => {
-  const res = await axios.delete(`${process.env.NEXT_PUBLIC_FRONT_URL}/cookie`);
-  return res;
+export const getUserInfo = async (): Promise<User | undefined> => {
+  try {
+    const userInfoData = await clientInstance.get<User>({
+      path: '/route/token/auths/user',
+    });
+    return userInfoData as User;
+  } catch (error) {
+    if (error instanceof CodeitError) {
+      throw new CodeitError(error.message, error.status, error.code, error.parameter);
+    }
+
+    return undefined;
+  }
 };
 
-export const getUserInfo = async (): Promise<User> => {
-  const res = await tokenInstance.get('/auths/user');
-
-  return res.data;
+export const getUserInfoInServer = async (token?: string): Promise<User | undefined> => {
+  try {
+    const userInfoData = await serverInstance.get<User>({path: '/auths/user', token});
+    return userInfoData;
+  } catch (error) {
+    if (error instanceof CodeitError) {
+      throw new CodeitError(error.message, error.status, error.code, error.parameter);
+    }
+    return undefined;
+  }
 };
