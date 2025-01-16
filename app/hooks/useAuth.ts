@@ -2,9 +2,9 @@
 
 import {useCallback} from 'react';
 
+import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 
-import {useQueryClient} from '@tanstack/react-query';
 import {deleteCookie} from '../apis/user/userApi';
 import {userQueryKey} from '../queries/common/queryKeys';
 

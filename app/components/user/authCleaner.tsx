@@ -1,6 +1,9 @@
 'use client';
-import {useQueryClient} from '@tanstack/react-query';
+
 import {useEffect} from 'react';
+
+import {useQueryClient} from '@tanstack/react-query';
+
 import {userQueryKey} from '../../queries/common/queryKeys';
 
 // AuthCleaner가 없으면 유저 정보를 React-query로 관리하는데 토큰이 만료되더라도 GNB 컴포넌트는 해당 정보가 반영이 안되어서 계속 유저 프로필을 띄우는 문제가 발생하게 된다.
@@ -21,7 +24,7 @@ function AuthCleaner({children}: {children: React.ReactNode}) {
     return () => {};
   }, [queryClient]);
 
-  return <>{children}</>;
+  return children;
 }
 
 export default AuthCleaner;
