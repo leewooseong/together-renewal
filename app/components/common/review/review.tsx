@@ -4,8 +4,8 @@ import {ReviewType} from '../../../types/common/reviews.types';
 
 import {ReviewScore} from './reviewScore';
 
-// 마이페이지-나의 리뷰는 pageName = ""MY_PAGE"를 보내야함.
-// 모임 상세 페에지는 pageName = "GATHERING"을 보내야함.
+// 마이페이지-나의 리뷰는 pageName = "my-page"를 보내야함.
+// 모임 상세 페에지는 pageName = "gatherings"을 보내야함.
 
 export function Review({
   gatheringImg,
@@ -22,9 +22,9 @@ export function Review({
 
   return (
     <div
-      className={`grid w-[311px] grid-rows-1 sm:w-full ${pageName === 'GATHERING' ? 'sm:grid-cols-1' : 'sm:grid-cols-[280px_minmax(0,_1fr)]'} box-border gap-6`}
+      className={`grid w-[311px] grid-rows-1 sm:w-full ${pageName === 'gatherings' ? 'sm:grid-cols-1' : 'sm:grid-cols-[280px_minmax(0,_1fr)]'} box-border gap-6`}
     >
-      {pageName !== 'GATHERING' &&
+      {pageName !== 'gatherings' &&
         (!gatheringImg ? (
           <div className="h-[156px] w-[311px] rounded-3xl bg-neutral-800 sm:w-[280px]" />
         ) : (
@@ -41,13 +41,13 @@ export function Review({
       <div className="flex flex-col border-b-2 border-dashed border-gray-200 pb-5 sm:px-0">
         <ReviewScore score={score} />
         <p className="pt-2.5 text-sm">{comment}</p>
-        {pageName === 'GATHERING' ? (
+        {pageName === 'gatherings' ? (
           ''
         ) : (
           <div className="pt-2.5 text-sm">{`${gatheringType} · ${gatheringLocation}`}</div>
         )}
         <div className="flex items-center pt-2 text-sm">
-          {pageName === 'MY_PAGE' ? (
+          {pageName === 'my-page' ? (
             ''
           ) : (
             <div className="flex items-center">
@@ -70,7 +70,7 @@ export function Review({
               <span className="pl-2">{userName}</span>
             </div>
           )}
-          {pageName === 'MY_PAGE' ? '' : <div className="pl-2 pr-3">|</div>}
+          {pageName === 'my-page' ? '' : <div className="pl-2 pr-3">|</div>}
           <div className="text-gray-500">{createDate}</div>
         </div>
       </div>
