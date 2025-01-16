@@ -1,5 +1,4 @@
-import {AverageScoreListProps} from '@/app/types/reviews/averageScores.types';
-
+import {AverageScoreListProps} from '../../types/reviews/averageScores.types';
 import {ReviewScore} from '../common/review/reviewScore';
 
 /* eslint-disable react/no-array-index-key */

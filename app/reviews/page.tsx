@@ -1,7 +1,10 @@
 'use client';
 
 // 나중에 모든 리뷰 페이지 구현 해야함.
+import {useEffect} from 'react';
+
 import {useQuery} from '@tanstack/react-query';
+import {useRouter} from 'next/navigation';
 
 import {getReviews} from '../apis/reviews';
 import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
@@ -24,20 +27,41 @@ const mock: AverageScoreListProps['data'] = {
 };
 
 // const emptyMock = {};
+// Helper 함수: 쿼리스트링 생성
+type QueryStringParams = Record<string, string | number | boolean | undefined | null>;
+
+const makeQueryString = (params: QueryStringParams): string => {
+  const queryParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value) {
+      queryParams.append(key, value.toString());
+    }
+  });
+  return queryParams.toString();
+};
 
 export default function ReviewsPage() {
+  const router = useRouter();
+
   const {gatheringType, setGatheringType} = useGatheringFilter();
+  // const location = '홍대입구';
+  // const sortBy = 'participantCount';
 
-  const {
-    data: reviewList,
-
-    isPending,
-  } = useQuery<ReviewListType>({
+  const location = '';
+  const sortBy = '';
+  const date = '';
+  const {data: reviewList, isPending} = useQuery<ReviewListType>({
     queryKey: ['reviewList', gatheringType],
-    queryFn: () => getReviews(undefined, undefined, gatheringType),
+    queryFn: () => getReviews({gatheringType, location, date, sortBy}),
     staleTime: 1 * 60 * 5000, // 5분
     gcTime: 60 * 1000 * 10, // 10분
   });
+
+  // URL에 쿼리스트링 반영
+  useEffect(() => {
+    const queryString = makeQueryString({gatheringType, location, sortBy, date});
+    router.replace(`/reviews?${queryString}`);
+  }, [gatheringType, location, sortBy, date, router]);
 
   if (isPending) {
     return <div>로딩중!</div>;
