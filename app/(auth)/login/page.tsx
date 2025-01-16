@@ -11,6 +11,8 @@ import {z} from 'zod';
 
 import {login} from '../../apis/user/userApi';
 import {useDebounce} from '../../hooks/useForm';
+import {useUserMutation} from '../../queries/user/useUserMutaions';
+import {useUserQuery} from '../../queries/user/useUserQuries';
 import {TLoginInputs} from '../../types/auth.types';
 import {CodeitError} from '../../types/error.types';
 import {LoginSchema} from '../../utils/schema';
@@ -34,14 +36,19 @@ export default function LoginPage() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
+  const {getMyInfo} = useUserQuery();
+  const {logout} = useUserMutation();
   const {debounceValidate} = useDebounce();
   const router = useRouter();
+
+  const {refetch: userInfoRefetch} = getMyInfo();
 
   // Form Event
   const onSubmit = async (data: TLoginInputs) => {
     try {
       await login(data.email, data.password);
-      setServerErrorMessage({email: '', password: ''});
+      setServerErrorMessage({email: '', password: ''}); // Todo: 불필요한 코드로 판단됨, 제거 예정
+      userInfoRefetch();
       router.push('/');
     } catch (error) {
       if (error instanceof CodeitError) {
@@ -54,6 +61,8 @@ export default function LoginPage() {
         }
 
         alert('로그인 과정에 문제가 발생했습니다.');
+      } else {
+        logout();
       }
     }
   };

@@ -1,3 +1,5 @@
+import AuthCleaner from '../components/user/authCleaner';
+
 function AuthLayout({
   children,
 }: Readonly<{
@@ -9,7 +11,7 @@ function AuthLayout({
         {/* 로그인 그림 들어가는 부분 */}
       </section>
       <section className="flex w-full flex-1 justify-center desktop:justify-start">
-        {children}
+        <AuthCleaner>{children}</AuthCleaner>
       </section>
     </main>
   );
