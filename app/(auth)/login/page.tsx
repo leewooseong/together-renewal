@@ -13,7 +13,7 @@ import {login} from '../../apis/user/userApi';
 import {useDebounce} from '../../hooks/useForm';
 import {useUserMutation} from '../../queries/user/useUserMutaions';
 import {useUserQuery} from '../../queries/user/useUserQuries';
-import {TLoginInputs} from '../../types/auth.types';
+import {LoginInputsType} from '../../types/auth.types';
 import {CodeitError} from '../../types/error.types';
 import {LoginSchema} from '../../utils/schema';
 
@@ -44,7 +44,7 @@ export default function LoginPage() {
   const {refetch: userInfoRefetch} = getMyInfo();
 
   // Form Event
-  const onSubmit = async (data: TLoginInputs) => {
+  const onSubmit = async (data: LoginInputsType) => {
     try {
       await login(data.email, data.password);
       setServerErrorMessage({email: '', password: ''}); // Todo: 불필요한 코드로 판단됨, 제거 예정
