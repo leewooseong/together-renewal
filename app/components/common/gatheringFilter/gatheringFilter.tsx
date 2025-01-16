@@ -17,7 +17,8 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
   const [dallaemfitWidth, setDallaemfitWidth] = useState(0);
   const [workationWidth, setWorkationWidth] = useState(0);
 
-  const [, setIsVisible] = useState(true);
+  // const router = useRouter();
+  // const searchParams = useSearchParams();
 
   useEffect(() => {
     if (dallaemfitRef.current) {
@@ -32,13 +33,22 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
     const getElementId = event.currentTarget.id as Gathering;
     if (getElementId === 'ALL') {
       setGatheringType('DALLAEMFIT');
-      return;
+    } else {
+      setGatheringType(getElementId);
     }
-    if (getElementId !== 'WORKATION') {
-      setIsVisible(true);
-    }
+    // if (getElementId !== 'WORKATION') {
+    //   setIsVisible(true);
+    // }
 
-    setGatheringType(getElementId);
+    // // URLSearchParams로 URL 업데이트
+    // const params = new URLSearchParams(searchParams.toString());
+    // if (getElementId === 'ALL') {
+    //   params.set('gatheringType', 'DALLAEMFIT');
+    // } else {
+    //   params.set('gatheringType', getElementId);
+    // }
+
+    // router.push(`?${params.toString()}`);
   };
 
   const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
@@ -135,11 +145,6 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
         transition={{
           duration: 0.5,
           ease: 'easeInOut',
-        }}
-        onAnimationComplete={() => {
-          if (gatheringType === 'WORKATION') {
-            setIsVisible(false);
-          }
         }}
         className="mt-[10px] flex gap-2 xs:mt-[14px]"
       >
