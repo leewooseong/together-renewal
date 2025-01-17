@@ -43,12 +43,12 @@ const pretendardSubset = localFont({
       weight: '300',
     },
     {
-      path: '/fonts/pretendard-subset/Pretendard-Thin.subset.woff2',
+      path: '/fonts/pretendard-subset/Pretendard-ExtraLight.subset.woff2',
       style: 'normal',
       weight: '200',
     },
     {
-      path: '/fonts/pretendard-subset/Pretendard-ExtraLight.subset.woff2',
+      path: '/fonts/pretendard-subset/Pretendard-Thin.subset.woff2',
       style: 'normal',
       weight: '100',
     },
@@ -59,7 +59,7 @@ const pretendardSubset = localFont({
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <body className={`${pretendardSubset.variable} bg-gray-100`}>
+      <body className={`${pretendardSubset.className} bg-gray-100`}>
         <Providers>
           <GNB />
           <main className="mx-auto h-screen max-w-[1200px] pt-14">{children}</main>

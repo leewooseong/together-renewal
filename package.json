@@ -16,6 +16,7 @@
     "@tanstack/react-query-devtools": "^5.62.11",
     "@vercel/speed-insights": "^1.1.0",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "eslint-config-airbnb": "^19.0.4",
     "jotai": "^2.11.0",
     "jotai-devtools": "^0.10.1",
