@@ -1,27 +1,30 @@
-import {AverageScoreListProps} from '../../types/reviews/averageScores.types';
+import {AverageScoreProps} from '../../types/reviews/averageScores.types';
 import {ReviewScore} from '../common/review/reviewScore';
 
 /* eslint-disable react/no-array-index-key */
 
-export function AverageScores({data}: AverageScoreListProps) {
-  let scoreArray = [0, 0, 0, 0, 0];
-  let averageScore = 0;
+export function AverageScores({
+  oneStar,
+  twoStars,
+  threeStars,
+  fourStars,
+  fiveStars,
+  averageScore,
+}: AverageScoreProps) {
+  const scoreArray: number[] = [fiveStars, fourStars, threeStars, twoStars, oneStar];
   const ratio: string[] = [];
-  const IsObjectEmpty = Object.keys(data).length !== 0;
-
+  let sum = 0;
   const totalReviewCount = (array: typeof scoreArray) => {
-    let sum = 0;
     array.forEach(item => {
       sum += item;
     });
-    array.forEach(item => {
-      ratio.push(`${Math.floor((item / sum) * 100)}%`);
+
+    array.forEach((item, index) => {
+      ratio[index] = `${Math.floor((item / sum) * 100)}%`;
     });
   };
 
-  if (IsObjectEmpty) {
-    scoreArray = Object.values(data).reverse().slice(1, 6) as number[];
-    averageScore = data.averageScore;
+  if (averageScore !== 0) {
     totalReviewCount(scoreArray);
   }
 
@@ -30,9 +33,7 @@ export function AverageScores({data}: AverageScoreListProps) {
     <div className="flex h-[180px] w-full items-center justify-between border-y-2 border-y-gray-200 bg-white px-6 py-8 sm:px-[73px]">
       <div className="flex w-32 flex-col items-center gap-2">
         <div>
-          <span className="text-xl font-semibold text-gray-900 sm:text-2xl">
-            {`${averageScore}.0 `}
-          </span>
+          <span className="text-xl font-semibold text-gray-900 sm:text-2xl">{`${averageScore}.0 `}</span>
           <span className="text-xl font-semibold text-gray-400 sm:text-2xl">/5</span>
         </div>
         <div>
@@ -47,16 +48,11 @@ export function AverageScores({data}: AverageScoreListProps) {
                 {scoreArray.length - index}점
               </span>
               <div className="relative h-1 w-[84px] rounded-sm bg-gray-200 sm:w-60">
-                {IsObjectEmpty ? (
-                  <div
-                    className="absolute h-1 rounded-sm bg-gray-900 sm:w-60"
-                    style={{width: ratio[index]}}
-                  />
-                ) : (
-                  ''
-                )}
+                <div
+                  className="absolute h-1 rounded-sm bg-gray-900 sm:w-60"
+                  style={{width: averageScore === 0 ? '0%' : ratio[index]}}
+                />
               </div>
-
               <span className="text-sm text-gray-400">{score}</span>
             </div>
           ))}

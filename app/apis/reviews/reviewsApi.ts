@@ -1,5 +1,7 @@
-import {ReviewListType} from '../types/common/reviews.types';
-import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
+import {Gathering} from '../../types/common/gatheringFilter.types';
+import {ReviewListType} from '../../types/common/reviews.types';
+import {AverageScoreList} from '../../types/reviews/averageScores.types';
+import {GetReviewsProps} from '../../types/reviews/reviewsApi.types';
 
 // 마이페이지-나의 리뷰는 userId를 보내야함.
 // 모임 상세 페에지는 gatheringId를 보내야함.
@@ -27,5 +29,17 @@ export async function getReviews({
   if (sortOrder) queryParams.append('sortOrder', sortOrder);
 
   const response = await fetch(`/route/reviews?${queryParams.toString()}`);
+  return response.json();
+}
+
+export async function getReviewsScore({
+  gatheringType,
+}: {
+  gatheringType: Gathering;
+}): Promise<AverageScoreList> {
+  const queryParams = new URLSearchParams();
+  if (gatheringType) queryParams.append('type', gatheringType);
+
+  const response = await fetch(`/route/reviews/scores?${queryParams.toString()}`);
   return response.json();
 }
