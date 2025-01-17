@@ -36,7 +36,7 @@ type CalendarProps = {
   setSelectedDate: Dispatch<SetStateAction<Date>>;
 };
 
-function Calendar({selectedDate, setSelectedDate}: CalendarProps) {
+export function Calendar({selectedDate, setSelectedDate}: CalendarProps) {
   const today = startOfToday();
   const [currentMonth, setCurrentMonth] = useState(format(selectedDate ?? today, 'MMM-yyyy'));
   const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', selectedDate || today);
@@ -69,7 +69,7 @@ function Calendar({selectedDate, setSelectedDate}: CalendarProps) {
   };
 
   return (
-    <div className="md:pr-14 bg-white">
+    <div className="bg-white">
       <div className="flex items-center">
         <button
           type="button"
@@ -126,7 +126,7 @@ function Calendar({selectedDate, setSelectedDate}: CalendarProps) {
                 type="button"
                 onClick={handleSelectDate}
                 className={clsx(
-                  'h-8 w-full rounded-lg',
+                  'h-8 w-full rounded-lg transition-colors',
                   [!isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400'],
                   isEqual(day, selectedDate)
                     ? 'bg-orange-600 text-white'
@@ -142,5 +142,3 @@ function Calendar({selectedDate, setSelectedDate}: CalendarProps) {
     </div>
   );
 }
-
-export default Calendar;

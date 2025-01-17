@@ -1,6 +1,6 @@
 import {Metadata} from 'next';
 
-import CalendarWrapper from '../components/common/calendar/calendarWrapper';
+import {CreateModalCalendar} from '../components/common/calendar/createModalCalendar';
 
 export const metadata: Metadata = {
   title: '서비스 명',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   return (
     <div>
-      <CalendarWrapper />
+      <CreateModalCalendar />
       <p>메인 페이지</p>
     </div>
   );
