@@ -1,6 +1,6 @@
 import {Metadata} from 'next';
 
-import Calendar from '../components/common/calendar';
+import Calendar from '../components/common/calendar/calendar';
 
 export const metadata: Metadata = {
   title: '서비스 명',
