@@ -1,6 +1,6 @@
 export type AverageScore = {
   teamId: string;
-  type: string; // Gathering 타입이 정의되지 않은 경우 string으로 변경
+  type: string;
   oneStar: number;
   twoStars: number;
   threeStars: number;
