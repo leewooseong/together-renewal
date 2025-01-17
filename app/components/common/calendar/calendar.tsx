@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 
 import clsx from 'clsx';
 import {
@@ -31,10 +31,13 @@ const colStartClasses = [
   'col-start-7',
 ];
 
-function Calendar() {
-  const today = startOfToday();
-  const [selectedDate, setSelectedDate] = useState<Date>(today);
+type CalendarProps = {
+  selectedDate: Date;
+  setSelectedDate: Dispatch<SetStateAction<Date>>;
+};
 
+function Calendar({selectedDate, setSelectedDate}: CalendarProps) {
+  const today = startOfToday();
   const [currentMonth, setCurrentMonth] = useState(format(selectedDate ?? today, 'MMM-yyyy'));
   const firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', selectedDate || today);
 
@@ -66,80 +69,76 @@ function Calendar() {
   };
 
   return (
-    <div>
-      <div className="mx-auto max-w-[336px] rounded-xl border border-gray-200 bg-white px-11 py-6 shadow-[0_10px_10px_-5px_rgba(0,0,0,0.04)]">
-        <div className="md:pr-14">
-          <div className="flex items-center">
-            <button
-              type="button"
-              onClick={previousMonth}
-              className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">Previous month</span>
-              <Image
-                src="/icons/Calendar-l-arrow.svg"
-                alt="이전 달로 이동"
-                width={24}
-                height={24}
-                // className="size-5"
-                aria-hidden="true"
-              />
-            </button>
-            <h2 className="flex-auto text-center text-sm font-medium text-gray-800">
-              {format(firstDayCurrentMonth, 'MMMM yyyy')}
-            </h2>
-            <button
-              onClick={nextMonth}
-              type="button"
-              className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
-            >
-              <span className="sr-only">Next month</span>
-              <Image
-                src="/icons/Calendar-r-arrow.svg"
-                alt="다음 달로 이동"
-                width={24}
-                height={24}
-                // className="size-5"
-                aria-hidden="true"
-              />
-            </button>
-          </div>
-          <div className="grid h-8 grid-cols-7 items-center text-center text-sm font-semibold leading-6 text-gray-800">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-          </div>
-          <ul className="grid grid-cols-7 text-sm font-medium text-gray-800">
-            {days.map((day, dayIdx) => {
-              return (
-                <li
-                  key={day.toString()}
-                  data-index={dayIdx}
-                  className={`${dayIdx === 0 && colStartClasses[getDay(day)]}`}
-                >
-                  <button
-                    type="button"
-                    onClick={handleSelectDate}
-                    className={clsx(
-                      'h-8 w-full rounded-lg',
-                      [!isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400'],
-                      isEqual(day, selectedDate)
-                        ? 'bg-orange-600 text-white'
-                        : isToday(day) && 'bg-white text-orange-600',
-                    )}
-                  >
-                    <time dateTime={format(day, 'yyyy-MM-dd')}>{format(day, 'd')}</time>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+    <div className="md:pr-14 bg-white">
+      <div className="flex items-center">
+        <button
+          type="button"
+          onClick={previousMonth}
+          className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+        >
+          <span className="sr-only">Previous month</span>
+          <Image
+            src="/icons/Calendar-l-arrow.svg"
+            alt="이전 달로 이동"
+            width={24}
+            height={24}
+            // className="size-5"
+            aria-hidden="true"
+          />
+        </button>
+        <h2 className="flex-auto text-center text-sm font-medium text-gray-800">
+          {format(firstDayCurrentMonth, 'MMMM yyyy')}
+        </h2>
+        <button
+          onClick={nextMonth}
+          type="button"
+          className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+        >
+          <span className="sr-only">Next month</span>
+          <Image
+            src="/icons/Calendar-r-arrow.svg"
+            alt="다음 달로 이동"
+            width={24}
+            height={24}
+            // className="size-5"
+            aria-hidden="true"
+          />
+        </button>
       </div>
+      <div className="grid h-8 grid-cols-7 items-center text-center text-sm font-semibold leading-6 text-gray-800">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+      <ul className="grid grid-cols-7 text-sm font-medium text-gray-800">
+        {days.map((day, dayIdx) => {
+          return (
+            <li
+              key={day.toString()}
+              data-index={dayIdx}
+              className={`${dayIdx === 0 && colStartClasses[getDay(day)]}`}
+            >
+              <button
+                type="button"
+                onClick={handleSelectDate}
+                className={clsx(
+                  'h-8 w-full rounded-lg',
+                  [!isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400'],
+                  isEqual(day, selectedDate)
+                    ? 'bg-orange-600 text-white'
+                    : isToday(day) && 'text-orange-600',
+                )}
+              >
+                <time dateTime={format(day, 'yyyy-MM-dd')}>{format(day, 'd')}</time>
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
