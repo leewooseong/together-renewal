@@ -1,8 +1,8 @@
 import {Metadata} from 'next';
 import {cookies} from 'next/headers';
 
-import {getUserInfoInServer} from './apis/user/userApi';
-import {AUTH_TOKEN} from './constants/auth';
+import {getUserInfoInServer} from '../apis/user/userApi';
+import {AUTH_TOKEN} from '../constants/auth';
 
 export const metadata: Metadata = {
   title: '서비스 명',
