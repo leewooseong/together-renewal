@@ -146,7 +146,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
           duration: 0.5,
           ease: 'easeInOut',
         }}
-        className="mt-[10px] flex gap-2 xs:mt-[14px]"
+        className="mt-[14px] flex gap-2 tablet:mt-[10px]"
       >
         <button
           type="button"

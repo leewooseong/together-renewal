@@ -6,14 +6,14 @@
 
 import {useQuery} from '@tanstack/react-query';
 
-import {getReviews, getReviewsScore} from '../apis/reviews/reviewsApi';
-import {GatheringFilter} from '../components/common/gatheringFilter/gatheringFilter';
-import {PageInfo} from '../components/common/pageInfo';
-import {Review} from '../components/common/review/review';
-import {AverageScores} from '../components/reviews/averageScores';
-import {useGatheringFilter} from '../hooks/useGatheringFilter';
-import {ReviewListType} from '../types/common/reviews.types';
-import {AverageScoreList} from '../types/reviews/averageScores.types';
+import {getReviews, getReviewsScore} from '../../apis/reviews/reviewsApi';
+import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
+import {PageInfo} from '../../components/common/pageInfo';
+import {Review} from '../../components/common/review/review';
+import {AverageScores} from '../../components/reviews/averageScores';
+import {useGatheringFilter} from '../../hooks/useGatheringFilter';
+import {ReviewListType} from '../../types/common/reviews.types';
+import {AverageScoreList} from '../../types/reviews/averageScores.types';
 
 export default function ReviewsPage() {
   const {gatheringType, setGatheringType} = useGatheringFilter();

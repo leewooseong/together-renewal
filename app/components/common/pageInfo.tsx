@@ -4,7 +4,7 @@ import {PageInfoProps} from '../../types/common/pageInfo.types';
 
 export function PageInfo({pageName}: PageInfoProps) {
   return (
-    <div className="flex items-center gap-4 xs:gap-[7px]">
+    <div className="flex items-center gap-4 tablet:gap-[7px]">
       <Image
         unoptimized
         width={72}
@@ -15,7 +15,7 @@ export function PageInfo({pageName}: PageInfoProps) {
       <div
         className={`flex h-[60px] gap-2 ${pageName === 'gatherings' ? 'flex-col-reverse' : 'flex-col'}`}
       >
-        <h1 className="text-lg font-semibold text-gray-900 xs:text-2xl">
+        <h1 className="text-lg font-semibold text-gray-900 tablet:text-2xl">
           {pageName === 'gatherings' && '지금 모임에 참여해보세요'}
           {pageName === 'reviews' && '모든 리뷰'}
           {pageName === 'zzim' && '찜한 모임'}
