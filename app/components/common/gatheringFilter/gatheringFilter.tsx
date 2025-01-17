@@ -17,9 +17,6 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
   const [dallaemfitWidth, setDallaemfitWidth] = useState(0);
   const [workationWidth, setWorkationWidth] = useState(0);
 
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
-
   useEffect(() => {
     if (dallaemfitRef.current) {
       setDallaemfitWidth(dallaemfitRef.current.offsetWidth);
@@ -36,19 +33,6 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
     } else {
       setGatheringType(getElementId);
     }
-    // if (getElementId !== 'WORKATION') {
-    //   setIsVisible(true);
-    // }
-
-    // // URLSearchParams로 URL 업데이트
-    // const params = new URLSearchParams(searchParams.toString());
-    // if (getElementId === 'ALL') {
-    //   params.set('gatheringType', 'DALLAEMFIT');
-    // } else {
-    //   params.set('gatheringType', getElementId);
-    // }
-
-    // router.push(`?${params.toString()}`);
   };
 
   const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
