@@ -42,28 +42,14 @@ export default function ReviewsPage() {
 
   return (
     <div>
-      <div>
+      <div className="mb-6 tablet:mb-8">
         <PageInfo pageName="reviews" />
       </div>
-      <div className="m-7">
+      <div className="border-b-2 border-b-gray-200 pb-4">
         <GatheringFilter gatheringType={gatheringType} setGatheringType={setGatheringType} />
       </div>
-      <div>
-        {reviewList?.data.map(review => (
-          <Review
-            key={review.id}
-            gatheringImg={review.Gathering.image}
-            score={review.score}
-            comment={review.comment}
-            gatheringType={review.Gathering.type}
-            gatheringLocation={review.Gathering.location}
-            userImg={review.User.image}
-            userName={review.User.name}
-            createdAt={review.createdAt}
-          />
-        ))}
-      </div>
-      <div>
+
+      <div className="mt-6">
         {scoreData && scoreData.length > 0 ? (
           <AverageScores
             oneStar={scoreData[0].oneStar}
@@ -83,6 +69,22 @@ export default function ReviewsPage() {
             averageScore={0}
           />
         )}
+      </div>
+
+      <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
+        {reviewList?.data.map(review => (
+          <Review
+            key={review.id}
+            gatheringImg={review.Gathering.image}
+            score={review.score}
+            comment={review.comment}
+            gatheringType={review.Gathering.type}
+            gatheringLocation={review.Gathering.location}
+            userImg={review.User.image}
+            userName={review.User.name}
+            createdAt={review.createdAt}
+          />
+        ))}
       </div>
     </div>
   );
