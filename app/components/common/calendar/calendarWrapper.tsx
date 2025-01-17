@@ -4,7 +4,7 @@ import {useState} from 'react';
 
 import {startOfToday} from 'date-fns';
 
-import Calendar from './calendar';
+import {Calendar} from './calendar';
 
 function CalendarWrapper() {
   const [selectedDate, setSelectedDate] = useState<Date>(startOfToday()); // startOfToday === today's date
