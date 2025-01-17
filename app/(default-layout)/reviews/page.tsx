@@ -26,8 +26,6 @@ export default function ReviewsPage() {
   const {data: reviewList, isPending} = useQuery<ReviewListType>({
     queryKey: ['reviewList', gatheringType],
     queryFn: () => getReviews({gatheringType, location, date, sortBy}),
-    staleTime: 1 * 60 * 5000, // 5분
-    gcTime: 60 * 1000 * 10, // 10분
   });
 
   // 두 번째 쿼리: 리뷰 점수 가져오기
