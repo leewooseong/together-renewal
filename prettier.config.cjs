@@ -31,5 +31,6 @@ module.exports = {
     },
   ],
   plugins: ['prettier-plugin-tailwindcss'],
-  tailwindConfig: path.join(__dirname, 'tailwind.config.ts'), // path 지정
+  tailwindFunctions: ['clsx'], // clsx를 사용하고 있으므로 추가
+  tailwindConfig: path.join(__dirname, 'tailwind.config.ts'), // path를 제대로 인식하지 못 해 절대경로로 지정
 };
