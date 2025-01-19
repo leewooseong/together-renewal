@@ -14,7 +14,6 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      xs: '375px',
       tablet: '405px', // navbar font 깨짐 때문에 405px 기준 추가
       desktop: '1200px',
     },

@@ -62,7 +62,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className={`${pretendardSubset.variable} bg-gray-100`}>
         <Providers>
           <GNB />
-          <main className="mx-auto h-screen max-w-[1200px] pt-14">{children}</main>
+          <main className="mx-auto h-screen max-w-screen-desktop pt-14">{children}</main>
         </Providers>
       </body>
     </html>
