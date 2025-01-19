@@ -1,7 +1,7 @@
 import {cookies} from 'next/headers';
 
-import {getUserInfoInServer} from './apis/user/userApi';
-import {AUTH_TOKEN} from './constants/auth';
+import {getUserInfoInServer} from '../apis/user/userApi';
+import {AUTH_TOKEN} from '../constants/auth';
 
 export default async function Home() {
   try {
