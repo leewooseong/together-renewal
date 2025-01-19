@@ -3,6 +3,7 @@ import {FieldValues, Path, UseFormRegister} from 'react-hook-form';
 interface InputFieldProps<T extends FieldValues> {
   label: string;
   name: Path<T>;
+  placeholder?: string;
   register: UseFormRegister<T>;
   errorMessage?: string;
   isPassword?: boolean;
@@ -11,6 +12,7 @@ interface InputFieldProps<T extends FieldValues> {
 function InputField<T extends FieldValues>({
   label,
   name,
+  placeholder = '',
   register,
   errorMessage = '',
   isPassword = false,
@@ -24,6 +26,7 @@ function InputField<T extends FieldValues>({
         {...register(name)}
         id={name}
         type={isPassword ? 'password' : 'text'}
+        placeholder={placeholder}
         className={`w-full border px-3 py-2 ${
           errorMessage ? 'border-red-500' : 'border-gray-300'
         } rounded-md focus:outline-none focus:ring-2 ${
@@ -36,6 +39,7 @@ function InputField<T extends FieldValues>({
 }
 
 InputField.defaultProps = {
+  placeholder: '',
   errorMessage: '',
   isPassword: false,
 };

@@ -59,24 +59,28 @@ export default function SignupForm() {
         <InputField
           label="이름"
           name="name"
+          placeholder="이름을 입력해주세요"
           register={register}
           errorMessage={errors.name?.message}
         />
         <InputField
           label="아이디"
           name="email"
+          placeholder="이메일을 입력해주세요"
           register={register}
           errorMessage={errors.email?.message}
         />
         <InputField
           label="회사명"
           name="companyName"
+          placeholder="회사명을 입력해주세요"
           register={register}
           errorMessage={errors.companyName?.message}
         />
         <InputField
           label="비밀번호"
           name="password"
+          placeholder="비밀번호를 입력해주세요"
           isPassword
           register={register}
           errorMessage={errors.password?.message}
@@ -84,6 +88,7 @@ export default function SignupForm() {
         <InputField
           label="비밀번호 확인"
           name="passwordCheck"
+          placeholder="비밀번호를 다시 한 번 입력해주세요"
           isPassword
           register={register}
           errorMessage={errors.passwordCheck?.message}

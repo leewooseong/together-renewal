@@ -42,11 +42,11 @@ module.exports = {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
         pathGroups: [
           {
-            pattern: 'react',
+            pattern: 'react*',
             group: 'builtin',
           },
           {
-            pattern: '@/',
+            pattern: '@/*',
             group: 'internal',
             position: 'after',
           },
@@ -70,4 +70,12 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['*.svg'],
+      rules: {
+        'prettier/prettier': ['error', {semi: false}],
+      },
+    },
+  ],
 };
