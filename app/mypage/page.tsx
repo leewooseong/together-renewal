@@ -171,7 +171,7 @@ export default function MyPage() {
   };
 
   return (
-    <div className="md:px-[24px] flex w-full min-w-[375px] max-w-[1200px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px]">
+    <div className="md:px-[24px] max-w-screen-desktop flex w-full min-w-[375px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px]">
       <h2 className="w-full max-w-[996px] text-left text-2xl font-semibold text-gray-900">
         마이 페이지
       </h2>

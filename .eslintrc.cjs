@@ -42,11 +42,11 @@ module.exports = {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
         pathGroups: [
           {
-            pattern: 'react*',
+            pattern: 'react',
             group: 'builtin',
           },
           {
-            pattern: '@/*',
+            pattern: '@/',
             group: 'internal',
             position: 'after',
           },
