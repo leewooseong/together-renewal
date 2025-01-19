@@ -1,4 +1,4 @@
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import {FieldValues, Path, UseFormRegister} from 'react-hook-form';
 
 interface InputFieldProps<T extends FieldValues> {
   label: string;
@@ -34,5 +34,10 @@ function InputField<T extends FieldValues>({
     </div>
   );
 }
+
+InputField.defaultProps = {
+  errorMessage: '',
+  isPassword: false,
+};
 
 export default InputField;
