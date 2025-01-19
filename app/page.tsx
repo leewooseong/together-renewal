@@ -1,20 +1,19 @@
-'use client';
+import {cookies} from 'next/headers';
 
-import {useRouter} from 'next/navigation';
+import {getUserInfoInServer} from './apis/user/userApi';
+import {AUTH_TOKEN} from './constants/auth';
 
-export default function Home() {
-  const router = useRouter();
-
-  const handleClick = () => {
-    router.push('/mypage'); // /mypage로 이동
-  };
-
+export default async function Home() {
+  try {
+    const token = cookies().get(AUTH_TOKEN);
+    const userInfoData = await getUserInfoInServer(token?.value);
+    console.log(userInfoData);
+  } catch (error) {
+    console.log(error);
+  }
   return (
     <div>
       <p>메인 페이지</p>
-      <button type="button" onClick={handleClick}>
-        마이페이지
-      </button>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import formatDateUtil from '@/app/utils/formatDateUtil';
+import formatDateUtil from '../../../utils/formatDateUtil';
 
 /** 오늘 마감 태그 */
 export function CloseTag({registrationEnd}: {registrationEnd: string}) {

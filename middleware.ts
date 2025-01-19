@@ -1,31 +1,25 @@
 import {cookies} from 'next/headers';
-import {NextResponse, type NextRequest} from 'next/server';
+import {type NextRequest} from 'next/server';
 
-import verifyToken from '@/app/apis/server/tokenApi';
-import {AUTH_TOKEN} from '@/app/constants/auth';
-import getPageType from '@/app/utils/server';
+import {AUTH_TOKEN} from './app/constants/auth';
+import {getRequestType, isPageType} from './app/utils/server';
+import {handleApiRequest} from './middlewares/apiHandler';
+import {protectRoute} from './middlewares/routeProtection';
 
-// This function can be marked `async` if using `await` inside
-export default async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const cookieStore = cookies();
   const token = cookieStore.get(AUTH_TOKEN);
 
-  // Main logic
-  const pageType = getPageType(request.nextUrl.pathname);
-  const isValidToken = await verifyToken(token);
+  const requestType = getRequestType(request.nextUrl.pathname);
 
-  if (isValidToken && pageType === 'guestOnly') {
-    return NextResponse.redirect(new URL('/', request.url));
+  if (isPageType(requestType)) {
+    return protectRoute(token, requestType, request.url);
   }
 
-  if (!isValidToken && pageType === 'protected') {
-    return NextResponse.redirect(new URL('/login', request.url));
-  }
-
-  return NextResponse.next();
+  return handleApiRequest(token, requestType);
 }
 
-// See "Matching Paths" below to learn more
+// 변수로 선언하면 반영이 되지 않으니 주의!
 export const config = {
-  matcher: ['/login', '/join', '/mypage'],
+  matcher: ['/login', '/signup', '/mypage', '/route/token'],
 };

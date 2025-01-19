@@ -7,6 +7,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
 const queryClient = new QueryClient();
 
+// layout, page는 아니지만 default가 없으면 에러 발생
 export default function Providers({children}: {children: React.ReactNode}) {
   return (
     <QueryClientProvider client={queryClient}>

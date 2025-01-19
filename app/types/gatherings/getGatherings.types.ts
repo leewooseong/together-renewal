@@ -1,4 +1,6 @@
-type GetGatherings = {
+import {LOCATIONS, TYPES} from '../../constants/commonConstants';
+
+export type GetGatherings = {
   id: number; // 모임 ID
   type: (typeof TYPES)[number]; // 모임 종류
   name: string; // 모임 이름
@@ -10,19 +12,4 @@ type GetGatherings = {
   image: string; // 모임 대표 이미지
   createdBy: number; // 모임 생성자 ID
   canceledAt: string; // 모임 취소일
-};
-
-type GetJoinedGatherings = GetGatherings & {
-  isCompleted: boolean; // 모임 완료 여부
-  isReviewed: boolean; // 리뷰 작성 여부
-};
-
-type CreateGathering = {
-  location: (typeof LOCATIONS)[number];
-  type: (typeof TYPES)[number];
-  name: string;
-  dateTime: string;
-  capacity: number;
-  image: string;
-  registrationEnd: string;
 };

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
-import isClosedUtil from '@/app/utils/isClosedUtil';
-
+import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
+import isClosedUtil from '../../utils/isClosedUtil';
 import ApproveCheck from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
 import {CloseTag} from '../common/chips/tag';
@@ -25,18 +25,18 @@ export default function ListCard({
   }
 
   return (
-    <div className="relative flex h-[316px] w-[343px] max-w-[996px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white sm:h-[156px] sm:w-full sm:flex-row">
+    <div className="sm:h-[156px] sm:w-full sm:flex-row relative flex h-[316px] w-[343px] max-w-[996px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white">
       {/* 마감 오버레이 */}
       {isClose()}
 
       {/* 모임 이미지 */}
-      <div className="relative flex h-[156px] w-[343px] items-center justify-center overflow-hidden sm:w-[280px]">
+      <div className="sm:w-[280px] relative flex h-[156px] w-[343px] items-center justify-center overflow-hidden">
         <Image src={image} alt="모임 대표 이미지" className="object-cover" layout="fill" />
         <CloseTag registrationEnd={registrationEnd} />
       </div>
 
       {/* 모임 정보 */}
-      <div className="relative h-[156px] w-full pl-2 sm:w-[716px] sm:pl-6">
+      <div className="sm:w-[716px] sm:pl-6 relative h-[156px] w-full pl-2">
         <button type="button" className="absolute right-5 top-5">
           <Image src="/emptyHeart.svg" alt="찜 버튼" width={48} height={48} unoptimized />
           {/* 기능 구현 필요함(찜하기) */}
@@ -61,7 +61,7 @@ export default function ListCard({
             <span className="mt-1 flex gap-[4px]">
               <Image
                 src="icons/personIcon.svg"
-                className="mt-1 h-4 w-4"
+                className="mt-1 size-4"
                 alt="참여자 아이콘"
                 width={16}
                 height={16}

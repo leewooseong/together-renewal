@@ -118,7 +118,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex w-full max-w-[340px] flex-col items-center justify-center rounded-3xl bg-white px-4 py-8 sm:max-w-[600px] sm:px-14 sm:py-8 xl:max-w-[510px]">
+    <div className="sm:max-w-[600px] sm:px-14 sm:py-8 xl:max-w-[510px] flex w-full max-w-[340px] flex-col items-center justify-center rounded-3xl bg-white px-4 py-8">
       <h1 className="mb-8 text-center text-2xl font-bold">회원가입</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-6">
         <div className="space-y-2">
@@ -131,7 +131,7 @@ export default function SignupPage() {
               onChange: handleChange,
             })}
             className={clsx(
-              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder-gray-400',
+              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
               {'border border-red-600': serverErrorMessage.name || errors.name?.message},
             )}
             placeholder="이름을 입력해주세요"
@@ -155,7 +155,7 @@ export default function SignupPage() {
               onChange: handleChange,
             })}
             className={clsx(
-              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder-gray-400',
+              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
               {'border border-red-600': serverErrorMessage.email || errors.email?.message},
             )}
             placeholder="이메일을 입력해주세요"
@@ -179,7 +179,7 @@ export default function SignupPage() {
               onChange: handleChange,
             })}
             className={clsx(
-              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder-gray-400',
+              'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
               {
                 'border border-red-600':
                   serverErrorMessage.companyName || errors.companyName?.message,
@@ -208,7 +208,7 @@ export default function SignupPage() {
                 onChange: handleChange,
               })}
               className={clsx(
-                'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder-gray-400',
+                'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
                 {'border border-red-600': serverErrorMessage.password || errors.password?.message},
               )}
               placeholder="비밀번호를 입력해주세요"
@@ -221,7 +221,7 @@ export default function SignupPage() {
                   password: !prevState.password,
                 }))
               }
-              className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-900"
+              className="absolute right-4 top-1/2 size-5 -translate-y-1/2 text-gray-900"
             >
               {showPassword.password ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
@@ -247,7 +247,7 @@ export default function SignupPage() {
                 onChange: handleChange,
               })}
               className={clsx(
-                'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder-gray-400',
+                'w-full rounded-lg border border-transparent bg-gray-50 px-4 py-2 text-base font-medium placeholder:text-gray-400',
                 {
                   'border border-red-600':
                     serverErrorMessage.passwordCheck || errors.passwordCheck?.message,
@@ -263,7 +263,7 @@ export default function SignupPage() {
                   passwordCheck: !prevState.passwordCheck,
                 }))
               }
-              className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-900"
+              className="absolute right-4 top-1/2 size-5 -translate-y-1/2 text-gray-900"
             >
               {showPassword.passwordCheck ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>

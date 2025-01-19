@@ -4,10 +4,11 @@ import {useEffect, useState} from 'react';
 
 import Image from 'next/image';
 
-import getUserInfoApi from '@/app/apis/getUserInfoApi';
+import {getUserInfo} from '../../apis/user/userApi';
+import {User} from '../../store/types/user.types';
 
 export default function ProfileLayout() {
-  const [userInfo, setUserInfo] = useState<GetUserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<User | null>(null);
 
   function userImg(img: string | undefined) {
     if (!img) {
@@ -19,8 +20,12 @@ export default function ProfileLayout() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
-        const data = await getUserInfoApi();
-        setUserInfo(data);
+        const userinfo = await getUserInfo();
+        if (userinfo) {
+          setUserInfo((userinfo as unknown as {data: User}).data);
+        } else {
+          setUserInfo(null);
+        }
       } catch (error) {
         console.error('유저 정보를 불러오는 중 에러 발생:', error);
       }
@@ -39,7 +44,7 @@ export default function ProfileLayout() {
 
   return (
     <div className="relative flex h-[178px] min-w-[343px] max-w-[996px] flex-col overflow-hidden rounded-3xl border-2 border-gray-200 bg-white">
-      <div className="absolute left-[24px] right-[18px] top-[54px] z-10 h-[56px] w-[56px] rounded-full bg-none">
+      <div className="absolute left-[24px] right-[18px] top-[54px] z-10 size-[56px] rounded-full bg-none">
         <Image src={userImg(userInfo.image)} alt="프로필 이미지" layout="fill" />
       </div>
 
@@ -57,7 +62,7 @@ export default function ProfileLayout() {
         </button>
         <Image
           src="icons/profileBar.svg"
-          className="absolute left-[60%] mt-[13px] -translate-x-1/2 md:left-[70%]"
+          className="md:left-[70%] absolute left-[60%] mt-[13px] -translate-x-1/2"
           alt="프로필 상단 이미지"
           width={156}
           height={46}

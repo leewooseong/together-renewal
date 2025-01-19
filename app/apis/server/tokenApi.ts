@@ -1,19 +1,14 @@
-import axios from 'axios';
+import {serverInstance} from '../client';
 
-const verifyToken = async (token: {name: string; value: string} | undefined): Promise<boolean> => {
+export const verifyToken = async (
+  token: {name: string; value: string} | undefined,
+): Promise<boolean> => {
   try {
-    await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/auths/user`,
-      {
-        headers: {
-          Authorization: `Bearer ${token?.value}`,
-        },
-      },
-    );
+    await serverInstance.get({path: '/auths/user', token: token?.value});
+    console.log('토큰 유효성 검사 성공');
     return true;
-  } catch {
+  } catch (error) {
+    console.log('토큰 유효성 검사 실패', error);
     return false;
   }
 };
-
-export default verifyToken;

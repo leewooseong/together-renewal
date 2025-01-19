@@ -1,8 +1,8 @@
 'use client';
 
-import useClearAuth from '../hooks/useAuth';
+import {useClearAuth} from '../hooks/useAuth';
 
-function LogoutButton() {
+export function LogoutButton() {
   const {clearAuth} = useClearAuth();
 
   const handleLogout = async () => {
@@ -15,5 +15,3 @@ function LogoutButton() {
     </button>
   );
 }
-
-export default LogoutButton;

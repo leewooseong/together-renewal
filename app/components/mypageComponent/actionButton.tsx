@@ -1,5 +1,6 @@
 import {useRouter} from 'next/navigation';
-import leaveGatheringsApi from '../../apis/leaveGatheringsApi';
+
+import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 
 export default function ActionButton({
   isCompleted,
@@ -24,7 +25,7 @@ export default function ActionButton({
       if (isCompleted) {
         onOpenModal();
       } else {
-        await leaveGatheringsApi(id);
+        await leaveJoinedGatherings(id);
         router.push('/mypage');
       }
     } catch {

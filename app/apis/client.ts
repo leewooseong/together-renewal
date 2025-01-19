@@ -1,0 +1,198 @@
+import {CodeitError, CodeitErrorStatus} from '../types/error.types';
+
+/** token: 서버 컴포넌트에서 데이터 요청 시 필요한 변수, 서버 컴포넌트에서는 fetch를 요청할 때는  */
+interface FetchOptions extends RequestInit {
+  baseURL: string;
+  timeout?: number;
+  contentType?: 'formData' | 'json';
+}
+
+// Todo: error 관련해서 수정하기
+// Todo: timeout 관련해서 공부하고 적용하기
+class FetchInstance {
+  private timeout: number;
+
+  private baseURL: string;
+
+  private token: string | undefined;
+
+  private contentType: 'formData' | 'json';
+
+  private defaultHeaders: HeadersInit;
+
+  constructor(options: FetchOptions) {
+    this.timeout = options.timeout || 30000;
+    this.contentType = options.contentType || 'json';
+    this.baseURL = options.baseURL;
+    this.defaultHeaders = {
+      ...options.headers,
+    };
+  }
+
+  private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+    console.log(url);
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+      return response;
+    } catch (error) {
+      clearTimeout(timeoutId);
+      throw error;
+    }
+  }
+
+  private getHeaders(): Headers {
+    const requestHeaders = new Headers(this.defaultHeaders);
+    if (this.token) {
+      requestHeaders.set('Authorization', `Bearer ${this.token}`);
+    }
+    if (this.contentType) {
+      const contentType = this.contentType === 'json' ? 'application/json' : 'multipart/form-data';
+      requestHeaders.set('Content-type', contentType);
+    }
+    return requestHeaders;
+  }
+
+  async request<T>(
+    method: string,
+    path?: string,
+    options: RequestInit = {},
+    token?: string | undefined,
+    contentType?: 'json' | 'formData',
+  ): Promise<T> {
+    this.token = token;
+    this.contentType = contentType || 'json';
+    const url = this.baseURL + path;
+    const requestHeaders = this.getHeaders();
+
+    try {
+      const response = await this.fetchWithTimeout(url.toString(), {
+        ...options,
+        method,
+        headers: requestHeaders,
+      });
+
+      if (!response.ok) {
+        throw await FetchInstance.handleError(response);
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.name === 'AbortError') {
+          throw new Error('Request timeout');
+        }
+      }
+      throw error;
+    }
+  }
+
+  private static async handleError(response: Response): Promise<Error> {
+    console.log(response);
+    try {
+      const data = await response.json();
+      return new CodeitError(
+        data.message,
+        response.status as CodeitErrorStatus,
+        data.code,
+        data?.parameter,
+      );
+    } catch (error) {
+      return new Error();
+    }
+  }
+
+  // HTTP method helpers
+  async get<T>({
+    path,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>('GET', path, options, token, contentType);
+  }
+
+  async post<T>({
+    path,
+    body,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    body?: unknown;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>(
+      'POST',
+      path,
+      {
+        ...options,
+        body: JSON.stringify(body),
+      },
+      token,
+      contentType,
+    );
+  }
+
+  async put<T>({
+    path,
+    body,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    body?: unknown;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>(
+      'PUT',
+      path,
+      {
+        ...options,
+        body: JSON.stringify(body),
+      },
+      token,
+      contentType,
+    );
+  }
+
+  async delete<T>({
+    path,
+    options,
+    token,
+    contentType,
+  }: {
+    path: string;
+    options?: RequestInit;
+    token?: string | undefined;
+    contentType?: 'json' | 'formData';
+  }): Promise<T> {
+    return this.request<T>('DELETE', path, options, token, contentType);
+  }
+}
+
+const clientInstance = new FetchInstance({
+  baseURL: `${process.env.NEXT_PUBLIC_FRONT_URL}`,
+});
+
+const serverInstance = new FetchInstance({
+  baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}`,
+});
+
+export {clientInstance, serverInstance};

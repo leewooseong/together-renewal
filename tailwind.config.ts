@@ -13,13 +13,13 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      xs: '375px',
+    },
     extend: {
       colors: COLOR_PALLETTE,
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
-      },
-      screens: {
-        xs: '375px',
       },
     },
   },

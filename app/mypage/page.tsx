@@ -2,9 +2,11 @@
 
 import {useEffect, useState} from 'react';
 
-import joinedGatheringsApi from '../apis/joinedGatheringsApi';
+import {getJoinedGatherings} from '../apis/gatherings/gatheringApi';
+import {getUserInfo} from '../apis/user/userApi';
 import MyPageCard from '../components/mypageComponent/myPageCard';
 import ProfileLayout from '../components/profileComponent/profileLayout';
+import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
 
 export default function MyPage() {
   const [userId, setUserId] = useState<number>(0);
@@ -16,28 +18,40 @@ export default function MyPage() {
   );
   const [reviewed, setReviewed] = useState(false);
 
-  // useEffect(() => {
-  //   const checkLogin = async () => {
-  //     try {
-  //       const id = getUserIdFromToken();
-  //       console.log('로그인된 유저 ID:', id);
-  //       setUserId(id);
-  //     } catch (err) {
-  //       console.error('인증 실패:', err);
-  //     }
-  //   };
-
-  //   checkLogin();
-  // }, []);
-
   useEffect(() => {
-    if (userId === null) return; // userId가 null인 경우 API 호출 방지
-
-    const fetchData = async () => {
-      setIsLoading(true);
+    const fetchUserId = async () => {
       try {
         setIsError(false);
-        const data = await joinedGatheringsApi({sortBy: 'dateTime', sortOrder: 'asc'});
+
+        const response = await getUserInfo();
+
+        console.log('Fetched user info:', response);
+
+        if (response) {
+          setUserId(response.id);
+          console.log('User ID set:', response.id);
+        }
+      } catch (error) {
+        console.error('Error fetching user ID:', error);
+        setIsError(true);
+      }
+    };
+
+    fetchUserId();
+  }, []);
+
+  useEffect(() => {
+    const fetchGatherings = async () => {
+      setIsLoading(true);
+      try {
+        const response = (await getJoinedGatherings()) as unknown as {data: GetJoinedGatherings[]};
+        console.log('Fetched response:', response);
+
+        const data = await response.data;
+
+        // if (!Array.isArray(data)) {
+        //   throw new Error('Data is not an array');
+        // }
 
         const now = new Date();
         const sortedData = data.sort((a, b) => {
@@ -56,16 +70,17 @@ export default function MyPage() {
         });
 
         setJoinedGatherings(sortedData);
+        setIsError(false);
       } catch (error) {
-        console.error('데이터를 불러오는 중 에러 발생:', error);
+        console.error('Error fetching gatherings:', error);
         setIsError(true);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchData();
-  }, [userId]);
+    fetchGatherings();
+  }, []);
 
   if (isLoading) {
     return <div className="text-center">로딩 중...</div>;
@@ -161,14 +176,14 @@ export default function MyPage() {
   };
 
   return (
-    <div className="flex w-full min-w-[360px] max-w-[1200px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px] sm:px-[24px]">
+    <div className="sm:px-[24px] flex w-full min-w-[375px] max-w-[1200px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px]">
       <h2 className="w-full max-w-[996px] text-left text-2xl font-semibold text-gray-900">
         마이 페이지
       </h2>
       <div className="mt-[24px] w-full max-w-[996px]">
         <ProfileLayout />
       </div>
-      <div className="min-w-sm mt-[30px] flex w-full max-w-[996px] flex-col items-start justify-start border-t-2 border-gray-900 bg-white sm:min-h-[720px]">
+      <div className="min-w-sm sm:min-h-[720px] mt-[30px] flex w-full max-w-[996px] flex-col items-start justify-start border-t-2 border-gray-900 bg-white">
         <div className="ml-[24px] mt-[24px] flex h-[34px] w-[300px] gap-[12px] text-gray-400">
           {tabOptions.map(tab => (
             <button
