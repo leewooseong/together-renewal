@@ -6,7 +6,7 @@ import {LogoutButton} from '../user/logoutButton';
 export function GNB() {
   return (
     <section className="fixed top-0 w-full border-b-2 border-gray-900 bg-orange-600">
-      <nav className="max-w-screen-desktop tablet:px-6 desktop:p-0 mx-auto flex h-14 px-4">
+      <nav className="mx-auto flex h-14 max-w-screen-desktop px-4 tablet:px-6 desktop:p-0">
         <Link href="/" className="self-center">
           {/* <Image
             src="/images/size=small.svg"
@@ -23,7 +23,7 @@ export function GNB() {
             unoptimized
           />
         </Link>
-        <ul className="tablet:px-5 tablet:text-base flex grow items-center gap-3 px-3 text-sm font-semibold text-orange-50">
+        <ul className="flex grow items-center gap-3 px-3 text-sm font-semibold text-orange-50 tablet:px-5 tablet:text-base">
           <li className="hover:text-orange-200">
             <Link href="/">모임 찾기</Link>
           </li>
@@ -52,7 +52,7 @@ export function GNB() {
             />
           </button>
           {/* Todo: intersection observer를 이용해서 모달이 잘릴 것 같으면 위치 재조정하기 */}
-          <ul className="desktop:w-[142px] desktop:text-base absolute right-0 top-[calc(100%+6px)] w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800">
+          <ul className="absolute right-0 top-[calc(100%+6px)] w-[110px] overflow-hidden rounded-[12px] bg-gray-50 text-sm font-medium text-gray-800 desktop:w-[142px] desktop:text-base">
             <li className="px-4 py-[10px] hover:bg-gray-100">
               <Link href="/mypage">마이페이지</Link>
             </li>
