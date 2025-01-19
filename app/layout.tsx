@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 
+import {GNB} from './components/common/GNB';
 import './globals.css';
 import Providers from './providers';
 
@@ -58,8 +59,11 @@ const pretendardSubset = localFont({
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-      <body className={`${pretendardSubset.variable}`}>
-        <Providers>{children}</Providers>
+      <body className={`${pretendardSubset.variable} bg-gray-100`}>
+        <Providers>
+          <GNB />
+          <main className="mx-auto h-screen max-w-screen-desktop pt-14">{children}</main>
+        </Providers>
       </body>
     </html>
   );
