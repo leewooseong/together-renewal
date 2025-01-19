@@ -1,12 +1,11 @@
 'use client';
 
-import {SubmitHandler, useForm} from 'react-hook-form';
-import {toast} from 'react-toastify';
-
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
 import {AxiosError} from 'axios';
 import {useRouter} from 'next/navigation';
+import {SubmitHandler, useForm} from 'react-hook-form';
+import {toast} from 'react-toastify';
 import {z} from 'zod';
 
 import {signupUser} from '../../apis/user/signupApi';
