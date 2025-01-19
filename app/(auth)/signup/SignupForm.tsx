@@ -25,12 +25,11 @@ export default function SignupForm() {
       router.push('/login');
     },
     onError: (error: unknown) => {
-      if (error instanceof AxiosError) {
-        const message = error.response?.data?.message || '회원가입 중 문제가 발생했습니다.';
-        toast.error(message);
-      } else {
-        toast.error('알 수 없는 오류가 발생했습니다.');
-      }
+      const message =
+        error instanceof AxiosError && error.response?.data?.message
+          ? error.response.data.message
+          : '회원가입 중 문제가 발생했습니다.';
+      toast.error(message);
     },
   });
 
@@ -61,43 +60,33 @@ export default function SignupForm() {
         <InputField
           label="이름"
           name="name"
-          placeholder="이름을 입력해주세요"
-          value=""
-          onChange={value => register('name').onChange({target: {value}})}
+          register={register}
           errorMessage={errors.name?.message}
         />
         <InputField
           label="아이디"
           name="email"
-          placeholder="이메일을 입력해주세요"
-          value=""
-          onChange={value => register('email').onChange({target: {value}})}
+          register={register}
           errorMessage={errors.email?.message}
         />
         <InputField
           label="회사명"
           name="companyName"
-          placeholder="회사명을 입력해주세요"
-          value=""
-          onChange={value => register('companyName').onChange({target: {value}})}
+          register={register}
           errorMessage={errors.companyName?.message}
         />
         <InputField
           label="비밀번호"
           name="password"
           isPassword
-          placeholder="비밀번호를 입력해주세요"
-          value=""
-          onChange={value => register('password').onChange({target: {value}})}
+          register={register}
           errorMessage={errors.password?.message}
         />
         <InputField
           label="비밀번호 확인"
           name="passwordCheck"
           isPassword
-          placeholder="비밀번호를 다시 한 번 입력해주세요"
-          value=""
-          onChange={value => register('passwordCheck').onChange({target: {value}})}
+          register={register}
           errorMessage={errors.passwordCheck?.message}
         />
         <button
