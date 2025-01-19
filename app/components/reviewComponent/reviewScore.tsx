@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Image from 'next/image';
 
 /* eslint-disable react/no-array-index-key */

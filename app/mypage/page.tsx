@@ -25,14 +25,10 @@ export default function MyPage() {
 
         const response = await getUserInfo();
 
-        console.log('Fetched user info:', response);
-
         if (response) {
           setUserId(response.id);
-          console.log('User ID set:', response.id);
         }
       } catch (error) {
-        console.error('Error fetching user ID:', error);
         setIsError(true);
       }
     };
@@ -45,13 +41,12 @@ export default function MyPage() {
       setIsLoading(true);
       try {
         const response = (await getJoinedGatherings()) as unknown as {data: GetJoinedGatherings[]};
-        console.log('Fetched response:', response);
 
         const data = await response.data;
 
-        // if (!Array.isArray(data)) {
-        //   throw new Error('Data is not an array');
-        // }
+        if (!Array.isArray(data)) {
+          throw new Error('Data is not an array');
+        }
 
         const now = new Date();
         const sortedData = data.sort((a, b) => {
@@ -72,7 +67,7 @@ export default function MyPage() {
         setJoinedGatherings(sortedData);
         setIsError(false);
       } catch (error) {
-        console.error('Error fetching gatherings:', error);
+        // console.error('Error fetching gatherings:', error);
         setIsError(true);
       } finally {
         setIsLoading(false);
@@ -160,7 +155,7 @@ export default function MyPage() {
 
     if (filteredGatherings.length === 0) {
       return (
-        <div className="absolute left-1/2 top-[180px] h-[20px] w-[220px] translate-x-[-50%]">
+        <div className="absolute left-1/2 top-[180px] h-[20px] w-[220px] -translate-x-1/2">
           <p className="text-sm font-medium text-gray-500">{getComment()}모임이 없어요.</p>
         </div>
       );
@@ -176,7 +171,7 @@ export default function MyPage() {
   };
 
   return (
-    <div className="sm:px-[24px] flex w-full min-w-[375px] max-w-[1200px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px]">
+    <div className="md:px-[24px] flex w-full min-w-[375px] max-w-[1200px] flex-col items-center justify-center bg-gray-50 px-[16px] py-[24px]">
       <h2 className="w-full max-w-[996px] text-left text-2xl font-semibold text-gray-900">
         마이 페이지
       </h2>

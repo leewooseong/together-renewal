@@ -22,13 +22,13 @@ export function Review({
 
   return (
     <div
-      className={`grid w-[311px] grid-rows-1 sm:w-full ${pageName === 'GATHERING' ? 'sm:grid-cols-1' : 'sm:grid-cols-[280px_minmax(0,_1fr)]'} box-border gap-6`}
+      className={`sm:w-full grid w-[311px] grid-rows-1 ${pageName === 'GATHERING' ? 'sm:grid-cols-1' : 'sm:grid-cols-[280px_minmax(0,_1fr)]'} box-border gap-6`}
     >
       {pageName !== 'GATHERING' &&
         (!gatheringImg ? (
-          <div className="h-[156px] w-[311px] rounded-3xl bg-neutral-800 sm:w-[280px]" />
+          <div className="sm:w-[280px] h-[156px] w-[311px] rounded-3xl bg-neutral-800" />
         ) : (
-          <div className="relative h-[156px] w-[311px] overflow-hidden rounded-3xl sm:w-[280px]">
+          <div className="sm:w-[280px] relative h-[156px] w-[311px] overflow-hidden rounded-3xl">
             <Image
               src={gatheringImg}
               alt="모임 이미지"
@@ -38,7 +38,7 @@ export function Review({
             />
           </div>
         ))}
-      <div className="flex flex-col border-b-2 border-dashed border-gray-200 pb-5 sm:px-0">
+      <div className="sm:px-0 flex flex-col border-b-2 border-dashed border-gray-200 pb-5">
         <ReviewScore score={score} />
         <p className="pt-2.5 text-sm">{comment}</p>
         {pageName === 'GATHERING' ? (
