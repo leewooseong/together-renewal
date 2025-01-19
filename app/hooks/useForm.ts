@@ -1,7 +1,7 @@
 import {useCallback} from 'react';
-import {UseFormTrigger} from 'react-hook-form';
 
 import _ from 'lodash';
+import {UseFormTrigger} from 'react-hook-form';
 
 import {LoginInputsType} from '../types/auth.types';
 
