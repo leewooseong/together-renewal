@@ -3,9 +3,9 @@ import {useState} from 'react';
 import Image from 'next/image';
 
 import {writeReview} from '../../apis/reviews/reviewApi';
-import InputTextBox from '../common/inputText';
+import {InputTextBox} from '../common/inputText';
 
-export default function WriteReviewModal({
+export function WriteReviewModal({
   onClose,
   gatheringId,
 }: {

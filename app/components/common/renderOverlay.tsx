@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 
 /** 모임 취소, 마감 오버레이 */
-export default function RenderOverlay({
+export function RenderOverlay({
   message,
   height,
   gatheringId,
@@ -25,7 +25,7 @@ export default function RenderOverlay({
     }
     try {
       await leaveJoinedGatherings(gatheringId);
-      window.location.href = '/mypage'; // 지금 사용되는 곳이 mypage밖에 없어서 mypage로 reDirection
+      window.location.href = '/mypage'; // 사용되는 곳이 mypage밖에 없어서 mypage로 reDirection
     } catch (err) {
       console.error('모임 삭제 중 오류 발생:', err);
     }
@@ -39,7 +39,7 @@ export default function RenderOverlay({
           <p className="sm:hidden pt-[5px] text-xs font-semibold">모임 보내주기</p>
         </button>
       </div>
-      <div className="absolute top-1/3 flex flex-col items-center text-xs text-white">
+      <div className="sm:top-1/4 absolute top-1/3 flex flex-col items-center text-xs text-white">
         <p>{`${message}된 챌린지에요,`}</p>
         <p>다음 기회에 만나요🙏</p>
       </div>

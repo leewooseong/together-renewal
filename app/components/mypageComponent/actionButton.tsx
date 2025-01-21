@@ -2,7 +2,7 @@ import {useRouter} from 'next/navigation';
 
 import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 
-export default function ActionButton({
+export function ActionButton({
   isCompleted,
   isReviewed,
   id,

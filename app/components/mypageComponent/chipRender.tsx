@@ -5,7 +5,7 @@ import {
   WaitingForApproval,
 } from '../common/chips/chip-state';
 
-export default function RenderChips({
+export function RenderChips({
   isCompleted,
   participantCount,
   isMyGathering,

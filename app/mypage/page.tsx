@@ -4,8 +4,8 @@ import {useEffect, useState} from 'react';
 
 import {getJoinedGatherings} from '../apis/gatherings/gatheringApi';
 import {getUserInfo} from '../apis/user/userApi';
-import MyPageCard from '../components/mypageComponent/myPageCard';
-import ProfileLayout from '../components/profileComponent/profileLayout';
+import {MyPageCard} from '../components/mypageComponent/myPageCard';
+import {ProfileLayout} from '../components/profileComponent/profileLayout';
 import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
 
 export default function MyPage() {

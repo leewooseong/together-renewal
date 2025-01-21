@@ -2,11 +2,11 @@ import Image from 'next/image';
 
 import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
 import isClosedUtil from '../../utils/isClosedUtil';
-import ApproveCheck from '../common/approveCheck';
+import {ApproveCheck} from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
 import {CloseTag} from '../common/chips/tag';
-import ProgressBar from '../common/progressBar';
-import RenderOverlay from '../common/renderOverlay';
+import {ProgressBar} from '../common/progressBar';
+import {RenderOverlay} from '../common/renderOverlay';
 
 export default function ListCard({
   image,

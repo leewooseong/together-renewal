@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
 /** 5인 이상 개설 확정 */
-export default function ApproveCheck(participantCount: number): React.ReactNode {
+export function ApproveCheck(participantCount: number): React.ReactNode {
   if (participantCount >= 5) {
     return (
       <div className="ml-3 flex items-center font-medium text-orange-500">

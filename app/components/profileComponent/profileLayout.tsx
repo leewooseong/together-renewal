@@ -7,7 +7,7 @@ import Image from 'next/image';
 import {getUserInfo} from '../../apis/user/userApi';
 import {User} from '../../store/types/user.types';
 
-export default function ProfileLayout() {
+export function ProfileLayout() {
   const [userInfo, setUserInfo] = useState<User | null>(null);
 
   function userImg(img: string | undefined) {
@@ -44,8 +44,13 @@ export default function ProfileLayout() {
 
   return (
     <div className="relative flex h-[178px] min-w-[343px] max-w-[996px] flex-col overflow-hidden rounded-3xl border-2 border-gray-200 bg-white">
-      <div className="absolute left-[24px] right-[18px] top-[54px] z-10 size-[56px] rounded-full bg-none">
-        <Image src={userImg(userInfo.image)} alt="프로필 이미지" layout="fill" />
+      <div className="absolute left-[24px] right-[18px] top-[54px] z-10 size-[56px] bg-none">
+        <Image
+          src={userImg(userInfo.image)}
+          alt="프로필 이미지"
+          layout="fill"
+          className="rounded-full"
+        />
       </div>
 
       <div className="relative flex h-[66px] w-full bg-orange-400">

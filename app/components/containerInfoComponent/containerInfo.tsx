@@ -1,11 +1,11 @@
 import Image from 'next/image';
 
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
-import ApproveCheck from '../common/approveCheck';
+import {ApproveCheck} from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
-import ProgressBar from '../common/progressBar';
+import {ProgressBar} from '../common/progressBar';
 
-export default function ContainerInfo({
+export function ContainerInfo({
   name,
   location,
   dateTime,
