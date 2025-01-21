@@ -12,20 +12,23 @@ import {PageInfo} from '../../components/common/pageInfo';
 import {Review} from '../../components/common/review/review';
 import {AverageScores} from '../../components/reviews/averageScores';
 import {useGatheringFilter} from '../../hooks/useGatheringFilter';
+import {getReviewListQueryKey} from '../../queries/common/queryKeys';
 import {ReviewListType} from '../../types/common/reviews.types';
 import {AverageScoreList} from '../../types/reviews/averageScores.types';
 
 export default function ReviewsPage() {
   const {gatheringType, setGatheringType} = useGatheringFilter();
   // const location = '홍대입구';
-  // const sortBy = 'participantCount';
-
+  const sortBy = 'participantCount';
   const location = '';
-  const sortBy = '';
   const date = '';
-  const {data: reviewList, isPending} = useQuery<ReviewListType>({
-    queryKey: ['reviewList', gatheringType],
-    queryFn: () => getReviews({gatheringType, location, date, sortBy}),
+  const sortOrder = '';
+
+  const reviewsQueryKey = getReviewListQueryKey({gatheringType, location, date, sortBy, sortOrder});
+
+  const {data: reviewList} = useQuery<ReviewListType>({
+    queryKey: reviewsQueryKey,
+    queryFn: () => getReviews({gatheringType, location, date, sortBy, sortOrder}),
   });
 
   // 두 번째 쿼리: 리뷰 점수 가져오기
@@ -33,10 +36,6 @@ export default function ReviewsPage() {
     queryKey: ['reviewScores', gatheringType],
     queryFn: () => getReviewsScore({gatheringType}),
   });
-
-  if (isPending) {
-    return <div>로딩중!</div>;
-  }
 
   return (
     <div>
