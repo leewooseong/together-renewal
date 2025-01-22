@@ -7,7 +7,7 @@ import {useQuery} from '@tanstack/react-query';
 import {getReviews, getReviewsScore} from '../../apis/reviews/reviewsApi';
 import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../../components/common/pageInfo';
-import {Review} from '../../components/common/review/review';
+import ReviewWrapper from '../../components/common/review/reviewWrapper';
 import {AverageScores} from '../../components/reviews/averageScores';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
 import {getReviewListQueryKey} from '../../queries/common/queryKeys';
@@ -51,20 +51,22 @@ export default function ReviewsPage() {
       <div className="mt-6">{scoreData && <AverageScores {...scoreData} />}</div>
 
       <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
-        {reviewList?.data.map(review => (
-          <Review
-            key={review.id}
-            gatheringImg={review.Gathering.image}
-            score={review.score}
-            comment={review.comment}
-            gatheringType={review.Gathering.type}
-            gatheringLocation={review.Gathering.location}
-            userImg={review.User.image}
-            userName={review.User.name}
-            createdAt={review.createdAt}
-          />
-        ))}
+        {reviewList && <ReviewWrapper {...reviewList} />}
       </div>
     </div>
   );
 }
+
+// {reviewList?.data.map(review => (
+//   <Review
+//     key={review.id}
+//     gatheringImg={review.Gathering.image}
+//     score={review.score}
+//     comment={review.comment}
+//     gatheringType={review.Gathering.type}
+//     gatheringLocation={review.Gathering.location}
+//     userImg={review.User.image}
+//     userName={review.User.name}
+//     createdAt={review.createdAt}
+//   />
+// ))}
