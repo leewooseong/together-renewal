@@ -62,7 +62,7 @@ export default function ProfileLayout() {
         </button>
         <Image
           src="icons/profileBar.svg"
-          className="md:left-[70%] absolute left-[60%] mt-[13px] -translate-x-1/2"
+          className="absolute left-[60%] mt-[13px] -translate-x-1/2 md:left-[70%]"
           alt="프로필 상단 이미지"
           width={156}
           height={46}

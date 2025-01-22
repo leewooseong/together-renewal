@@ -39,8 +39,8 @@ export default function WriteReviewModal({
   };
   return (
     <div className="absolute z-50 flex size-full items-center justify-center">
-      <div className="sm:w-[520px] flex h-[408px] w-[343px] items-center justify-center rounded-md bg-white">
-        <div className="sm:w-[472px] flex h-[360px] w-[295px] flex-col gap-[24px]">
+      <div className="flex h-[408px] w-[343px] items-center justify-center rounded-md bg-white sm:w-[520px]">
+        <div className="flex h-[360px] w-[295px] flex-col gap-[24px] sm:w-[472px]">
           <p className="h-[28px] w-full text-lg font-semibold">리뷰 쓰기</p>
           <div className="flex h-[60px] w-full flex-col">
             <p className="font-semibold">만족스러운 경험이었나요?</p>
