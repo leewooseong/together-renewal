@@ -1,4 +1,4 @@
-import {Gathering} from '../../types/common/gatheringFilter.types';
+import {GatheringWithoutAll} from '../../types/common/gatheringFilter.types';
 import {ReviewListType} from '../../types/common/reviews.types';
 import {CodeitError} from '../../types/error.types';
 import {AverageScoreList} from '../../types/reviews/averageScores.types';
@@ -7,19 +7,17 @@ import {
   GetMyReviewsProps,
   GetReviewsProps,
 } from '../../types/reviews/reviewsApi.types';
+import {buildQueryParams} from '../../utils/apiFilterUrlUtil';
 import {clientInstance} from '../client';
 
 export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType> => {
-  const queryParams = new URLSearchParams();
-
-  // 선택적 매개변수
-  // if (userId) queryParams.append('userId', userId.toString());
-  // if (gatheringId) queryParams.append('gatheringId', gatheringId.toString());
-  if (props.gatheringType) queryParams.append('type', props.gatheringType);
-  if (props.location) queryParams.append('location', props.location);
-  if (props.date) queryParams.append('date', props.date);
-  if (props.sortBy) queryParams.append('sortBy', props.sortBy);
-  if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
+  const queryParams = buildQueryParams({
+    type: props.gatheringType,
+    location: props.location,
+    date: props.date,
+    sortBy: props.sortBy,
+    sortOrder: props.sortOrder,
+  });
   try {
     const response = await clientInstance.get<ReviewListType>({
       path: `/route/reviews?${queryParams.toString()}`,
@@ -48,10 +46,14 @@ export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType
 
 // 마이페이지-나의 리뷰는 userId를 보내야함.
 export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewListType> => {
-  const queryParams = new URLSearchParams();
+  const queryParams = buildQueryParams({
+    userId: props.userId,
+    sortOrder: props.sortOrder,
+  });
+  // const queryParams = new URLSearchParams();
 
-  if (props.userId) queryParams.append('userId', props.userId.toString());
-  if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
+  // if (props.userId) queryParams.append('userId', props.userId.toString());
+  // if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
 
   try {
     const response = await clientInstance.get<ReviewListType>({
@@ -81,10 +83,15 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
 export const getGatheringReviews = async (
   props: GetGatheringReviewsProps,
 ): Promise<ReviewListType> => {
-  const queryParams = new URLSearchParams();
+  // const queryParams = new URLSearchParams();
 
-  if (props.gatheringId) queryParams.append('gatheringId', props.gatheringId.toString());
-  if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
+  // if (props.gatheringId) queryParams.append('gatheringId', props.gatheringId.toString());
+  // if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
+
+  const queryParams = buildQueryParams({
+    gatheringId: props.gatheringId,
+    sortOrder: props.sortOrder,
+  });
 
   try {
     const response = await clientInstance.get<ReviewListType>({
@@ -110,11 +117,9 @@ export const getGatheringReviews = async (
   }
 };
 
-export const getReviewsScore = async ({
-  gatheringType,
-}: {
-  gatheringType: Gathering;
-}): Promise<AverageScoreList> => {
+export const getReviewsScore = async (
+  gatheringType: GatheringWithoutAll,
+): Promise<AverageScoreList> => {
   const queryParams = new URLSearchParams();
   if (gatheringType) queryParams.append('type', gatheringType);
 
