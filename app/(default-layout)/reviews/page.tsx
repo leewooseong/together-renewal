@@ -2,8 +2,6 @@
 
 'use client';
 
-// 나중에 모든 리뷰 페이지 구현 해야함.
-
 import {useQuery} from '@tanstack/react-query';
 
 import {getReviews, getReviewsScore} from '../../apis/reviews/reviewsApi';
@@ -19,59 +17,7 @@ import {AverageScoreList} from '../../types/reviews/averageScores.types';
 
 export default function ReviewsPage() {
   const {filter, setFilter, makeQueryString} = useQueryStringFilter();
-  // const searchParams = useSearchParams();
-  // const router = useRouter();
-  // const [filter, setFilter] = useState({
-  //   gatheringType: 'DALLAEMFIT',
-  //   location: '',
-  //   date: '',
-  //   sortBy: '',
-  //   sortOrder: '',
-  // });
 
-  // // const location = '홍대입구';
-  // // const sortBy = 'participantCount';
-  // // const location = '';
-  // // const date = '';
-  // // const sortOrder = '';
-
-  // useEffect(() => {
-  //   setFilter({
-  //     gatheringType: searchParams.get('type') || 'DALLAEMFIT',
-  //     location: searchParams.get('location') || '',
-  //     date: searchParams.get('date') || '',
-  //     sortBy: searchParams.get('sortBy') || '',
-  //     sortOrder: searchParams.get('sortOrder') || '',
-  //   });
-  // }, [searchParams]);
-
-  // // const makeQueryString = (filterItem: string) => {
-  // //   const params = new URLSearchParams(searchParams.toString());
-  // //   params.set('type', filterItem);
-
-  // //   router.replace(`?${params.toString()}`);
-  // // };
-
-  // const makeQueryString = (newFilter: Partial<typeof filter>) => {
-  //   const params = new URLSearchParams(searchParams.toString());
-
-  //   // 새로운 필터 값을 쿼리 스트링에 추가
-  //   Object.entries(newFilter).forEach(([key, value]) => {
-  //     if (value) {
-  //       if (key === 'gatheringType') {
-  //         params.set('type', value); // 값이 있으면 설정
-  //       } else {
-  //         params.set(key, value); // 값이 있으면 설정
-  //       }
-  //     } else {
-  //       params.delete(key); // 값이 없으면 제거
-  //     }
-  //   });
-
-  //   router.replace(`?${params.toString()}`);
-  // };
-
-  // const reviewsQueryKey = getReviewListQueryKey({gatheringType, location, date, sortBy, sortOrder});
   const reviewsQueryKey = getReviewListQueryKey(filter);
 
   const {data: reviewList} = useQuery<ReviewListType>({
@@ -80,7 +26,7 @@ export default function ReviewsPage() {
   });
 
   // 두 번째 쿼리: 리뷰 점수 가져오기
-  const {gatheringType} = filter; // gatheringType 추출
+  const {gatheringType} = filter;
   const {data: scoreData} = useQuery<AverageScoreList>({
     queryKey: ['reviewScores', gatheringType],
     queryFn: () => getReviewsScore(gatheringType as GatheringWithoutAll),
