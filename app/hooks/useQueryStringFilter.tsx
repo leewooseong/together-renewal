@@ -29,7 +29,7 @@ export const useQueryStringFilter = () => {
     Object.entries(newFilter).forEach(([key, value]) => {
       if (value) {
         if (key === 'gatheringType') {
-          params.set('type', value); // `type`으로 매핑
+          params.set('type', value);
         } else {
           params.set(key, value);
         }
