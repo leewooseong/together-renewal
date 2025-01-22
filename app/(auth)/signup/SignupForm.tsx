@@ -54,7 +54,7 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="sm:max-w-[600px] sm:px-14 sm:py-8 xl:max-w-[510px] flex w-full max-w-[340px] flex-col items-center justify-center rounded-3xl bg-white px-4 py-8">
+    <div className="flex w-full max-w-[340px] flex-col items-center justify-center rounded-3xl bg-white px-4 py-8 sm:max-w-[600px] sm:px-14 sm:py-8 xl:max-w-[510px]">
       <h1 className="mb-8 text-center text-2xl font-bold">회원가입</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex w-full flex-col gap-6">
         <InputField
