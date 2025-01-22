@@ -13,7 +13,7 @@ import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
 import {getReviewListQueryKey} from '../../queries/common/queryKeys';
 import {GatheringWithoutAll} from '../../types/common/gatheringFilter.types';
 import {ReviewListType} from '../../types/common/reviews.types';
-import {AverageScoreList} from '../../types/reviews/averageScores.types';
+import {AverageScore} from '../../types/reviews/averageScores.types';
 
 export default function ReviewsPage() {
   const {filter, setFilter, makeQueryString} = useQueryStringFilter();
@@ -27,7 +27,7 @@ export default function ReviewsPage() {
 
   // 두 번째 쿼리: 리뷰 점수 가져오기
   const {gatheringType} = filter;
-  const {data: scoreData} = useQuery<AverageScoreList>({
+  const {data: scoreData} = useQuery<AverageScore>({
     queryKey: ['reviewScores', gatheringType],
     queryFn: () => getReviewsScore(gatheringType as GatheringWithoutAll),
   });
@@ -48,27 +48,7 @@ export default function ReviewsPage() {
         <GatheringFilter makeQueryString={makeQueryString} filter={filter} setFilter={setFilter} />
       </div>
 
-      <div className="mt-6">
-        {scoreData && scoreData.length > 0 ? (
-          <AverageScores
-            oneStar={scoreData[0].oneStar}
-            twoStars={scoreData[0].twoStars}
-            threeStars={scoreData[0].threeStars}
-            fourStars={scoreData[0].fourStars}
-            fiveStars={scoreData[0].fiveStars}
-            averageScore={scoreData[0].averageScore}
-          />
-        ) : (
-          <AverageScores
-            oneStar={0}
-            twoStars={0}
-            threeStars={0}
-            fourStars={0}
-            fiveStars={0}
-            averageScore={0}
-          />
-        )}
-      </div>
+      <div className="mt-6">{scoreData && <AverageScores {...scoreData} />}</div>
 
       <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
         {reviewList?.data.map(review => (

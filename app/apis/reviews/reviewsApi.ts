@@ -1,7 +1,7 @@
 import {GatheringWithoutAll} from '../../types/common/gatheringFilter.types';
 import {ReviewListType} from '../../types/common/reviews.types';
 import {CodeitError} from '../../types/error.types';
-import {AverageScoreList} from '../../types/reviews/averageScores.types';
+import {AverageScore} from '../../types/reviews/averageScores.types';
 import {
   GetGatheringReviewsProps,
   GetMyReviewsProps,
@@ -119,33 +119,19 @@ export const getGatheringReviews = async (
 
 export const getReviewsScore = async (
   gatheringType: GatheringWithoutAll,
-): Promise<AverageScoreList> => {
+): Promise<AverageScore> => {
   const queryParams = new URLSearchParams();
   if (gatheringType) queryParams.append('type', gatheringType);
 
   try {
-    const response = await clientInstance.get<AverageScoreList>({
+    const response = await clientInstance.get<AverageScore>({
       path: `/route/reviews/scores?${queryParams.toString()}`,
     });
     return response;
   } catch (error) {
     if (error instanceof CodeitError) {
       console.log('현재 error 객체', error.code);
-      return [
-        {
-          teamId: String(process.env.NEXT_PUBLIC_TEAM_ID),
-          type: 'DALLAEMFIT',
-          oneStar: 0,
-          twoStars: 0,
-          threeStars: 0,
-          fourStars: 0,
-          fiveStars: 0,
-          averageScore: 0,
-        },
-      ];
-    }
-    return [
-      {
+      return {
         teamId: String(process.env.NEXT_PUBLIC_TEAM_ID),
         type: 'DALLAEMFIT',
         oneStar: 0,
@@ -154,7 +140,17 @@ export const getReviewsScore = async (
         fourStars: 0,
         fiveStars: 0,
         averageScore: 0,
-      },
-    ];
+      };
+    }
+    return {
+      teamId: String(process.env.NEXT_PUBLIC_TEAM_ID),
+      type: 'DALLAEMFIT',
+      oneStar: 0,
+      twoStars: 0,
+      threeStars: 0,
+      fourStars: 0,
+      fiveStars: 0,
+      averageScore: 0,
+    };
   }
 };

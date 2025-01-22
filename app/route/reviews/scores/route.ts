@@ -2,15 +2,17 @@ import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../../apis/client';
 import {CodeitError} from '../../../types/error.types';
+import {AverageScoreList} from '../../../types/reviews/averageScores.types';
 
 export async function GET(request: NextRequest) {
   const {searchParams} = new URL(request.url);
 
   try {
-    const response = await serverInstance.get({
+    const response = await serverInstance.get<AverageScoreList>({
       path: `/reviews/scores?${searchParams}`,
     });
-    return Response.json(response);
+
+    return Response.json(response[0]);
   } catch (error) {
     if (error instanceof CodeitError) {
       console.log('현재 error 객체', error.code);
