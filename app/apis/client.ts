@@ -32,7 +32,6 @@ class FetchInstance {
   private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-    console.log(url);
     try {
       const response = await fetch(url, {
         ...options,
@@ -51,9 +50,11 @@ class FetchInstance {
     if (this.token) {
       requestHeaders.set('Authorization', `Bearer ${this.token}`);
     }
-    if (this.contentType) {
-      const contentType = this.contentType === 'json' ? 'application/json' : 'multipart/form-data';
-      requestHeaders.set('Content-type', contentType);
+
+    // FormData의 경우에는 브라우저에서 Content-Type 자동 설정
+    // JSON 데이터일 경우에만 Content-Type 설정
+    if (this.contentType === 'json') {
+      requestHeaders.set('Content-Type', 'application/json');
     }
     return requestHeaders;
   }
@@ -93,7 +94,6 @@ class FetchInstance {
   }
 
   private static async handleError(response: Response): Promise<Error> {
-    console.log(response);
     try {
       const data = await response.json();
       return new CodeitError(
@@ -135,12 +135,22 @@ class FetchInstance {
     token?: string | undefined;
     contentType?: 'json' | 'formData';
   }): Promise<T> {
+    // body가 없다면 undefined로 넘어갈 것
+    let formattedBody: BodyInit | undefined;
+
+    // body가 있다면 케이스에 맞게 처리
+    if (contentType === 'json' && body) {
+      formattedBody = JSON.stringify(body); // json의 경우 처리 해줌
+    } else if (contentType === 'formData' && body instanceof FormData) {
+      formattedBody = body; // formData는 그대로 사용
+    }
+
     return this.request<T>(
       'POST',
       path,
       {
         ...options,
-        body: JSON.stringify(body),
+        body: formattedBody,
       },
       token,
       contentType,
@@ -160,12 +170,22 @@ class FetchInstance {
     token?: string | undefined;
     contentType?: 'json' | 'formData';
   }): Promise<T> {
+    // body가 없다면 undefined로 넘어갈 것
+    let formattedBody: BodyInit | undefined;
+
+    // body가 있다면 케이스에 맞게 처리
+    if (contentType === 'json' && body) {
+      formattedBody = JSON.stringify(body); // json의 경우 처리 해줌
+    } else if (contentType === 'formData' && body instanceof FormData) {
+      formattedBody = body; // formData는 그대로 사용
+    }
+
     return this.request<T>(
       'PUT',
       path,
       {
         ...options,
-        body: JSON.stringify(body),
+        body: formattedBody,
       },
       token,
       contentType,
