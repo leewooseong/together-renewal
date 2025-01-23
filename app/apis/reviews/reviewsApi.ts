@@ -121,8 +121,8 @@ export const getReviewsScore = async (
     if (error instanceof CodeitError) {
       console.log('현재 error 객체', error.code);
       return {
-        teamId: String(process.env.NEXT_PUBLIC_TEAM_ID),
-        type: 'DALLAEMFIT',
+        teamId: '',
+        type: '',
         oneStar: 0,
         twoStars: 0,
         threeStars: 0,
@@ -132,8 +132,8 @@ export const getReviewsScore = async (
       };
     }
     return {
-      teamId: String(process.env.NEXT_PUBLIC_TEAM_ID),
-      type: 'DALLAEMFIT',
+      teamId: '',
+      type: '',
       oneStar: 0,
       twoStars: 0,
       threeStars: 0,
