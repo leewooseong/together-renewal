@@ -38,9 +38,9 @@ export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringF
     }
   };
 
-  const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
-    gathering,
-  );
+  // const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
+  //   gathering,
+  // );
   const isAllActive = gathering === 'ALL' || gathering === 'DALLAEMFIT';
 
   return (
@@ -50,13 +50,14 @@ export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringF
           <motion.div
             ref={dallaemfitRef}
             animate={{
-              opacity: isDallaemfitActive
-                ? isWorkationHovered
-                  ? 0.4
-                  : 1
-                : isDallaemfitHovered
-                  ? 1
-                  : 0.4,
+              opacity:
+                gathering !== 'WORKATION'
+                  ? isWorkationHovered
+                    ? 0.4
+                    : 1
+                  : isDallaemfitHovered
+                    ? 1
+                    : 0.4,
             }}
             transition={{
               duration: 0.5,
@@ -75,13 +76,14 @@ export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringF
           <motion.div
             initial={false}
             animate={{
-              opacity: !isDallaemfitActive
-                ? isDallaemfitHovered
-                  ? 0.4
-                  : 1
-                : isWorkationHovered
-                  ? 1
-                  : 0.4,
+              opacity:
+                gathering === 'WORKATION'
+                  ? isDallaemfitHovered
+                    ? 0.4
+                    : 1
+                  : isWorkationHovered
+                    ? 1
+                    : 0.4,
             }}
             transition={{
               duration: 0.5,
@@ -128,6 +130,7 @@ export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringF
       <motion.nav
         animate={{
           opacity: gathering === 'WORKATION' ? 0 : 1,
+          visibility: gathering === 'WORKATION' ? 'hidden' : 'visible',
         }}
         transition={{
           duration: 0.5,
