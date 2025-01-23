@@ -12,6 +12,20 @@ export async function GET(request: NextRequest) {
       path: `/reviews/scores?${searchParams}`,
     });
 
+    // 응답 데이터가 빈 배열인 경우 처리
+    if (!response || response.length === 0) {
+      return NextResponse.json({
+        teamId: '',
+        type: '',
+        oneStar: 0,
+        twoStars: 0,
+        threeStars: 0,
+        fourStars: 0,
+        fiveStars: 0,
+        averageScore: 0,
+      });
+    }
+
     return Response.json(response[0]);
   } catch (error) {
     if (error instanceof CodeitError) {
