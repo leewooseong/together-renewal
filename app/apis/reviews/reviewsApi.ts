@@ -32,9 +32,7 @@ export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType
         currentPage: 0,
         totalPages: 0,
       };
-      // throw new CodeitError(error.message, error.status, error.code, error.parameter);
     }
-    // throw error; // 일반적인 에러도 상위로 전달
     return {
       data: [],
       totalItemCount: 0,
@@ -50,10 +48,6 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
     userId: props.userId,
     sortOrder: props.sortOrder,
   });
-  // const queryParams = new URLSearchParams();
-
-  // if (props.userId) queryParams.append('userId', props.userId.toString());
-  // if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
 
   try {
     const response = await clientInstance.get<ReviewListType>({
@@ -75,7 +69,7 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
       totalItemCount: 0,
       currentPage: 0,
       totalPages: 0,
-    }; // 기본 값 반환
+    };
   }
 };
 
@@ -83,11 +77,6 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
 export const getGatheringReviews = async (
   props: GetGatheringReviewsProps,
 ): Promise<ReviewListType> => {
-  // const queryParams = new URLSearchParams();
-
-  // if (props.gatheringId) queryParams.append('gatheringId', props.gatheringId.toString());
-  // if (props.sortOrder) queryParams.append('sortOrder', props.sortOrder);
-
   const queryParams = buildQueryParams({
     gatheringId: props.gatheringId,
     sortOrder: props.sortOrder,
@@ -113,7 +102,7 @@ export const getGatheringReviews = async (
       totalItemCount: 0,
       currentPage: 0,
       totalPages: 0,
-    }; // 기본 값 반환
+    };
   }
 };
 
