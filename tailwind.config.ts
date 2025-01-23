@@ -14,14 +14,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: COLOR_PALLETTE,
-      fontFamily: {
-        pretendard: ['var(--font-pretendard)'],
-      },
-
       screens: {
         tablet: '405px', // navbar font 깨짐 때문에 405px 기준 추가
         desktop: '1200px',
+      },
+      colors: COLOR_PALLETTE,
+      fontFamily: {
+        pretendard: ['var(--font-pretendard)'],
       },
     },
   },
