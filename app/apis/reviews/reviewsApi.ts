@@ -12,11 +12,11 @@ import {clientInstance} from '../client';
 
 export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType> => {
   const queryParams = buildQueryParams({
-    type: props.gatheringType,
-    location: props.location,
-    date: props.date,
-    sortBy: props.sortBy,
-    sortOrder: props.sortOrder,
+    type: props.type ?? '',
+    location: props.location ?? '',
+    date: props.date ?? '',
+    sortBy: props.sortBy ?? '',
+    sortOrder: props.sortOrder ?? '',
   });
   try {
     const response = await clientInstance.get<ReviewListType>({
@@ -106,11 +106,9 @@ export const getGatheringReviews = async (
   }
 };
 
-export const getReviewsScore = async (
-  gatheringType: GatheringWithoutAll,
-): Promise<AverageScoreList> => {
+export const getReviewsScore = async (type: GatheringWithoutAll): Promise<AverageScoreList> => {
   const queryParams = new URLSearchParams();
-  if (gatheringType) queryParams.append('type', gatheringType);
+  if (type) queryParams.append('type', type);
 
   try {
     const response = await clientInstance.get<AverageScoreList>({

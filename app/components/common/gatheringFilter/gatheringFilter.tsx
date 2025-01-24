@@ -9,7 +9,7 @@ import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';
 
 export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringFilterProps) {
-  const gathering = filter.gatheringType;
+  const gathering = filter.type;
   const dallaemfitRef = useRef<HTMLDivElement>(null);
   const workationRef = useRef<HTMLDivElement>(null);
 
@@ -30,11 +30,11 @@ export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringF
   const handleElementClick = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
     const getElementId = event.currentTarget.id as Gathering;
     if (getElementId === 'ALL') {
-      setFilter({...filter, gatheringType: 'DALLAEMFIT'});
-      makeQueryString({...filter, gatheringType: 'DALLAEMFIT'});
+      setFilter({...filter, type: 'DALLAEMFIT'});
+      makeQueryString({...filter, type: 'DALLAEMFIT'});
     } else {
-      setFilter({...filter, gatheringType: getElementId});
-      makeQueryString({...filter, gatheringType: getElementId});
+      setFilter({...filter, type: getElementId});
+      makeQueryString({...filter, type: getElementId});
     }
   };
 

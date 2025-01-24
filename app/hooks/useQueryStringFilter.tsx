@@ -6,7 +6,7 @@ export const useQueryStringFilter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [filter, setFilter] = useState({
-    gatheringType: 'DALLAEMFIT',
+    type: 'DALLAEMFIT',
     location: '',
     date: '',
     sortBy: '',
@@ -15,7 +15,7 @@ export const useQueryStringFilter = () => {
 
   useEffect(() => {
     setFilter({
-      gatheringType: searchParams.get('type') || 'DALLAEMFIT',
+      type: searchParams.get('type') || 'DALLAEMFIT',
       location: searchParams.get('location') || '',
       date: searchParams.get('date') || '',
       sortBy: searchParams.get('sortBy') || '',
@@ -24,11 +24,11 @@ export const useQueryStringFilter = () => {
   }, [searchParams]);
 
   const makeQueryString = (newFilter: Partial<typeof filter>) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams();
 
     Object.entries(newFilter).forEach(([key, value]) => {
       if (value) {
-        if (key === 'gatheringType') {
+        if (key === 'type') {
           params.set('type', value);
         } else {
           params.set(key, value);

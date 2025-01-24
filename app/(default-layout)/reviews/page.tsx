@@ -26,16 +26,16 @@ export default function ReviewsPage() {
   });
 
   // 두 번째 쿼리: 리뷰 점수 가져오기
-  const {gatheringType} = filter;
+  const {type} = filter;
   const {data: scoreData} = useQuery<AverageScoreList>({
-    queryKey: ['reviewScores', gatheringType],
-    queryFn: () => getReviewsScore(gatheringType as GatheringWithoutAll),
+    queryKey: ['reviewScores', type],
+    queryFn: () => getReviewsScore(type as GatheringWithoutAll),
   });
 
   return (
     <div>
       <div>
-        <p>Category: {filter.gatheringType}</p>
+        <p>Category: {filter.type}</p>
         <p>location: {filter.location}</p>
         <p>date: {filter.date}</p>
         <p>sortBy: {filter.sortBy}</p>

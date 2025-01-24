@@ -5,12 +5,12 @@ import {
 } from '../../types/reviews/reviewsApi.types';
 
 export const getReviewListQueryKey = ({
-  gatheringType,
+  type,
   location,
   date,
   sortBy,
   sortOrder,
-}: GetReviewsProps) => ['reviewList', {gatheringType, location, date, sortBy, sortOrder}];
+}: GetReviewsProps) => ['reviewList', {type, location, date, sortBy, sortOrder}];
 
 export const getMyReviewListQueryKey = ({userId, sortOrder}: GetMyReviewsProps) => [
   'reviewList',

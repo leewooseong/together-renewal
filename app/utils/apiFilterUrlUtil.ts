@@ -1,4 +1,4 @@
-type QueryParams = Record<string, string | number | undefined>;
+type QueryParams = Record<string, string | number>;
 
 export const buildQueryParams = (params: QueryParams): string => {
   const queryParams = new URLSearchParams();
