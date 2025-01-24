@@ -10,7 +10,7 @@ export type GatheringFilterProps = {
   setFilter: Dispatch<SetStateAction<RequiredGetReviewsProps>>;
   filter: RequiredGetReviewsProps;
   // makeQueryString: (filterItem: string) => void;
-  makeQueryString: (newFilter: GetReviewsProps) => void;
+  updateQueryString: (newFilter: GetReviewsProps) => void;
 };
 
 export type RequiredGetReviewsProps = Required<GetReviewsProps>;

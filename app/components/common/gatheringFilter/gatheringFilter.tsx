@@ -8,7 +8,7 @@ import {Gathering, GatheringFilterProps} from '../../../types/common/gatheringFi
 import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';
 
-export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringFilterProps) {
+export function GatheringFilter({setFilter, filter, updateQueryString}: GatheringFilterProps) {
   const gathering = filter.type;
   const dallaemfitRef = useRef<HTMLDivElement>(null);
   const workationRef = useRef<HTMLDivElement>(null);
@@ -31,10 +31,10 @@ export function GatheringFilter({setFilter, filter, makeQueryString}: GatheringF
     const getElementId = event.currentTarget.id as Gathering;
     if (getElementId === 'ALL') {
       setFilter({...filter, type: 'DALLAEMFIT'});
-      makeQueryString({...filter, type: 'DALLAEMFIT'});
+      updateQueryString({...filter, type: 'DALLAEMFIT'});
     } else {
       setFilter({...filter, type: getElementId});
-      makeQueryString({...filter, type: getElementId});
+      updateQueryString({...filter, type: getElementId});
     }
   };
 

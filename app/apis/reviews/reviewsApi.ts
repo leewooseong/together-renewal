@@ -7,7 +7,7 @@ import {
   GetMyReviewsProps,
   GetReviewsProps,
 } from '../../types/reviews/reviewsApi.types';
-import {buildQueryParams} from '../../utils/apiFilterUrlUtil';
+import {buildQueryParams} from '../../utils/buildQueryParamsUtil';
 import {clientInstance} from '../client';
 
 export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType> => {

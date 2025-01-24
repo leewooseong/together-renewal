@@ -2,6 +2,9 @@ import {useEffect, useState} from 'react';
 
 import {useRouter, useSearchParams} from 'next/navigation';
 
+import {buildQueryParams} from '../utils/buildQueryParamsUtil';
+import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
+
 export const useQueryStringFilter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -14,32 +17,38 @@ export const useQueryStringFilter = () => {
   });
 
   useEffect(() => {
-    setFilter({
+    // URL의 전체 쿼리 파라미터를 객체로 출력
+    // const queryObject = Object.fromEntries(searchParams.entries());
+    // console.log('Query Object:', queryObject);
+
+    const getUrlObject = {
       type: searchParams.get('type') || 'DALLAEMFIT',
       location: searchParams.get('location') || '',
       date: searchParams.get('date') || '',
       sortBy: searchParams.get('sortBy') || '',
       sortOrder: searchParams.get('sortOrder') || '',
-    });
+    };
+    const validQueryStringObject = checkQueryStringObject(getUrlObject);
+    console.log(`바뀐 type값: ${validQueryStringObject.type}`);
+    console.log(`바뀐 location값: ${validQueryStringObject.location}`);
+    console.log(`바뀐 sortBy값: ${validQueryStringObject.sortBy}`);
+    console.log(`바뀐 sortOrder값: ${validQueryStringObject.sortOrder}`);
+    console.log(`------------------------------`);
+    setFilter(validQueryStringObject);
+    // setFilter({
+    //   type: searchParams.get('type') || 'DALLAEMFIT',
+    //   location: searchParams.get('location') || '',
+    //   date: searchParams.get('date') || '',
+    //   sortBy: searchParams.get('sortBy') || '',
+    //   sortOrder: searchParams.get('sortOrder') || '',
+    // });
   }, [searchParams]);
 
-  const makeQueryString = (newFilter: Partial<typeof filter>) => {
-    const params = new URLSearchParams();
+  const updateQueryString = (newFilter: Partial<typeof filter>) => {
+    const queryString = buildQueryParams(newFilter);
 
-    Object.entries(newFilter).forEach(([key, value]) => {
-      if (value) {
-        if (key === 'type') {
-          params.set('type', value);
-        } else {
-          params.set(key, value);
-        }
-      } else {
-        params.delete(key);
-      }
-    });
-
-    router.replace(`?${params.toString()}`);
+    router.replace(`?${queryString}`);
   };
 
-  return {filter, setFilter, makeQueryString};
+  return {filter, setFilter, updateQueryString};
 };

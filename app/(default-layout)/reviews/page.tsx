@@ -16,7 +16,7 @@ import {ReviewListType} from '../../types/common/reviews.types';
 import {AverageScoreList} from '../../types/reviews/averageScores.types';
 
 export default function ReviewsPage() {
-  const {filter, setFilter, makeQueryString} = useQueryStringFilter();
+  const {filter, setFilter, updateQueryString} = useQueryStringFilter();
 
   const reviewsQueryKey = getReviewListQueryKey(filter);
 
@@ -45,7 +45,11 @@ export default function ReviewsPage() {
         <PageInfo pageName="reviews" />
       </div>
       <div className="border-b-2 border-b-gray-200 pb-4">
-        <GatheringFilter makeQueryString={makeQueryString} filter={filter} setFilter={setFilter} />
+        <GatheringFilter
+          updateQueryString={updateQueryString}
+          filter={filter}
+          setFilter={setFilter}
+        />
       </div>
 
       <div className="mt-6">
