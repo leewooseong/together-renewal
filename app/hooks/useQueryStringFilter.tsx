@@ -17,10 +17,6 @@ export const useQueryStringFilter = () => {
   });
 
   useEffect(() => {
-    // URL의 전체 쿼리 파라미터를 객체로 출력
-    // const queryObject = Object.fromEntries(searchParams.entries());
-    // console.log('Query Object:', queryObject);
-
     const getUrlObject = {
       type: searchParams.get('type') || 'DALLAEMFIT',
       location: searchParams.get('location') || '',
@@ -35,13 +31,6 @@ export const useQueryStringFilter = () => {
     console.log(`바뀐 sortOrder값: ${validQueryStringObject.sortOrder}`);
     console.log(`------------------------------`);
     setFilter(validQueryStringObject);
-    // setFilter({
-    //   type: searchParams.get('type') || 'DALLAEMFIT',
-    //   location: searchParams.get('location') || '',
-    //   date: searchParams.get('date') || '',
-    //   sortBy: searchParams.get('sortBy') || '',
-    //   sortOrder: searchParams.get('sortOrder') || '',
-    // });
   }, [searchParams]);
 
   const updateQueryString = (newFilter: Partial<typeof filter>) => {
