@@ -5,12 +5,14 @@ import {useEffect, useRef, useState} from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 
 import {PROFILE_DROPDOWN} from '../../../constants/style';
 import {useUserMutation} from '../../../queries/user/useUserMutaions';
 import {useUserQuery} from '../../../queries/user/useUserQuries';
 
 function ProfileSection() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [hasDropdownSpace, setHasDropdownSpace] = useState(true);
   const profileButtonRef = useRef<HTMLButtonElement>(null);
@@ -92,9 +94,16 @@ function ProfileSection() {
             )}
           >
             <li className="px-4 py-[10px] hover:bg-gray-100">
-              <Link href="/mypage" onClick={handleDropDownClick}>
+              <button
+                type="button"
+                onClick={() => {
+                  handleDropDownClick();
+                  router.push('/mypage');
+                  router.refresh(); // Router cache로 인해 middleware가 동작하지 않게 되어, middleware가 필요한 페이지의 경우 router.refresh 사용
+                }}
+              >
                 마이페이지
-              </Link>
+              </button>
             </li>
             <li className="px-4 py-[10px] hover:bg-gray-100">
               <button type="button" onClick={handleLogout}>

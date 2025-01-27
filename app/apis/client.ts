@@ -32,7 +32,7 @@ class FetchInstance {
   private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-    console.log(url);
+    // console.log(url);
     try {
       const response = await fetch(url, {
         ...options,
@@ -93,9 +93,10 @@ class FetchInstance {
   }
 
   private static async handleError(response: Response): Promise<Error> {
-    console.log(response);
+    // console.log(response);
     try {
       const data = await response.json();
+      console.log(data, response.url);
       return new CodeitError(
         data.message,
         response.status as CodeitErrorStatus,
