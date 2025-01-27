@@ -47,7 +47,7 @@ export function Review({
           <div className="pt-2.5 text-sm">{`${gatheringType} · ${gatheringLocation}`}</div>
         )}
         <div className="flex items-center pt-2 text-sm">
-          {pageName === 'my-page' ? (
+          {pageName === 'mypage' ? (
             ''
           ) : (
             <div className="flex items-center">
@@ -70,7 +70,7 @@ export function Review({
               <span className="pl-2">{userName}</span>
             </div>
           )}
-          {pageName === 'my-page' ? '' : <div className="pl-2 pr-3">|</div>}
+          {pageName === 'mypage' ? '' : <div className="pl-2 pr-3">|</div>}
           <div className="text-gray-500">{createDate}</div>
         </div>
       </div>
