@@ -105,36 +105,7 @@ export const checkQueryStringObject = (params: QueryStringObject) => {
   } else {
     console.log('sortBy에 빈값을 줬구나나');
   }
-  // if (params.sortBy) {
-  //   const noSpaces = params.sortBy.replace(/\s/g, '');
-  //   const isEnglish = /^[a-zA-Z]+$/.test(noSpaces);
-  //   let upperCase = '';
-  //   if (isEnglish) {
-  //     upperCase = noSpaces.toUpperCase();
-  //     console.log('대문자로 변환!', upperCase);
-  //   }
-  //   console.log('받은값은:', params.sortBy);
-  //   console.log('공백을 제거했습니다:', noSpaces);
 
-  //   console.log('가지고 있나요?', UPPER_CASE_SORT_BY.includes(upperCase));
-
-  //   if (isEnglish && UPPER_CASE_SORT_BY.includes(upperCase)) {
-  //     console.log('있네요');
-  //     if (upperCase === UPPER_CASE_SORT_BY[0]) {
-  //       newQueryStringObject.sortBy = SORT_BY[0];
-  //     } else if (upperCase === UPPER_CASE_SORT_BY[1]) {
-  //       newQueryStringObject.sortBy = SORT_BY[1];
-  //     } else if (upperCase === UPPER_CASE_SORT_BY[2]) {
-  //       newQueryStringObject.sortBy = SORT_BY[2];
-  //     }
-  //   } else {
-  //     console.log('없음!!!');
-  //     console.log('정제를 거친 니가 준 값:', upperCase);
-  //     newQueryStringObject.sortBy = '';
-  //   }
-  // } else {
-  //   console.log('sortBy에 빈값을 줬구나나');
-  // }
   console.log('sortBy가-잘 반영됐니?', newQueryStringObject.sortBy);
   console.log('----------------------');
   console.log('sortOrder 확인 시작');
