@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from 'react';
 
 import {motion} from 'motion/react';
 
-import {Gathering, GatheringFilterProps} from '../../../types/gatheringFilter.types';
+import {Gathering, GatheringFilterProps} from '../../../types/common/gatheringFilter.types';
 
 import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';
@@ -16,8 +16,6 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
   const [isWorkationHovered, setIsWorkationHovered] = useState(false);
   const [dallaemfitWidth, setDallaemfitWidth] = useState(0);
   const [workationWidth, setWorkationWidth] = useState(0);
-
-  const [, setIsVisible] = useState(true);
 
   useEffect(() => {
     if (dallaemfitRef.current) {
@@ -32,13 +30,9 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
     const getElementId = event.currentTarget.id as Gathering;
     if (getElementId === 'ALL') {
       setGatheringType('DALLAEMFIT');
-      return;
+    } else {
+      setGatheringType(getElementId);
     }
-    if (getElementId !== 'WORKATION') {
-      setIsVisible(true);
-    }
-
-    setGatheringType(getElementId);
   };
 
   const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
@@ -136,12 +130,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
           duration: 0.5,
           ease: 'easeInOut',
         }}
-        onAnimationComplete={() => {
-          if (gatheringType === 'WORKATION') {
-            setIsVisible(false);
-          }
-        }}
-        className="mt-[10px] flex gap-2 xs:mt-[14px]"
+        className="mt-[14px] flex gap-2 tablet:mt-[10px]"
       >
         <button
           type="button"

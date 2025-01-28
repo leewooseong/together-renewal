@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {Gathering} from '../types/gatheringFilter.types';
+import {Gathering} from '../types/common/gatheringFilter.types';
 
 export function useGatheringFilter() {
   const [gatheringType, setGatheringType] = useState<Gathering>('DALLAEMFIT');

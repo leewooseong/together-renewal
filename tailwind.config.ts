@@ -1,4 +1,4 @@
-import {DESKTOP, PROFILE_DROPDOWN, TABLET} from './app/constants/style';
+import {PROFILE_DROPDOWN} from './app/constants/style';
 
 import type {Config} from 'tailwindcss';
 
@@ -15,12 +15,11 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    screens: {
-      xs: '375px',
-      tablet: TABLET, // navbar font 깨짐 때문에 405px 기준 추가
-      desktop: DESKTOP,
-    },
     extend: {
+      screens: {
+        tablet: '405px', // navbar font 깨짐 때문에 405px 기준 추가
+        desktop: '1200px',
+      },
       colors: COLOR_PALLETTE,
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],

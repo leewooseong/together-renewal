@@ -1,4 +1,4 @@
-import {GatheringIconProps} from '../../../../types/svgComponent.type';
+import {GatheringIconProps} from '../../../../types/common/svgComponent.type';
 
 export function WorkationSvg({className}: GatheringIconProps) {
   return (

@@ -19,3 +19,15 @@ body {
     text-wrap: balance;
   }
 }
+
+/** card component용 점선*/
+.custom-dotted-line {
+  height: 2px;
+  background: repeating-linear-gradient(
+    to right,
+    #E5E7EB,
+    #E5E7EB 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}
