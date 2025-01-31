@@ -2,9 +2,9 @@
 
 import {Dispatch, SetStateAction, useState} from 'react';
 
-import {startOfToday} from 'date-fns';
+import {getTodayStart} from '../../../utils/calendar';
 
-import {CalendarWithEndDate} from './calendarWithEndDate';
+import {DatePicker} from './datePicker';
 import {TimeSelector} from './timeSelector';
 
 export type TimeType = 'hour' | 'minute' | 'period';
@@ -16,9 +16,10 @@ export type TimeSelectorType = {
   setSelectedTime: Dispatch<SetStateAction<string>>;
 };
 
+// Todo: resizeObserver를 이용해서 날짜 선택 컴포넌트의 높이에 따라 캘린더의 높이가 될 수 있도록 수정
+// Todo: provider를 이용하는 방법으로 변경 필요
 export function CreateModalCalendar() {
-  // Todo: provider를 이용하는 방법으로 변경 필요
-  const [selectedDate, setSelectedDate] = useState<Date>(startOfToday()); // startOfToday === today's date
+  const [selectedDate, setSelectedDate] = useState<Date | null>(getTodayStart());
   const [selectedHour, setSelectedHour] = useState<string>('12');
   const [selectedMinute, setSelectedMinute] = useState<string>('00');
   const [selectedPeriod, setSelectedPeriod] = useState<string>('AM');
@@ -46,7 +47,7 @@ export function CreateModalCalendar() {
   return (
     <div className="mx-auto inline-flex h-64 flex-row overflow-hidden rounded-xl border border-gray-200 bg-white p-3 shadow-[0_10px_10px_-5px_rgba(0,0,0,0.04)]">
       <div className="mr-[10px] w-[270px]">
-        <CalendarWithEndDate selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        <DatePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
       {timeInfoList.map(timeInfo => (
         <div className="ml-[10px] border-l border-gray-200" key={timeInfo.type}>

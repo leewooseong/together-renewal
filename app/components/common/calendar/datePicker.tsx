@@ -18,12 +18,11 @@ import {
 } from '../../../utils/calendar';
 
 type CalendarProps = {
-  selectedDate: Date;
-  setSelectedDate: Dispatch<SetStateAction<Date>>;
+  selectedDate: Date | null;
+  setSelectedDate: Dispatch<SetStateAction<Date | null>>;
 };
 
-// Todo: startDate, endDate에 대한 작업 처리 필요
-export function CalendarWithEndDate({selectedDate, setSelectedDate}: CalendarProps) {
+export function DatePicker({selectedDate, setSelectedDate}: CalendarProps) {
   const today = getTodayStart();
   const [currentMonth, setCurrentMonth] = useState(formatDate(selectedDate ?? today, 'MMM-yyyy'));
   const firstDayCurrentMonth = getFirstDayOfMonth(currentMonth, 'MMM-yyyy', selectedDate || today);
@@ -48,6 +47,20 @@ export function CalendarWithEndDate({selectedDate, setSelectedDate}: CalendarPro
     const dateIndex = parseInt(dateElement.dataset.index, 10);
     const newSelectedDate = days[dateIndex];
     setSelectedDate(newSelectedDate);
+  };
+
+  const getStyleOfDay = (day: Date) => {
+    if (selectedDate && dateComparison.isEqual(day, selectedDate)) {
+      return 'bg-orange-600 text-white';
+    }
+
+    if (dateComparison.isToday(day)) {
+      return 'text-orange-600';
+    }
+
+    if (!dateComparison.isSameMonth(day, firstDayCurrentMonth)) return 'text-gray-400';
+
+    return 'text-gray-800';
   };
 
   return (
@@ -103,18 +116,12 @@ export function CalendarWithEndDate({selectedDate, setSelectedDate}: CalendarPro
             <li
               key={day.toString()}
               data-index={dayIdx}
-              className={`${dayIdx === 0 && colStartClasses[getDayIndex(day)]}`}
+              className={clsx(`${dayIdx === 0 && colStartClasses[getDayIndex(day)]}`, {})}
             >
               <button
                 type="button"
                 onClick={handleSelectDate}
-                className={clsx(
-                  'h-8 w-full rounded-lg transition-colors',
-                  [!dateComparison.isSameMonth(day, firstDayCurrentMonth) && 'text-gray-400'],
-                  dateComparison.isEqual(day, selectedDate)
-                    ? 'bg-orange-600 text-white'
-                    : dateComparison.isToday(day) && 'text-orange-600',
-                )}
+                className={clsx('h-8 w-full rounded-lg transition-colors', getStyleOfDay(day))}
               >
                 <time dateTime={formatDate(day, 'yyyy-MM-dd')}>{formatDate(day, 'd')}</time>
               </button>

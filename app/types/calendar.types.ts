@@ -8,3 +8,5 @@ export type MonthNavigationResult = {
   firstDayNextMonth: Date;
   formattedMonth: string;
 };
+
+export type CalendarType = 'startDatePicker' | 'endDatePicker';
