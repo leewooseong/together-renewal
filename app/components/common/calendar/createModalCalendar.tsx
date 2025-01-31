@@ -4,7 +4,7 @@ import {Dispatch, SetStateAction, useState} from 'react';
 
 import {startOfToday} from 'date-fns';
 
-import {Calendar} from './calendar';
+import {CalendarWithEndDate} from './calendarWithEndDate';
 import {TimeSelector} from './timeSelector';
 
 export type TimeType = 'hour' | 'minute' | 'period';
@@ -17,6 +17,7 @@ export type TimeSelectorType = {
 };
 
 export function CreateModalCalendar() {
+  // Todo: provider를 이용하는 방법으로 변경 필요
   const [selectedDate, setSelectedDate] = useState<Date>(startOfToday()); // startOfToday === today's date
   const [selectedHour, setSelectedHour] = useState<string>('12');
   const [selectedMinute, setSelectedMinute] = useState<string>('00');
@@ -45,7 +46,7 @@ export function CreateModalCalendar() {
   return (
     <div className="mx-auto inline-flex h-64 flex-row overflow-hidden rounded-xl border border-gray-200 bg-white p-3 shadow-[0_10px_10px_-5px_rgba(0,0,0,0.04)]">
       <div className="mr-[10px] w-[270px]">
-        <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+        <CalendarWithEndDate selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
       {timeInfoList.map(timeInfo => (
         <div className="ml-[10px] border-l border-gray-200" key={timeInfo.type}>
