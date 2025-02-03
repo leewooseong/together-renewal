@@ -1,6 +1,6 @@
 'use client';
 
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, RefObject, SetStateAction, useState} from 'react';
 
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -20,9 +20,10 @@ import {
 type CalendarProps = {
   selectedDate: Date | null;
   setSelectedDate: Dispatch<SetStateAction<Date | null>>;
+  datePickerRef: RefObject<HTMLDivElement>;
 };
 
-export function DatePicker({selectedDate, setSelectedDate}: CalendarProps) {
+export function DatePicker({selectedDate, setSelectedDate, datePickerRef}: CalendarProps) {
   const today = getTodayStart();
   const [currentMonth, setCurrentMonth] = useState(formatDate(selectedDate ?? today, 'MMM-yyyy'));
   const firstDayCurrentMonth = getFirstDayOfMonth(currentMonth, 'MMM-yyyy', selectedDate || today);
@@ -64,8 +65,8 @@ export function DatePicker({selectedDate, setSelectedDate}: CalendarProps) {
   };
 
   return (
-    <div className="bg-white">
-      <div className="flex items-center">
+    <div ref={datePickerRef} className="bg-white p-[10px] pb-4">
+      <div className="flex items-center py-[5px]">
         <button
           type="button"
           onClick={previousMonth}
