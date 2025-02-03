@@ -2,28 +2,29 @@ import {useEffect, useState} from 'react';
 
 import {useRouter, useSearchParams} from 'next/navigation';
 
+import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
 import {buildQueryParams} from '../utils/buildQueryParamsUtil';
 import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
 
 export const useQueryStringFilter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<GetReviewsProps>({
     type: 'DALLAEMFIT',
-    location: '',
-    date: '',
-    sortBy: '',
-    sortOrder: '',
   });
 
   useEffect(() => {
-    const getUrlObject = {
-      type: searchParams.get('type') || 'DALLAEMFIT',
-      location: searchParams.get('location') || '',
-      date: searchParams.get('date') || '',
-      sortBy: searchParams.get('sortBy') || '',
-      sortOrder: searchParams.get('sortOrder') || '',
+    const parsedQuery = Object.fromEntries(searchParams.entries());
+
+    const deletedEmptyQuery = Object.fromEntries(
+      Object.entries(parsedQuery).filter(([, value]) => value !== '' && value !== null),
+    );
+
+    const getUrlObject: GetReviewsProps = {
+      type: (deletedEmptyQuery.type as string) || 'DALLAEMFIT',
+      ...deletedEmptyQuery,
     };
+
     const validQueryStringObject = checkQueryStringObject(getUrlObject);
     console.log(`바뀐 type값: ${validQueryStringObject.type}`);
     console.log(`바뀐 location값: ${validQueryStringObject.location}`);

@@ -17,12 +17,6 @@ import {AverageScoreList} from '../../types/reviews/averageScores.types';
 export default function ReviewsPage() {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();
 
-  // const reviewsQueryKey = getReviewListQueryKey(filter);
-
-  // const {data: reviewList} = useQuery<ReviewListType>({
-  //   queryKey: reviewsQueryKey,
-  //   queryFn: () => getReviews(filter),
-  // });
   const {data: reviewList} = useQuery(reviewListQuery.getReviewList(filter));
 
   // 두 번째 쿼리: 리뷰 점수 가져오기

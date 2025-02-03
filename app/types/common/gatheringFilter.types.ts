@@ -7,10 +7,9 @@ export type Gathering = 'DALLAEMFIT' | 'ALL' | 'OFFICE_STRETCHING' | 'MINDFULNES
 export type GatheringWithoutAll = Exclude<Gathering, 'ALL'>;
 
 export type GatheringFilterProps = {
-  setFilter: Dispatch<SetStateAction<RequiredGetReviewsProps>>;
-  filter: RequiredGetReviewsProps;
-  // makeQueryString: (filterItem: string) => void;
+  setFilter: Dispatch<SetStateAction<GetReviewsProps>>;
+  filter: GetReviewsProps;
   updateQueryString: (newFilter: GetReviewsProps) => void;
 };
 
-export type RequiredGetReviewsProps = Required<GetReviewsProps>;
+// export type RequiredGetReviewsProps = Required<GetReviewsProps>;

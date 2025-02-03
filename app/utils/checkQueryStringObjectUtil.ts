@@ -1,10 +1,5 @@
-type QueryStringObject = {
-  type: string;
-  location: string;
-  date: string;
-  sortBy: string;
-  sortOrder: string;
-};
+import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
+
 const GATHERING_TYPES = ['DALLAEMFIT', 'OFFICE_STRETCHING', 'MINDFULNESS', 'WORKATION'];
 const STRING_ONLY_GATHERING_TYPES = ['DALLAEMFIT', 'OFFICESTRETCHING', 'MINDFULNESS', 'WORKATION'];
 
@@ -15,7 +10,7 @@ const UPPER_CASE_SORT_BY = ['CREATEDAT', 'SCORE', 'PARTICIPANTCOUNT'];
 
 const SORT_ORDER = ['asc', 'desc'];
 
-export const checkQueryStringObject = (params: QueryStringObject) => {
+export const checkQueryStringObject = (params: GetReviewsProps) => {
   const newQueryStringObject = {...params};
   // 모임 타입 확인
   if (params.type) {
