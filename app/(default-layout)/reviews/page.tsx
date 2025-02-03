@@ -4,26 +4,26 @@
 
 import {useQuery} from '@tanstack/react-query';
 
-import {getReviews, getReviewsScore} from '../../apis/reviews/reviewsApi';
+import {getReviewsScore} from '../../apis/reviews/reviewsApi';
 import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../../components/common/pageInfo';
 import {Review} from '../../components/common/review/review';
 import {AverageScores} from '../../components/reviews/averageScores';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-import {getReviewListQueryKey} from '../../queries/common/queryKeys';
+import {reviewListQuery} from '../../queries/common/queryKeys';
 import {GatheringWithoutAll} from '../../types/common/gatheringFilter.types';
-import {ReviewListType} from '../../types/common/reviews.types';
 import {AverageScoreList} from '../../types/reviews/averageScores.types';
 
 export default function ReviewsPage() {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();
 
-  const reviewsQueryKey = getReviewListQueryKey(filter);
+  // const reviewsQueryKey = getReviewListQueryKey(filter);
 
-  const {data: reviewList} = useQuery<ReviewListType>({
-    queryKey: reviewsQueryKey,
-    queryFn: () => getReviews(filter),
-  });
+  // const {data: reviewList} = useQuery<ReviewListType>({
+  //   queryKey: reviewsQueryKey,
+  //   queryFn: () => getReviews(filter),
+  // });
+  const {data: reviewList} = useQuery(reviewListQuery.getReviewList(filter));
 
   // 두 번째 쿼리: 리뷰 점수 가져오기
   const {type} = filter;
