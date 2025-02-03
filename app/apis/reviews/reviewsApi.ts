@@ -21,15 +21,7 @@ export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType
     });
     return response;
   } catch (error) {
-    if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
-      return {
-        data: [],
-        totalItemCount: 0,
-        currentPage: 0,
-        totalPages: 0,
-      };
-    }
+    console.log('현재 error 객체', error);
     return {
       data: [],
       totalItemCount: 0,
@@ -52,15 +44,7 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
     });
     return response;
   } catch (error) {
-    if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
-      return {
-        data: [],
-        totalItemCount: 0,
-        currentPage: 0,
-        totalPages: 0,
-      };
-    }
+    console.log('현재 error 객체', error);
     return {
       data: [],
       totalItemCount: 0,
@@ -85,15 +69,7 @@ export const getGatheringReviews = async (
     });
     return response;
   } catch (error) {
-    if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
-      return {
-        data: [],
-        totalItemCount: 0,
-        currentPage: 0,
-        totalPages: 0,
-      };
-    }
+    console.log('현재 error 객체', error);
     return {
       data: [],
       totalItemCount: 0,
