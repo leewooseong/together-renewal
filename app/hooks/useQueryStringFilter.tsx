@@ -14,10 +14,8 @@ export const useQueryStringFilter = () => {
   });
 
   useEffect(() => {
-    const parsedQuery = Object.fromEntries(searchParams.entries());
-
     const deletedEmptyQuery = Object.fromEntries(
-      Object.entries(parsedQuery).filter(([, value]) => value !== '' && value !== null),
+      Array.from(searchParams.entries()).filter(([, value]) => value !== '' && value !== null),
     );
 
     const getUrlObject: GetReviewsProps = {
