@@ -19,8 +19,8 @@ export const useQueryStringFilter = () => {
     );
 
     const getUrlObject: GetReviewsProps = {
-      type: (deletedEmptyQuery.type as string) || 'DALLAEMFIT',
       ...deletedEmptyQuery,
+      type: (deletedEmptyQuery.type as string) || 'DALLAEMFIT',
     };
 
     const validQueryStringObject = checkQueryStringObject(getUrlObject);
