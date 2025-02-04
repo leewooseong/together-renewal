@@ -1,3 +1,26 @@
+'use client';
+
+import BottomBar from '../../../components/gatherings/bottomBar';
+
 export default function Gathering() {
-  return <div className="h-[1000px]">모임 상세 페이지ㄴㅇㅁ</div>;
+  return (
+    <>
+      <div>
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+        <div className="size-44 bg-pink-400" />
+      </div>
+      <BottomBar isOwner={false} gatheringId={1} />
+    </>
+  );
 }
