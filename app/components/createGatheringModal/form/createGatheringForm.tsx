@@ -37,7 +37,7 @@ export function CreateGatheringForm({formData, onChangeFormData}: CreateGatherin
         value={formData.type}
         onChange={value => handleInputChange('type', value)}
       />
-      <div className="grid grid-cols-2 gap-10">
+      <div className="flex flex-wrap gap-2 tablet:flex-nowrap tablet:gap-10">
         <GatheringTimePicker
           value={formData.dateTime}
           onChange={value => handleInputChange('dateTime', value)}

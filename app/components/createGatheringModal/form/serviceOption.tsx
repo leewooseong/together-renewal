@@ -17,7 +17,7 @@ export function ServiceOption({
 }) {
   return (
     <label
-      className={`flex grow cursor-pointer items-start gap-2 rounded-lg border p-4 transition-colors ${
+      className={`flex min-w-[109px] grow cursor-pointer items-start rounded-lg border pb-[14px] pl-2 pr-[6px] pt-[6px] transition-colors tablet:gap-2 tablet:pb-4 tablet:pl-4 tablet:pr-5 tablet:pt-3 ${
         isSelected ? 'bg-gray-900 text-white' : 'bg-white'
       }`}
     >
@@ -37,8 +37,8 @@ export function ServiceOption({
       )}
       {/* 커스텀 라디오 컨텐트 UI */}
       <div className="flex flex-col">
-        <span className="text-base font-semibold">{label}</span>
-        <span className="text-xs font-medium">{subLabel}</span>
+        <span className="text-sm font-semibold tablet:text-base">{label}</span>
+        <span className="break-keep text-xs font-medium">{subLabel}</span>
       </div>
     </label>
   );

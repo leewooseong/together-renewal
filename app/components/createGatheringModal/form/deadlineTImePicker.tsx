@@ -15,8 +15,8 @@ export function DeadlineTImePicker({value, onChange, error = undefined}: InputPr
   };
 
   return (
-    <div>
-      <label className="mb-1 block text-sm font-medium">마감 날짜</label>
+    <div className="grow">
+      <label className="mb-1 block text-base font-medium">마감 날짜</label>
       <button
         type="button"
         onClick={() => setShowCalendar(!showCalendar)}

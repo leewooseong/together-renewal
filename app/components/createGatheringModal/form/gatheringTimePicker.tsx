@@ -15,7 +15,7 @@ export function GatheringTimePicker({value, onChange, error = undefined}: InputP
   };
 
   return (
-    <div>
+    <div className="grow">
       <label className="mb-1 block text-base font-medium">모임 날짜</label>
       <button
         type="button"

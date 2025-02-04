@@ -5,7 +5,7 @@ import {ServiceOption} from './serviceOption';
 const OPTION_LIST: {
   type: ServiceType;
   label: '달램핏' | '워케이션';
-  subLabel: '오피스 스트레칭' | '마인드 풀니스' | '';
+  subLabel: '오피스 스트레칭' | '마인드풀니스' | '';
 }[] = [
   {
     type: 'OFFICE_STRETCHING',
@@ -15,7 +15,7 @@ const OPTION_LIST: {
   {
     type: 'MINDFULNESS',
     label: '달램핏',
-    subLabel: '마인드 풀니스',
+    subLabel: '마인드풀니스',
   },
   {
     type: 'WORKATION',
@@ -28,7 +28,7 @@ export function ServiceTypeSelect({value, onChange}: InputProps<ServiceType>) {
   return (
     <div>
       <label className="mb-1 block text-sm font-medium">선택 서비스</label>
-      <div className="flex gap-3">
+      <div className="grid grid-cols-3 gap-2 tablet:gap-3">
         {OPTION_LIST.map(optionInfo => {
           return (
             <ServiceOption
