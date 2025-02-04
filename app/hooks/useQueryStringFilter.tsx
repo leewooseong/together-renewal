@@ -24,11 +24,7 @@ export const useQueryStringFilter = () => {
     };
 
     const validQueryStringObject = checkQueryStringObject(getUrlObject);
-    console.log(`바뀐 type값: ${validQueryStringObject.type}`);
-    console.log(`바뀐 location값: ${validQueryStringObject.location}`);
-    console.log(`바뀐 sortBy값: ${validQueryStringObject.sortBy}`);
-    console.log(`바뀐 sortOrder값: ${validQueryStringObject.sortOrder}`);
-    console.log(`------------------------------`);
+
     setFilter(validQueryStringObject);
   }, [searchParams]);
 

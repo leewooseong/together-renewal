@@ -14,7 +14,7 @@ export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType
   const queryParams = buildQueryParams({
     ...props,
   });
-  console.log(queryParams);
+
   try {
     const response = await clientInstance.get<ReviewListType>({
       path: `/route/reviews?${queryParams.toString()}`,
