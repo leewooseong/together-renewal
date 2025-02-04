@@ -11,13 +11,13 @@ import {buildQueryParams} from '../../utils/buildQueryParamsUtil';
 import {clientInstance} from '../client';
 
 export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType> => {
-  const queryParams = buildQueryParams({
+  const queryParam = buildQueryParams({
     ...props,
   });
 
   try {
     const response = await clientInstance.get<ReviewListType>({
-      path: `/route/reviews?${queryParams.toString()}`,
+      path: `/route/reviews?${queryParam.toString()}`,
     });
     return response;
   } catch (error) {
