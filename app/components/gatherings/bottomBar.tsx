@@ -8,7 +8,7 @@ type BottomBarType = {
   isOwner: boolean;
   gatheringId: number;
 };
-const islogin = false;
+const islogin = true;
 export default function BottomBar({isOwner, gatheringId}: BottomBarType) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ModalType>({

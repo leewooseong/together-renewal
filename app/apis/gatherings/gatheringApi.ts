@@ -1,3 +1,4 @@
+import {JoinGatheringResponse} from '../../route/token/gatherings/joinedGatherings/[id]/route';
 import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
 import {clientInstance, serverInstance} from '../client';
 
@@ -62,5 +63,27 @@ export const leaveJoinedGatheringsInServer = async (
   } catch (error) {
     console.error('참여한 모임 삭제 실패: ', error);
     throw error;
+  }
+};
+
+export const postJoinGathering = async ({
+  token,
+  id,
+}: {
+  id: number;
+  token: string;
+}): Promise<JoinGatheringResponse> => {
+  try {
+    const response = await clientInstance.post<JoinGatheringResponse>({
+      path: `/route/token/gatherings/${id}`,
+      body: {
+        token,
+        id,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log('현재 error 객체', error);
+    throw new Error();
   }
 };
