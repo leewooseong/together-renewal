@@ -96,6 +96,7 @@ class FetchInstance {
   private static async handleError(response: Response): Promise<Error> {
     try {
       const data = await response.json();
+      console.log(data, response.url);
       return new CodeitError(
         data.message,
         response.status as CodeitErrorStatus,

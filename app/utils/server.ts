@@ -1,8 +1,5 @@
+import {GUEST_ONLY_PATH, PROTECTED_PATH} from '../constants/routing';
 import {PageType, RequestType} from '../types/server.types';
-
-// Todo: 팀원분들 작성 내용 기반으로 수정하기
-const PROTECTED_PATH = ['/mypage'];
-const GUEST_ONLY_PATH = ['/login', '/signup'];
 
 export const getRequestType = (pathname: string): RequestType => {
   const firstPathName = pathname.split('/').filter(Boolean)[0];
