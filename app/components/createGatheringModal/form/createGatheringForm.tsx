@@ -1,3 +1,5 @@
+import {useState} from 'react';
+
 import {CreateGathering} from '../../../types/gatherings/createGathering.types';
 import {ValueOf} from '../../../types/util.types';
 import {LOCATION_MAP} from '../../../utils/createGathering';
@@ -11,16 +13,23 @@ import {LocationSelect} from './locationSelect';
 import {ServiceTypeSelect} from './serviceTypeSelect';
 import {SubmitButton} from './submitButton';
 
-interface CreateGatheringFormProps {
-  formData: CreateGathering;
-  onChangeFormData: (field: keyof CreateGathering, value: ValueOf<CreateGathering>) => void;
-}
+export function CreateGatheringForm() {
+  const [formData, setFormData] = useState<CreateGathering>({
+    name: '',
+    location: null,
+    image: null,
+    type: 'OFFICE_STRETCHING',
+    dateTime: '',
+    capacity: 0,
+    registrationEnd: '',
+  });
 
-export function CreateGatheringForm({formData, onChangeFormData}: CreateGatheringFormProps) {
   const handleInputChange = (field: keyof CreateGathering, value: ValueOf<CreateGathering>) => {
-    onChangeFormData(field, value);
+    setFormData(prev => ({
+      ...prev,
+      [field]: value,
+    }));
   };
-
   return (
     <form className="flex flex-col gap-6">
       <GatheringNameInput

@@ -1,31 +1,9 @@
-import {useState} from 'react';
-
-import {CreateGathering} from '../../types/gatherings/createGathering.types';
-import {ValueOf} from '../../types/util.types';
-
 import {CreateGatheringForm} from './form/createGatheringForm';
 
 interface CreateGatheringModalProps {
   onClose: () => void;
 }
 export function CreateGatheringModal({onClose}: CreateGatheringModalProps) {
-  const [formData, setFormData] = useState<CreateGathering>({
-    name: '',
-    location: null,
-    image: null,
-    type: 'OFFICE_STRETCHING',
-    dateTime: '',
-    capacity: 0,
-    registrationEnd: '',
-  });
-
-  const handleInputChange = (field: keyof CreateGathering, value: ValueOf<CreateGathering>) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
   return (
     <div className="fixed inset-0 z-50">
       {/* Backdrop */}
@@ -41,7 +19,7 @@ export function CreateGatheringModal({onClose}: CreateGatheringModalProps) {
           </button>
         </div>
         {/* Modal content */}
-        <CreateGatheringForm formData={formData} onChangeFormData={handleInputChange} />
+        <CreateGatheringForm />
       </div>
     </div>
   );
