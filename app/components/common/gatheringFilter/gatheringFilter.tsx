@@ -9,7 +9,7 @@ import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';
 
 export function GatheringFilter({setFilter, filter, updateQueryString}: GatheringFilterProps) {
-  const gathering = filter.type;
+  const gathering = filter.type || 'DALLAEMFIT';
   const dallaemfitRef = useRef<HTMLDivElement>(null);
   const workationRef = useRef<HTMLDivElement>(null);
 
