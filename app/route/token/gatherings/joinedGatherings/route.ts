@@ -45,7 +45,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const [gathering] = await getGatherings({id: gatheringId});
+    const [gathering] = await getGatherings({id: String(gatheringId)});
 
     if (!gathering) {
       return NextResponse.json({message: '해당 모임 정보를 찾을 수 없습니다.'}, {status: 404});

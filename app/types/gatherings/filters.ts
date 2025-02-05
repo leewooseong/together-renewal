@@ -2,7 +2,7 @@ import {Gathering, Locations, SortBy} from '../common/gatheringFilter.types';
 
 export type GatheringsFilter = {
   // 필터링 조건
-  id?: number; // 모임 ID
+  id?: string; // 모임 ID: ,로 구분된 string
   type?: Gathering; // 모임 종류
   location?: Locations; // 모임 위치 // 모임 위치
   date?: string; // YYYY-MM-DD 형식의 날짜

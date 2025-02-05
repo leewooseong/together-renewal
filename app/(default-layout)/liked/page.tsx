@@ -1,5 +1,7 @@
 'use client';
 
+import {useEffect, useState} from 'react';
+
 import {useQuery} from '@tanstack/react-query';
 
 import {getGatherings} from '../../apis/gatherings/gatheringApi';
@@ -13,17 +15,22 @@ import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
 export default function Home() {
   const {gatheringType, setGatheringType} = useGatheringFilter();
+  const [storedIds, setStoredIds] = useState<string[]>([]);
 
-  const stored = localStorage.getItem('likedGatherings');
-  const storedIds = stored ? JSON.parse(stored) : [];
-  const id = storedIds.join(',');
+  useEffect(() => {
+    const stored = localStorage.getItem('likedGatherings');
+    if (stored) {
+      setStoredIds(JSON.parse(stored));
+    }
+  }, []);
+  const id: string = storedIds.join(',');
 
   const {
     data: gatheringList,
     isLoading,
     isError,
   } = useQuery<GetGatherings[]>({
-    queryKey: ['reviewList', gatheringType],
+    queryKey: ['likedGatherings', gatheringType, id],
     queryFn: () => getGatherings({id, type: gatheringType}),
   });
 
