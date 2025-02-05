@@ -19,6 +19,7 @@ import {
 } from 'date-fns';
 
 import {CalendarDays, MonthNavigationResult} from '../types/calendar.types';
+import {TimeInfo} from '../types/gatherings/createGathering.types';
 
 /**
  * 날짜 포맷팅
@@ -132,3 +133,45 @@ export const getFirstDayOfMonth = (
   const firstDay = parseDate(dateStr, formatStr, referenceDate);
   return startOfMonth(firstDay);
 };
+
+// api용 데이터로 변환하기 위한 함수
+export const formatDateTimeForAPI = (dateTime: TimeInfo): string => {
+  const {selectedDate, selectedHour, selectedMinute, selectedPeriod} = dateTime;
+
+  // 기존 날짜 복사
+  const newDate = new Date(selectedDate);
+
+  // 12시간제를 24시간제로 변환
+  let hour = parseInt(selectedHour as string, 10);
+  if (selectedPeriod === 'PM' && hour !== 12) {
+    hour += 12;
+  } else if (selectedPeriod === 'AM' && hour === 12) {
+    hour = 0;
+  }
+
+  // 기존 분 복사
+  const minute = parseInt(selectedMinute as string, 10);
+
+  // 시, 분 설정
+  newDate.setHours(hour);
+  newDate.setMinutes(minute);
+  newDate.setSeconds(0);
+  newDate.setMilliseconds(0);
+
+  // return newDate;
+  return format(newDate, "yyyy-MM-dd'T'HH:mm");
+};
+
+export const getTimeInfoUI = (timeInfo: TimeInfo): string => {
+  const year = timeInfo.selectedDate.getFullYear();
+  const month = String(timeInfo.selectedDate.getMonth() + 1).padStart(2, '0');
+  const day = String(timeInfo.selectedDate.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day} ${timeInfo.selectedHour}:${timeInfo.selectedMinute} ${timeInfo.selectedPeriod}`;
+};
+
+export const getInitialDate = (): TimeInfo => ({
+  selectedDate: getTodayStart(),
+  selectedHour: '12',
+  selectedMinute: '00',
+  selectedPeriod: 'AM',
+});

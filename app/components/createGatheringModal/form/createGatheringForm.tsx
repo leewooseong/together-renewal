@@ -1,35 +1,42 @@
 import {useState} from 'react';
 
-import {CreateGathering} from '../../../types/gatherings/createGathering.types';
+import {
+  CreateGathering,
+  CreateGatheringState,
+} from '../../../types/gatherings/createGathering.types';
 import {ValueOf} from '../../../types/util.types';
+import {getInitialDate} from '../../../utils/calendar';
 import {LOCATION_MAP} from '../../../utils/createGathering';
 
 import {Capacity} from './capacity';
-import {DeadlineTImePicker} from './deadlineTImePicker';
+import {GatheringDateTimePicker} from './gatheringDateTimePicker';
 import {GatheringNameInput} from './gatheringNameInput';
-import {GatheringTimePicker} from './gatheringTimePicker';
 import {ImageUpload} from './imageUpload';
 import {LocationSelect} from './locationSelect';
 import {ServiceTypeSelect} from './serviceTypeSelect';
 import {SubmitButton} from './submitButton';
 
 export function CreateGatheringForm() {
-  const [formData, setFormData] = useState<CreateGathering>({
+  const [formData, setFormData] = useState<CreateGatheringState>({
     name: '',
     location: null,
     image: null,
     type: 'OFFICE_STRETCHING',
-    dateTime: '',
+    dateTime: getInitialDate(),
+    registrationEnd: getInitialDate(),
     capacity: 0,
-    registrationEnd: '',
   });
 
-  const handleInputChange = (field: keyof CreateGathering, value: ValueOf<CreateGathering>) => {
+  const handleInputChange = (
+    field: keyof CreateGathering,
+    value: ValueOf<CreateGatheringState>,
+  ) => {
     setFormData(prev => ({
       ...prev,
       [field]: value,
     }));
   };
+
   return (
     <form className="flex flex-col gap-6">
       <GatheringNameInput
@@ -46,12 +53,14 @@ export function CreateGatheringForm() {
         value={formData.type}
         onChange={value => handleInputChange('type', value)}
       />
-      <div className="flex flex-wrap gap-2 tablet:flex-nowrap tablet:gap-10">
-        <GatheringTimePicker
+      <div className="flex flex-wrap justify-between gap-2 tablet:flex-nowrap">
+        <GatheringDateTimePicker
+          name="모임 날짜"
           value={formData.dateTime}
           onChange={value => handleInputChange('dateTime', value)}
         />
-        <DeadlineTImePicker
+        <GatheringDateTimePicker
+          name="마감 날짜"
           value={formData.registrationEnd}
           onChange={value => handleInputChange('registrationEnd', value)}
         />

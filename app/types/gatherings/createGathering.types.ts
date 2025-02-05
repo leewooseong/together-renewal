@@ -1,3 +1,4 @@
+import {HOURS, MINUTES, PERIOD} from '../../constants/calendar';
 import {LOCATIONS, SERVICE_TYPES} from '../../constants/commonConstants';
 import {ValueOf} from '../util.types';
 
@@ -13,15 +14,29 @@ export type CreateGathering = {
   registrationEnd: string; // YYYY-MM-DDTHH:MM:SS
 };
 
-export interface InputProps<T> {
+export type CreateGatheringState = Omit<CreateGathering, 'dateTime' | 'registrationEnd'> & {
+  dateTime: TimeInfo;
+  registrationEnd: TimeInfo;
+};
+
+export type InputProps<T> = {
   value: T;
   onChange: (value: T) => void;
   error?: string;
-}
-
-// export type RadioInputProps =
+};
 
 export type SelectItem = {value: (typeof LOCATIONS)[number]; label: (typeof LOCATIONS)[number]};
-export interface SelectProps extends InputProps<string | null> {
+export type SelectProps = InputProps<string | null> & {
   options: SelectItem[];
-}
+};
+
+export type DateTimePickerProps = InputProps<TimeInfo> & {
+  name: string;
+};
+
+export type TimeInfo = {
+  selectedDate: Date;
+  selectedHour: ValueOf<typeof HOURS>;
+  selectedMinute: ValueOf<typeof MINUTES>;
+  selectedPeriod: ValueOf<typeof PERIOD>;
+};

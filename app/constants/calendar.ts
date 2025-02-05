@@ -10,3 +10,11 @@ export const colStartClasses = [
   'col-start-6',
   'col-start-7',
 ];
+
+export const HOURS = [
+  '12',
+  ...Array.from({length: 11}, (_, i) => String(i + 1).padStart(2, '0')),
+] as const;
+
+export const MINUTES = [...Array.from({length: 60}, (_, i) => String(i).padStart(2, '0'))] as const; // 'as const'를 여기에서 올바르게 적용
+export const PERIOD = ['AM', 'PM'] as const; // 'as const'를 올바르게 적용

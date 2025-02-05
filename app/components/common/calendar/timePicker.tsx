@@ -1,18 +1,19 @@
-// timeSelector.tsx
+// timePicker.tsx
 
 'use client';
 
-import {Dispatch, SetStateAction} from 'react';
-
 import clsx from 'clsx';
 
-type TimeSelectorProps = {
-  dataList: string[];
-  selectedTime: string;
-  setSelectedTime: Dispatch<SetStateAction<string>>;
+import {TimeInfo} from '../../../types/gatherings/createGathering.types';
+import {ValueOf} from '../../../types/util.types';
+
+type TimePickerProps = {
+  dataList: readonly string[];
+  selectedTime: ValueOf<TimeInfo>;
+  setSelectedTime: (time: ValueOf<TimeInfo>) => void;
 };
 
-export function TimeSelector({dataList, selectedTime, setSelectedTime}: TimeSelectorProps) {
+export function TimePicker({dataList, selectedTime, setSelectedTime}: TimePickerProps) {
   const handleSelectTime = (event: React.MouseEvent<HTMLButtonElement>) => {
     const clickedElement = event.currentTarget;
     const clickedTime = clickedElement.dataset.time;

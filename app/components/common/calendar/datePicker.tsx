@@ -1,11 +1,13 @@
 'use client';
 
-import {Dispatch, RefObject, SetStateAction, useState} from 'react';
+import {RefObject, useState} from 'react';
 
 import clsx from 'clsx';
 import Image from 'next/image';
 
 import {colStartClasses} from '../../../constants/calendar';
+import {TimeInfo} from '../../../types/gatherings/createGathering.types';
+import {ValueOf} from '../../../types/util.types';
 import {
   dateComparison,
   formatDate,
@@ -18,8 +20,8 @@ import {
 } from '../../../utils/calendar';
 
 type CalendarProps = {
-  selectedDate: Date | null;
-  setSelectedDate: Dispatch<SetStateAction<Date | null>>;
+  selectedDate: Date;
+  setSelectedDate: (time: ValueOf<TimeInfo>) => void;
   datePickerRef: RefObject<HTMLDivElement>;
 };
 
