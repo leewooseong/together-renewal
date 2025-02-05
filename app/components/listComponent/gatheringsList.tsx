@@ -9,7 +9,6 @@ import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 import ListCard from './listCard';
 
 export default function GatheringsList({initialData}: {initialData: GetGatherings[]}) {
-  // ✅ initialData를 useInfiniteGatherings에 전달
   const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = useInfiniteGatherings(initialData);
 
   const handleFetchNextPage = useCallback(() => {
@@ -18,7 +17,6 @@ export default function GatheringsList({initialData}: {initialData: GetGathering
 
   const observerRef = useInfiniteObserver(handleFetchNextPage);
 
-  // ✅ data가 undefined일 경우 안전하게 처리
   const gatherings = useMemo(() => {
     if (!data) return [];
     const uniqueGatherings = new Map<number, GetGatherings>();

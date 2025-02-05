@@ -1,12 +1,12 @@
-import {NextResponse} from 'next/server';
+import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../apis/client';
 import {SORT_BY} from '../../constants/commonConstants';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
-export async function GET(req: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const {searchParams} = new URL(req.url);
+    const {searchParams} = new URL(request.url);
 
     const rawSortBy = searchParams.get('sortBy');
     const sortBy: (typeof SORT_BY)[number] | undefined =
