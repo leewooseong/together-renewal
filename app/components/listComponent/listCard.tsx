@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
+import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 import isClosedUtil from '../../utils/isClosedUtil';
 import ApproveCheck from '../common/approveCheck';
 import {DateTimeInfoChip} from '../common/chips/chip-info';
@@ -16,7 +16,7 @@ export default function ListCard({
   name,
   location,
   dateTime,
-}: GetJoinedGatherings) {
+}: GetGatherings) {
   function isClose() {
     if (isClosedUtil(registrationEnd, participantCount, capacity)) {
       return <RenderOverlay message="모집 취소" height="full" gatheringId={0} />;
@@ -31,7 +31,7 @@ export default function ListCard({
 
       {/* 모임 이미지 */}
       <div className="relative flex h-[156px] w-[343px] items-center justify-center overflow-hidden sm:w-[280px]">
-        <Image src={image} alt="모임 대표 이미지" className="object-cover" layout="fill" />
+        <Image src={image || ''} alt="모임 대표 이미지" className="object-cover" layout="fill" />
         <CloseTag registrationEnd={registrationEnd} />
       </div>
 

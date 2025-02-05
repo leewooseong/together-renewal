@@ -1,3 +1,4 @@
+import {GatheringParams, GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
 import {clientInstance, serverInstance} from '../client';
 
@@ -63,4 +64,22 @@ export const leaveJoinedGatheringsInServer = async (
     console.error('참여한 모임 삭제 실패: ', error);
     throw error;
   }
+};
+
+export const getGatheringsInServer = async (params: GatheringParams): Promise<GetGatherings[]> => {
+  const queryString = new URLSearchParams(
+    Object.entries(params).reduce(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = String(value);
+        }
+        return acc;
+      },
+      {} as Record<string, string>,
+    ),
+  ).toString();
+
+  return serverInstance.get<GetGatherings[]>({
+    path: `/gatherings?${queryString}`,
+  });
 };
