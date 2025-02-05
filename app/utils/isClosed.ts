@@ -19,5 +19,6 @@ export default function isClosedUtil(
   if (participantCount >= capacity) {
     return true;
   }
+
   return getNow >= closeTime;
 }

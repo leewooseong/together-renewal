@@ -28,7 +28,7 @@ export function GNB() {
             <Link href="/">모임 찾기</Link>
           </li>
           <li className="hover:text-orange-200">
-            <Link href="/zzim">찜한 모임</Link>
+            <Link href="liked">찜한 모임</Link>
           </li>
           <li className="hover:text-orange-200">
             <Link href="reviews">모든 리뷰</Link>

@@ -2,9 +2,9 @@ import {useMyGatheringsData} from '../../hooks/useMyGatherings';
 import {useMyGatheringsFilter} from '../../hooks/useMyGatheringsFilter';
 import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
 import {getCommentByTab} from '../../utils/getCommentByTab';
+import {EmptyMessage} from '../common/emptyMessage';
 import {TextRender} from '../common/textRender';
 
-import {EmptyMessage} from './myGatherings/emptyMessage';
 import {GatheringList} from './myGatherings/gatheringList';
 import {ReviewList} from './myGatherings/reviewList';
 

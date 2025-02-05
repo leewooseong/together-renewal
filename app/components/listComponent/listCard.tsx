@@ -22,6 +22,7 @@ export function ListCard({
   name,
   location,
   dateTime,
+  canceledAt,
 }: GetGatherings) {
   const {data: userInfo} = useUserQuery().getMyInfo();
   const userId = userInfo?.data?.id as number;
@@ -30,8 +31,12 @@ export function ListCard({
 
   function isClose() {
     if (isClosedUtil(registrationEnd, participantCount, capacity)) {
-      return <RenderOverlay message="모집 취소" height="full" gatheringId={0} userId={userId} />;
+      return <RenderOverlay message="모집 마감" height="full" gatheringId={id} userId={userId} />;
     }
+    if (canceledAt)
+      return (
+        <RenderOverlay message="모집 취소" height="[328px]" gatheringId={id} userId={userId} />
+      );
     return null;
   }
 

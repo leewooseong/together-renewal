@@ -6,7 +6,7 @@
  */
 export function EmptyMessage({message}: {message: string}) {
   return (
-    <div className="absolute left-1/2 top-[180px] h-[20px] w-[220px] -translate-x-1/2">
+    <div className="mt-[180px] flex h-[20px] w-[full] items-center justify-center">
       <p className="text-sm font-medium text-gray-500">{message}</p>
     </div>
   );
