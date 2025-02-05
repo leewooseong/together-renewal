@@ -66,9 +66,11 @@ export const leaveJoinedGatheringsInServer = async (
   }
 };
 
-export const getGatheringsInServer = async (params: GatheringParams): Promise<GetGatherings[]> => {
+export const getGatheringsInServer = async (params?: GatheringParams): Promise<GetGatherings[]> => {
+  const validParams = params ?? {};
+
   const queryString = new URLSearchParams(
-    Object.entries(params).reduce(
+    Object.entries(validParams).reduce(
       (acc, [key, value]) => {
         if (value !== undefined) {
           acc[key] = String(value);
