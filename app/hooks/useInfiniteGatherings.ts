@@ -19,10 +19,9 @@ export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage && lastPage.length === 10 ? allPages.length * 10 : undefined;
     },
-    // ✅ 올바른 initialData 제공 방식
     initialData: {
-      pages: [initialData], // ✅ 초기 데이터를 pages 배열에 포함
-      pageParams: [0], // ✅ 첫 번째 페이지 param을 0으로 설정
+      pages: [initialData],
+      pageParams: [0],
     },
   });
 };

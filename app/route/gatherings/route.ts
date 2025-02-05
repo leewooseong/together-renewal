@@ -5,9 +5,8 @@ import {SORT_BY} from '../../constants/commonConstants';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
 export async function GET(request: NextRequest) {
+  const {searchParams} = new URL(request.url);
   try {
-    const {searchParams} = new URL(request.url);
-
     const rawSortBy = searchParams.get('sortBy');
     const sortBy: (typeof SORT_BY)[number] | undefined =
       rawSortBy && SORT_BY.includes(rawSortBy as (typeof SORT_BY)[number])

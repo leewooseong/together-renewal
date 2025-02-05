@@ -24,7 +24,6 @@ export const getJoinedGatheringsInServer = async (
       sortOrder: 'asc',
     };
 
-    // 쿼리 문자열 생성
     const queryString = new URLSearchParams(
       defaultParams as unknown as Record<string, string>,
     ).toString();
