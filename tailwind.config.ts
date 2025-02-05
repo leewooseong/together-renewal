@@ -1,3 +1,5 @@
+import {PROFILE_DROPDOWN} from './app/constants/style';
+
 import type {Config} from 'tailwindcss';
 
 // 사용자 추가 색상 팔레트
@@ -21,6 +23,9 @@ const config: Config = {
       colors: COLOR_PALLETTE,
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
+      },
+      width: {
+        profileDropdown: PROFILE_DROPDOWN,
       },
     },
   },

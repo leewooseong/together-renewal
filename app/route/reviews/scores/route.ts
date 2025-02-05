@@ -4,7 +4,7 @@ import {serverInstance} from '../../../apis/client';
 import {CodeitError} from '../../../types/error.types';
 import {AverageScoreList} from '../../../types/reviews/averageScores.types';
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const {searchParams} = new URL(request.url);
 
   try {
@@ -44,4 +44,4 @@ export async function GET(request: NextRequest) {
     {message: '리뷰 평점을 가져오는 중 알 수 없는 오류가 발생했습니다'},
     {status: 500},
   );
-}
+};

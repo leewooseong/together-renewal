@@ -1,6 +1,6 @@
 import localFont from 'next/font/local';
 
-import {GNB} from './components/common/GNB';
+import {GNB} from './components/common/navigationbar/GNB';
 import './globals.css';
 import Providers from './providers';
 

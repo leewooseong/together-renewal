@@ -4,7 +4,10 @@ import {clientInstance, serverInstance} from '../client';
 
 export const login = async (email: string, password: string) => {
   try {
-    await clientInstance.post({path: '/route/auths/signin', body: {email, password}});
+    await clientInstance.post({
+      path: '/route/auths/signin',
+      body: {email, password},
+    });
   } catch (error) {
     if (error instanceof CodeitError) {
       throw new CodeitError(error.message, error.status, error.code, error.parameter);
