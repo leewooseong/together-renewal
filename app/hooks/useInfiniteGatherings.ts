@@ -16,7 +16,7 @@ export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
       return getGatheringsInServer(params);
     },
     initialData: {
-      pages: initialData ? [initialData] : [],
+      pages: [initialData],
       pageParams: [0],
     },
     initialPageParam: 0,
