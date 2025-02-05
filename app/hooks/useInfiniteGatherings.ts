@@ -1,6 +1,6 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
 
-import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
+import {getGatherings} from '../apis/gatherings/gatheringApi';
 import {GatheringParams, GetGatherings} from '../types/gatherings/getGatherings.types';
 
 export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
@@ -13,15 +13,16 @@ export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
         limit: 10,
         offset: pageParam,
       };
-      return getGatheringsInServer(params);
-    },
-    initialData: {
-      pages: [initialData],
-      pageParams: [0],
+      return getGatherings(params);
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 10 ? allPages.length * 10 : undefined;
+      return lastPage && lastPage.length === 10 ? allPages.length * 10 : undefined;
+    },
+    // ✅ 올바른 initialData 제공 방식
+    initialData: {
+      pages: [initialData], // ✅ 초기 데이터를 pages 배열에 포함
+      pageParams: [0], // ✅ 첫 번째 페이지 param을 0으로 설정
     },
   });
 };

@@ -66,17 +66,20 @@ export const leaveJoinedGatheringsInServer = async (
   }
 };
 
-export const getGatheringsInServer = async (params?: GatheringParams): Promise<GetGatherings[]> => {
-  const validParams = params ?? {};
+export async function getGatherings(params: GatheringParams): Promise<GetGatherings[]> {
+  try {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) {
+        query.append(key, String(value));
+      }
+    });
 
-  const query = new URLSearchParams();
-  Object.entries(validParams).forEach(([key, value]) => {
-    if (value !== undefined) {
-      query.append(key, String(value));
-    }
-  });
-
-  return serverInstance.get<GetGatherings[]>({
-    path: `/gatherings${query.toString() ? `?${query.toString()}` : ''}`,
-  });
-};
+    return await clientInstance.get<GetGatherings[]>({
+      path: `/route/gatherings?${query.toString()}`,
+    });
+  } catch (error) {
+    console.error('모임 데이터 불러오기 실패:', error);
+    throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
+  }
+}
