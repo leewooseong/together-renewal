@@ -1,4 +1,4 @@
-import {AverageScoreProps} from '../../types/reviews/averageScores.types';
+import {AverageScore} from '../../types/reviews/averageScores.types';
 import {ReviewScore} from '../common/review/reviewScore';
 
 /* eslint-disable react/no-array-index-key */
@@ -10,25 +10,13 @@ export function AverageScores({
   fourStars,
   fiveStars,
   averageScore,
-}: AverageScoreProps) {
+}: AverageScore) {
   const scoreArray: number[] = [fiveStars, fourStars, threeStars, twoStars, oneStar];
-  const ratio: string[] = [];
-  let sum = 0;
-  const totalReviewCount = (array: typeof scoreArray) => {
-    array.forEach(item => {
-      sum += item;
-    });
 
-    array.forEach((item, index) => {
-      ratio[index] = `${Math.floor((item / sum) * 100)}%`;
-    });
-  };
+  const sum = scoreArray.reduce((acc, num) => acc + num, 0);
 
-  if (averageScore !== 0) {
-    totalReviewCount(scoreArray);
-  }
+  const ratio: string[] = scoreArray.map(item => `${Math.floor((item / sum) * 100)}%`);
 
-  // 반응 형 수정 필요
   return (
     <div className="flex h-[180px] w-full items-center justify-between border-y-2 border-y-gray-200 bg-white px-6 py-8 tablet:px-[73px]">
       <div className="flex w-32 flex-col items-center gap-2">

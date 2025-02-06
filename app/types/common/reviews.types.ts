@@ -35,5 +35,5 @@ export type ReviewType = {
   userImg: string;
   userName: string;
   createdAt: string;
-  pageName?: 'my-page' | 'gatherings';
+  pageName?: 'mypage' | 'gatherings';
 };

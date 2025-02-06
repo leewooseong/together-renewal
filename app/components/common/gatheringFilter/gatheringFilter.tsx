@@ -8,7 +8,8 @@ import {Gathering, GatheringFilterProps} from '../../../types/common/gatheringFi
 import {DallaemfitSvg} from './svgComponent/dallaemfitSvg';
 import {WorkationSvg} from './svgComponent/workationSvg';
 
-export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilterProps) {
+export function GatheringFilter({setFilter, filter, updateQueryString}: GatheringFilterProps) {
+  const gathering = filter.type || 'DALLAEMFIT';
   const dallaemfitRef = useRef<HTMLDivElement>(null);
   const workationRef = useRef<HTMLDivElement>(null);
 
@@ -29,16 +30,18 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
   const handleElementClick = (event: React.MouseEvent<HTMLDivElement | HTMLButtonElement>) => {
     const getElementId = event.currentTarget.id as Gathering;
     if (getElementId === 'ALL') {
-      setGatheringType('DALLAEMFIT');
+      setFilter({...filter, type: 'DALLAEMFIT'});
+      updateQueryString({...filter, type: 'DALLAEMFIT'});
     } else {
-      setGatheringType(getElementId);
+      setFilter({...filter, type: getElementId});
+      updateQueryString({...filter, type: getElementId});
     }
   };
 
-  const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
-    gatheringType,
-  );
-  const isAllActive = gatheringType === 'ALL' || gatheringType === 'DALLAEMFIT';
+  // const isDallaemfitActive = ['DALLAEMFIT', 'ALL', 'OFFICE_STRETCHING', 'MINDFULNESS'].includes(
+  //   gathering,
+  // );
+  const isAllActive = gathering === 'ALL' || gathering === 'DALLAEMFIT';
 
   return (
     <div>
@@ -47,13 +50,14 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
           <motion.div
             ref={dallaemfitRef}
             animate={{
-              opacity: isDallaemfitActive
-                ? isWorkationHovered
-                  ? 0.4
-                  : 1
-                : isDallaemfitHovered
-                  ? 1
-                  : 0.4,
+              opacity:
+                gathering !== 'WORKATION'
+                  ? isWorkationHovered
+                    ? 0.4
+                    : 1
+                  : isDallaemfitHovered
+                    ? 1
+                    : 0.4,
             }}
             transition={{
               duration: 0.5,
@@ -72,13 +76,14 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
           <motion.div
             initial={false}
             animate={{
-              opacity: !isDallaemfitActive
-                ? isDallaemfitHovered
-                  ? 0.4
-                  : 1
-                : isWorkationHovered
-                  ? 1
-                  : 0.4,
+              opacity:
+                gathering === 'WORKATION'
+                  ? isDallaemfitHovered
+                    ? 0.4
+                    : 1
+                  : isWorkationHovered
+                    ? 1
+                    : 0.4,
             }}
             transition={{
               duration: 0.5,
@@ -99,7 +104,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
         <motion.div
           animate={{
             x:
-              gatheringType === 'WORKATION'
+              gathering === 'WORKATION'
                 ? isDallaemfitHovered
                   ? 0
                   : dallaemfitWidth + 12
@@ -107,7 +112,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
                   ? dallaemfitWidth + 12
                   : 0,
             width:
-              gatheringType === 'WORKATION'
+              gathering === 'WORKATION'
                 ? isDallaemfitHovered
                   ? dallaemfitWidth
                   : workationWidth
@@ -124,7 +129,8 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
       </nav>
       <motion.nav
         animate={{
-          opacity: gatheringType === 'WORKATION' ? 0 : 1,
+          opacity: gathering === 'WORKATION' ? 0 : 1,
+          visibility: gathering === 'WORKATION' ? 'hidden' : 'visible',
         }}
         transition={{
           duration: 0.5,
@@ -147,7 +153,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
           onClick={handleElementClick}
           id="OFFICE_STRETCHING"
           className={`${
-            gatheringType === 'OFFICE_STRETCHING'
+            gathering === 'OFFICE_STRETCHING'
               ? 'bg-gray-900 text-white'
               : 'bg-gray-200 text-gray-900'
           } rounded-xl px-3 py-2 text-sm`}
@@ -159,7 +165,7 @@ export function GatheringFilter({gatheringType, setGatheringType}: GatheringFilt
           onClick={handleElementClick}
           id="MINDFULNESS"
           className={`${
-            gatheringType === 'MINDFULNESS' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
+            gathering === 'MINDFULNESS' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-900'
           } rounded-xl px-3 py-2 text-sm`}
         >
           마인드풀니스
