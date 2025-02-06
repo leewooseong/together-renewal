@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 
-import {clientInstance, serverInstance} from '../../apis/client';
+import {serverInstance} from '../../apis/client';
 import {SORT_BY} from '../../constants/commonConstants';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
         .map(([key, value]) => [key, String(value)]),
     ).toString();
 
-    const data = await clientInstance.get<GetGatherings[]>({
+    const data = await serverInstance.get<GetGatherings[]>({
       path: `/gatherings?${queryString}`,
     });
 
