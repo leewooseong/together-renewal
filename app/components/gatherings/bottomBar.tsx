@@ -7,7 +7,7 @@ import Modal, {ModalType} from './modal';
 type BottomBarType = {
   isLogin: boolean;
   isOwner: boolean;
-  gatheringId: number;
+  gatheringId: number | undefined;
 };
 
 export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType) {
@@ -112,7 +112,11 @@ export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType
           </div>
         </div>
       </div>
-      {isModalOpen ? <Modal modalType={modalType} setIsModalOpen={setIsModalOpen} /> : ''}
+      {isModalOpen ? (
+        <Modal gatheringId={gatheringId} modalType={modalType} setIsModalOpen={setIsModalOpen} />
+      ) : (
+        ''
+      )}
     </>
   );
 }

@@ -13,12 +13,12 @@ export type ModalType = {
   message: string;
 };
 export type ModalPropsType = {
+  gatheringId: number | undefined;
   modalType: ModalType;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const gatheringId = 1716;
-export default function Modal({modalType, setIsModalOpen}: ModalPropsType) {
+export default function Modal({gatheringId, modalType, setIsModalOpen}: ModalPropsType) {
   const [isLoading, setIsLoading] = useState(false);
 
   const postJoinGatheringMutation = useMutation({
@@ -38,7 +38,9 @@ export default function Modal({modalType, setIsModalOpen}: ModalPropsType) {
 
   const handleConfirmButton = () => {
     setIsModalOpen(prev => !prev);
-    postJoinGatheringMutation.mutate(gatheringId);
+    if (gatheringId) {
+      postJoinGatheringMutation.mutate(gatheringId);
+    }
     // api요청 보내면 된다.
   };
 

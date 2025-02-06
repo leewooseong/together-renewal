@@ -1,3 +1,4 @@
+import {GatheringDetailType} from '../../types/gatherings/getGatheringDetail';
 import {
   GetJoinedGatherings,
   PostJoinGatheringResponse,
@@ -97,5 +98,17 @@ export const postJoinGatheringInServer = async (
   } catch (error) {
     console.error(`postJoinGatheringInServer 요청 실패 - ID: ${id}`, error);
     throw new Error(error instanceof Error ? error.message : '모임 참여 요청 중 오류 발생');
+  }
+};
+
+export const getGatheringDetail = async (id: number): Promise<GatheringDetailType> => {
+  try {
+    const response = await clientInstance.get<GatheringDetailType>({
+      path: `/route/gatherings/${id}`,
+    });
+    return response;
+  } catch (error) {
+    console.error('현재 error 객체:', error);
+    throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
   }
 };

@@ -8,7 +8,7 @@ import {
 
 export const reviewListQuery = {
   all: ['reviewList'] as const,
-  getQueryKey: <T,>(params: T) => [...reviewListQuery.all, params] as const,
+  getQueryKey: <T,>(params: T) => [...reviewListQuery.all, JSON.stringify(params)] as const,
 
   getReviewList: (params: GetReviewsProps) => ({
     queryKey: reviewListQuery.getQueryKey(params),
@@ -28,4 +28,10 @@ export const reviewListQuery = {
 export const userQueryKey = {
   all: ['user'] as const,
   myInfo: () => [...userQueryKey.all, 'info'] as const,
+};
+
+export const gatheringDetailQueryKey = {
+  all: ['gathering'] as const,
+
+  getGatheringDetail: (id: number) => [...gatheringDetailQueryKey.all, id] as const,
 };

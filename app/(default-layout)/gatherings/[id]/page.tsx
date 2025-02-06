@@ -1,61 +1,65 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
+import {useQuery} from '@tanstack/react-query';
+import {useParams} from 'next/navigation';
+
+import {getGatheringDetail} from '../../../apis/gatherings/gatheringApi';
 import BottomBar from '../../../components/gatherings/bottomBar';
+import {gatheringDetailQueryKey} from '../../../queries/common/queryKeys';
 import {useUserQuery} from '../../../queries/user/useUserQuries';
 
-const gatheringId = 1716;
-const createdBy = 1004;
+// const gatheringId = 1716;
 
-// 모임 id랑 createdBy(모임 주인 id)는 모임상세 api조회로 받아와야함
-
-// 모임 id는 메인 페이지에서 받아오는게 맞는듯?
-// 근데 굳이 메인 페이지에서 안 받아와도 될듯 modal은 모임상세 페이지에서 있는 하단바에서 받는거니까 모임상세페이지에서 줘도 된다.
 export default function Gathering() {
+  const params = useParams(); // URL에서 동적 파라미터 가져오기
+  const gatheringId = Number(params.id);
+
   const [isOwner, setIsOwner] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
+  const {data: gatheringDetail, isError} = useQuery({
+    queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId),
+    queryFn: () => getGatheringDetail(gatheringId),
+    retry: false,
+    enabled: !!gatheringId, // gatheringId가 있을 때만 요청
+  });
+
   const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId: number = userInfo?.data?.id as number;
-  const gatheringOwner = createdBy;
-  if (userId) {
+  const userId = userInfo?.data?.id as number;
+  const gatheringOwner = gatheringDetail?.createdBy;
+
+  useEffect(() => {
+    if (!userId) {
+      console.log('로그인해라');
+      return;
+    }
+
     if (userId === gatheringOwner) {
       console.log('유저 주인임');
       setIsOwner(true);
+      setIsLogin(true);
     } else {
       console.log('일반유저임');
+      setIsOwner(false);
       setIsLogin(true);
     }
-  } else {
-    console.log('로그인해라');
-  }
+  }, [userId, gatheringOwner]);
 
-  // const {data: joinGatheringResponse} = useQuery<JoinGatheringResponse>({
-  //   queryKey: ['postJoinGathering', gatheringId],
-  //   queryFn: () => postJoinGathering({id: gatheringId}),
-  // });
+  if (isError) {
+    console.log('모임 받아오기 실패😞😞');
+    return <div>모임을 찾을 수 없습니다</div>;
+  }
 
   return (
     <>
       <div>{userId}</div>
-      <div>{userInfo?.name}</div>
-      {/* <div>
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-        <div className="size-44 bg-pink-400" />
-      </div> */}
-      <BottomBar isLogin={isLogin} isOwner={isOwner} gatheringId={1} />
+      <div>{gatheringDetail?.id}</div>
+      <div>{gatheringDetail?.name}</div>
+      <div>{gatheringDetail?.createdBy}</div>
+
+      <BottomBar isLogin={isLogin} isOwner={isOwner} gatheringId={gatheringDetail?.id} />
     </>
   );
 }
