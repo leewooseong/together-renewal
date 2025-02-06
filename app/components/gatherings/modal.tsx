@@ -2,8 +2,11 @@
 
 import {Dispatch, SetStateAction, useState} from 'react';
 
+import {useMutation} from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import {postJoinGathering} from '../../apis/gatherings/gatheringApi';
 
 export type ModalType = {
   type: 'confirm' | 'alert' | 'redirect';
@@ -13,8 +16,20 @@ export type ModalPropsType = {
   modalType: ModalType;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
 };
+
+const gatheringId = 1716;
 export default function Modal({modalType, setIsModalOpen}: ModalPropsType) {
   const [isLoading, setIsLoading] = useState(false);
+
+  const postJoinGatheringMutation = useMutation({
+    mutationFn: (id: number) => postJoinGathering(id),
+    onSuccess: () => {
+      console.log('🥳모임 참여 성공했음!!!!');
+    },
+  });
+  // const postJoinGatheringMutation = useMutation<JoinGatheringResponse>({
+  //   mutationFn: () => postJoinGathering({id: gatheringId}),
+  // });
 
   const handleCloseButton = () => {
     setIsModalOpen(prev => !prev);
@@ -26,6 +41,7 @@ export default function Modal({modalType, setIsModalOpen}: ModalPropsType) {
 
   const handleConfirmButton = () => {
     setIsModalOpen(prev => !prev);
+    postJoinGatheringMutation.mutate(gatheringId);
     // api요청 보내면 된다.
   };
 

@@ -1,5 +1,7 @@
-import {JoinGatheringResponse} from '../../route/token/gatherings/joinedGatherings/[id]/route';
-import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
+import {
+  GetJoinedGatherings,
+  PostJoinGatheringResponse,
+} from '../../types/gatherings/joinedGatherings.types';
 import {clientInstance, serverInstance} from '../client';
 
 export const getJoinedGatherings = async (): Promise<GetJoinedGatherings[]> => {
@@ -66,24 +68,34 @@ export const leaveJoinedGatheringsInServer = async (
   }
 };
 
-export const postJoinGathering = async ({
-  token,
-  id,
-}: {
-  id: number;
-  token: string;
-}): Promise<JoinGatheringResponse> => {
+export const postJoinGathering = async (id: number): Promise<PostJoinGatheringResponse> => {
   try {
-    const response = await clientInstance.post<JoinGatheringResponse>({
+    const response = await clientInstance.post<PostJoinGatheringResponse>({
       path: `/route/token/gatherings/${id}`,
-      body: {
-        token,
-        id,
-      },
+      body: {id},
     });
+
     return response;
   } catch (error) {
-    console.log('현재 error 객체', error);
-    throw new Error();
+    console.error('현재 error 객체:', error);
+    throw new Error(error instanceof Error ? error.message : '모임 참여 요청 실패');
+  }
+};
+
+export const postJoinGatheringInServer = async (
+  token: string,
+  id: number,
+): Promise<PostJoinGatheringResponse> => {
+  console.log(`postJoinGatheringInServer 서버 요청 시작 - ID: ${id}`);
+  try {
+    const response = await serverInstance.post<PostJoinGatheringResponse>({
+      path: `/gatherings/${id}/join`,
+      token,
+    });
+    console.log(`postJoinGatheringInServer 요청 성공 - ID: ${id}, 응답:`, response);
+    return response;
+  } catch (error) {
+    console.error(`postJoinGatheringInServer 요청 실패 - ID: ${id}`, error);
+    throw new Error(error instanceof Error ? error.message : '모임 참여 요청 중 오류 발생');
   }
 };
