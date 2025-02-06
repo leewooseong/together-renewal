@@ -4,7 +4,7 @@ import {serverInstance} from '../../apis/client';
 import {SORT_BY} from '../../constants/commonConstants';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   const {searchParams} = new URL(request.url);
   try {
     const rawSortBy = searchParams.get('sortBy');
@@ -37,4 +37,4 @@ export async function GET(request: NextRequest) {
     console.error('API 호출 실패:', error);
     return NextResponse.json({message: '데이터를 가져올 수 없습니다.'}, {status: 500});
   }
-}
+};

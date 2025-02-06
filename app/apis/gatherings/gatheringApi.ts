@@ -65,7 +65,7 @@ export const leaveJoinedGatheringsInServer = async (
   }
 };
 
-export async function getGatherings(params: GatheringParams): Promise<GetGatherings[]> {
+export const getGatherings = async (params: GatheringParams): Promise<GetGatherings[]> => {
   try {
     const query = new URLSearchParams();
     Object.entries(params).forEach(([key, value]) => {
@@ -81,4 +81,4 @@ export async function getGatherings(params: GatheringParams): Promise<GetGatheri
     console.error('모임 데이터 불러오기 실패:', error);
     throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
   }
-}
+};
