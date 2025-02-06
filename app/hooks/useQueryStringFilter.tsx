@@ -2,44 +2,37 @@ import {useEffect, useState} from 'react';
 
 import {useRouter, useSearchParams} from 'next/navigation';
 
+import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
+import {buildQueryParams} from '../utils/buildQueryParamsUtil';
+import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
+
 export const useQueryStringFilter = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [filter, setFilter] = useState({
-    gatheringType: 'DALLAEMFIT',
-    location: '',
-    date: '',
-    sortBy: '',
-    sortOrder: '',
+  const [filter, setFilter] = useState<GetReviewsProps>({
+    type: 'DALLAEMFIT',
   });
 
   useEffect(() => {
-    setFilter({
-      gatheringType: searchParams.get('type') || 'DALLAEMFIT',
-      location: searchParams.get('location') || '',
-      date: searchParams.get('date') || '',
-      sortBy: searchParams.get('sortBy') || '',
-      sortOrder: searchParams.get('sortOrder') || '',
-    });
+    const deletedEmptyQuery = Object.fromEntries(
+      Array.from(searchParams.entries()).filter(([, value]) => value !== '' && value !== null),
+    );
+
+    const getUrlObject: GetReviewsProps = {
+      ...deletedEmptyQuery,
+      type: (deletedEmptyQuery.type as string) || 'DALLAEMFIT',
+    };
+
+    const validQueryStringObject = checkQueryStringObject(getUrlObject);
+
+    setFilter(validQueryStringObject);
   }, [searchParams]);
 
-  const makeQueryString = (newFilter: Partial<typeof filter>) => {
-    const params = new URLSearchParams(searchParams.toString());
+  const updateQueryString = (newFilter: Partial<typeof filter>) => {
+    const queryString = buildQueryParams(newFilter);
 
-    Object.entries(newFilter).forEach(([key, value]) => {
-      if (value) {
-        if (key === 'gatheringType') {
-          params.set('type', value);
-        } else {
-          params.set(key, value);
-        }
-      } else {
-        params.delete(key);
-      }
-    });
-
-    router.replace(`?${params.toString()}`);
+    router.replace(`?${queryString}`);
   };
 
-  return {filter, setFilter, makeQueryString};
+  return {filter, setFilter, updateQueryString};
 };

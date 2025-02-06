@@ -1,5 +1,5 @@
 export type GetReviewsProps = {
-  gatheringType?: string;
+  type?: string;
   location?: string;
   date?: string;
   sortBy?: string;

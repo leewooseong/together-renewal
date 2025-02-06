@@ -7,32 +7,21 @@ import {
   GetMyReviewsProps,
   GetReviewsProps,
 } from '../../types/reviews/reviewsApi.types';
-import {buildQueryParams} from '../../utils/apiFilterUrlUtil';
+import {buildQueryParams} from '../../utils/buildQueryParamsUtil';
 import {clientInstance} from '../client';
 
 export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType> => {
-  const queryParams = buildQueryParams({
-    type: props.gatheringType,
-    location: props.location,
-    date: props.date,
-    sortBy: props.sortBy,
-    sortOrder: props.sortOrder,
+  const queryParam = buildQueryParams({
+    ...props,
   });
+
   try {
     const response = await clientInstance.get<ReviewListType>({
-      path: `/route/reviews?${queryParams.toString()}`,
+      path: `/route/reviews?${queryParam.toString()}`,
     });
     return response;
   } catch (error) {
-    if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
-      return {
-        data: [],
-        totalItemCount: 0,
-        currentPage: 0,
-        totalPages: 0,
-      };
-    }
+    console.log('현재 error 객체', error);
     return {
       data: [],
       totalItemCount: 0,
@@ -55,15 +44,7 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
     });
     return response;
   } catch (error) {
-    if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
-      return {
-        data: [],
-        totalItemCount: 0,
-        currentPage: 0,
-        totalPages: 0,
-      };
-    }
+    console.log('현재 error 객체', error);
     return {
       data: [],
       totalItemCount: 0,
@@ -88,15 +69,7 @@ export const getGatheringReviews = async (
     });
     return response;
   } catch (error) {
-    if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
-      return {
-        data: [],
-        totalItemCount: 0,
-        currentPage: 0,
-        totalPages: 0,
-      };
-    }
+    console.log('현재 error 객체', error);
     return {
       data: [],
       totalItemCount: 0,
@@ -106,11 +79,9 @@ export const getGatheringReviews = async (
   }
 };
 
-export const getReviewsScore = async (
-  gatheringType: GatheringWithoutAll,
-): Promise<AverageScoreList> => {
+export const getReviewsScore = async (type: GatheringWithoutAll): Promise<AverageScoreList> => {
   const queryParams = new URLSearchParams();
-  if (gatheringType) queryParams.append('type', gatheringType);
+  if (type) queryParams.append('type', type);
 
   try {
     const response = await clientInstance.get<AverageScoreList>({
