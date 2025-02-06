@@ -5,11 +5,12 @@ import {useState} from 'react';
 import Modal, {ModalType} from './modal';
 
 type BottomBarType = {
+  isLogin: boolean;
   isOwner: boolean;
   gatheringId: number;
 };
-const islogin = true;
-export default function BottomBar({isOwner, gatheringId}: BottomBarType) {
+
+export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ModalType>({
     type: 'redirect',
@@ -17,7 +18,7 @@ export default function BottomBar({isOwner, gatheringId}: BottomBarType) {
   });
 
   const handleJoinButton = () => {
-    if (islogin) {
+    if (isLogin) {
       // gatherings/id/join으로 요청 보내고 참여성공했다고 모달 띄우기
 
       setIsModalOpen(true);

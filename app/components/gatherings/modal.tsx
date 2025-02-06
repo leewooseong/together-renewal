@@ -27,9 +27,6 @@ export default function Modal({modalType, setIsModalOpen}: ModalPropsType) {
       console.log('🥳모임 참여 성공했음!!!!');
     },
   });
-  // const postJoinGatheringMutation = useMutation<JoinGatheringResponse>({
-  //   mutationFn: () => postJoinGathering({id: gatheringId}),
-  // });
 
   const handleCloseButton = () => {
     setIsModalOpen(prev => !prev);
