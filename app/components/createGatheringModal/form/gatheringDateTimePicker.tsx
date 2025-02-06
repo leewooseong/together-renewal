@@ -10,7 +10,7 @@ import {CreateModalCalendar} from '../../common/calendar/createModalCalendar';
 
 // Todo: useEffect를 이용해 storage에서 정보가 있다면 받아오기
 export function GatheringDateTimePicker({
-  name,
+  label,
   value: timeInfo,
   onChange,
   error = undefined,
@@ -26,7 +26,7 @@ export function GatheringDateTimePicker({
 
   return (
     <div className="relative">
-      <label className="mb-1 block text-base font-medium">{name}</label>
+      <label className="mb-1 block text-base font-medium">{label}</label>
       <button
         type="button"
         onClick={() => setShowCalendar(!showCalendar)}

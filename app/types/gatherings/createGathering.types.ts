@@ -1,3 +1,5 @@
+import {FieldValues, UseFormRegister} from 'react-hook-form';
+
 import {HOURS, MINUTES, PERIOD} from '../../constants/calendar';
 import {LOCATIONS, SERVICE_TYPES} from '../../constants/commonConstants';
 import {ValueOf} from '../util.types';
@@ -25,13 +27,19 @@ export type InputProps<T> = {
   error?: string;
 };
 
+export type UnControlledInputProps<T extends FieldValues> = {
+  register: UseFormRegister<T>;
+  registerKey: keyof T;
+  label: string;
+};
+
 export type SelectItem = {value: (typeof LOCATIONS)[number]; label: (typeof LOCATIONS)[number]};
 export type SelectProps = InputProps<string | null> & {
   options: SelectItem[];
 };
 
 export type DateTimePickerProps = InputProps<TimeInfo> & {
-  name: string;
+  label: string;
 };
 
 export type TimeInfo = {
