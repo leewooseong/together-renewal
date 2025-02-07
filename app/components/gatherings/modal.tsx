@@ -2,29 +2,62 @@
 
 import {Dispatch, SetStateAction, useState} from 'react';
 
-import {useMutation} from '@tanstack/react-query';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {postJoinGathering} from '../../apis/gatherings/gatheringApi';
+import {deleteLeaveGathering, postJoinGathering} from '../../apis/gatherings/gatheringApi';
+import {gatheringDetailQueryKey} from '../../queries/common/queryKeys';
 
 export type ModalType = {
   type: 'confirm' | 'alert' | 'redirect';
   message: string;
 };
 export type ModalPropsType = {
+  isLogin: boolean;
+  isOwner: boolean;
+  isParticipated: boolean;
   gatheringId: number | undefined;
   modalType: ModalType;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  setIsParticipated: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function Modal({gatheringId, modalType, setIsModalOpen}: ModalPropsType) {
+export default function Modal({
+  isLogin,
+  isOwner,
+  isParticipated,
+  gatheringId,
+  modalType,
+  setIsModalOpen,
+  setIsParticipated,
+}: ModalPropsType) {
+  const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
   const postJoinGatheringMutation = useMutation({
     mutationFn: (id: number) => postJoinGathering(id),
-    onSuccess: () => {
+    onSuccess: async () => {
       console.log('🥳모임 참여 성공했음!!!!');
+      queryClient.invalidateQueries({
+        queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
+      });
+      setIsLoading(false);
+      setIsParticipated(true);
+    },
+  });
+
+  const deleteLeaveGatheringMutation = useMutation({
+    mutationFn: (id: number) => deleteLeaveGathering(id),
+    onSuccess: async () => {
+      console.log('모임을 떠났습니다🏃‍➡️🏃‍♀️‍➡️🏃‍♂️‍➡️ 모임떠나기 성공');
+      queryClient.invalidateQueries({
+        queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
+      });
+      // 로그인된 사용자가 참석한 모임 목록 조회 api 쿼리키 무효화하기기
+
+      setIsLoading(false);
+      setIsParticipated(false);
     },
   });
 
@@ -38,8 +71,23 @@ export default function Modal({gatheringId, modalType, setIsModalOpen}: ModalPro
 
   const handleConfirmButton = () => {
     setIsModalOpen(prev => !prev);
-    if (gatheringId) {
-      postJoinGatheringMutation.mutate(gatheringId);
+    if (!isOwner && isLogin && !isParticipated) {
+      if (gatheringId) {
+        postJoinGatheringMutation.mutate(gatheringId);
+        setIsLoading(true);
+      }
+      return;
+    }
+    if (!isOwner && isLogin && isParticipated) {
+      if (gatheringId) {
+        deleteLeaveGatheringMutation.mutate(gatheringId);
+      }
+      console.log('모임 참여 취소요청 보내면 된다.');
+      // 모임 참여 취소하고 어떻게 할까... 그냥 상세페이지에 냅두기? or 메인 페이지로 보내버리기
+      return;
+    }
+    if (isOwner) {
+      console.log('모임 취소 요청 보내면 된다.');
     }
     // api요청 보내면 된다.
   };

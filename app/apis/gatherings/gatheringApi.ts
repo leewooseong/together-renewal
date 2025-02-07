@@ -54,6 +54,17 @@ export const leaveJoinedGatherings = async (gatheringId: number): Promise<void> 
   }
 };
 
+export const deleteLeaveGathering = async (id: number): Promise<void> => {
+  try {
+    await clientInstance.delete<GetJoinedGatherings[]>({
+      path: `/route/token/gatherings/${id}`,
+    });
+  } catch (error) {
+    console.error('Error fetching leave joined gatherings:', error);
+    throw error;
+  }
+};
+
 export const leaveJoinedGatheringsInServer = async (
   token: string,
   gatheringId: number,
@@ -112,3 +123,23 @@ export const getGatheringDetail = async (id: number): Promise<GatheringDetailTyp
     throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
   }
 };
+
+// export const getGatheringDetail = async (id: number): Promise<GatheringDetailType> => {
+//   try {
+//     const response = await serverInstance.get<GatheringDetailType>({
+//       path: `/gatherings/${id}`,
+//     });
+//     return response;
+//   } catch (error) {
+//     console.error('현재 error 객체:', error);
+//     throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
+//   }
+// };
+
+// export async function getGatheringDetail(id: number): Promise<GatheringDetailType> {
+//   const response = await fetch(
+//     `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gatherings/${id}`,
+//   );
+//   console.log(response.json());
+//   return response.json();
+// }

@@ -12,9 +12,18 @@ export const GET = async (request: NextRequest) => {
   try {
     const response = await serverInstance.get({
       path: `/gatherings/${id}`,
+      options: {cache: 'no-store'},
     });
 
-    return NextResponse.json(response);
+    // // 🛠 응답 데이터 확인
+    // console.log(`📡 [Gathering Detail API] 응답 데이터:`, response);
+    // console.log('🔍 응답 객체 유형:', typeof response);
+    // console.log('🔍 응답 객체 JSON 변환 가능 여부:', JSON.stringify(response));
+
+    // // return NextResponse.json(response);
+    return NextResponse.json(response, {
+      status: 200,
+    });
   } catch (error) {
     if (error instanceof CodeitError) {
       console.log('현재 error 객체', error.code);

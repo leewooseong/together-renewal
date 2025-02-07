@@ -1,24 +1,45 @@
+/* eslint-disable no-nested-ternary */
+
 'use client';
 
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import Modal, {ModalType} from './modal';
 
 type BottomBarType = {
   isLogin: boolean;
   isOwner: boolean;
+  isParticipated: boolean;
+  setIsParticipated: Dispatch<SetStateAction<boolean>>;
+  isFull: boolean;
   gatheringId: number | undefined;
 };
 
-export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType) {
+export default function BottomBar({
+  isLogin,
+  isOwner,
+  isParticipated,
+  setIsParticipated,
+  isFull,
+  gatheringId,
+}: BottomBarType) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<ModalType>({
     type: 'redirect',
     message: '',
   });
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // gatheringId가 로드되면 로딩 상태를 false로 변경
+    if (gatheringId !== undefined) {
+      setIsLoading(false);
+    }
+  }, [gatheringId]);
+
   const handleJoinButton = () => {
-    if (isLogin) {
+    if (isLogin && !isOwner) {
       // gatherings/id/join으로 요청 보내고 참여성공했다고 모달 띄우기
 
       setIsModalOpen(true);
@@ -36,8 +57,25 @@ export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType
     }
   };
 
+  const handleLeaveButton = () => {
+    if (isLogin && !isOwner) {
+      setIsModalOpen(true);
+      setModalType({
+        type: 'confirm',
+        message: '참여를 취소하시겠어요?',
+      });
+    } else {
+      // 로그인 페이지로 넘기기
+      setIsModalOpen(true);
+      setModalType({
+        type: 'redirect',
+        message: '로그인이 필요해요',
+      });
+    }
+  };
+
   const handleCancelButton = () => {
-    if (isOwner) {
+    if (isLogin && isOwner) {
       // 취소하기 api 요청 보내고 취소하시겠습니까? 모달 띄우고 ok하면 메인 페이지로 보내버리기
       setIsModalOpen(true);
       setModalType({
@@ -53,7 +91,7 @@ export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType
   };
 
   const handleShareButton = () => {
-    if (isOwner) {
+    if (isLogin && isOwner) {
       // 복사 됐다고 모달 띄우기
 
       setIsModalOpen(true);
@@ -100,11 +138,22 @@ export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType
                   공유하기
                 </button>
               </>
+            ) : isParticipated ? (
+              <button
+                onClick={handleLeaveButton}
+                type="button"
+                className="font-semibol h-11 w-[115px] rounded-xl border border-orange-600 text-orange-600"
+              >
+                참여 취소하기
+              </button>
             ) : (
               <button
                 onClick={handleJoinButton}
                 type="button"
-                className="h-11 w-[115px] rounded-xl bg-orange-600 font-semibold text-white"
+                disabled={isLoading || isFull}
+                className={`h-11 w-[115px] rounded-xl font-semibold text-white ${
+                  isLoading || isFull ? 'cursor-not-allowed bg-gray-400' : 'bg-orange-600'
+                }`}
               >
                 참여하기
               </button>
@@ -113,7 +162,15 @@ export default function BottomBar({isLogin, isOwner, gatheringId}: BottomBarType
         </div>
       </div>
       {isModalOpen ? (
-        <Modal gatheringId={gatheringId} modalType={modalType} setIsModalOpen={setIsModalOpen} />
+        <Modal
+          isLogin={isLogin}
+          isOwner={isOwner}
+          isParticipated={isParticipated}
+          gatheringId={gatheringId}
+          modalType={modalType}
+          setIsModalOpen={setIsModalOpen}
+          setIsParticipated={setIsParticipated}
+        />
       ) : (
         ''
       )}
