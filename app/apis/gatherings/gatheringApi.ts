@@ -1,3 +1,4 @@
+import {GatheringParams, GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
 import {clientInstance, serverInstance} from '../client';
 
@@ -23,7 +24,6 @@ export const getJoinedGatheringsInServer = async (
       sortOrder: 'asc',
     };
 
-    // 쿼리 문자열 생성
     const queryString = new URLSearchParams(
       defaultParams as unknown as Record<string, string>,
     ).toString();
@@ -62,5 +62,23 @@ export const leaveJoinedGatheringsInServer = async (
   } catch (error) {
     console.error('참여한 모임 삭제 실패: ', error);
     throw error;
+  }
+};
+
+export const getGatherings = async (params: GatheringParams): Promise<GetGatherings[]> => {
+  try {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) {
+        query.append(key, String(value));
+      }
+    });
+
+    return await clientInstance.get<GetGatherings[]>({
+      path: `/route/gatherings?${query.toString()}`,
+    });
+  } catch (error) {
+    console.error('모임 데이터 불러오기 실패:', error);
+    throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
   }
 };
