@@ -22,6 +22,18 @@ export const getJoinedGatherings = async (): Promise<GetJoinedGatherings[]> => {
   }
 };
 
+// export const getJoinedGatherings = async (): Promise<GetJoinedGatherings[]> => {
+//   try {
+//     const joinedGatherings = await clientInstance.get<GetJoinedGatherings[]>({
+//       path: `/route/token/gatherings/joinedGatherings`,
+//     });
+//     return joinedGatherings;
+//   } catch (error) {
+//     console.error('Error fetching joined gatherings:', error);
+//     throw error;
+//   }
+// };
+
 export const getJoinedGatheringsInServer = async (
   token: string,
 ): Promise<GetJoinedGatherings[]> => {
@@ -126,5 +138,37 @@ export const getGatheringDetail = async (id: number): Promise<GatheringDetailTyp
   } catch (error) {
     console.error('현재 error 객체:', error);
     throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
+  }
+};
+
+export const putCancelGathering = async (id: number): Promise<{message: string}> => {
+  try {
+    const response = await clientInstance.put<{message: string}>({
+      path: `/route/token/gatherings/${id}`,
+      body: {id},
+    });
+    console.log('클라이언트에서 받은 모임 취소 응답:', response);
+    return response;
+  } catch (error) {
+    console.error('현재 error 객체:', error);
+    throw new Error(error instanceof Error ? error.message : '모임 취소 실패');
+  }
+};
+
+export const putCancelGatheringInServer = async (
+  token: string,
+  id: number,
+): Promise<{message: string}> => {
+  console.log(`putCancelGatheringInServer 서버 요청 시작 - ID: ${id}`);
+  try {
+    const response = await serverInstance.put<{message: string}>({
+      path: `/gatherings/${id}/cancel`,
+      token,
+    });
+    console.log(`putCancelGatheringInServer 요청 성공 - ID: ${id}`, response);
+    return response; // ✅ 응답 메시지 반환
+  } catch (error) {
+    console.error(`putCancelGatheringInServer 요청 실패 - ID: ${id}`, error);
+    throw new Error(error instanceof Error ? error.message : '모임 참여 요청 중 오류 발생');
   }
 };

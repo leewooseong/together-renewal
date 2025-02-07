@@ -100,6 +100,9 @@ export default function Gathering() {
       <div>모임 owner: {gatheringDetail?.createdBy}</div>
       <div>참여 가능 인원: {gatheringDetail?.capacity}</div>
       <div>현재 참여한 인원: {gatheringDetail?.participantCount}</div>
+      <div>
+        현재 모임 상태: {gatheringDetail?.canceledAt ? '취소된 모임임' : '아직 활성중인 모임임'}
+      </div>
       <div>{isParticipated ? '이미 참여중임' : '아직 참여안함'}</div>
 
       <BottomBar
@@ -108,6 +111,7 @@ export default function Gathering() {
         isParticipated={isParticipated}
         setIsParticipated={setIsParticipated}
         isFull={isFull}
+        isCancel={gatheringDetail?.canceledAt}
         gatheringId={gatheringDetail?.id}
       />
     </>

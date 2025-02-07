@@ -5,8 +5,13 @@ import {Dispatch, SetStateAction, useState} from 'react';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 
-import {deleteLeaveGathering, postJoinGathering} from '../../apis/gatherings/gatheringApi';
+import {
+  deleteLeaveGathering,
+  postJoinGathering,
+  putCancelGathering,
+} from '../../apis/gatherings/gatheringApi';
 import {gatheringDetailQueryKey} from '../../queries/common/queryKeys';
 
 export type ModalType = {
@@ -32,12 +37,13 @@ export default function Modal({
   setIsModalOpen,
   setIsParticipated,
 }: ModalPropsType) {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const [isLoading, setIsLoading] = useState(false);
 
   const postJoinGatheringMutation = useMutation({
     mutationFn: (id: number) => postJoinGathering(id),
-    onSuccess: async () => {
+    onSuccess: () => {
       console.log('🥳모임 참여 성공했음!!!!');
       queryClient.invalidateQueries({
         queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
@@ -49,13 +55,25 @@ export default function Modal({
 
   const deleteLeaveGatheringMutation = useMutation({
     mutationFn: (id: number) => deleteLeaveGathering(id),
-    onSuccess: async () => {
+    onSuccess: () => {
       console.log('모임을 떠났습니다🏃‍➡️🏃‍♀️‍➡️🏃‍♂️‍➡️ 모임떠나기 성공');
       queryClient.invalidateQueries({
         queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
       });
       // 로그인된 사용자가 참석한 모임 목록 조회 api 쿼리키 무효화하기기
       queryClient.invalidateQueries({queryKey: ['joinedGatheringList']});
+      setIsLoading(false);
+      setIsParticipated(false);
+    },
+  });
+
+  const putCancelGatheringMutation = useMutation({
+    mutationFn: (id: number) => putCancelGathering(id),
+    onSuccess: data => {
+      console.log(data.message);
+      queryClient.invalidateQueries({
+        queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
+      });
       setIsLoading(false);
       setIsParticipated(false);
     },
@@ -87,6 +105,10 @@ export default function Modal({
       return;
     }
     if (isOwner) {
+      if (gatheringId) {
+        putCancelGatheringMutation.mutate(gatheringId);
+        router.replace('/gatherings');
+      }
       console.log('모임 취소 요청 보내면 된다.');
     }
     // api요청 보내면 된다.
