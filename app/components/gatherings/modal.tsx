@@ -55,7 +55,7 @@ export default function Modal({
         queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
       });
       // 로그인된 사용자가 참석한 모임 목록 조회 api 쿼리키 무효화하기기
-
+      queryClient.invalidateQueries({queryKey: ['joinedGatheringList']});
       setIsLoading(false);
       setIsParticipated(false);
     },

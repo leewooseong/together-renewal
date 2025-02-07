@@ -5,13 +5,17 @@ import {
 } from '../../types/gatherings/joinedGatherings.types';
 import {clientInstance, serverInstance} from '../client';
 
+type ApiResponse<T> = {
+  data: T;
+  message: string;
+};
+
 export const getJoinedGatherings = async (): Promise<GetJoinedGatherings[]> => {
   try {
-    const joinedGatherings = await clientInstance.get<GetJoinedGatherings[]>({
+    const joinedGatherings = await clientInstance.get<ApiResponse<GetJoinedGatherings[]>>({
       path: `/route/token/gatherings/joinedGatherings`,
     });
-
-    return joinedGatherings;
+    return joinedGatherings.data;
   } catch (error) {
     console.error('Error fetching joined gatherings:', error);
     throw error;
@@ -36,6 +40,7 @@ export const getJoinedGatheringsInServer = async (
       path: `/gatherings/joined?${queryString}`,
       token,
     });
+    console.log(joinedGatherings);
     return joinedGatherings;
   } catch (error) {
     console.error('Error fetching joined gatherings in server:', error);
@@ -123,23 +128,3 @@ export const getGatheringDetail = async (id: number): Promise<GatheringDetailTyp
     throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
   }
 };
-
-// export const getGatheringDetail = async (id: number): Promise<GatheringDetailType> => {
-//   try {
-//     const response = await serverInstance.get<GatheringDetailType>({
-//       path: `/gatherings/${id}`,
-//     });
-//     return response;
-//   } catch (error) {
-//     console.error('현재 error 객체:', error);
-//     throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
-//   }
-// };
-
-// export async function getGatheringDetail(id: number): Promise<GatheringDetailType> {
-//   const response = await fetch(
-//     `${process.env.NEXT_PUBLIC_BASE_URL}/${process.env.NEXT_PUBLIC_TEAM_ID}/gatherings/${id}`,
-//   );
-//   console.log(response.json());
-//   return response.json();
-// }
