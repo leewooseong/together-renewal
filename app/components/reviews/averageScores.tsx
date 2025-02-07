@@ -16,6 +16,7 @@ export function AverageScores({
   const sum = scoreArray.reduce((acc, num) => acc + num, 0);
 
   const ratio: string[] = scoreArray.map(item => `${Math.floor((item / sum) * 100)}%`);
+  console.log(averageScore);
 
   return (
     <div className="flex h-[180px] w-full items-center justify-between border-y-2 border-y-gray-200 bg-white px-6 py-8 tablet:px-[73px]">
