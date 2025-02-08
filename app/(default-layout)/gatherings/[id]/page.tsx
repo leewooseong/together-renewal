@@ -6,8 +6,9 @@ import {useQuery} from '@tanstack/react-query';
 import {useParams} from 'next/navigation';
 
 import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatherings/gatheringApi';
+import ReviewWrapper from '../../../components/common/review/reviewWrapper';
 import BottomBar from '../../../components/gatherings/bottomBar';
-import {gatheringsQueryKey} from '../../../queries/common/queryKeys';
+import {gatheringsQueryKey, reviewListQuery} from '../../../queries/common/queryKeys';
 import {useUserQuery} from '../../../queries/user/useUserQuries';
 
 export default function Gathering() {
@@ -18,6 +19,10 @@ export default function Gathering() {
   const [isLogin, setIsLogin] = useState(false);
   const [isParticipated, setIsParticipated] = useState(false);
   const [isFull, setIsFull] = useState(false);
+
+  const {data: gatheringReviewList} = useQuery(
+    reviewListQuery.getGatheringReviewList({gatheringId, sortOrder: 'desc'}),
+  );
 
   const {data: gatheringDetail, isError} = useQuery({
     queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
@@ -104,6 +109,7 @@ export default function Gathering() {
         현재 모임 상태: {gatheringDetail?.canceledAt ? '취소된 모임임' : '아직 활성중인 모임임'}
       </div>
       <div>{isParticipated ? '이미 참여중임' : '아직 참여안함'}</div>
+      <div>{gatheringReviewList && <ReviewWrapper {...gatheringReviewList} />}</div>
 
       <BottomBar
         isLogin={isLogin}
