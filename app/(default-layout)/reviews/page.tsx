@@ -5,6 +5,7 @@
 import {useQuery} from '@tanstack/react-query';
 
 import {getReviewsScore} from '../../apis/reviews/reviewsApi';
+import {Filtering} from '../../components/common/filter/filtering';
 import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../../components/common/pageInfo';
 import ReviewWrapper from '../../components/common/review/reviewWrapper';
@@ -49,7 +50,14 @@ export default function ReviewsPage() {
       <div className="mt-6">{scoreData && <AverageScores {...scoreData} />}</div>
 
       <div className="mt-4 border-t-2 border-t-gray-900 bg-white px-4 py-6 tablet:mt-6 tablet:px-6">
-        <div className="mb-6">필터링 컴포넌트</div>
+        <div className="mb-6">
+          <Filtering
+            pageName="REVIEW"
+            updateQueryString={updateQueryString}
+            filter={filter}
+            setFilter={setFilter}
+          />
+        </div>
         {reviewList && <ReviewWrapper {...reviewList} />}
       </div>
     </div>

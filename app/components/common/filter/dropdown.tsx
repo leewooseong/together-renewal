@@ -1,20 +1,79 @@
 /* eslint-disable @next/next/no-img-element */
 
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 
-import {DropdownProps, SelectedItem} from '@/app/types/dropDown.types';
+import {DefaultValue, SelectedItem} from '../../../types/dropDown.types';
+import {GetReviewsProps} from '../../../types/reviews/reviewsApi.types';
 
-export function Dropdown({defaultValue, filterList}: DropdownProps) {
+export type DropdownProps = {
+  defaultValue: DefaultValue;
+  filterList: SelectedItem[];
+  updateQueryString: (newFilter: Partial<GetReviewsProps>) => void;
+  filter: GetReviewsProps;
+  setFilter: Dispatch<SetStateAction<GetReviewsProps>>;
+};
+
+export function Dropdown({
+  defaultValue,
+  filterList,
+  updateQueryString,
+  filter,
+  setFilter,
+}: DropdownProps) {
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(defaultValue);
+
+  const convertSortBy = (item: string) => {
+    if (item === '최신 순') {
+      return 'createdAt';
+    }
+    if (item === '리뷰 높은 순') {
+      return 'score';
+    }
+    if (item === '참여 인원 순') {
+      return 'participantCount';
+    }
+    return '';
+  };
 
   const handleButtonClick = () => {
     setIsButtonClicked(prev => !prev);
   };
   const handleListClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const getLocationName = event.currentTarget.name as SelectedItem;
-    setSelectedItem(getLocationName);
+    const getSelectedName = event.currentTarget.name as SelectedItem;
+    if (defaultValue === '지역 전체') {
+      if (getSelectedName !== '지역 전체') {
+        setFilter({
+          ...filter,
+          location: getSelectedName,
+        });
+        updateQueryString({
+          ...filter,
+          location: getSelectedName,
+        });
+      } else {
+        setFilter({
+          ...filter,
+          location: '',
+        });
+        updateQueryString({
+          ...filter,
+          location: '',
+        });
+      }
+    } else if (defaultValue === '최신 순' || defaultValue === '마감 임박') {
+      const sortByFormat = convertSortBy(getSelectedName);
+      setFilter({
+        ...filter,
+        sortBy: sortByFormat,
+      });
+      updateQueryString({
+        ...filter,
+        sortBy: sortByFormat,
+      });
+    }
+    setSelectedItem(getSelectedName);
     setIsButtonClicked(false);
   };
 
@@ -30,15 +89,13 @@ export function Dropdown({defaultValue, filterList}: DropdownProps) {
 
   return (
     <div className={`${IS_SORT && 'flex justify-end'} relative`}>
-      {/* <div>{isButtonClicked ? 'Location: true' : 'Location: false'}</div>
-      <div>{selectedItem}</div> */}
       <div>
         <button
           onClick={handleButtonClick}
           type="button"
           className={`flex h-9 items-center justify-between rounded-xl border-2 border-gray-100 ${DROPDOWN_BUTTON_DEFAULT_CLASS} ${DROPDOWN_BUTTON_PADDING_CLASS} ${DROPDOWN_BUTTON_DIRECTION_CLASS} ${DROPDOWN_BUTTON_ACTIVE_CLASS}`}
         >
-          <span className={`text-sm ${IS_SORT ? 'hidden xs:block' : ''}`}>{selectedItem}</span>
+          <span className={`text-sm ${IS_SORT ? 'xs:block hidden' : ''}`}>{selectedItem}</span>
           {IS_SORT ? (
             <img
               alt="정렬 화살표"
@@ -54,7 +111,7 @@ export function Dropdown({defaultValue, filterList}: DropdownProps) {
       </div>
       {isButtonClicked && (
         <ul
-          className={`absolute mt-[6px] xs:mt-2 z-10 flex flex-col bg-white justify-between ${defaultValue === '지역 전체' ? 'w-[116px]' : 'w-[105px] xs:w-32'} ${IS_SORT ? 'top-9 xs:top-10' : ''} rounded-xl shadow-xl`}
+          className={`xs:mt-2 absolute z-10 mt-[6px] flex flex-col justify-between bg-white ${defaultValue === '지역 전체' ? 'w-[116px]' : 'xs:w-32 w-[105px]'} ${IS_SORT ? 'xs:top-10 top-9' : ''} rounded-xl shadow-xl`}
         >
           {filterList.map(list => (
             <button
