@@ -28,13 +28,13 @@ export default function ReviewsPage() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <p>Category: {filter.type}</p>
         <p>location: {filter.location}</p>
         <p>date: {filter.date}</p>
         <p>sortBy: {filter.sortBy}</p>
         <p>sortOrder: {filter.sortOrder}</p>
-      </div>
+      </div> */}
       <div className="mb-6 tablet:mb-8">
         <PageInfo pageName="reviews" />
       </div>
@@ -48,7 +48,8 @@ export default function ReviewsPage() {
 
       <div className="mt-6">{scoreData && <AverageScores {...scoreData} />}</div>
 
-      <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
+      <div className="mt-4 border-t-2 border-t-gray-900 bg-white px-4 py-6 tablet:mt-6 tablet:px-6">
+        <div className="mb-6">필터링 컴포넌트</div>
         {reviewList && <ReviewWrapper {...reviewList} />}
       </div>
     </div>
