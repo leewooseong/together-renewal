@@ -125,7 +125,6 @@ export default function BottomBar({
 
   return (
     <>
-      <div>복사한 URL: {shareUrl}</div>
       <div
         className={`fixed bottom-0 left-0 z-10 w-full border-t-2 border-t-gray-900 bg-white px-4 py-5 sm:h-[84px] sm:justify-center sm:px-6 ${isOwner ? 'h-auto sm:flex' : 'flex h-auto justify-between'}`}
       >

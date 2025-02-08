@@ -109,7 +109,12 @@ export default function Gathering() {
         현재 모임 상태: {gatheringDetail?.canceledAt ? '취소된 모임임' : '아직 활성중인 모임임'}
       </div>
       <div>{isParticipated ? '이미 참여중임' : '아직 참여안함'}</div>
-      <div>{gatheringReviewList && <ReviewWrapper {...gatheringReviewList} />}</div>
+      <div className="border-t-2 border-t-gray-200 px-6 pt-6">
+        <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
+          이용자들은 이 프로그램을 이렇게 느꼈어요!
+        </div>
+        {gatheringReviewList && <ReviewWrapper {...gatheringReviewList} />}
+      </div>
 
       <BottomBar
         isLogin={isLogin}
