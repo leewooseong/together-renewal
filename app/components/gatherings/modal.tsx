@@ -12,7 +12,7 @@ import {
   postJoinGathering,
   putCancelGathering,
 } from '../../apis/gatherings/gatheringApi';
-import {gatheringDetailQueryKey} from '../../queries/common/queryKeys';
+import {gatheringsQueryKey} from '../../queries/common/queryKeys';
 
 export type ModalType = {
   type: 'confirm' | 'alert' | 'redirect';
@@ -46,7 +46,7 @@ export default function Modal({
     onSuccess: () => {
       console.log('🥳모임 참여 성공했음!!!!');
       queryClient.invalidateQueries({
-        queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
+        queryKey: gatheringsQueryKey.GatheringDetails(gatheringId!),
       });
       setIsLoading(false);
       setIsParticipated(true);
@@ -58,10 +58,10 @@ export default function Modal({
     onSuccess: () => {
       console.log('모임을 떠났습니다🏃‍➡️🏃‍♀️‍➡️🏃‍♂️‍➡️ 모임떠나기 성공');
       queryClient.invalidateQueries({
-        queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
+        queryKey: gatheringsQueryKey.GatheringDetails(gatheringId!),
       });
       // 로그인된 사용자가 참석한 모임 목록 조회 api 쿼리키 무효화하기기
-      queryClient.invalidateQueries({queryKey: ['joinedGatheringList']});
+      queryClient.invalidateQueries({queryKey: gatheringsQueryKey.joinedGatherings()});
       setIsLoading(false);
       setIsParticipated(false);
     },
@@ -72,7 +72,7 @@ export default function Modal({
     onSuccess: data => {
       console.log(data.message);
       queryClient.invalidateQueries({
-        queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId!),
+        queryKey: gatheringsQueryKey.GatheringDetails(gatheringId!),
       });
       setIsLoading(false);
       setIsParticipated(false);

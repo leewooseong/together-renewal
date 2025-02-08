@@ -7,7 +7,7 @@ import {useParams} from 'next/navigation';
 
 import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatherings/gatheringApi';
 import BottomBar from '../../../components/gatherings/bottomBar';
-import {gatheringDetailQueryKey} from '../../../queries/common/queryKeys';
+import {gatheringsQueryKey} from '../../../queries/common/queryKeys';
 import {useUserQuery} from '../../../queries/user/useUserQuries';
 
 export default function Gathering() {
@@ -20,13 +20,13 @@ export default function Gathering() {
   const [isFull, setIsFull] = useState(false);
 
   const {data: gatheringDetail, isError} = useQuery({
-    queryKey: gatheringDetailQueryKey.getGatheringDetail(gatheringId),
+    queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
     queryFn: () => getGatheringDetail(gatheringId),
     staleTime: 0,
   });
 
   const {data: joinedGatherings} = useQuery({
-    queryKey: ['joinedGatheringList'],
+    queryKey: gatheringsQueryKey.joinedGatherings(),
     queryFn: () => getJoinedGatherings(),
   });
 
