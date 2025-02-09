@@ -1,10 +1,6 @@
-import {useState} from 'react';
+import {Controller, useForm} from 'react-hook-form';
 
-import {
-  CreateGathering,
-  CreateGatheringState,
-} from '../../../types/gatherings/createGathering.types';
-import {ValueOf} from '../../../types/util.types';
+import {CreateGatheringState} from '../../../types/gatherings/createGathering.types';
 import {getInitialDate} from '../../../utils/calendar';
 import {LOCATION_MAP} from '../../../utils/createGathering';
 
@@ -17,58 +13,73 @@ import {ServiceTypeSelect} from './serviceTypeSelect';
 import {SubmitButton} from './submitButton';
 
 export function CreateGatheringForm() {
-  const [formData, setFormData] = useState<CreateGatheringState>({
-    name: '',
-    location: null,
-    image: null,
-    type: 'OFFICE_STRETCHING',
-    dateTime: getInitialDate(),
-    registrationEnd: getInitialDate(),
-    capacity: 0,
+  const {
+    register,
+    control,
+    handleSubmit,
+    // formState: {errors},
+  } = useForm<CreateGatheringState>({
+    defaultValues: {
+      name: '',
+      location: null,
+      image: null,
+      type: 'OFFICE_STRETCHING',
+      dateTime: getInitialDate(),
+      registrationEnd: getInitialDate(),
+      capacity: null,
+    },
   });
 
-  const handleInputChange = (
-    field: keyof CreateGathering,
-    value: ValueOf<CreateGatheringState>,
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
+  const onSubmit = (data: CreateGatheringState) => {
+    // API 호출 로직
+    console.log(data);
   };
 
   return (
-    <form className="flex flex-col gap-6">
-      <GatheringNameInput
-        value={formData.name}
-        onChange={value => handleInputChange('name', value)}
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      <GatheringNameInput register={register} registerKey="name" label="모임 이름" />
+      <Controller
+        control={control}
+        name="location"
+        render={({field}) => (
+          <LocationSelect value={field.value} onChange={field.onChange} options={LOCATION_MAP} />
+        )}
       />
-      <LocationSelect
-        value={formData.location}
-        onChange={value => handleInputChange('location', value)}
-        options={LOCATION_MAP} // 장소 옵션 추가 필요
+      <Controller
+        control={control}
+        name="image"
+        render={({field}) => <ImageUpload value={field.value} onChange={field.onChange} />}
       />
-      <ImageUpload value={formData.image} onChange={file => handleInputChange('image', file)} />
-      <ServiceTypeSelect
-        value={formData.type}
-        onChange={value => handleInputChange('type', value)}
+      <Controller
+        control={control}
+        name="type"
+        render={({field}) => <ServiceTypeSelect value={field.value} onChange={field.onChange} />}
       />
       <div className="flex flex-wrap justify-between gap-2 tablet:flex-nowrap">
-        <GatheringDateTimePicker
-          name="모임 날짜"
-          value={formData.dateTime}
-          onChange={value => handleInputChange('dateTime', value)}
+        <Controller
+          control={control}
+          name="dateTime"
+          render={({field}) => (
+            <GatheringDateTimePicker
+              label="모임 날짜"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
         />
-        <GatheringDateTimePicker
-          name="마감 날짜"
-          value={formData.registrationEnd}
-          onChange={value => handleInputChange('registrationEnd', value)}
+        <Controller
+          control={control}
+          name="registrationEnd"
+          render={({field}) => (
+            <GatheringDateTimePicker
+              label="마감 날짜"
+              value={field.value}
+              onChange={field.onChange}
+            />
+          )}
         />
       </div>
-      <Capacity
-        value={formData.capacity}
-        onChange={value => handleInputChange('capacity', value)}
-      />
+      <Capacity register={register} registerKey="capacity" label="모집 정원" />
       <SubmitButton />
     </form>
   );
