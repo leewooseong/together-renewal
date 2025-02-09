@@ -5,6 +5,8 @@ import {z} from 'zod';
 import {HOURS, MINUTES, PERIOD} from '../constants/calendar';
 import {LOCATIONS, TYPES} from '../constants/commonConstants';
 import {ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE} from '../constants/image';
+import {TimeInfo} from '../types/common/time.types';
+
 import {dateComparison, formatDateTimeForAPI} from './calendar';
 
 // # Login Schema
@@ -42,11 +44,11 @@ export const SignupSchema = z
 
 // # Create gathering schema
 // ## 기본 타입들 정의
-export const timeInfoSchema = z.object({
+export const timeInfoSchema: z.ZodType<TimeInfo> = z.object({
   selectedDate: z.date(),
   selectedHour: z.enum(Object.values(HOURS) as [string, ...string[]]),
   selectedMinute: z.enum(Object.values(MINUTES) as [string, ...string[]]),
-  selectedPeriod: z.enum(Object.values(PERIOD) as [string, ...string[]]),
+  selectedPeriod: z.enum(PERIOD),
 });
 
 const typeSchema = z.enum(TYPES);

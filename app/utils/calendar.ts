@@ -19,7 +19,7 @@ import {
 } from 'date-fns';
 
 import {CalendarDays, MonthNavigationResult} from '../types/calendar.types';
-import {TimeInfo} from '../types/gatherings/createGathering.types';
+import {TimeInfo} from '../types/common/time.types';
 
 /**
  * 날짜 포맷팅

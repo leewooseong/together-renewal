@@ -3,7 +3,8 @@ import {useState} from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import {DateTimePickerProps, TimeInfo} from '../../../types/gatherings/createGathering.types';
+import {TimeInfo} from '../../../types/common/time.types';
+import {DateTimePickerProps} from '../../../types/gatherings/createGathering.types';
 import {ValueOf} from '../../../types/util.types';
 import {formatDateTimeForAPI, getTimeInfoUI} from '../../../utils/calendar';
 import {CreateModalCalendar} from '../../common/calendar/createModalCalendar';

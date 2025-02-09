@@ -1,9 +1,7 @@
 import {FieldError, FieldErrorsImpl, FieldValues, UseFormRegister} from 'react-hook-form';
 
-import {z} from 'zod';
-
 import {LOCATIONS, SERVICE_TYPES} from '../../constants/commonConstants';
-import {timeInfoSchema} from '../../utils/validation';
+import {TimeInfo} from '../common/time.types';
 import {ValueOf} from '../util.types';
 
 export type ServiceType = ValueOf<typeof SERVICE_TYPES>;
@@ -46,6 +44,3 @@ export type DateTimePickerProps = InputProps<TimeInfo> & {
   label: string;
   error?: FieldError | FieldErrorsImpl<TimeInfo>;
 };
-
-// TimeInfo 타입 추론
-export type TimeInfo = z.infer<typeof timeInfoSchema>;
