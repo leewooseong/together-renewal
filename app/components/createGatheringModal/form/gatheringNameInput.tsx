@@ -1,16 +1,15 @@
 import clsx from 'clsx';
 
-import {
-  CreateGatheringState,
-  UnControlledInputProps,
-} from '../../../types/gatherings/createGathering.types';
+import {UnControlledInputProps} from '../../../types/gatherings/createGathering.types';
+import {GatheringFormSchema} from '../../../utils/validation';
 
 // React.forwardRef<HTMLInputElement, InputProps>
 export function GatheringNameInput({
   register,
   registerKey,
   label,
-}: UnControlledInputProps<CreateGatheringState>) {
+  error,
+}: UnControlledInputProps<GatheringFormSchema>) {
   return (
     <div>
       <label className="mb-1 block text-sm font-medium">{label}</label>
@@ -24,7 +23,7 @@ export function GatheringNameInput({
           'focus:outline-none focus:ring-2 focus:ring-orange-600',
         )}
       />
-      {/* {error && <span className="text-sm text-red-500">{error}</span>} */}
+      {error && <span className="text-sm text-red-500">{error.message}</span>}
     </div>
   );
 }

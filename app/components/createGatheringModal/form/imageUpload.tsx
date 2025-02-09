@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import {InputProps} from '../../../types/gatherings/createGathering.types';
 
-export function ImageUpload({value, onChange}: InputProps<File | null>) {
+export function ImageUpload({value, onChange, error}: InputProps<File | null>) {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFile: File | undefined | null = event.target.files?.[0];
     if (!newFile) return;
@@ -19,7 +19,7 @@ export function ImageUpload({value, onChange}: InputProps<File | null>) {
             'min-w-0 grow truncate rounded-lg',
             'bg-gray-50 px-4 py-[10px]',
             'focus:outline-none focus:ring-2 focus:ring-orange-600',
-            [value === null && 'text-gray-400'],
+            [!value && 'text-gray-400'],
           )}
         >
           {value ? value.name : '이미지를 첨부해주세요'}
@@ -31,6 +31,7 @@ export function ImageUpload({value, onChange}: InputProps<File | null>) {
           <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
         </label>
       </div>
+      {error && <span className="text-sm text-red-500">{error.message}</span>}
     </div>
   );
 }
