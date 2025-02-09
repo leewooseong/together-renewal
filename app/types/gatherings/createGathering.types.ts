@@ -1,6 +1,7 @@
 import {FieldError, FieldErrorsImpl, FieldValues, UseFormRegister} from 'react-hook-form';
 
 import {LOCATIONS, SERVICE_TYPES} from '../../constants/commonConstants';
+import {GatheringFormSchema} from '../../utils/validation';
 import {TimeInfo} from '../common/time.types';
 import {ValueOf} from '../util.types';
 
@@ -17,10 +18,19 @@ export type CreateGathering = {
   registrationEnd: string; // YYYY-MM-DDTHH:MM:SS
 };
 
-// export type CreateGatheringState = Omit<CreateGathering, 'dateTime' | 'registrationEnd'> & {
-//   dateTime: TimeInfo;
-//   registrationEnd: TimeInfo;
-// };
+export type CreateGatheringFormData = {
+  location: LocationType;
+  type: ServiceType;
+  name: string;
+  dateTime: string; // YYYY-MM-DDTHH:MM:SS
+  capacity: number;
+  image: File;
+  registrationEnd: string; // YYYY-MM-DDTHH:MM:SS
+};
+
+export type ErrorMessageType = {
+  [K in keyof GatheringFormSchema]: string;
+};
 
 export type InputProps<T> = {
   value: T;

@@ -19,7 +19,7 @@ export function CreateGatheringModal({onClose}: CreateGatheringModalProps) {
           </button>
         </div>
         {/* Modal content */}
-        <CreateGatheringForm />
+        <CreateGatheringForm onClose={onClose} />
       </div>
     </div>
   );
