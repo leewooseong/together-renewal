@@ -2,7 +2,7 @@ import clsx from 'clsx';
 
 import {InputProps} from '../../../types/gatherings/createGathering.types';
 
-export function ImageUpload({value, onChange, error}: InputProps<File | null>) {
+export function ImageUpload({value, onChange}: InputProps<File | null>) {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFile: File | undefined | null = event.target.files?.[0];
     if (!newFile) return;
@@ -11,7 +11,7 @@ export function ImageUpload({value, onChange, error}: InputProps<File | null>) {
   };
 
   return (
-    <div>
+    <>
       <label className="mb-1 block text-sm font-medium">이미지</label>
       <div className="flex w-full gap-3">
         <p
@@ -31,7 +31,6 @@ export function ImageUpload({value, onChange, error}: InputProps<File | null>) {
           <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} />
         </label>
       </div>
-      {error && <span className="text-sm text-red-500">{error.message}</span>}
-    </div>
+    </>
   );
 }

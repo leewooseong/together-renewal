@@ -26,7 +26,7 @@ export function GatheringDateTimePicker({
   };
 
   return (
-    <div className="relative">
+    <>
       <label className="mb-1 block text-base font-medium">{label}</label>
       <button
         type="button"
@@ -64,7 +64,6 @@ export function GatheringDateTimePicker({
           onChangeTimeInfo={handleTimeInfoChange}
         />
       )}
-      {error && <span className="text-sm text-red-500">{error.message}</span>}
-    </div>
+    </>
   );
 }

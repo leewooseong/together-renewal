@@ -92,8 +92,6 @@ export function LocationSelect({value, onChange, options, error}: CustomLocation
           ))}
         </div>
       )}
-
-      {error && <span className="mt-1 text-sm text-red-500">{error.message}</span>}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import {Controller, FieldError, useForm} from 'react-hook-form';
+import {Controller, useForm} from 'react-hook-form';
 
 import {zodResolver} from '@hookform/resolvers/zod';
 
@@ -12,6 +12,7 @@ import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
 import {ErrorMessageType} from '../../../types/gatherings/createGathering.types';
 import {Capacity} from './capacity';
+import ErrorInfo from './errorInfo';
 import {GatheringDateTimePicker} from './gatheringDateTimePicker';
 import {GatheringNameInput} from './gatheringNameInput';
 import {ImageUpload} from './imageUpload';
@@ -43,7 +44,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
     mode: 'all',
   });
 
-  const [errorMessage, setErrorMessage] = useState<ErrorMessageType>({
+  const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
     name: '',
     location: '',
     image: '',
@@ -53,9 +54,10 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
     capacity: '',
   });
 
-  console.log(errorMessage);
+  console.log(serverErrorMessage);
 
-  const {createGatheringMutation} = useCreateGatheringMutation<ErrorMessageType>(setErrorMessage);
+  const {createGatheringMutation} =
+    useCreateGatheringMutation<ErrorMessageType>(setServerErrorMessage);
 
   const getGatheringFormData = (data: GatheringFormSchema): FormData => {
     const formData = new FormData();
@@ -93,7 +95,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
       onError: error => {
         if (error instanceof CodeitError) {
           const {parameter, message} = error;
-          parameter && setErrorMessage(prev => ({...prev, [parameter]: message}));
+          parameter && setServerErrorMessage(prev => ({...prev, [parameter]: message}));
         }
       },
     });
@@ -101,74 +103,87 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-      <GatheringNameInput
-        register={register}
-        registerKey="name"
-        label="모임 이름"
-        error={errors.name}
-      />
-      <Controller
-        control={control}
-        name="location"
-        render={({field}) => (
-          <LocationSelect
-            value={field.value}
-            onChange={field.onChange}
-            options={LOCATION_MAP}
-            error={errors.location}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="image"
-        render={({field}) => (
-          <ImageUpload
-            value={field.value}
-            onChange={field.onChange}
-            error={errors.image as FieldError}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="type"
-        render={({field}) => (
-          <ServiceTypeSelect value={field.value} onChange={field.onChange} error={errors.type} />
-        )}
-      />
-      <div className="flex flex-wrap justify-between gap-2 tablet:flex-nowrap">
+      <div>
+        <GatheringNameInput register={register} registerKey="name" label="모임 이름" />
+        <ErrorInfo type="name" message={errors.name?.message || serverErrorMessage.name} />
+      </div>
+      <div>
         <Controller
           control={control}
-          name="dateTime"
+          name="location"
           render={({field}) => (
-            <GatheringDateTimePicker
-              label="모임 날짜"
+            <LocationSelect
               value={field.value}
               onChange={field.onChange}
-              error={errors.dateTime as FieldError}
+              options={LOCATION_MAP}
+              error={errors.location}
             />
           )}
         />
-        <Controller
-          control={control}
-          name="registrationEnd"
-          render={({field}) => (
-            <GatheringDateTimePicker
-              label="마감 날짜"
-              value={field.value}
-              onChange={field.onChange}
-              error={errors?.registrationEnd as FieldError}
-            />
-          )}
+        <ErrorInfo
+          type="location"
+          message={errors.location?.message || serverErrorMessage.location}
         />
       </div>
-      <Capacity
-        register={register}
-        registerKey="capacity"
-        label="모집 정원"
-        error={errors.capacity}
-      />
+      <div>
+        <Controller
+          control={control}
+          name="image"
+          render={({field}) => <ImageUpload value={field.value} onChange={field.onChange} />}
+        />
+        <ErrorInfo type="image" message={errors.image?.message || serverErrorMessage.image} />
+      </div>
+      <div>
+        <Controller
+          control={control}
+          name="type"
+          render={({field}) => <ServiceTypeSelect value={field.value} onChange={field.onChange} />}
+        />
+        <ErrorInfo type="type" message={errors.type?.message || serverErrorMessage.type} />
+      </div>
+      <div className="flex flex-wrap justify-between gap-2 tablet:flex-nowrap">
+        <div className="relative">
+          <Controller
+            control={control}
+            name="dateTime"
+            render={({field}) => (
+              <GatheringDateTimePicker
+                label="모임 날짜"
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
+          <ErrorInfo
+            type="dateTime"
+            message={errors.dateTime?.message || serverErrorMessage.dateTime}
+          />
+        </div>
+        <div className="relative">
+          <Controller
+            control={control}
+            name="registrationEnd"
+            render={({field}) => (
+              <GatheringDateTimePicker
+                label="마감 날짜"
+                value={field.value}
+                onChange={field.onChange}
+              />
+            )}
+          />
+          <ErrorInfo
+            type="registrationEnd"
+            message={errors.registrationEnd?.message || serverErrorMessage.registrationEnd}
+          />
+        </div>
+      </div>
+      <div>
+        <Capacity register={register} registerKey="capacity" label="모집 정원" />
+        <ErrorInfo
+          type="capacity"
+          message={errors.capacity?.message || serverErrorMessage.capacity}
+        />
+      </div>
       <SubmitButton />
     </form>
   );

@@ -11,7 +11,7 @@ export function GatheringNameInput({
   error,
 }: UnControlledInputProps<GatheringFormSchema>) {
   return (
-    <div>
+    <>
       <label className="mb-1 block text-sm font-medium">{label}</label>
       <input
         {...register(registerKey)}
@@ -23,7 +23,6 @@ export function GatheringNameInput({
           'focus:outline-none focus:ring-2 focus:ring-orange-600',
         )}
       />
-      {error && <span className="text-sm text-red-500">{error.message}</span>}
-    </div>
+    </>
   );
 }

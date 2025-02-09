@@ -35,14 +35,14 @@ export type ErrorMessageType = {
 export type InputProps<T> = {
   value: T;
   onChange: (value: T) => void;
-  error?: FieldError;
+  error?: string;
 };
 
 export type UnControlledInputProps<T extends FieldValues> = {
   register: UseFormRegister<T>;
   registerKey: keyof T;
   label: string;
-  error?: FieldError;
+  error?: string;
 };
 
 export type SelectItem = {value: (typeof LOCATIONS)[number]; label: (typeof LOCATIONS)[number]};
