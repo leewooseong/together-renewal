@@ -1,9 +1,12 @@
-import {useMutation} from '@tanstack/react-query';
 import {SetStateAction} from 'react';
 import {toast} from 'react-toastify';
+
+import {useMutation} from '@tanstack/react-query';
+
 import {createGathering} from '../../apis/gatherings/createGathering';
 import {CodeitError} from '../../types/error.types';
 
+// eslint-disable-next-line prettier/prettier
 export const useCreateGatheringMutation = <T,>(
   setErrorMessage: React.Dispatch<SetStateAction<T>>,
 ) => {
@@ -15,7 +18,9 @@ export const useCreateGatheringMutation = <T,>(
     onError: error => {
       if (error instanceof CodeitError) {
         const {parameter, message} = error;
-        parameter && setErrorMessage(prev => ({...prev, [parameter]: message}));
+        if (parameter) {
+          setErrorMessage(prev => ({...prev, [parameter]: message}));
+        }
       }
     },
   });

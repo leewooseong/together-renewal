@@ -27,7 +27,7 @@ const OPTION_LIST: {
 export function ServiceTypeSelect({value, onChange}: InputProps<ServiceType>) {
   return (
     <>
-      <label className="mb-1 block text-sm font-medium">선택 서비스</label>
+      <label className="mb-1 block text-base font-medium">선택 서비스</label>
       <div className="grid grid-cols-3 gap-2 tablet:gap-3">
         {OPTION_LIST.map(optionInfo => {
           return (

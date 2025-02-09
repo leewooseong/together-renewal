@@ -10,7 +10,7 @@ export function Capacity({
 }: UnControlledInputProps<GatheringFormSchema>) {
   return (
     <>
-      <label className="mb-1 block text-sm font-medium">{label}</label>
+      <label className="mb-1 block text-base font-medium">{label}</label>
       <input
         {...register(registerKey, {valueAsNumber: true})}
         type="number"

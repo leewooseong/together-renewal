@@ -8,11 +8,10 @@ export function GatheringNameInput({
   register,
   registerKey,
   label,
-  error,
 }: UnControlledInputProps<GatheringFormSchema>) {
   return (
     <>
-      <label className="mb-1 block text-sm font-medium">{label}</label>
+      <label className="mb-1 block text-base font-medium">{label}</label>
       <input
         {...register(registerKey)}
         type="text"

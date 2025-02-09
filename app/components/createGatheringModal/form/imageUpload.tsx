@@ -12,7 +12,7 @@ export function ImageUpload({value, onChange}: InputProps<File | null>) {
 
   return (
     <>
-      <label className="mb-1 block text-sm font-medium">이미지</label>
+      <label className="mb-1 block text-base font-medium">이미지</label>
       <div className="flex w-full gap-3">
         <p
           className={clsx(

@@ -1,16 +1,16 @@
+import {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 
 import {zodResolver} from '@hookform/resolvers/zod';
 
-import {formatDateTimeForAPI, getInitialDate} from '../../../utils/calendar';
-import {LOCATION_MAP} from '../../../utils/createGathering';
-import {createGatheringSchema, GatheringFormSchema} from '../../../utils/validation';
-
-import {useState} from 'react';
 import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
 import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
 import {ErrorMessageType} from '../../../types/gatherings/createGathering.types';
+import {formatDateTimeForAPI, getInitialDate} from '../../../utils/calendar';
+import {LOCATION_MAP} from '../../../utils/createGathering';
+import {createGatheringSchema, GatheringFormSchema} from '../../../utils/validation';
+
 import {Capacity} from './capacity';
 import ErrorInfo from './errorInfo';
 import {GatheringDateTimePicker} from './gatheringDateTimePicker';
@@ -95,7 +95,9 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
       onError: error => {
         if (error instanceof CodeitError) {
           const {parameter, message} = error;
-          parameter && setServerErrorMessage(prev => ({...prev, [parameter]: message}));
+          if (parameter) {
+            setServerErrorMessage(prev => ({...prev, [parameter]: message}));
+          }
         }
       },
     });
@@ -112,12 +114,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
           control={control}
           name="location"
           render={({field}) => (
-            <LocationSelect
-              value={field.value}
-              onChange={field.onChange}
-              options={LOCATION_MAP}
-              error={errors.location}
-            />
+            <LocationSelect value={field.value} onChange={field.onChange} options={LOCATION_MAP} />
           )}
         />
         <ErrorInfo

@@ -1,4 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server';
+
 import {serverInstance} from '../../../apis/client';
 import {AUTH_TOKEN} from '../../../constants/auth';
 import {CodeitError} from '../../../types/error.types';
