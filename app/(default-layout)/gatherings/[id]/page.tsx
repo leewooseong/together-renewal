@@ -35,9 +35,15 @@ export default function Gathering() {
     queryFn: () => getJoinedGatherings(),
   });
 
+  // 나중에 api함수 변경되고 아래 useId 주석 해제하면 잘 동작함
   const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
+  // const userId = userInfo?.data?.id as number;
+  const userId = 1005;
+
   const gatheringOwner = gatheringDetail?.createdBy;
+
+  console.log('userInfo:', userInfo);
+  console.log('userID:', userId);
 
   const checkFull = () => {
     if (gatheringDetail) {
