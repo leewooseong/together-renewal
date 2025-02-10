@@ -1,44 +1,36 @@
-import {useEffect, useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
 
 import {getJoinedGatherings} from '../apis/gatherings/gatheringApi';
 import {getReviews} from '../apis/reviews/reviewsApi';
 import {useUserQuery} from '../queries/user/useUserQueries';
-import {ReviewListType} from '../types/common/reviews.types';
-import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
 import {myGatheringSort} from '../utils/myGatheringSort';
 
 export function useMyGatheringsData() {
-  const [joinedGatherings, setJoinedGatherings] = useState<GetJoinedGatherings[] | null>(null);
-  const [reviewsData, setReviewsData] = useState<ReviewListType['data'] | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-
   const {getMyInfo} = useUserQuery();
   const {data: userInfoResponse} = getMyInfo();
   const userInfo = userInfoResponse?.data;
 
-  useEffect(() => {
-    const fetchGatherings = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getJoinedGatherings();
-        setJoinedGatherings(myGatheringSort(response));
+  const {
+    data: joinedGatherings,
+    isLoading: isLoadingGatherings,
+    isError: isErrorGatherings,
+  } = useQuery({
+    queryKey: ['joinedGatherings'],
+    queryFn: async () => myGatheringSort(await getJoinedGatherings()),
+  });
 
-        if (userInfo) {
-          const reviewsResponse = await getReviews({userId: userInfo.id});
-          setReviewsData(reviewsResponse.data);
-        }
+  const {
+    data: reviewedGatherings,
+    isLoading: isLoadingReviews,
+    isError: isErrorReviews,
+  } = useQuery({
+    queryKey: ['reviewedGatherings', userInfo?.id],
+    queryFn: () => getReviews({userId: userInfo?.id}),
+    enabled: !!userInfo, // userInfo가 있을 때만 실행
+  });
 
-        setIsError(false);
-      } catch (error) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const isLoading = isLoadingGatherings || isLoadingReviews;
+  const isError = isErrorGatherings || isErrorReviews;
 
-    fetchGatherings();
-  }, [userInfo?.id]);
-
-  return {joinedGatherings, reviewsData, isLoading, isError, userInfo};
+  return {joinedGatherings, reviewedGatherings, isLoading, isError, userInfo};
 }

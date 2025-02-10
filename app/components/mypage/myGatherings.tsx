@@ -15,8 +15,9 @@ export function MyGatherings({
   activeTab: ReviewedGatheringFilter;
   reviewed: boolean;
 }) {
-  const {joinedGatherings, reviewsData, isLoading, isError, userInfo} = useMyGatheringsData();
-  const filteredGatherings = useMyGatheringsFilter(joinedGatherings, activeTab, userInfo?.id);
+  const {joinedGatherings, reviewedGatherings, isLoading, isError, userInfo} =
+    useMyGatheringsData();
+  const filteredGatherings = useMyGatheringsFilter(joinedGatherings ?? [], activeTab, userInfo?.id);
 
   if (isLoading) {
     return <TextRender effect="bounce" text="로딩중..." />;
@@ -27,8 +28,8 @@ export function MyGatherings({
   }
 
   if (activeTab === 'myReviews' && reviewed) {
-    return reviewsData && reviewsData.length > 0 ? (
-      <ReviewList reviewsData={reviewsData} />
+    return reviewedGatherings && reviewedGatherings.data.length > 0 ? (
+      <ReviewList reviewsData={reviewedGatherings.data} />
     ) : (
       <EmptyMessage message="리뷰가 없어요." />
     );

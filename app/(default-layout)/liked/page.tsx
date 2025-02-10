@@ -9,7 +9,7 @@ import {EmptyMessage} from '../../components/common/emptyMessage';
 import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../../components/common/pageInfo';
 import {TextRender} from '../../components/common/textRender';
-import {ListCard} from '../../components/listComponent/listCard';
+import {ListCard} from '../../components/list/listCard';
 import {useGatheringFilter} from '../../hooks/useGatheringFilter';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 

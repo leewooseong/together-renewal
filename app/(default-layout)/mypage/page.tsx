@@ -2,10 +2,10 @@
 
 import {useState} from 'react';
 
-import {FilterTab} from '../../components/mypageComponent/filterTab';
-import {MyGatherings} from '../../components/mypageComponent/myGatherings';
-import {TabNavigation} from '../../components/mypageComponent/tabNavigation';
-import {ProfileLayout} from '../../components/profileComponent/profileLayout';
+import {FilterTab} from '../../components/mypage/filterTab';
+import {MyGatherings} from '../../components/mypage/myGatherings';
+import {TabNavigation} from '../../components/mypage/tabNavigation';
+import {ProfileLayout} from '../../components/profile/profileLayout';
 import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
 
 export default function MyPage() {

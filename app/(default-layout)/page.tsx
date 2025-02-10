@@ -1,19 +1,34 @@
-import {cookies} from 'next/headers';
+import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
-import {getUserInfoInServer} from '../apis/user/userApi';
-import {AUTH_TOKEN} from '../constants/auth';
+import {getGatherings} from '../apis/gatherings/gatheringApi';
+import GatheringsList from '../components/list/gatheringsList';
+import {GatheringsFilter} from '../types/gatherings/filters';
+import {GetGatherings} from '../types/gatherings/getGatherings.types';
+
+const fetchGatheringsData = async () => {
+  const initialParams: GatheringsFilter = {
+    sortBy: 'dateTime',
+    sortOrder: 'asc',
+    limit: 10,
+    offset: 0,
+  };
+  const initialData: GetGatherings[] = await getGatherings(initialParams);
+  return initialData;
+};
 
 export default async function Home() {
-  try {
-    const token = cookies().get(AUTH_TOKEN);
-    const userInfoData = await getUserInfoInServer(token?.value);
-    console.log(userInfoData);
-  } catch (error) {
-    console.log(error);
-  }
+  const queryClient = new QueryClient();
+
+  const initialData = await fetchGatheringsData();
+
+  queryClient.setQueryData(['gatherings'], {
+    pages: [initialData],
+    pageParams: [0],
+  });
+
   return (
-    <div>
-      <p>메인 페이지</p>
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <GatheringsList initialData={initialData} />
+    </HydrationBoundary>
   );
 }

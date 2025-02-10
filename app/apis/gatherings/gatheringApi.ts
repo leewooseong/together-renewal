@@ -1,14 +1,10 @@
+import {ApiResponse} from '../../types/common/responseApi.types';
 import {GatheringParticipant} from '../../types/gatherings/GatheringParticipant';
 import {GatheringsFilter, JoinedGatheringsFilter} from '../../types/gatherings/filters';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
 import createQueryString from '../../utils/createQueryString';
 import {clientInstance, serverInstance} from '../client';
-
-interface ApiResponse<T> {
-  data: T;
-  message: string;
-}
 
 // TODO: 에러처리 맞게 수정
 export const getGatherings = async (filters: GatheringsFilter = {}): Promise<GetGatherings[]> => {
