@@ -9,6 +9,7 @@ export const GET = async (request: NextRequest) => {
   try {
     const response = await serverInstance.get({
       path: `/reviews?${searchParams}`,
+      options: {cache: 'no-store'},
     });
     return Response.json(response);
   } catch (error) {

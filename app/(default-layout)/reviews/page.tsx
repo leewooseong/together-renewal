@@ -5,6 +5,7 @@
 import {useQuery} from '@tanstack/react-query';
 
 import {getReviewsScore} from '../../apis/reviews/reviewsApi';
+import {Filtering} from '../../components/common/filter/filtering';
 import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../../components/common/pageInfo';
 import ReviewWrapper from '../../components/common/review/reviewWrapper';
@@ -28,16 +29,17 @@ export default function ReviewsPage() {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <p>Category: {filter.type}</p>
         <p>location: {filter.location}</p>
         <p>date: {filter.date}</p>
         <p>sortBy: {filter.sortBy}</p>
         <p>sortOrder: {filter.sortOrder}</p>
-      </div>
+      </div> */}
       <div className="mb-6 tablet:mb-8">
         <PageInfo pageName="reviews" />
       </div>
+
       <div className="border-b-2 border-b-gray-200 pb-4">
         <GatheringFilter
           updateQueryString={updateQueryString}
@@ -48,23 +50,17 @@ export default function ReviewsPage() {
 
       <div className="mt-6">{scoreData && <AverageScores {...scoreData} />}</div>
 
-      <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
+      <div className="mt-4 border-t-2 border-t-gray-900 bg-white px-4 py-6 tablet:mt-6 tablet:px-6">
+        <div className="mb-6">
+          <Filtering
+            pageName="REVIEW"
+            updateQueryString={updateQueryString}
+            filter={filter}
+            setFilter={setFilter}
+          />
+        </div>
         {reviewList && <ReviewWrapper {...reviewList} />}
       </div>
     </div>
   );
 }
-
-// {reviewList?.data.map(review => (
-//   <Review
-//     key={review.id}
-//     gatheringImg={review.Gathering.image}
-//     score={review.score}
-//     comment={review.comment}
-//     gatheringType={review.Gathering.type}
-//     gatheringLocation={review.Gathering.location}
-//     userImg={review.User.image}
-//     userName={review.User.name}
-//     createdAt={review.createdAt}
-//   />
-// ))}
