@@ -1,15 +1,14 @@
 import {User} from '../../store/types/user.types';
+import {ApiResponse} from '../../types/common/responseApi.types';
 import {CodeitError} from '../../types/error.types';
 import {clientInstance, serverInstance} from '../client';
 
-export interface ApiResponse<T> {
-  message: string;
-  data: T;
-}
-
 export const login = async (email: string, password: string) => {
   try {
-    await clientInstance.post({path: '/route/auths/signin', body: {email, password}});
+    await clientInstance.post({
+      path: '/route/auths/signin',
+      body: {email, password},
+    });
   } catch (error) {
     if (error instanceof CodeitError) {
       throw new CodeitError(error.message, error.status, error.code, error.parameter);

@@ -1,5 +1,7 @@
 'use client';
 
+import {useMemo} from 'react';
+
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
@@ -26,19 +28,32 @@ export function ListCard({
 }: GetGatherings) {
   const {data: userInfo} = useUserQuery().getMyInfo();
   const userId = userInfo?.data?.id as number;
+  // const userId = userInfo?.data?.id ?? 0;
 
   const route = useRouter();
 
-  function isClose() {
+  // function isClose() {
+  //   if (isClosedUtil(registrationEnd, participantCount, capacity)) {
+  //     return <RenderOverlay message="모집 마감" height="full" gatheringId={id} userId={userId} />;
+  //   }
+  //   if (canceledAt)
+  //     return (
+  //       <RenderOverlay message="모집 취소" height="[328px]" gatheringId={id} userId={userId} />
+  //     );
+  //   return null;
+  // }
+
+  const isClose = useMemo(() => {
     if (isClosedUtil(registrationEnd, participantCount, capacity)) {
       return <RenderOverlay message="모집 마감" height="full" gatheringId={id} userId={userId} />;
     }
-    if (canceledAt)
+    if (canceledAt) {
       return (
         <RenderOverlay message="모집 취소" height="[328px]" gatheringId={id} userId={userId} />
       );
+    }
     return null;
-  }
+  }, [registrationEnd, participantCount, capacity, canceledAt, id, userId]);
 
   function joinNowButton() {
     route.push(`/gatherings/${id}`);
@@ -47,11 +62,11 @@ export function ListCard({
   return (
     <div className="relative flex h-[316px] w-[343px] max-w-[996px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white sm:h-[156px] sm:w-full sm:flex-row">
       {/* 마감 오버레이 */}
-      {isClose()}
+      {isClose}
 
       {/* 모임 이미지 */}
       <div className="relative flex h-[156px] w-[343px] items-center justify-center overflow-hidden sm:w-[280px]">
-        <Image src={image} alt="모임 대표 이미지" className="object-cover" layout="fill" />
+        <Image src={image || ''} alt="모임 대표 이미지" className="object-cover" fill />
         <CloseTag registrationEnd={registrationEnd} />
       </div>
 

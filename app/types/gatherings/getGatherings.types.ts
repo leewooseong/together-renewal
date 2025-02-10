@@ -11,5 +11,5 @@ export type GetGatherings = {
   capacity: number; // 모임 정원
   image: string; // 모임 대표 이미지
   createdBy: number; // 모임 생성자 ID
-  canceledAt: string; // 모임 취소일
+  canceledAt?: string | null; // 모임 취소일
 };

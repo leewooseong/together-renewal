@@ -19,7 +19,7 @@ function InputField<T extends FieldValues>({
 }: InputFieldProps<T>) {
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={name} className="text-sm font-medium text-gray-700">
+      <label htmlFor={name} className="text-sm font-semibold">
         {label}
       </label>
       <input
@@ -27,7 +27,7 @@ function InputField<T extends FieldValues>({
         id={name}
         type={isPassword ? 'password' : 'text'}
         placeholder={placeholder}
-        className={`w-full border px-3 py-2 ${
+        className={`w-full border bg-gray-50 px-3 py-2 ${
           errorMessage ? 'border-red-500' : 'border-gray-300'
         } rounded-md focus:outline-none focus:ring-2 ${
           errorMessage ? 'focus:ring-red-500' : 'focus:ring-blue-500'
