@@ -3,6 +3,7 @@ import {Controller, useForm} from 'react-hook-form';
 
 import {zodResolver} from '@hookform/resolvers/zod';
 
+import {useClearAuth} from '../../../hooks/useAuth';
 import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
 import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
@@ -53,11 +54,11 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
     registrationEnd: '',
     capacity: '',
   });
-
-  console.log(serverErrorMessage);
-
+  const {clearAuth} = useClearAuth();
   const {createGatheringMutation} =
     useCreateGatheringMutation<ErrorMessageType>(setServerErrorMessage);
+
+  console.log(serverErrorMessage);
 
   const getGatheringFormData = (data: GatheringFormSchema): FormData => {
     const formData = new FormData();
@@ -92,9 +93,14 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
     const gatheringFormData = getGatheringFormData(data);
     createGatheringMutation.mutate(gatheringFormData, {
       onSuccess: onClose,
-      onError: error => {
+      onError: async error => {
         if (error instanceof CodeitError) {
-          const {parameter, message} = error;
+          const {parameter, message, code} = error;
+          if (code === 'UNAUTHORIZED') {
+            await clearAuth();
+            return;
+          }
+
           if (parameter) {
             setServerErrorMessage(prev => ({...prev, [parameter]: message}));
           }

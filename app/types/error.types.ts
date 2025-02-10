@@ -1,7 +1,7 @@
 // login Error
 type CodeitErrorMessage = string;
 type CodeitErrorCode = string;
-export type CodeitErrorStatus = 401 | 404 | 500;
+export type CodeitErrorStatus = number;
 type CodeitErrorParameter = string;
 
 export class CodeitError extends Error {
