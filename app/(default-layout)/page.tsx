@@ -1,11 +1,12 @@
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
 import {getGatherings} from '../apis/gatherings/gatheringApi';
-import GatheringsList from '../components/listComponent/gatheringsList';
-import {GatheringParams, GetGatherings} from '../types/gatherings/getGatherings.types';
+import GatheringsList from '../components/list/gatheringsList';
+import {GatheringsFilter} from '../types/gatherings/filters';
+import {GetGatherings} from '../types/gatherings/getGatherings.types';
 
 const fetchGatheringsData = async () => {
-  const initialParams: GatheringParams = {
+  const initialParams: GatheringsFilter = {
     sortBy: 'dateTime',
     sortOrder: 'asc',
     limit: 10,
