@@ -39,6 +39,7 @@ export default function ReviewsPage() {
       <div className="mb-6 tablet:mb-8">
         <PageInfo pageName="reviews" />
       </div>
+
       <div className="border-b-2 border-b-gray-200 pb-4">
         <GatheringFilter
           updateQueryString={updateQueryString}

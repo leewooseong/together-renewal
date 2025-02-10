@@ -4,6 +4,7 @@ import {GATHERING_SORT_LIST, LOCATION_LIST, REVIEW_SORT_LIST} from '../../../typ
 import {GetReviewsProps} from '../../../types/reviews/reviewsApi.types';
 
 import {Dropdown} from './dropdown';
+import DropdownCalendar from './dropdownCalendar';
 
 export type FilterProps = {
   pageName: 'GATHERING' | 'REVIEW';
@@ -28,10 +29,7 @@ export function Filtering({pageName, updateQueryString, filter, setFilter}: Filt
             filter={filter}
             setFilter={setFilter}
           />
-          {/* date */}
-          <Dropdown
-            defaultValue="지역 전체"
-            filterList={[...LOCATION_LIST]}
+          <DropdownCalendar
             updateQueryString={updateQueryString}
             filter={filter}
             setFilter={setFilter}

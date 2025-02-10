@@ -111,9 +111,7 @@ export default function Gathering() {
       <div>모임 owner: {gatheringDetail?.createdBy}</div>
       <div>참여 가능 인원: {gatheringDetail?.capacity}</div>
       <div>현재 참여한 인원: {gatheringDetail?.participantCount}</div>
-      <div>
-        현재 모임 상태: {gatheringDetail?.canceledAt ? '취소된 모임임' : '아직 활성중인 모임임'}
-      </div>
+      <div>현재 모임 상태: {gatheringDetail?.canceledAt ? '취소된 모임' : '취소 안 된 모임'}</div>
       <div>{isParticipated ? '이미 참여중임' : '아직 참여안함'}</div>
       <div className="border-t-2 border-t-gray-200 px-6 pt-6">
         <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
