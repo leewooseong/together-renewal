@@ -5,6 +5,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 
 import {useClearAuth} from '../../../hooks/useAuth';
 import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
+import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
 import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
 import {ErrorMessageType} from '../../../types/gatherings/createGathering.types';
@@ -26,6 +27,17 @@ type CreateGatheringFormProps = {
 };
 
 export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
+  const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
+    name: '',
+    location: '',
+    image: '',
+    type: '',
+    dateTime: '',
+    registrationEnd: '',
+    capacity: '',
+  });
+
+  const {gatheringFormData, setGatheringFormData} = useGatheringFormDataStore();
   const {
     register,
     control,
@@ -33,7 +45,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
     formState: {errors},
   } = useForm<GatheringFormSchema>({
     resolver: zodResolver(createGatheringSchema),
-    defaultValues: {
+    defaultValues: gatheringFormData || {
       name: '',
       location: undefined,
       image: undefined,
@@ -43,16 +55,6 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
       capacity: undefined,
     },
     mode: 'all',
-  });
-
-  const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
-    name: '',
-    location: '',
-    image: '',
-    type: '',
-    dateTime: '',
-    registrationEnd: '',
-    capacity: '',
   });
   const {clearAuth} = useClearAuth();
   const {createGatheringMutation} =
@@ -90,9 +92,13 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   // todo: Suspense 적용해서 응답 대기하는 동안 스피너 보여주도록 수정
   // todo: react-query 에러처리
   const onSubmit = async (data: GatheringFormSchema) => {
-    const gatheringFormData = getGatheringFormData(data);
-    createGatheringMutation.mutate(gatheringFormData, {
-      onSuccess: onClose,
+    setGatheringFormData(data);
+    const gatheringFormDataForApi = getGatheringFormData(data);
+
+    createGatheringMutation.mutate(gatheringFormDataForApi, {
+      onSuccess: () => {
+        onClose();
+      },
       onError: async error => {
         if (error instanceof CodeitError) {
           const {parameter, message, code} = error;
