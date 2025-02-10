@@ -5,12 +5,13 @@ import {toast} from 'react-toastify';
 
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useMutation} from '@tanstack/react-query';
-import {AxiosError} from 'axios';
+import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 
 import {signupUser} from '../../apis/user/signupApi';
 import InputField from '../../components/InputField';
+import {CodeitError} from '../../types/error.types';
 import {SignupSchema} from '../../utils/schema';
 
 type SignupInputs = z.infer<typeof SignupSchema>;
@@ -24,10 +25,10 @@ export default function SignupForm() {
       toast.success('회원가입 성공');
       router.push('/login');
     },
-    onError: (error: unknown) => {
+    onError: error => {
       const message =
-        error instanceof AxiosError && error.response?.data?.message
-          ? error.response.data.message
+        error instanceof CodeitError && error.message
+          ? error.message
           : '회원가입 중 문제가 발생했습니다.';
       toast.error(message);
     },
@@ -65,7 +66,7 @@ export default function SignupForm() {
           errorMessage={errors.name?.message}
         />
         <InputField
-          label="아이디"
+          label="이메일"
           name="email"
           placeholder="이메일을 입력해주세요"
           register={register}
@@ -86,6 +87,9 @@ export default function SignupForm() {
           register={register}
           errorMessage={errors.password?.message}
         />
+        <div className="-mt-4 text-xs text-gray-600">
+          <p>※ 비밀번호는 영문, 숫자, 특수문자가 포함된 8자 이상이 되도록 해 주세요.</p>
+        </div>
         <InputField
           label="비밀번호 확인"
           name="passwordCheck"
@@ -101,6 +105,12 @@ export default function SignupForm() {
           확인
         </button>
       </form>
+      <footer className="mt-6 flex justify-center text-center text-sm text-gray-800">
+        <span>이미 회원이신가요?</span>
+        <Link href="/login" className="text-orange-600 underline">
+          로그인
+        </Link>
+      </footer>
     </div>
   );
 }

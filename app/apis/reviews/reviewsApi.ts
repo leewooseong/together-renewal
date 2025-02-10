@@ -114,3 +114,12 @@ export const getReviewsScore = async (type: GatheringWithoutAll): Promise<Averag
     };
   }
 };
+
+export async function writeReview(gatheringId: number, score: number, comment: string) {
+  try {
+    await clientInstance.post({path: '/route/token/reviews', body: {gatheringId, score, comment}});
+  } catch (error) {
+    console.log('리뷰 작성 중 에러 발생');
+    throw error;
+  }
+}

@@ -1,4 +1,7 @@
+import {ToastContainer} from 'react-toastify';
+
 import localFont from 'next/font/local';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {GNB} from './components/common/navigationbar/GNB';
 import './globals.css';
@@ -62,6 +65,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
       <body className={`${pretendardSubset.variable} bg-gray-100`}>
         <Providers>
           <GNB />
+          <ToastContainer position="top-center" autoClose={2000} />
           <main className="mx-auto h-screen max-w-screen-desktop pt-14">{children}</main>
         </Providers>
       </body>
