@@ -4,7 +4,7 @@
 
 import clsx from 'clsx';
 
-import {TimeInfo} from '../../../types/gatherings/createGathering.types';
+import {TimeInfo} from '../../../types/common/time.types';
 import {ValueOf} from '../../../types/util.types';
 
 type TimePickerProps = {

@@ -1,4 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
+import {FieldError} from 'react-hook-form';
 
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -10,7 +11,7 @@ interface CustomLocationSelectProps {
   onChange: (value: string | null) => void;
   options: SelectItem[];
   // eslint-disable-next-line react/require-default-props
-  error?: string;
+  error?: FieldError;
 }
 
 export function LocationSelect({value, onChange, options, error}: CustomLocationSelectProps) {
@@ -92,7 +93,7 @@ export function LocationSelect({value, onChange, options, error}: CustomLocation
         </div>
       )}
 
-      {error && <span className="mt-1 text-sm text-red-500">{error}</span>}
+      {error && <span className="mt-1 text-sm text-red-500">{error.message}</span>}
     </div>
   );
 }

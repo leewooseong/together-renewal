@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 import {colStartClasses} from '../../../constants/calendar';
-import {TimeInfo} from '../../../types/gatherings/createGathering.types';
+import {TimeInfo} from '../../../types/common/time.types';
 import {ValueOf} from '../../../types/util.types';
 import {
   dateComparison,

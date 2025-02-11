@@ -13,7 +13,7 @@ import {login} from '../../apis/user/userApi';
 import {useDebounce} from '../../hooks/useForm';
 import {LoginInputsType} from '../../types/auth.types';
 import {CodeitError} from '../../types/error.types';
-import {LoginSchema} from '../../utils/schema';
+import {LoginSchema} from '../../utils/validation';
 
 export default function LoginPage() {
   const {

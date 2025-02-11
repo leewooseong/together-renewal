@@ -19,7 +19,7 @@ import {
 } from 'date-fns';
 
 import {CalendarDays, MonthNavigationResult} from '../types/calendar.types';
-import {TimeInfo} from '../types/gatherings/createGathering.types';
+import {TimeInfo} from '../types/common/time.types';
 
 /**
  * 날짜 포맷팅
@@ -169,7 +169,21 @@ export const getTimeInfoUI = (timeInfo: TimeInfo): string => {
   return `${year}-${month}-${day} ${timeInfo.selectedHour}:${timeInfo.selectedMinute} ${timeInfo.selectedPeriod}`;
 };
 
-export const getInitialDate = (): TimeInfo => ({
+export const getInitialDate = () => ({
+  selectedDate: getTodayStart(),
+  selectedHour: '12',
+  selectedMinute: '00',
+  selectedPeriod: 'AM',
+});
+
+export const getInitialGatheringDate = (): TimeInfo => ({
+  selectedDate: add(getTodayStart(), {days: 1}),
+  selectedHour: '12',
+  selectedMinute: '00',
+  selectedPeriod: 'AM',
+});
+
+export const getInitialDueDate = (): TimeInfo => ({
   selectedDate: getTodayStart(),
   selectedHour: '12',
   selectedMinute: '00',

@@ -3,7 +3,8 @@ import {useState} from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 
-import {DateTimePickerProps, TimeInfo} from '../../../types/gatherings/createGathering.types';
+import {TimeInfo} from '../../../types/common/time.types';
+import {DateTimePickerProps} from '../../../types/gatherings/createGathering.types';
 import {ValueOf} from '../../../types/util.types';
 import {formatDateTimeForAPI, getTimeInfoUI} from '../../../utils/calendar';
 import {CreateModalCalendar} from '../../common/calendar/createModalCalendar';
@@ -13,7 +14,7 @@ export function GatheringDateTimePicker({
   label,
   value: timeInfo,
   onChange,
-  error = undefined,
+  error,
 }: DateTimePickerProps) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
@@ -63,7 +64,7 @@ export function GatheringDateTimePicker({
           onChangeTimeInfo={handleTimeInfoChange}
         />
       )}
-      {error && <span className="text-sm text-red-500">{error}</span>}
+      {error && <span className="text-sm text-red-500">{error.message}</span>}
     </div>
   );
 }
