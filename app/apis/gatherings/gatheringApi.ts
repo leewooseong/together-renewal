@@ -21,7 +21,6 @@ export const getGatherings = async (filters: GatheringsFilter = {}): Promise<Get
 
     return response.data;
   } catch (error) {
-    console.error('모임 목록 불러오는 중 에러 발생:', error);
     throw error;
   }
 };
@@ -43,7 +42,6 @@ export const getGatheringsInServer = async (
     });
     return response;
   } catch (error) {
-    console.error('server-모임 목록 불러오는 중 에러 발생:', error);
     throw error;
   }
 };
@@ -60,7 +58,6 @@ export const getJoinedGatherings = async (
 
     return response.data;
   } catch (error) {
-    console.error('참여중인 모임 불러 오는 중 에러 발생:', error);
     throw error;
   }
 };
@@ -84,7 +81,6 @@ export const getJoinedGatheringsInServer = async (
     });
     return response;
   } catch (error) {
-    console.error('server-참여중인 모임 불러 오는 중 에러 발생:', error);
     throw error;
   }
 };
@@ -95,7 +91,6 @@ export const leaveJoinedGatherings = async (gatheringId: number, userId: number)
       path: `/route/token/gatherings/joinedGatherings?gatheringId=${gatheringId}&userId=${userId}`,
     });
   } catch (error) {
-    console.error('모임 참여 취소 중 에러 발생:', error);
     throw error;
   }
 };
@@ -106,7 +101,6 @@ export const deleteLeaveGathering = async (id: number): Promise<void> => {
       path: `/route/token/gatherings/${id}`,
     });
   } catch (error) {
-    console.error('Error fetching leave joined gatherings:', error);
     throw error;
   }
 };
@@ -121,7 +115,6 @@ export const leaveJoinedGatheringsInServer = async (
       token,
     });
   } catch (error) {
-    console.error('server-모임 참여 취소 중 에러 발생: ', error);
     throw error;
   }
 };
@@ -135,7 +128,6 @@ export const getUserFromGathering = async (
     });
     return response.data;
   } catch (error) {
-    console.error('모임의 참여자 정보 불러오는 중 에러 발생:', error);
     throw error;
   }
 };
@@ -150,7 +142,6 @@ export const getUserFromGatheringInServer = async (
 
     return response;
   } catch (error) {
-    console.error('server-모임의 참여자 정보 불러오는 중 에러 발생:', error);
     throw error;
   }
 };

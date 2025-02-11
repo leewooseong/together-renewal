@@ -29,13 +29,11 @@ export function MyGatherings({
 
   if (activeTab === 'myReviews' && reviewed) {
     return reviewedGatherings && reviewedGatherings.data.length > 0 ? (
-      // TODO: response로 totalItemCount, currentPage, totalPages도 받아와야함
-      // <ReviewList reviewsData={reviewedGatherings.data} />
       <ReviewWrapper
         data={reviewedGatherings.data}
-        totalItemCount={0}
-        currentPage={0}
-        totalPages={0}
+        totalItemCount={reviewedGatherings.totalItemCount}
+        currentPage={reviewedGatherings.currentPage}
+        totalPages={reviewedGatherings.totalPages}
       />
     ) : (
       <EmptyMessage message="리뷰가 없어요." />

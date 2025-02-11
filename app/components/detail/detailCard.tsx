@@ -2,7 +2,7 @@
 
 import {useQuery} from '@tanstack/react-query';
 
-import {getUserFromGathering} from '../../apis/gatherings/gatheringApi';
+import {gatheringsQueryKey} from '../../queries/common/queryKeys';
 import {GatheringParticipant} from '../../types/gatherings/GatheringParticipant';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {ApproveCheck} from '../common/approveCheck';
@@ -13,7 +13,7 @@ import {TextRender} from '../common/textRender';
 
 import {ParticipantIcons} from './participantIcons';
 
-export function ContainerInfo({
+export function DetailCard({
   id,
   name,
   location,
@@ -25,10 +25,7 @@ export function ContainerInfo({
     data: participants = [],
     isLoading,
     isError,
-  } = useQuery<GatheringParticipant[]>({
-    queryKey: ['gatheringParticipants', id],
-    queryFn: () => getUserFromGathering(id),
-  });
+  } = useQuery<GatheringParticipant[]>(gatheringsQueryKey.gatheringParticipants(id));
 
   return (
     <div className="flex h-[270px] w-[486px] items-center justify-center rounded-2xl bg-white">

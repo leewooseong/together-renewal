@@ -1,11 +1,12 @@
 'use client';
 
+import {toast} from 'react-toastify';
+
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
 import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 
-/** 모임 취소, 마감 오버레이 */
 export function RenderOverlay({
   message,
   height,
@@ -27,10 +28,12 @@ export function RenderOverlay({
     }
     try {
       await leaveJoinedGatherings(gatheringId, userId);
+      toast.success('모임에서 성공적으로 탈퇴했습니다.');
 
-      route.push('/mypage'); // 사용되는 곳이 mypage밖에 없어서 mypage로 reDirection
+      route.refresh();
     } catch (error) {
-      throw new Error(error instanceof Error ? error.message : '모임 수정 중 에러 발생');
+      toast.error('모임 탈퇴 중 에러 발생');
+      throw new Error(error instanceof Error ? error.message : '모임 탈퇴 중 에러 발생');
     }
   };
 
