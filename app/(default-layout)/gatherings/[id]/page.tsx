@@ -103,7 +103,7 @@ export default function Gathering() {
 
   useEffect(() => {
     if (!gatheringDetail?.registrationEnd) {
-      return () => {}; //  빈 cleanup 함수 반환 (ESLint 경고 방지)
+      return;
     }
 
     const EndTime = gatheringDetail.registrationEnd;
@@ -121,17 +121,8 @@ export default function Gathering() {
       }
     };
 
-    // 1분마다 실행 (60000ms = 1분)
-    const interval = setInterval(checkDeadline, 60000);
-
-    //  처음 실행 (마운트 시 1회 실행)
     checkDeadline();
-
-    //  컴포넌트 언마운트 시 `clearInterval`로 정리
-    return () => {
-      clearInterval(interval);
-    };
-  }, [gatheringDetail]);
+  });
 
   if (isError) {
     console.log('모임 받아오기 실패😞😞');
@@ -152,7 +143,7 @@ export default function Gathering() {
           : '참여한 모임 없음'}
       </div>
       <div>현재 로그인한 유저 id: {userId}</div>
- 
+
       <div>모임 id: {gatheringDetail?.id}</div>
       <div>모임 이름: {gatheringDetail?.name}</div>
       <div>모임 owner: {gatheringDetail?.createdBy}</div>
