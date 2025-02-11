@@ -1,6 +1,6 @@
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
-import {getGatherings} from '../apis/gatherings/gatheringApi';
+import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
 import GatheringsList from '../components/list/gatheringsList';
 import {GatheringsFilter} from '../types/gatherings/filters';
 import {GetGatherings} from '../types/gatherings/getGatherings.types';
@@ -12,7 +12,7 @@ const fetchGatheringsData = async () => {
     limit: 10,
     offset: 0,
   };
-  const initialData: GetGatherings[] = await getGatherings(initialParams);
+  const initialData: GetGatherings[] = await getGatheringsInServer(initialParams);
   return initialData;
 };
 
