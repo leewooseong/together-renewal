@@ -5,7 +5,7 @@ interface CreateGatheringModalProps {
 }
 export function CreateGatheringModal({onClose}: CreateGatheringModalProps) {
   return (
-    <div className="fixed inset-0 z-50">
+    <div className="fixed inset-0 z-30">
       {/* Backdrop */}
       <div className="fixed inset-0 bg-black/50" onClick={onClose} aria-hidden="true" />
 
