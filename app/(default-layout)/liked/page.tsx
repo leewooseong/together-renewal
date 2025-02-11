@@ -105,6 +105,7 @@ function LikedContent() {
   } = useQuery<GetGatherings[]>({
     queryKey: ['likedGatherings', gatheringType, id],
     queryFn: () => getGatherings({id, type: gatheringType || ''}),
+    enabled: !!id,
   });
 
   return (
