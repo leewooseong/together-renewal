@@ -100,5 +100,3 @@ export const getGatheringsInServer = async (params: GatheringParams): Promise<Ge
     throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
   }
 };
-
-//getGatheringsInServer
