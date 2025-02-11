@@ -29,6 +29,7 @@ class FetchInstance {
     };
   }
 
+  // 최종 fetch 요청을 보내는 부분
   private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
@@ -45,6 +46,7 @@ class FetchInstance {
     }
   }
 
+  // token, contentType에 따라 맞춤 Header 추가
   private getHeaders(): Headers {
     const requestHeaders = new Headers(this.defaultHeaders);
     if (this.token) {
@@ -59,6 +61,7 @@ class FetchInstance {
     return requestHeaders;
   }
 
+  // 각 메소드(GET, POST, DELETE, PUT) method 내부에서 호출되는 fetch 수행 method
   async request<T>(
     method: string,
     path?: string,
@@ -78,6 +81,8 @@ class FetchInstance {
         headers: requestHeaders,
       });
 
+      console.log('fetch 응답 결과 status', response.status);
+
       if (!response.ok) {
         throw await FetchInstance.handleError(response);
       }
@@ -93,15 +98,15 @@ class FetchInstance {
     }
   }
 
-  private static async handleError(response: Response): Promise<Error> {
+  // 에러 처리를 담당하는 로직
+  private static async handleError(response: Response): Promise<Error | CodeitError> {
     try {
       const data = await response.json();
-      console.log(data, response.url);
       return new CodeitError(
         data.message,
         response.status as CodeitErrorStatus,
         data.code,
-        data?.parameter,
+        data.parameter,
       );
     } catch (error) {
       return new Error();
@@ -140,7 +145,7 @@ class FetchInstance {
     let formattedBody: BodyInit | undefined;
 
     // body가 있다면 케이스에 맞게 처리
-    if (contentType === 'json' && body) {
+    if ((contentType === 'json' || contentType === undefined) && body) {
       formattedBody = JSON.stringify(body); // json의 경우 처리 해줌
     } else if (contentType === 'formData' && body instanceof FormData) {
       formattedBody = body; // formData는 그대로 사용
