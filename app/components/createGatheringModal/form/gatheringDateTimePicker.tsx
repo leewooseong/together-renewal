@@ -10,12 +10,7 @@ import {formatDateTimeForAPI, getTimeInfoUI} from '../../../utils/calendar';
 import {CreateModalCalendar} from '../../common/calendar/createModalCalendar';
 
 // Todo: useEffect를 이용해 storage에서 정보가 있다면 받아오기
-export function GatheringDateTimePicker({
-  label,
-  value: timeInfo,
-  onChange,
-  error,
-}: DateTimePickerProps) {
+export function GatheringDateTimePicker({label, value: timeInfo, onChange}: DateTimePickerProps) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [isChanged, setIsChanged] = useState(false);
 
@@ -26,7 +21,7 @@ export function GatheringDateTimePicker({
   };
 
   return (
-    <div className="relative">
+    <>
       <label className="mb-1 block text-base font-medium">{label}</label>
       <button
         type="button"
@@ -64,7 +59,6 @@ export function GatheringDateTimePicker({
           onChangeTimeInfo={handleTimeInfoChange}
         />
       )}
-      {error && <span className="text-sm text-red-500">{error.message}</span>}
-    </div>
+    </>
   );
 }

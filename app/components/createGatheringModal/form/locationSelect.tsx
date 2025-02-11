@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from 'react';
-import {FieldError} from 'react-hook-form';
 
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -11,10 +10,9 @@ interface CustomLocationSelectProps {
   onChange: (value: string | null) => void;
   options: SelectItem[];
   // eslint-disable-next-line react/require-default-props
-  error?: FieldError;
 }
 
-export function LocationSelect({value, onChange, options, error}: CustomLocationSelectProps) {
+export function LocationSelect({value, onChange, options}: CustomLocationSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const selectedOption = options.find(opt => opt.value === value);
@@ -37,7 +35,7 @@ export function LocationSelect({value, onChange, options, error}: CustomLocation
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <label className="mb-1 block text-sm font-medium">장소</label>
+      <label className="mb-1 block text-base font-medium">장소</label>
 
       {/* Hidden native select for accessibility */}
       <select
@@ -92,8 +90,6 @@ export function LocationSelect({value, onChange, options, error}: CustomLocation
           ))}
         </div>
       )}
-
-      {error && <span className="mt-1 text-sm text-red-500">{error.message}</span>}
     </div>
   );
 }
