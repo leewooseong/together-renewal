@@ -82,3 +82,21 @@ export const getGatherings = async (params: GatheringParams): Promise<GetGatheri
     throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
   }
 };
+
+export const getGatheringsInServer = async (params: GatheringParams): Promise<GetGatherings[]> => {
+  try {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) {
+        query.append(key, String(value));
+      }
+    });
+
+    return await serverInstance.get<GetGatherings[]>({
+      path: `/gatherings?${query.toString()}`,
+    });
+  } catch (error) {
+    console.error('모임 데이터 불러오기 실패:', error);
+    throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
+  }
+};
