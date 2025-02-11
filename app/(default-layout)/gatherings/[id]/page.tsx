@@ -8,11 +8,13 @@ import {useParams} from 'next/navigation';
 
 import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatherings/gatheringApi';
 import ReviewWrapper from '../../../components/common/review/reviewWrapper';
+import {ContainerInfo} from '../../../components/detail/containerInfo';
 import BottomBar from '../../../components/gatherings/bottomBar';
 import {gatheringsQueryKey, reviewListQuery} from '../../../queries/common/queryKeys';
 import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {Gathering, Locations} from '../../../types/common/gatheringFilter.types';
 
-export default function Gathering() {
+export default function GatheringPage() {
   const params = useParams();
   const gatheringId = Number(params.id);
 
@@ -23,6 +25,15 @@ export default function Gathering() {
   const [isDeadlineApproaching, setIsDeadlineApproaching] = useState(false);
   const [deadLine, setDeadline] = useState('');
 
+  const {data: userInfo} = useUserQuery().getMyInfo();
+  const userId = userInfo?.data?.id as number;
+
+  const {data: joinedGatherings} = useQuery({
+    queryKey: gatheringsQueryKey.joinedGatherings(),
+    queryFn: () => getJoinedGatherings(),
+    enabled: !!userId,
+  });
+
   const {data: gatheringReviewList} = useQuery(
     reviewListQuery.getGatheringReviewList({gatheringId, sortOrder: 'desc'}),
   );
@@ -30,16 +41,7 @@ export default function Gathering() {
   const {data: gatheringDetail, isError} = useQuery({
     queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
     queryFn: () => getGatheringDetail(gatheringId),
-    staleTime: 0,
   });
-
-  const {data: joinedGatherings} = useQuery({
-    queryKey: gatheringsQueryKey.joinedGatherings(),
-    queryFn: () => getJoinedGatherings(),
-  });
-
-  const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
 
   const gatheringOwner = gatheringDetail?.createdBy;
 
@@ -90,7 +92,11 @@ export default function Gathering() {
 
   const getHoursDifference = (timestamp: string): number => {
     const EndDate = new Date(timestamp);
-    setDeadline(String(EndDate.getHours()));
+    if (Number(EndDate.getHours()) === 0) {
+      setDeadline('24');
+    } else {
+      setDeadline(String(EndDate.getHours()));
+    }
     const currentDate = new Date();
     console.log(EndDate.getHours());
     console.log('🕒 마감시간 (UTC 기준):', EndDate.getUTCHours());
@@ -169,15 +175,40 @@ export default function Gathering() {
             ''
           )}
         </div>
-        <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
-          건희님 컴포넌트
-        </div>
+
+        {gatheringDetail ? (
+          <div className="rounded-3xl outline outline-2 outline-gray-200">
+            <ContainerInfo
+              id={gatheringDetail?.id}
+              name={gatheringDetail?.name}
+              dateTime={gatheringDetail?.dateTime}
+              location={gatheringDetail?.location as Locations}
+              participantCount={gatheringDetail?.participantCount}
+              capacity={gatheringDetail?.capacity}
+              type={gatheringDetail?.type as Gathering}
+              registrationEnd={gatheringDetail?.registrationEnd}
+              image={gatheringDetail?.image}
+              createdBy={gatheringDetail?.createdBy}
+            />
+          </div>
+        ) : (
+          <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
+            <div>모임 정보 아직 안 받아옴</div>
+          </div>
+        )}
       </div>
       <div className="border-t-2 border-t-gray-200 px-6 pt-6">
         <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
           이용자들은 이 프로그램을 이렇게 느꼈어요!
         </div>
-        {gatheringReviewList && <ReviewWrapper {...gatheringReviewList} />}
+
+        {gatheringReviewList?.data && gatheringReviewList.data.length > 0 ? (
+          <ReviewWrapper {...gatheringReviewList} />
+        ) : (
+          <div className="flex h-56 items-center justify-center">
+            <div className="text-gray-500">아직 리뷰가 없습니다🥹</div>
+          </div>
+        )}
       </div>
       <div>
         <BottomBar
