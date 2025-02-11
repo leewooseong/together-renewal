@@ -3,6 +3,7 @@
 import {useState} from 'react';
 
 import {useUserQuery} from '../../queries/user/useUserQuries';
+import {useGatheringFormDataStore} from '../../store/gathering/useCreateGathering';
 
 import {CreateGatheringModal} from './createGatheringModal';
 
@@ -10,6 +11,7 @@ export function CreateGatheringButton() {
   const {data: userInfo} = useUserQuery().getMyInfo();
 
   const [isOpen, setIsOpen] = useState(false);
+  const resetGatheringFormData = useGatheringFormDataStore(state => state.resetGatheringFormData);
 
   return (
     <>
@@ -22,7 +24,14 @@ export function CreateGatheringButton() {
           모임 만들기
         </button>
       )}
-      {isOpen && <CreateGatheringModal onClose={() => setIsOpen(false)} />}
+      {isOpen && (
+        <CreateGatheringModal
+          onClose={() => {
+            setIsOpen(false);
+            resetGatheringFormData();
+          }}
+        />
+      )}
     </>
   );
 }
