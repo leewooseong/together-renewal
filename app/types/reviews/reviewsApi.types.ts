@@ -4,6 +4,7 @@ export type GetReviewsProps = {
   date?: string;
   sortBy?: string;
   sortOrder?: string;
+  limit?: number;
 };
 
 export type GetMyReviewsProps = {
