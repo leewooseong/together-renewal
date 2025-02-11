@@ -7,44 +7,18 @@ import {
 } from '../../../../apis/gatherings/gatheringApi';
 import {AUTH_TOKEN} from '../../../../constants/auth';
 
-// export async function GET(request: NextRequest) {
-//   const token = request.cookies.get(AUTH_TOKEN)?.value;
-
-//   const {searchParams} = new URL(request.url);
-//   const filters: Record<string, string> = {};
-//   searchParams.forEach((value, key) => {
-//     filters[key] = value;
-//   });
-
-//   try {
-//     const response = await getJoinedGatheringsInServer(token!, filters);
-
-//     return NextResponse.json({message: '참여중인 모임 조회 성공', data: response}, {status: 200});
-//   } catch (error) {
-//     return NextResponse.json(
-//       {message: '참여중인 모임 조회 중 오류가 발생했습니다.'},
-//       {status: 500},
-//     );
-//   }
-// }
-
 export async function GET(request: NextRequest) {
   const token = request.cookies.get(AUTH_TOKEN)?.value;
 
   const {searchParams} = new URL(request.url);
-  const filters: Record<string, string | number> = {}; // id가 number가 될 수도 있도록 설정
-
+  const filters: Record<string, string> = {};
   searchParams.forEach((value, key) => {
-    // id 값이 문자열로 들어오면 숫자로 변환
-    if (key === 'id' && !Number(value)) {
-      filters[key] = Number(value);
-    } else {
-      filters[key] = value;
-    }
+    filters[key] = value;
   });
 
   try {
     const response = await getJoinedGatheringsInServer(token!, filters);
+
     return NextResponse.json({message: '참여중인 모임 조회 성공', data: response}, {status: 200});
   } catch (error) {
     return NextResponse.json(
