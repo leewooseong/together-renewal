@@ -86,31 +86,26 @@ import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
 function LikedContent() {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();
-  // const [storedIds, setStoredIds] = useState<string[]>([]);
-  const [storedIds, setStoredIds] = useState<number[]>([]); // 🔹 number[] 배열로 변경
+  const [storedIds, setStoredIds] = useState<string[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem('likedGatherings');
     if (stored) {
-      // setStoredIds(JSON.parse(stored));
-      setStoredIds(JSON.parse(stored).map(Number)); // 🔹 숫자로 변환해서 저장
+      setStoredIds(JSON.parse(stored));
     }
   }, []);
 
-  // const id: string = storedIds.join(',');
+  const id: string = storedIds.join(',');
   const gatheringType = filter.type as Gathering;
 
-  const {data: gatheringList, isLoading, isError} =
-    // useQuery<GetGatherings[]>({
-    //   queryKey: ['likedGatherings', gatheringType, id],
-    //   queryFn: () => getGatherings({id, type: gatheringType || ''}),
-    //   enabled: !!id,
-    // });
-    useQuery<GetGatherings[]>({
-      queryKey: ['likedGatherings', gatheringType, storedIds], // 🔹 storedIds 배열 그대로 전달
-      queryFn: () => getGatherings({id: String(storedIds), type: gatheringType || ''}), // 🔹 숫자 배열 전달
-      enabled: storedIds.length > 0, // 🔹 배열이 비어있지 않을 때만 실행
-    });
+  const {
+    data: gatheringList,
+    isLoading,
+    isError,
+  } = useQuery<GetGatherings[]>({
+    queryKey: ['likedGatherings', gatheringType, id],
+    queryFn: () => getGatherings({id, type: gatheringType || ''}),
+  });
 
   return (
     <div>
