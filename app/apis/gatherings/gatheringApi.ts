@@ -1,4 +1,3 @@
-import exp from 'constants';
 import {GatheringParams, GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
 import {clientInstance, serverInstance} from '../client';
@@ -83,7 +82,6 @@ export const getGatherings = async (params: GatheringParams): Promise<GetGatheri
     throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
   }
 };
-
 
 export const getGatheringsInServer = async (params: GatheringParams): Promise<GetGatherings[]> => {
   try {
