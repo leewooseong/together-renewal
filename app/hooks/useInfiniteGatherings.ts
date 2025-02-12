@@ -9,11 +9,11 @@ export const useInfiniteGatherings = (initialData: GetGatherings[], filter: Gath
     queryKey: ['gatherings', filter],
     queryFn: async ({pageParam = 0}) => {
       const params: GatheringsFilter = {
-        ...filter,
         sortBy: 'dateTime',
         sortOrder: 'asc',
         limit: 10,
         offset: pageParam,
+        ...filter,
       };
       return getGatherings(params);
     },
