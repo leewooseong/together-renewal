@@ -9,11 +9,13 @@ import {useParams} from 'next/navigation';
 import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 import {gatheringsQueryKey, reviewListQuery} from '../../queries/common/queryKeys';
 import {useUserQuery} from '../../queries/user/useUserQueries';
-import ReviewListWrapper from '../common/review/reviewListWrapper';
+import {Gathering, Locations} from '../../types/common/gatheringFilter.types';
+import ReviewWrapper from '../common/review/reviewWrapper';
 import BottomBar from '../gatherings/bottomBar';
 
-// Todo: useInfiniteQuery 적용 필요
-export default function DetailPageWrapper() {
+import {ContainerInfo} from './containerInfo';
+
+export default function GatheringPage() {
   const params = useParams();
   const gatheringId = Number(params.id);
 
@@ -23,6 +25,16 @@ export default function DetailPageWrapper() {
   const [isFull, setIsFull] = useState(false);
   const [isDeadlineApproaching, setIsDeadlineApproaching] = useState(false);
   const [deadLine, setDeadline] = useState('');
+  const [isFinishedGathering, setIsFinishedGathering] = useState(false);
+
+  const {data: userInfo} = useUserQuery().getMyInfo();
+  const userId = userInfo?.data?.id as number;
+
+  const {data: joinedGatherings} = useQuery({
+    queryKey: gatheringsQueryKey.joinedGatherings(),
+    queryFn: () => getJoinedGatherings(),
+    enabled: !!userId,
+  });
 
   const {data: gatheringReviewList} = useQuery(
     reviewListQuery.getGatheringReviewList({gatheringId, sortOrder: 'desc'}),
@@ -31,16 +43,7 @@ export default function DetailPageWrapper() {
   const {data: gatheringDetail, isError} = useQuery({
     queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
     queryFn: () => getGatheringDetail(gatheringId),
-    staleTime: 0,
   });
-
-  const {data: joinedGatherings} = useQuery({
-    queryKey: gatheringsQueryKey.joinedGatherings(),
-    queryFn: () => getJoinedGatherings(),
-  });
-
-  const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
 
   const gatheringOwner = gatheringDetail?.createdBy;
 
@@ -79,7 +82,11 @@ export default function DetailPageWrapper() {
 
   const getHoursDifference = (timestamp: string): number => {
     const EndDate = new Date(timestamp);
-    setDeadline(String(EndDate.getHours()));
+    if (Number(EndDate.getHours()) === 0) {
+      setDeadline('24');
+    } else {
+      setDeadline(String(EndDate.getHours()));
+    }
     const currentDate = new Date();
 
     const diffMs = EndDate.getTime() - currentDate.getTime();
@@ -98,6 +105,9 @@ export default function DetailPageWrapper() {
 
       if (res > 0 && res < 24) {
         setIsDeadlineApproaching(true);
+      } else if (res < 0) {
+        setIsFinishedGathering(true);
+        setIsDeadlineApproaching(false);
       } else {
         setIsDeadlineApproaching(false);
       }
@@ -113,8 +123,9 @@ export default function DetailPageWrapper() {
 
   return (
     <>
-      <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
-      <div>마감시간 시간만(로컬): {deadLine}</div>
+      {/* <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
+      <div>마감시간 시간만(로컬): {deadLine}</div> */}
+
       <div className="mb-4 flex flex-col items-center gap-4 md:mb-[21px] md:flex-row md:justify-center md:gap-[14px] lg:mb-6 lg:gap-6">
         <div className="relative h-[180px] w-[343px] rounded-3xl border-2 border-gray-200 md:h-60 md:w-[340px] lg:h-[270px] lg:w-[486px] lg:gap-6">
           {gatheringDetail?.image ? (
@@ -131,15 +142,40 @@ export default function DetailPageWrapper() {
             ''
           )}
         </div>
-        <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
-          건희님 컴포넌트
-        </div>
+
+        {gatheringDetail ? (
+          <div className="rounded-3xl outline outline-2 outline-gray-200">
+            <ContainerInfo
+              id={gatheringDetail?.id}
+              name={gatheringDetail?.name}
+              dateTime={gatheringDetail?.dateTime}
+              location={gatheringDetail?.location as Locations}
+              participantCount={gatheringDetail?.participantCount}
+              capacity={gatheringDetail?.capacity}
+              type={gatheringDetail?.type as Gathering}
+              registrationEnd={gatheringDetail?.registrationEnd}
+              image={gatheringDetail?.image}
+              createdBy={gatheringDetail?.createdBy}
+            />
+          </div>
+        ) : (
+          <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
+            <div>모임 정보 아직 안 받아옴</div>
+          </div>
+        )}
       </div>
       <div className="border-t-2 border-t-gray-200 px-6 pt-6">
         <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
           이용자들은 이 프로그램을 이렇게 느꼈어요!
         </div>
-        {gatheringReviewList && <ReviewListWrapper {...gatheringReviewList} />}
+
+        {gatheringReviewList?.data && gatheringReviewList.data.length > 0 ? (
+          <ReviewWrapper initialData={[]} {...gatheringReviewList} />
+        ) : (
+          <div className="flex h-56 items-center justify-center">
+            <div className="text-gray-500">아직 리뷰가 없습니다</div>
+          </div>
+        )}
       </div>
       <div>
         <BottomBar
@@ -149,6 +185,7 @@ export default function DetailPageWrapper() {
           setIsParticipated={setIsParticipated}
           isFull={isFull}
           isCancel={gatheringDetail?.canceledAt}
+          isFinishedGathering={isFinishedGathering}
           gatheringId={gatheringDetail?.id}
         />
       </div>

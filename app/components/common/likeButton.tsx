@@ -31,7 +31,7 @@ export function LikeButton({gatheringId}: {gatheringId: number}) {
   return (
     <button type="button" className="absolute right-5 top-5" onClick={toggleLike}>
       <Image
-        src={liked ? 'icons/heart.svg' : 'icons/emptyHeart.svg'}
+        src={liked ? '/icons/heart.svg' : '/icons/emptyHeart.svg'}
         alt="찜 버튼"
         width={48}
         height={48}
