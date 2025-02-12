@@ -15,4 +15,5 @@ export type GetMyReviewsProps = {
 export type GetGatheringReviewsProps = {
   gatheringId: number;
   sortOrder: string;
+  page?: number;
 };

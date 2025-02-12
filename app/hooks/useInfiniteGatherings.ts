@@ -1,13 +1,14 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
 
 import {getGatherings} from '../apis/gatherings/gatheringApi';
-import {GatheringParams, GetGatherings} from '../types/gatherings/getGatherings.types';
+import {GatheringsFilter} from '../types/gatherings/filters';
+import {GetGatherings} from '../types/gatherings/getGatherings.types';
 
 export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
   return useInfiniteQuery({
     queryKey: ['gatherings'],
     queryFn: async ({pageParam = 0}) => {
-      const params: GatheringParams = {
+      const params: GatheringsFilter = {
         sortBy: 'dateTime',
         sortOrder: 'asc',
         limit: 10,

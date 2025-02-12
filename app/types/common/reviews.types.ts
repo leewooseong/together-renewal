@@ -27,15 +27,15 @@ export type ReviewListType = {
 };
 
 export type ReviewParams = {
-  gatheringId?: number,
-  userId?: number,
-  type?: string,
-  location?: string,
-  date?: string,
-  registrationEnd?: string,
-  sortBy?: string,
-  sortOrder?: string,
-  limit: number,
+  gatheringId?: number;
+  userId?: number;
+  type?: string;
+  location?: string;
+  date?: string;
+  registrationEnd?: string;
+  sortBy?: string;
+  sortOrder?: string;
+  limit: number;
   offset: number;
 };
 
@@ -48,5 +48,7 @@ export type ReviewType = {
   userImg: string;
   userName: string;
   createdAt: string;
-  pageName?: 'mypage' | 'gatherings';
+  pageName: PageName;
 };
+
+export type PageName = 'reviews' | 'mypage' | 'gatherings';
