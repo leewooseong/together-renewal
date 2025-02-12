@@ -42,7 +42,15 @@ export function RenderOverlay({
   const detailButton = () => route.push(`/gatherings/${gatheringId}`);
 
   return (
-    <button type="button" onClick={detailButton} className={baseStyle}>
+    <div
+      onClick={detailButton}
+      onKeyPress={e => {
+        if (e.key === 'Enter') detailButton();
+      }}
+      className={baseStyle}
+      role="button"
+      tabIndex={0}
+    >
       <div className="absolute top-1/2 flex h-9 w-28 items-center justify-center rounded-xl bg-orange-50 text-orange-600 sm:right-5 sm:top-5 sm:size-12 sm:rounded-full">
         <button type="button" className="flex items-center gap-1" onClick={leaveGatheringButton}>
           <Image src="icons/handIcon.svg" alt="손 아이콘" width={24} height={24} unoptimized />
@@ -53,6 +61,6 @@ export function RenderOverlay({
         <p>{`${message}된 챌린지에요,`}</p>
         <p>다음 기회에 만나요🙏</p>
       </div>
-    </button>
+    </div>
   );
 }
