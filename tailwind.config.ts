@@ -27,9 +27,23 @@ const config: Config = {
       width: {
         profileDropdown: PROFILE_DROPDOWN,
       },
+      keyframes: {
+        bounce: {
+          '0%, 100%': {transform: 'translateY(0)'},
+          '50%': {transform: 'translateY(-10px)'},
+        },
+        shake: {
+          '0%, 100%': {transform: 'translateX(0)'},
+          '25%': {transform: 'translateX(-5px)'},
+          '75%': {transform: 'translateX(5px)'},
+        },
+      },
+      animation: {
+        bounce: 'bounce 0.8s ease-in-out infinite',
+        shake: 'shake 0.2s ease-in-out 2', // 5회 반복(1초)
+      },
     },
   },
   plugins: [],
 };
 export default config;
- 

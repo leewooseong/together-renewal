@@ -1,7 +1,7 @@
 import {GetJoinedGatherings} from '../../../types/gatherings/joinedGatherings.types';
 import {MyPageCard} from '../myPageCard';
 
-export function GatheringList({
+export function JoinedGatheringList({
   gatherings,
   isMyGathering,
 }: {

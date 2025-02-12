@@ -53,13 +53,11 @@ export async function DELETE(request: NextRequest) {
 
     // const userId = request.cookies.get('userId')?.value; // 쿠키에서 userId를 추출해서 사용하는건 위험
     const userId = Number(searchParams.get('userId'));
-    console.log('userId:', userId);
     if (!userId) {
       return NextResponse.json({message: '사용자 정보를 확인할 수 없습니다.'}, {status: 403});
     }
 
     if (gathering.createdBy === Number(userId)) {
-      // TODO: 에러 모달 or alert로 처리
       return NextResponse.json(
         {message: '모임의 생성자는 모임을 떠날 수 없습니다.'},
         {status: 403},
@@ -70,7 +68,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({message: '참여한 모임 삭제 성공'}, {status: 200});
   } catch (error) {
-    console.error('참여한 모임 삭제 중 에러 발생:', error);
     return NextResponse.json({message: '참여한 모임 삭제 중 오류가 발생했습니다.'}, {status: 500});
   }
 }

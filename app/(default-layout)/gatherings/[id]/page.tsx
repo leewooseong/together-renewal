@@ -6,7 +6,7 @@ import {useQuery} from '@tanstack/react-query';
 import Image from 'next/image';
 import {useParams} from 'next/navigation';
 
-import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatherings/gatheringApi';
+import {getGatheringDetail} from '../../../apis/gatherings/gatheringApi';
 import ReviewWrapper from '../../../components/common/review/reviewWrapper';
 import BottomBar from '../../../components/gatherings/bottomBar';
 import {gatheringsQueryKey, reviewListQuery} from '../../../queries/common/queryKeys';
@@ -33,10 +33,7 @@ export default function Gathering() {
     staleTime: 0,
   });
 
-  const {data: joinedGatherings} = useQuery({
-    queryKey: gatheringsQueryKey.joinedGatherings(),
-    queryFn: () => getJoinedGatherings(),
-  });
+  const {data: joinedGatherings} = useQuery(gatheringsQueryKey.joinedGatherings());
 
   const {data: userInfo} = useUserQuery().getMyInfo();
   const userId = userInfo?.data?.id as number;
