@@ -1,6 +1,7 @@
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
 import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
+import {PageInfo} from '../components/common/pageInfo';
 import GatheringsList from '../components/list/gatheringsList';
 import {GatheringsFilter} from '../types/gatherings/filters';
 import {GetGatherings} from '../types/gatherings/getGatherings.types';
@@ -27,8 +28,14 @@ export default async function Home() {
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <GatheringsList initialData={initialData} />
-    </HydrationBoundary>
+    <div>
+      <div className="mb-6 tablet:mb-8">
+        <PageInfo pageName="gatherings" />
+      </div>
+      {/* 무한스크롤 + 필터링 */}
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <GatheringsList initialData={initialData} />
+      </HydrationBoundary>
+    </div>
   );
 }
