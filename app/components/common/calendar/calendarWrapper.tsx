@@ -60,7 +60,7 @@ function CalendarWrapper({
   }, [selectedDate]);
 
   return (
-    <div className="absolute top-1 z-10 mx-auto flex max-w-[336px] flex-col rounded-xl border border-gray-200 bg-white px-11 py-6 shadow-[0_10px_10px_-5px_rgba(0,0,0,0.04)]">
+    <div className="absolute top-1 z-50 mx-auto flex max-w-[336px] flex-col rounded-xl border border-gray-200 bg-white px-11 py-6 shadow-[0_10px_10px_-5px_rgba(0,0,0,0.04)]">
       <Calendar selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <div className="mt-3 flex gap-3">
         <button
