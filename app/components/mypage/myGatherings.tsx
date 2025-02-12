@@ -3,7 +3,7 @@ import {useMyGatheringsFilter} from '../../hooks/useMyGatheringsFilter';
 import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
 import {getCommentByTab} from '../../utils/getCommentByTab';
 import {EmptyMessage} from '../common/emptyMessage';
-import ReviewWrapper from '../common/review/reviewWrapper';
+import ReviewListWrapper from '../common/review/reviewListWrapper';
 import {TextRender} from '../common/textRender';
 
 import {JoinedGatheringList} from './myGatherings/joinedGatheringList';
@@ -31,7 +31,7 @@ export function MyGatherings({
   if (activeTab === 'myReviews' && reviewed) {
     return reviewedGatherings && reviewedGatherings.data.length > 0 ? (
       <div className="relative flex h-[352px] w-[311px] max-w-[996px] flex-col justify-between sm:h-[180px] sm:w-full sm:flex-col">
-        <ReviewWrapper
+        <ReviewListWrapper
           data={reviewedGatherings.data}
           totalItemCount={reviewedGatherings.totalItemCount}
           currentPage={reviewedGatherings.currentPage}

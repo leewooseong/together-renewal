@@ -1,51 +1,49 @@
-import {useEffect, useState} from 'react';
+'use client';
 
-import {usePathname} from 'next/navigation';
-import {match} from 'ts-pattern';
+import {useQuery} from '@tanstack/react-query';
 
-import {PageName, ReviewListType} from '../../../types/common/reviews.types';
+import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
+import {reviewListQuery} from '../../../queries/common/queryKeys';
+import {ReviewListDataType} from '../../../types/common/reviews.types';
+import AverageScoresWrapper from '../../reviewComponent/AverageScoresWrapper';
+import {Filtering} from '../filter/filtering';
+import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
 
-import {Review} from './review';
+import ReviewListWrapper from './reviewListWrapper';
 
-export default function ReviewWrapper({data}: ReviewListType) {
-  const pathName = usePathname();
-  const [pageName, setPageName] = useState('');
+type ReviewWrapperProps = {
+  initialData: ReviewListDataType[];
+};
 
-  useEffect(() => {
-    const name = match(pathName)
-      .when(
-        p => p.startsWith('/gatherings'),
-        () => 'gatherings',
-      )
-      .when(
-        p => p.startsWith('/reviews'),
-        () => 'reviews',
-      )
-      .when(
-        p => p.startsWith('/mypage'),
-        () => 'mypage',
-      )
-      .otherwise(() => 'unknown');
+// Todo: useInfiniteQuery 적용 필요
+export default function ReviewWrapper({initialData}: ReviewWrapperProps) {
+  console.log(initialData);
 
-    setPageName(name);
-  }, [pathName]);
+  const {filter, setFilter, updateQueryString} = useQueryStringFilter();
+  const {data: reviewList} = useQuery(reviewListQuery.getReviewList(filter));
 
   return (
-    <div className="flex flex-col items-center gap-6">
-      {data.map(review => (
-        <Review
-          key={review.id}
-          gatheringImg={review.Gathering.image}
-          score={review.score}
-          comment={review.comment}
-          gatheringType={review.Gathering.type}
-          gatheringLocation={review.Gathering.location}
-          userImg={review.User.image}
-          userName={review.User.name}
-          createdAt={review.createdAt}
-          pageName={pageName as PageName}
+    <>
+      <div className="border-b-2 border-b-gray-200 pb-4">
+        <GatheringFilter
+          updateQueryString={updateQueryString}
+          filter={filter}
+          setFilter={setFilter}
         />
-      ))}
-    </div>
+      </div>
+
+      <AverageScoresWrapper filter={filter} />
+      <div className="mt-4 border-t-2 border-t-gray-900 bg-white px-4 py-6 tablet:mt-6 tablet:px-6">
+        <div className="mb-6">
+          <Filtering
+            pageName="REVIEW"
+            updateQueryString={updateQueryString}
+            filter={filter}
+            setFilter={setFilter}
+          />
+        </div>
+        {reviewList && <ReviewListWrapper {...reviewList} />}
+      </div>
+    </>
   );
 }

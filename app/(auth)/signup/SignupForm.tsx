@@ -12,7 +12,7 @@ import {z} from 'zod';
 import {signupUser} from '../../apis/user/signupApi';
 import InputField from '../../components/InputField';
 import {CodeitError} from '../../types/error.types';
-import {SignupSchema} from '../../utils/schema';
+import {SignupSchema} from '../../utils/validation';
 
 type SignupInputs = z.infer<typeof SignupSchema>;
 

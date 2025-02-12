@@ -14,7 +14,10 @@ const LOCATIONS = ['건대입구', '을지로3가', '신림', '홍대입구'] as
   ...string[],
 ];
 
-const SORT_BY = ['createdAt', 'score', 'participantCount'] as const satisfies [string, ...string[]];
+const SORT_BY = ['createdAt', 'score', 'participantCount', 'registrationEnd'] as const satisfies [
+  string,
+  ...string[],
+];
 
 const SORT_ORDER = ['asc', 'desc'] as const satisfies [string, ...string[]];
 
