@@ -33,7 +33,7 @@ export default function ReviewWrapper({initialData}: ReviewWrapperProps) {
     getNextPageParam: lastPage => {
       return lastPage.data.length < 10 ? undefined : lastPage.currentPage + 1;
     },
-    initialData: {pages: [initialData], pageParams: [0]},
+    initialData: {pages: [{...initialData}], pageParams: [0]},
   });
 
   const observerRef = useInfiniteObserver(() => {
