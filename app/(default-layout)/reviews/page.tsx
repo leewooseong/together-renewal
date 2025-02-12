@@ -1,15 +1,16 @@
 import {getGatheringReviewsInServer} from '../../apis/reviews/reviewsApi';
 import {PageInfo} from '../../components/common/pageInfo';
 import ReviewWrapper from '../../components/common/review/reviewWrapper';
+import {ReviewListType} from '../../types/common/reviews.types';
 
 type ReviewsPageProps = {
-  searchParams?: { gatheringId?: string };
+  searchParams: {gatheringId?: string};
 };
 
 export default async function ReviewsPage({searchParams}: ReviewsPageProps) {
   const gatheringId = searchParams?.gatheringId ? Number(searchParams.gatheringId) : undefined;
 
-  const initialReviews = await getGatheringReviewsInServer({
+  const initialReviews: ReviewListType = await getGatheringReviewsInServer({
     gatheringId,
     sortOrder: 'desc',
     limit: 10,
@@ -21,7 +22,7 @@ export default async function ReviewsPage({searchParams}: ReviewsPageProps) {
       <div className="mb-6 tablet:mb-8">
         <PageInfo pageName="reviews" />
       </div>
-      <ReviewWrapper initialData={initialReviews.data} />
+      <ReviewWrapper initialData={initialReviews} />
     </div>
   );
 }

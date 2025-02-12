@@ -1,28 +1,46 @@
 'use client';
 
-import {useQuery} from '@tanstack/react-query';
 import {useInfiniteQuery} from '@tanstack/react-query';
 
+import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
 import {reviewListQuery} from '../../../queries/common/queryKeys';
-import {ReviewListDataType} from '../../../types/common/reviews.types';
+import {ReviewListType} from '../../../types/common/reviews.types';
 import AverageScoresWrapper from '../../reviewComponent/AverageScoresWrapper';
 import {Filtering} from '../filter/filtering';
 import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
-import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
 
 import ReviewListWrapper from './reviewListWrapper';
 
 type ReviewWrapperProps = {
-  initialData: ReviewListDataType[];
+  initialData: ReviewListType;
 };
 
-// Todo: useInfiniteQuery 적용 필요
 export default function ReviewWrapper({initialData}: ReviewWrapperProps) {
-  console.log(initialData);
-
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();
-  const {data: reviewList} = useQuery(reviewListQuery.getReviewList(filter));
+
+  const {data, fetchNextPage, hasNextPage} = useInfiniteQuery({
+    queryKey: ['reviewList', filter],
+    queryFn: async ({pageParam = 0}) => {
+      const {queryFn} = reviewListQuery.getReviewList({
+        ...filter,
+        offset: pageParam,
+        limit: 10,
+      });
+      return queryFn();
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => {
+      return lastPage.data.length < 10 ? undefined : lastPage.currentPage + 1;
+    },
+    initialData: {pages: [initialData], pageParams: [0]},
+  });
+
+  const observerRef = useInfiniteObserver(() => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  });
 
   return (
     <>
@@ -44,7 +62,9 @@ export default function ReviewWrapper({initialData}: ReviewWrapperProps) {
             setFilter={setFilter}
           />
         </div>
-        {reviewList && <ReviewListWrapper {...reviewList} />}
+
+        {data?.pages.map(page => <ReviewListWrapper key={page.currentPage} {...page} />)}
+        {hasNextPage && <div ref={observerRef} className="h-10" />}
       </div>
     </>
   );

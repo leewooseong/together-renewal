@@ -4,20 +4,20 @@ type PaginationProps = {
   onPageChange: (page: number) => void;
 };
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({currentPage, totalPages, onPageChange}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   const getPageNumbers = () => {
-    return Array.from({ length: totalPages }, (_, i) => i + 1);
+    return Array.from({length: totalPages}, (_, i) => i + 1);
   };
 
   return (
-    <div className="flex justify-center space-x-2 mt-4">
+    <div className="mt-4 flex justify-center space-x-2">
       <button
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-3 py-1 border rounded-md disabled:opacity-50"
+        className="rounded-md border px-3 py-1 disabled:opacity-50"
       >
         &lt;
       </button>
@@ -28,7 +28,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           key={page}
           onClick={() => onPageChange(page)}
           disabled={page === currentPage}
-          className={`px-3 py-1 border rounded-md ${
+          className={`rounded-md border px-3 py-1 ${
             page === currentPage ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
           }`}
         >
@@ -40,7 +40,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-3 py-1 border rounded-md disabled:opacity-50"
+        className="rounded-md border px-3 py-1 disabled:opacity-50"
       >
         &gt;
       </button>

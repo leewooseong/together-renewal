@@ -1,10 +1,12 @@
 export type GetReviewsProps = {
+  gatheringId?: number;
   type?: string;
   location?: string;
   date?: string;
   sortBy?: string;
   sortOrder?: string;
   limit?: number;
+  offset?: number;
 };
 
 export type GetMyReviewsProps = {

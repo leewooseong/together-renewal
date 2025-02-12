@@ -30,9 +30,10 @@ export const useQueryStringFilter = () => {
     setFilter(validQueryStringObject);
   }, [searchParams]);
 
-  const updateQueryString = (newFilter: Partial<typeof filter>) => {
-    const queryString = buildQueryParams(newFilter);
-
+  const updateQueryString = (newFilter: Partial<GetReviewsProps>) => {
+    const updatedFilter = {...filter, ...newFilter};
+    setFilter(updatedFilter);
+    const queryString = buildQueryParams(updatedFilter);
     router.replace(`?${queryString}`);
   };
 

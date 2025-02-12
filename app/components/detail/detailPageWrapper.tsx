@@ -10,10 +10,9 @@ import {getGatheringReviews} from '../../apis/reviews/reviewsApi';
 import {gatheringsQueryKey} from '../../queries/common/queryKeys';
 import {useUserQuery} from '../../queries/user/useUserQueries';
 import {ReviewListType} from '../../types/common/reviews.types';
+import Pagination from '../common/pagination';
 import ReviewListWrapper from '../common/review/reviewListWrapper';
-import Pagination from '../../components/common/pagination';
 import BottomBar from '../gatherings/bottomBar';
-
 
 type DetailPageWrapperProps = {
   gatheringId: number;
@@ -39,10 +38,16 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
         offset: (currentPage - 1) * 10,
       }),
     initialData: currentPage === 1 ? initialReviews : undefined,
-    placeholderData: previousData => previousData ?? { data: [], totalItemCount: 0, currentPage: 1, totalPages: 1 },
+    placeholderData: previousData =>
+      previousData ?? {data: [], totalItemCount: 0, currentPage: 1, totalPages: 1},
   });
 
-  const reviews = gatheringReviewList ?? { data: [], totalItemCount: 0, currentPage: 1, totalPages: 1 };
+  const reviews = gatheringReviewList ?? {
+    data: [],
+    totalItemCount: 0,
+    currentPage: 1,
+    totalPages: 1,
+  };
 
   const {data: gatheringDetail, isError} = useQuery({
     queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),

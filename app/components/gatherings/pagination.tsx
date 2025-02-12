@@ -6,8 +6,8 @@ type PaginationProps = {
   onPageChange: (page: number) => void;
 };
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+export default function Pagination({currentPage, totalPages, onPageChange}: PaginationProps) {
+  const pages = Array.from({length: totalPages}, (_, i) => i + 1);
 
   return (
     <div className="flex space-x-2">
@@ -15,7 +15,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage <= 1}
-        className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+        className="rounded bg-gray-200 px-3 py-1 disabled:opacity-50"
       >
         &lt;
       </button>
@@ -26,8 +26,8 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
           key={page}
           onClick={() => currentPage !== page && onPageChange(page)}
           className={clsx(
-            'px-3 py-1 rounded',
-            page === currentPage ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'
+            'rounded px-3 py-1',
+            page === currentPage ? 'bg-blue-500 text-white' : 'bg-white text-blue-500',
           )}
         >
           {page}
@@ -38,7 +38,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
-        className="px-3 py-1 rounded bg-gray-200 disabled:opacity-50"
+        className="rounded bg-gray-200 px-3 py-1 disabled:opacity-50"
       >
         &gt;
       </button>

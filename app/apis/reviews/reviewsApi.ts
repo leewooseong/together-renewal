@@ -64,7 +64,7 @@ export const getGatheringReviews = async (
       sortOrder: props.sortOrder,
       limit: props.limit,
       offset: props.offset,
-    }).filter(([_, value]) => value !== undefined),
+    }).filter(([, value]) => value !== undefined),
   ) as Record<string, string | number>;
 
   const queryParams = buildQueryParams(filteredParams);
@@ -94,7 +94,7 @@ export const getGatheringReviewsInServer = async (
       sortOrder: props.sortOrder,
       limit: props.limit,
       offset: props.offset,
-    }).filter(([_, value]) => value !== undefined),
+    }).filter(([, value]) => value !== undefined),
   ) as Record<string, string | number>;
 
   const queryParams = buildQueryParams(filteredParams);
