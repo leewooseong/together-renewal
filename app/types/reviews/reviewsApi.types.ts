@@ -9,6 +9,8 @@ export type GetReviewsProps = {
 export type GetMyReviewsProps = {
   userId: number;
   sortOrder: string;
+  limit?: number;
+  offset?: number;
 };
 
 export type GetGatheringReviewsProps = {
