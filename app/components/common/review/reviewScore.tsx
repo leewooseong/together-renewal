@@ -1,25 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-array-index-key */
 
-import Image from 'next/image';
-
 import {ReviewScoreprops} from '../../../types/common/reviewScore.types';
 
-const heartStateList = [false, false, false, false, false];
-export function ReviewScore({score, isAverage}: ReviewScoreprops) {
-  const heartList = heartStateList.map((_, index) => index < score);
+import {HeartSVG} from './heartSvg';
 
+export function ReviewScore({score, isAverage}: ReviewScoreprops) {
+  const fullHearts = Math.floor(score); // 정수 부분
+  const decimalPercentage = Math.floor((score % 1) * 100);
+
+  const heartPercentageArray: number[] = Array(5).fill(0);
+
+  if (fullHearts > 0) {
+    heartPercentageArray.fill(100, 0, fullHearts + 1);
+
+    if (fullHearts < 5) {
+      heartPercentageArray[fullHearts] = decimalPercentage;
+    }
+  }
   return (
     <div className={`flex gap-[2px] ${isAverage && 'gap-2'}`}>
-      {heartList.map((heart, index) => (
-        <Image
-          unoptimized
-          width={24}
-          height={24}
-          key={`score-${score}-${index}`}
-          src={heart ? '/icons/heart-active.svg' : '/icons/heart-default.svg'}
-          alt={heart ? '찬 하트' : '빈 하트'}
-        />
+      {heartPercentageArray.map((percentage, index) => (
+        <HeartSVG key={`score-${score}-${index}`} percentage={percentage} />
       ))}
     </div>
   );

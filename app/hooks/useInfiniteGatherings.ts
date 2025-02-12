@@ -1,13 +1,18 @@
 import {useInfiniteQuery} from '@tanstack/react-query';
 
-import {getGatherings} from '../apis/gatherings/gatheringApi';
-import {GatheringParams, GetGatherings} from '../types/gatherings/getGatherings.types';
+import {getGatherings, getJoinedGatherings} from '../apis/gatherings/gatheringApi';
+import {gatheringsQueryKey} from '../queries/common/queryKeys';
+import {Gathering} from '../types/common/gatheringFilter.types';
+import {GatheringsFilter} from '../types/gatherings/filters';
+import {GetGatherings} from '../types/gatherings/getGatherings.types';
+import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
+import {myGatheringSort} from '../utils/myGatheringSort';
 
 export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
   return useInfiniteQuery({
     queryKey: ['gatherings'],
     queryFn: async ({pageParam = 0}) => {
-      const params: GatheringParams = {
+      const params: GatheringsFilter = {
         sortBy: 'dateTime',
         sortOrder: 'asc',
         limit: 10,
@@ -19,6 +24,61 @@ export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage && lastPage.length === 10 ? allPages.length * 10 : undefined;
     },
+    initialData: {
+      pages: [initialData],
+      pageParams: [0],
+    },
+  });
+};
+
+export function useInfiniteJoinedGatherings(
+  userId: number,
+  initialData: GetJoinedGatherings[] = [],
+) {
+  return useInfiniteQuery({
+    queryKey: ['joinedGatherings', userId],
+    queryFn: async ({pageParam = 0}) => {
+      const response = await getJoinedGatherings({
+        sortBy: 'dateTime',
+        sortOrder: 'asc',
+        limit: 10,
+        offset: pageParam,
+      });
+      return myGatheringSort(response ?? []);
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => (lastPage.length === 10 ? lastPage.length : undefined),
+    initialData: {
+      pages: [initialData],
+      pageParams: [0],
+    },
+    enabled: !!userId,
+  });
+}
+
+export const useInfiniteLikedGatherings = (
+  initialData: GetGatherings[],
+  gatheringType: Gathering,
+  likedIds: string[],
+) => {
+  return useInfiniteQuery({
+    ...gatheringsQueryKey.likedGatherings(gatheringType, likedIds.join(',')),
+    queryFn: async ({pageParam = 0}) => {
+      if (likedIds.length === 0) return [];
+
+      const params: GatheringsFilter = {
+        sortBy: 'dateTime',
+        sortOrder: 'asc',
+        id: likedIds.join(','),
+        type: gatheringType || '',
+        limit: 10,
+        offset: pageParam,
+      };
+
+      return getGatherings(params);
+    },
+    initialPageParam: 0,
+    getNextPageParam: lastPage => (lastPage.length === 10 ? lastPage.length : undefined),
     initialData: {
       pages: [initialData],
       pageParams: [0],

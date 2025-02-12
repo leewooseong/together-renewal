@@ -1,51 +1,106 @@
-import {GatheringParams, GetGatherings} from '../../types/gatherings/getGatherings.types';
-import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
+import {ApiResponse} from '../../types/common/responseApi.types';
+import {GatheringParticipant} from '../../types/gatherings/GatheringParticipant';
+import {GatheringsFilter, JoinedGatheringsFilter} from '../../types/gatherings/filters';
+import {GatheringDetailType} from '../../types/gatherings/getGatheringDetail';
+import {GetGatherings} from '../../types/gatherings/getGatherings.types';
+import {
+  GetJoinedGatherings,
+  PostJoinGatheringResponse,
+} from '../../types/gatherings/joinedGatherings.types';
+import createQueryString from '../../utils/createQueryString';
 import {clientInstance, serverInstance} from '../client';
 
-export const getJoinedGatherings = async (): Promise<GetJoinedGatherings[]> => {
+// TODO: 에러처리 맞게 수정
+export const getGatherings = async (filters: GatheringsFilter = {}): Promise<GetGatherings[]> => {
   try {
-    const joinedGatherings = await clientInstance.get<GetJoinedGatherings[]>({
-      path: `/route/token/gatherings/joinedGatherings`,
+    const queryString = createQueryString(filters);
+
+    const response = await clientInstance.get<ApiResponse<GetGatherings[]>>({
+      path: `/route/gatherings/gathering?${queryString}`,
     });
 
-    return joinedGatherings;
+    return response.data;
   } catch (error) {
-    console.error('Error fetching joined gatherings:', error);
+    throw error;
+  }
+};
+
+export const getGatheringsInServer = async (
+  filters: GatheringsFilter = {},
+): Promise<GetGatherings[]> => {
+  try {
+    const defaultParams = {
+      sortBy: 'dateTime',
+      sortOrder: 'asc',
+      ...filters,
+    };
+
+    const queryString = createQueryString(defaultParams);
+
+    const response = await serverInstance.get<GetGatherings[]>({
+      path: `/gatherings?${queryString}`,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getJoinedGatherings = async (
+  filters: JoinedGatheringsFilter = {},
+): Promise<GetJoinedGatherings[]> => {
+  try {
+    const queryString = createQueryString(filters);
+
+    const response = await clientInstance.get<ApiResponse<GetJoinedGatherings[]>>({
+      path: `/route/token/gatherings/joinedGatherings?${queryString}`,
+    });
+
+    return response.data;
+  } catch (error) {
     throw error;
   }
 };
 
 export const getJoinedGatheringsInServer = async (
   token: string,
+  filters: JoinedGatheringsFilter = {},
 ): Promise<GetJoinedGatherings[]> => {
   try {
     const defaultParams = {
       sortBy: 'dateTime',
       sortOrder: 'asc',
+      ...filters,
     };
 
-    const queryString = new URLSearchParams(
-      defaultParams as unknown as Record<string, string>,
-    ).toString();
+    const queryString = createQueryString(defaultParams);
 
-    const joinedGatherings = await serverInstance.get<GetJoinedGatherings[]>({
+    const response = await serverInstance.get<GetJoinedGatherings[]>({
       path: `/gatherings/joined?${queryString}`,
       token,
     });
-    return joinedGatherings;
+    return response;
   } catch (error) {
-    console.error('Error fetching joined gatherings in server:', error);
     throw error;
   }
 };
 
-export const leaveJoinedGatherings = async (gatheringId: number): Promise<void> => {
+export const leaveJoinedGatherings = async (gatheringId: number, userId: number): Promise<void> => {
   try {
     await clientInstance.delete<GetJoinedGatherings[]>({
-      path: `/route/token/gatherings/joinedGatherings/${gatheringId}`,
+      path: `/route/token/gatherings/joinedGatherings?gatheringId=${gatheringId}&userId=${userId}`,
     });
   } catch (error) {
-    console.error('Error fetching leave joined gatherings:', error);
+    throw error;
+  }
+};
+
+export const deleteLeaveGathering = async (id: number): Promise<void> => {
+  try {
+    await clientInstance.delete<GetJoinedGatherings[]>({
+      path: `/route/token/gatherings/${id}`,
+    });
+  } catch (error) {
     throw error;
   }
 };
@@ -60,25 +115,109 @@ export const leaveJoinedGatheringsInServer = async (
       token,
     });
   } catch (error) {
-    console.error('참여한 모임 삭제 실패: ', error);
     throw error;
   }
 };
 
-export const getGatherings = async (params: GatheringParams): Promise<GetGatherings[]> => {
+export const getUserFromGathering = async (
+  gatheringId: number,
+): Promise<GatheringParticipant[]> => {
   try {
-    const query = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
-      if (value !== undefined) {
-        query.append(key, String(value));
-      }
+    const response = await clientInstance.get<ApiResponse<GatheringParticipant[]>>({
+      path: `/route/gatherings/gatheringParticipant?gatheringId=${gatheringId}`,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getUserFromGatheringInServer = async (
+  gatheringId: number,
+): Promise<GatheringParticipant[]> => {
+  try {
+    const response = await serverInstance.get<GatheringParticipant[]>({
+      path: `/gatherings/${gatheringId}/participants`,
     });
 
-    return await clientInstance.get<GetGatherings[]>({
-      path: `/route/gatherings?${query.toString()}`,
-    });
+    return response;
   } catch (error) {
-    console.error('모임 데이터 불러오기 실패:', error);
-    throw new Error('모임 데이터를 가져오는 중 오류가 발생했습니다.');
+    throw error;
+  }
+};
+
+export const postJoinGathering = async (id: number): Promise<PostJoinGatheringResponse> => {
+  try {
+    const response = await clientInstance.post<PostJoinGatheringResponse>({
+      path: `/route/token/gatherings/${id}`,
+      body: {id},
+    });
+
+    return response;
+  } catch (error) {
+    console.error('현재 error 객체:', error);
+    throw new Error(error instanceof Error ? error.message : '모임 참여 요청 실패');
+  }
+};
+
+export const postJoinGatheringInServer = async (
+  token: string,
+  id: number,
+): Promise<PostJoinGatheringResponse> => {
+  console.log(`postJoinGatheringInServer 서버 요청 시작 - ID: ${id}`);
+  try {
+    const response = await serverInstance.post<PostJoinGatheringResponse>({
+      path: `/gatherings/${id}/join`,
+      token,
+    });
+    console.log(`postJoinGatheringInServer 요청 성공 - ID: ${id}, 응답:`, response);
+    return response;
+  } catch (error) {
+    console.error(`postJoinGatheringInServer 요청 실패 - ID: ${id}`, error);
+    throw new Error(error instanceof Error ? error.message : '모임 참여 요청 중 오류 발생');
+  }
+};
+
+export const getGatheringDetail = async (id: number): Promise<GatheringDetailType> => {
+  try {
+    const response = await clientInstance.get<GatheringDetailType>({
+      path: `/route/gatherings/${id}`,
+    });
+    return response;
+  } catch (error) {
+    console.error('현재 error 객체:', error);
+    throw new Error(error instanceof Error ? error.message : '모임 상세 정보 가져오기 실패');
+  }
+};
+
+export const putCancelGathering = async (id: number): Promise<{message: string}> => {
+  try {
+    const response = await clientInstance.put<{message: string}>({
+      path: `/route/token/gatherings/${id}`,
+      body: {id},
+    });
+    console.log('클라이언트에서 받은 모임 취소 응답:', response);
+    return response;
+  } catch (error) {
+    console.error('현재 error 객체:', error);
+    throw new Error(error instanceof Error ? error.message : '모임 취소 실패');
+  }
+};
+
+export const putCancelGatheringInServer = async (
+  token: string,
+  id: number,
+): Promise<{message: string}> => {
+  console.log(`putCancelGatheringInServer 서버 요청 시작 - ID: ${id}`);
+  try {
+    const response = await serverInstance.put<{message: string}>({
+      path: `/gatherings/${id}/cancel`,
+      token,
+    });
+    console.log(`putCancelGatheringInServer 요청 성공 - ID: ${id}`, response);
+    return response; // ✅ 응답 메시지 반환
+  } catch (error) {
+    console.error(`putCancelGatheringInServer 요청 실패 - ID: ${id}`, error);
+    throw new Error(error instanceof Error ? error.message : '모임 참여 요청 중 오류 발생');
   }
 };

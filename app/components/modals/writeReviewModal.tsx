@@ -1,11 +1,12 @@
 import {useState} from 'react';
+import {toast} from 'react-toastify';
 
 import Image from 'next/image';
 
-import {writeReview} from '../../apis/reviews/reviewApi';
-import InputTextBox from '../common/inputText';
+import {writeReview} from '../../apis/reviews/reviewsApi';
+import {InputTextBox} from '../common/inputText';
 
-export default function WriteReviewModal({
+export function WriteReviewModal({
   onClose,
   gatheringId,
 }: {
@@ -18,23 +19,20 @@ export default function WriteReviewModal({
   const handleSubmit = async () => {
     try {
       if (!comment.trim()) {
-        alert('리뷰를 입력해주세요!');
+        toast.warn('리뷰를 입력해주세요!');
         return;
       }
       if (rating <= 0) {
-        alert('별점을 선택해주세요!');
+        toast.warn('별점을 선택해주세요!');
         return;
       }
 
-      console.log(comment);
-      console.log(rating);
       await writeReview(gatheringId, rating, comment);
-      alert('리뷰가 등록되었습니다.');
-      window.location.href = '/mypage';
+      toast.success('리뷰가 등록되었습니다.');
+
       onClose();
     } catch (error) {
-      console.error('리뷰 등록 중 오류 발생:', error);
-      alert('리뷰 등록에 실패했습니다.');
+      toast.error('리뷰 등록에 실패했습니다.');
     }
   };
   return (
@@ -70,6 +68,7 @@ export default function WriteReviewModal({
               placeholder="남겨주신 리뷰는 프로그램 운영 및 다른 회원분들께 큰 도움이 됩니다."
               value={comment}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value)}
+              height={120}
             />
           </div>
           <div className="flex h-[44px] w-full gap-[16px]">
@@ -82,7 +81,9 @@ export default function WriteReviewModal({
             </button>
             <button
               type="button"
-              className="flex h-full w-[228px] items-center justify-center rounded-md bg-gray-400 font-semibold text-white"
+              className={`flex h-full w-[228px] items-center justify-center rounded-md ${
+                rating > 0 && comment.trim() !== '' ? 'bg-orange-600' : 'bg-gray-400'
+              } font-semibold text-white`}
               onClick={handleSubmit}
             >
               리뷰 등록
