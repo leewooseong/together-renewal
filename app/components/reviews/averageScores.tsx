@@ -22,7 +22,6 @@ export function AverageScores({
   } else {
     averageScoreFormat = `${averageScore}.0`;
   }
-  console.log(averageScoreFormat);
 
   return (
     <div className="flex h-[180px] w-full items-center justify-between border-y-2 border-y-gray-200 bg-white px-6 py-8 sm:px-[73px]">
