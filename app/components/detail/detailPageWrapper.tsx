@@ -4,112 +4,99 @@ import {useEffect, useState} from 'react';
 
 import {useQuery} from '@tanstack/react-query';
 import Image from 'next/image';
-import {useParams} from 'next/navigation';
 
 import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatherings/gatheringApi';
-import {gatheringsQueryKey, reviewListQuery} from '../../queries/common/queryKeys';
+import {getGatheringReviews} from '../../apis/reviews/reviewsApi';
+import {gatheringsQueryKey} from '../../queries/common/queryKeys';
 import {useUserQuery} from '../../queries/user/useUserQueries';
 import {Gathering, Locations} from '../../types/common/gatheringFilter.types';
-import ReviewWrapper from '../common/review/reviewWrapper';
+import {ReviewListType} from '../../types/common/reviews.types';
+import Pagination from '../common/pagination';
+import ReviewListWrapper from '../common/review/reviewListWrapper';
 import BottomBar from '../gatherings/bottomBar';
 
 import {DetailCard} from './detailCard';
 
-export default function GatheringPage() {
-  const params = useParams();
-  const gatheringId = Number(params.id);
+type DetailPageWrapperProps = {
+  gatheringId: number;
+  initialReviews: ReviewListType;
+};
 
+export default function DetailPageWrapper({gatheringId, initialReviews}: DetailPageWrapperProps) {
   const [isOwner, setIsOwner] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [isParticipated, setIsParticipated] = useState(false);
   const [isFull, setIsFull] = useState(false);
   const [isDeadlineApproaching, setIsDeadlineApproaching] = useState(false);
   const [deadLine, setDeadline] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const [isFinishedGathering, setIsFinishedGathering] = useState(false);
-
   const {data: userInfo} = useUserQuery().getMyInfo();
   const userId = userInfo?.data?.id as number;
+  const {data: gatheringReviewList} = useQuery({
+    queryKey: ['gatheringReviews', gatheringId, currentPage],
+    queryFn: () =>
+      getGatheringReviews({
+        gatheringId,
+        sortOrder: 'desc',
+        limit: 10,
+        offset: (currentPage - 1) * 10,
+      }),
+    initialData: currentPage === 1 ? initialReviews : undefined,
+    placeholderData: previousData =>
+      previousData ?? {data: [], totalItemCount: 0, currentPage: 1, totalPages: 1},
+  });
 
-  // const {data: joinedGatherings} = useQuery({
-  //   queryKey: gatheringsQueryKey.joinedGatherings(),
-  //   queryFn: () => getJoinedGatherings(),
-  //   enabled: !!userId,
-  // });
-
-  const {data: gatheringReviewList} = useQuery(
-    reviewListQuery.getGatheringReviewList({gatheringId, sortOrder: 'desc'}),
-  );
-
+  const reviews = gatheringReviewList ?? {
+    data: [],
+    totalItemCount: 0,
+    currentPage: 1,
+    totalPages: 1,
+  };
   const {data: gatheringDetail, isError} = useQuery({
     queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
     queryFn: () => getGatheringDetail(gatheringId),
     staleTime: 0,
   });
-
+  const gatheringOwner = gatheringDetail?.createdBy;
   const {data: joinedGatherings} = useQuery({
     queryKey: gatheringsQueryKey.joinedGatherings().queryKey,
     queryFn: () => getJoinedGatherings(),
     enabled: !!userId,
   });
 
-  const gatheringOwner = gatheringDetail?.createdBy;
-
   const checkFull = () => {
     if (gatheringDetail) {
       const {capacity, participantCount} = gatheringDetail;
-      if (capacity === participantCount) {
-        setIsFull(true);
-      } else {
-        setIsFull(false);
-      }
+      setIsFull(capacity === participantCount);
     }
   };
 
   const checkParticipated = () => {
     if (joinedGatherings) {
-      const exists = joinedGatherings.some(item => Number(item.id) === Number(gatheringId));
-      setIsParticipated(exists);
+      setIsParticipated(joinedGatherings.some(item => Number(item.id) === Number(gatheringId)));
     }
   };
 
   useEffect(() => {
-    if (!userId) {
-      return;
-    }
+    if (!userId) return;
     checkFull();
     checkParticipated();
-    if (userId === gatheringOwner) {
-      setIsOwner(true);
-      setIsLogin(true);
-    } else {
-      setIsOwner(false);
-      setIsLogin(true);
-    }
+    setIsOwner(userId === gatheringOwner);
+    setIsLogin(true);
   }, [userId, gatheringOwner, joinedGatherings, gatheringDetail]);
 
   const getHoursDifference = (timestamp: string): number => {
     const EndDate = new Date(timestamp);
-    if (Number(EndDate.getHours()) === 0) {
-      setDeadline('24');
-    } else {
-      setDeadline(String(EndDate.getHours()));
-    }
+    setDeadline(String(EndDate.getHours()));
     const currentDate = new Date();
-
-    const diffMs = EndDate.getTime() - currentDate.getTime();
-    return diffMs / (1000 * 60 * 60);
+    return (EndDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60);
   };
 
   useEffect(() => {
-    if (!gatheringDetail?.registrationEnd) {
-      return;
-    }
-
-    const EndTime = gatheringDetail.registrationEnd;
-
+    if (!gatheringDetail?.registrationEnd) return;
+    const res = getHoursDifference(gatheringDetail.registrationEnd);
     const checkDeadline = () => {
-      const res = getHoursDifference(EndTime);
-
       if (res > 0 && res < 24) {
         setIsDeadlineApproaching(true);
       } else if (res < 0) {
@@ -121,18 +108,16 @@ export default function GatheringPage() {
     };
 
     checkDeadline();
-  });
+  }, [gatheringDetail?.registrationEnd]);
 
   if (isError) {
-    console.log('모임 받아오기 실패😞😞');
     return <div>모임을 찾을 수 없습니다</div>;
   }
 
   return (
     <>
-      {/* <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
-      <div>마감시간 시간만(로컬): {deadLine}</div> */}
-
+      <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
+      <div>마감시간 시간만(로컬): {deadLine}</div>
       <div className="mb-4 flex flex-col items-center gap-4 md:mb-[21px] md:flex-row md:justify-center md:gap-[14px] lg:mb-6 lg:gap-6">
         <div className="relative h-[180px] w-[343px] rounded-3xl border-2 border-gray-200 md:h-60 md:w-[340px] lg:h-[270px] lg:w-[486px] lg:gap-6">
           {gatheringDetail?.image ? (
@@ -149,7 +134,6 @@ export default function GatheringPage() {
             ''
           )}
         </div>
-
         {gatheringDetail ? (
           <div className="rounded-3xl outline outline-2 outline-gray-200">
             <DetailCard
@@ -171,19 +155,26 @@ export default function GatheringPage() {
           </div>
         )}
       </div>
+
       <div className="border-t-2 border-t-gray-200 px-6 pt-6">
         <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
           이용자들은 이 프로그램을 이렇게 느꼈어요!
         </div>
 
-        {gatheringReviewList?.data && gatheringReviewList.data.length > 0 ? (
-          <ReviewWrapper initialData={[]} {...gatheringReviewList} />
+        {reviews.data.length > 0 ? (
+          <>
+            <ReviewListWrapper {...reviews} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={reviews.totalPages}
+              onPageChange={setCurrentPage}
+            />
+          </>
         ) : (
-          <div className="flex h-56 items-center justify-center">
-            <div className="text-gray-500">아직 리뷰가 없습니다</div>
-          </div>
+          <p className="py-8 text-center text-gray-500">등록된 리뷰가 없습니다.</p>
         )}
       </div>
+
       <div>
         <BottomBar
           isLogin={isLogin}

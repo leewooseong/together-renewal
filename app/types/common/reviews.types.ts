@@ -27,6 +27,19 @@ export type ReviewListType = {
   totalPages: number;
 };
 
+export type ReviewParams = {
+  gatheringId?: number;
+  userId?: number;
+  type?: string;
+  location?: string;
+  date?: string;
+  registrationEnd?: string;
+  sortBy?: string;
+  sortOrder?: string;
+  limit: number;
+  offset: number;
+};
+
 export type ReviewType = {
   gatheringImg: string;
   score: number;
