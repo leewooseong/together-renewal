@@ -10,7 +10,7 @@ import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatherings/gat
 import {gatheringsQueryKey, reviewListQuery} from '../../queries/common/queryKeys';
 import {useUserQuery} from '../../queries/user/useUserQueries';
 import {Gathering, Locations} from '../../types/common/gatheringFilter.types';
-import ReviewWrapper from '../common/review/reviewWrapper';
+import ReviewListWrapper from '../common/review/reviewListWrapper';
 import BottomBar from '../gatherings/bottomBar';
 
 import {DetailCard} from './detailCard';
@@ -177,7 +177,7 @@ export default function GatheringPage() {
         </div>
 
         {gatheringReviewList?.data && gatheringReviewList.data.length > 0 ? (
-          <ReviewWrapper initialData={[]} {...gatheringReviewList} />
+          <ReviewListWrapper {...gatheringReviewList} />
         ) : (
           <div className="flex h-56 items-center justify-center">
             <div className="text-gray-500">아직 리뷰가 없습니다</div>

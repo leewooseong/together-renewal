@@ -49,7 +49,7 @@ export function LikedContents() {
         {isError && <TextRender effect="shake" text="찜한 목록을 불러오지 못했습니다." />}
 
         {!isLoading && !isError && (
-          <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
+          <div className="mt-4 flex flex-col items-center justify-between gap-6 tablet:mt-6">
             {gatheringList && gatheringList.length > 0 ? (
               gatheringList.map(gathering => <ListCard key={gathering.id} {...gathering} />)
             ) : (

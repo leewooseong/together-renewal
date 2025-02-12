@@ -54,7 +54,7 @@ export default function GatheringsList({initialData}: {initialData: GetGathering
           setFilter={setFilter}
         />
       </div>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col items-center gap-6">
         {gatherings.map(gathering => (
           <ListCard key={gathering.id} {...gathering} />
         ))}
