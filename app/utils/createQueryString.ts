@@ -16,7 +16,7 @@ export default function createQueryString(
 ) {
   return new URLSearchParams(
     Object.entries(params)
-      .filter(([, value]) => value !== undefined && value !== null)
+      .filter(([, value]) => value !== undefined && value !== null && value !== '')
       .reduce((acc, [key, value]) => ({...acc, [key]: String(value)}), {}),
   ).toString();
 }

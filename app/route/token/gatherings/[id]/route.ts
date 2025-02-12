@@ -62,9 +62,11 @@ export const DELETE = async (request: NextRequest) => {
   }
 };
 
-export const PUT = async (request: NextRequest) => {
+export const PUT = async (request: NextRequest, {params}: {params: Promise<{id: string}>}) => {
   try {
-    const {id} = await request.json();
+    const {id} = await params;
+    console.log(id);
+
     const token = request.cookies.get(AUTH_TOKEN)?.value;
 
     if (!token) {
