@@ -107,7 +107,6 @@ export default function Modal({
         putCancelGatheringMutation.mutate(gatheringId);
         router.replace('/gatherings');
       }
-      console.log('모임 취소 요청 보내면 된다.');
     }
   };
 
