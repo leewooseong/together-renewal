@@ -67,15 +67,12 @@ export function MyPageCard({
       {isCanceled()}
 
       <div className="flex h-[328px] w-full flex-col justify-between sm:h-[156px] sm:w-[545px] sm:flex-row">
-        <button type="button" onClick={handleCardClick}>
-          <div className="relative flex size-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]">
-            <Image
-              src={image || ''}
-              alt="모임 대표 이미지"
-              className="object-cover"
-              layout="fill"
-            />
-          </div>
+        <button
+          type="button"
+          onClick={handleCardClick}
+          className="relative flex size-full items-center justify-center overflow-hidden rounded-3xl border border-dashed sm:w-[280px]"
+        >
+          <Image src={image || ''} alt="모임 대표 이미지" className="object-cover" layout="fill" />
         </button>
 
         <div className="flex h-full w-[249px] flex-col justify-between">
@@ -87,16 +84,21 @@ export function MyPageCard({
 
           <div className="flex h-[54px] w-full flex-col justify-between">
             <div className="flex h-[28px] items-center justify-between">
-              <button type="button" onClick={handleCardClick}>
-                <div className="w-[170px] overflow-hidden truncate font-semibold">{name}</div>
+              <button
+                type="button"
+                onClick={handleCardClick}
+                className="w-[170px] overflow-hidden truncate font-semibold"
+              >
+                {name}
               </button>
+
               <div className="flex w-[76px] justify-between">
                 <span className="font-semibold">|</span>
                 <p className="text-sm font-medium">{location}</p>
               </div>
             </div>
 
-            <div className="flex h-[20px] w-[160px] justify-between text-sm">
+            <div className="ml-[8px] flex h-[20px] w-[160px] justify-between text-sm">
               <span>{`${dateFormat.date} ${dateFormat.time}`}</span>
               <span className="flex gap-[4px]">
                 <Image

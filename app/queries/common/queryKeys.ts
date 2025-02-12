@@ -1,13 +1,16 @@
 /* eslint-disable prettier/prettier */
-import {getGatherings, getJoinedGatherings, getUserFromGathering} from '../../apis/gatherings/gatheringApi';
+import {
+  getGatherings,
+  getJoinedGatherings,
+  getUserFromGathering,
+} from '../../apis/gatherings/gatheringApi';
 import {getGatheringReviews, getMyReviews, getReviews} from '../../apis/reviews/reviewsApi';
-import { Gathering } from '../../types/common/gatheringFilter.types';
+import {Gathering} from '../../types/common/gatheringFilter.types';
 import {
   GetGatheringReviewsProps,
   GetMyReviewsProps,
   GetReviewsProps,
 } from '../../types/reviews/reviewsApi.types';
-import {myGatheringSort} from '../../utils/myGatheringSort';
 
 // 'info'와 같이 callback 함수로 작성하면 매개변수를 받아 매개변수에 맞는 queryKey를 생성할 수 있다.
 export const userQueryKey = {
@@ -38,7 +41,7 @@ export const gatheringsQueryKey = {
   all: ['gatherings'] as const,
   joinedGatherings: () => ({
     queryKey: ['joinedGatherings'] as const,
-    queryFn: async () => myGatheringSort(await getJoinedGatherings()),
+    queryFn: () => getJoinedGatherings(),
   }),
   GatheringDetails: (id: number) => ['gathering', id] as const,
   gatheringParticipants: (id: number) => ({
