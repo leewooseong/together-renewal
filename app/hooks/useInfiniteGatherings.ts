@@ -8,15 +8,16 @@ import {GetGatherings} from '../types/gatherings/getGatherings.types';
 import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
 import {myGatheringSort} from '../utils/myGatheringSort';
 
-export const useInfiniteGatherings = (initialData: GetGatherings[]) => {
+export const useInfiniteGatherings = (initialData: GetGatherings[], filter: GatheringsFilter) => {
   return useInfiniteQuery({
-    queryKey: ['gatherings'],
+    queryKey: ['gatherings', filter],
     queryFn: async ({pageParam = 0}) => {
       const params: GatheringsFilter = {
         sortBy: 'dateTime',
         sortOrder: 'asc',
         limit: 10,
         offset: pageParam,
+        ...filter,
       };
       return getGatherings(params);
     },
