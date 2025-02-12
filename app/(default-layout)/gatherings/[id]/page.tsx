@@ -172,7 +172,7 @@ export default function GatheringPage() {
           <ReviewWrapper {...gatheringReviewList} />
         ) : (
           <div className="flex h-56 items-center justify-center">
-            <div className="text-gray-500">아직 리뷰가 없습니다🥹</div>
+            <div className="text-gray-500">아직 리뷰가 없습니다</div>
           </div>
         )}
       </div>
