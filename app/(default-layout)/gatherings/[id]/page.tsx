@@ -1,162 +1,19 @@
-'use client';
+import {getGatheringReviewsInServer} from '../../../apis/reviews/reviewsApi';
+import DetailPageWrapper from '../../../components/detail/detailPageWrapper';
 
-import {useEffect, useState} from 'react';
+type GatheringPageProps = {
+  params: { id: string };
+};
 
-import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
-import Image from 'next/image';
-import {useParams} from 'next/navigation';
-
-import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatherings/gatheringApi';
-import {getGatheringReviews} from '../../../apis/reviews/reviewsApi';
-import ReviewWrapper from '../../../components/common/review/reviewWrapper';
-import BottomBar from '../../../components/gatherings/bottomBar';
-import Pagination from '../../../components/gatherings/pagination';
-import {gatheringsQueryKey} from '../../../queries/common/queryKeys';
-import {useUserQuery} from '../../../queries/user/useUserQuries';
-
-export default function Gathering() {
-  const params = useParams();
+export default async function GatheringPage({ params }: GatheringPageProps) {
   const gatheringId = Number(params.id);
-
-  const [isOwner, setIsOwner] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [isParticipated, setIsParticipated] = useState(false);
-  const [isFull, setIsFull] = useState(false);
-  const [isDeadlineApproaching, setIsDeadlineApproaching] = useState(false);
-  const [deadLine, setDeadline] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-
-  // 리뷰 목록을 페이지네이션 방식으로 가져오기
-  const {
-    data: gatheringReviewList
-  } = useInfiniteQuery({
-    queryKey: ['gatheringReviews', gatheringId],
-    queryFn: ({pageParam = 1}) =>
-      getGatheringReviews({gatheringId, page: pageParam, sortOrder: 'desc'}),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return lastPage.data.length === 10 ? allPages.length + 1 : undefined;
-    },
+  
+  const initialReviews = await getGatheringReviewsInServer({
+    gatheringId,
+    sortOrder: 'desc',
+    limit: 10,
+    offset: 0,
   });
 
-  const {data: gatheringDetail, isError} = useQuery({
-    queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
-    queryFn: () => getGatheringDetail(gatheringId),
-    staleTime: 0,
-  });
-
-  const {data: joinedGatherings} = useQuery({
-    queryKey: gatheringsQueryKey.joinedGatherings(),
-    queryFn: () => getJoinedGatherings(),
-  });
-
-  const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
-
-  const gatheringOwner = gatheringDetail?.createdBy;
-
-  console.log('userInfo:', userInfo);
-  console.log('userID:', userId);
-
-  const checkFull = () => {
-    if (gatheringDetail) {
-      const {capacity, participantCount} = gatheringDetail;
-      setIsFull(capacity === participantCount);
-    }
-  };
-
-  const checkParticipated = () => {
-    if (joinedGatherings) {
-      setIsParticipated(joinedGatherings.some(item => Number(item.id) === Number(gatheringId)));
-    }
-  };
-
-  useEffect(() => {
-    if (!userId) return;
-    checkFull();
-    checkParticipated();
-    setIsOwner(userId === gatheringOwner);
-    setIsLogin(true);
-  }, [userId, gatheringOwner, joinedGatherings, gatheringDetail]);
-
-  const getHoursDifference = (timestamp: string): number => {
-    const EndDate = new Date(timestamp);
-    setDeadline(String(EndDate.getHours()));
-    const currentDate = new Date();
-    return (EndDate.getTime() - currentDate.getTime()) / (1000 * 60 * 60);
-  };
-
-  useEffect(() => {
-    if (!gatheringDetail?.registrationEnd) return;
-    const res = getHoursDifference(gatheringDetail.registrationEnd);
-    setIsDeadlineApproaching(res > 0 && res < 24);
-  }, [gatheringDetail?.registrationEnd]);
-
-  if (isError) {
-    console.log('모임 받아오기 실패😞😞');
-    return <div>모임을 찾을 수 없습니다</div>;
-  }
-
-  const reviews = {
-    data: gatheringReviewList?.pages.flatMap(page => page.data) || [],
-    totalItemCount: gatheringReviewList?.pages[0]?.totalItemCount || 0,
-    currentPage: gatheringReviewList?.pageParams.length || 0,
-    totalPages: Math.ceil((gatheringReviewList?.pages[0]?.totalItemCount || 0) / 10),
-  };
-
-  return (
-    <>
-      <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
-      <div>마감시간 시간만(로컬): {deadLine}</div>
-      <div className="mb-4 flex flex-col items-center gap-4 md:mb-[21px] md:flex-row md:justify-center md:gap-[14px] lg:mb-6 lg:gap-6">
-        <div className="relative h-[180px] w-[343px] rounded-3xl border-2 border-gray-200 md:h-60 md:w-[340px] lg:h-[270px] lg:w-[486px] lg:gap-6">
-          {gatheringDetail?.image ? (
-            <Image src={gatheringDetail.image} alt="모임 이미지" fill className="rounded-3xl" />
-          ) : (
-            <div className="size-full rounded-3xl bg-gray-800" />
-          )}
-          {isDeadlineApproaching && (
-            <div className="absolute right-0 top-0 flex h-8 w-[123px] items-center gap-[2px] rounded-bl-xl rounded-tr-3xl bg-orange-600 py-1 pl-[7px]">
-              <Image src="/icons/watch.svg" alt="시계 아이콘" width={24} height={24} />
-              <div className="text-xs text-white">{`오늘 ${deadLine}시 마감`}</div>
-            </div>
-          )}
-        </div>
-        <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
-          건희님 컴포넌트
-        </div>
-      </div>
-      <div className="border-t-2 border-t-gray-200 px-6 pt-6">
-        <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
-          이용자들은 이 프로그램을 이렇게 느꼈어요!
-        </div>
-        {reviews.data.length > 0 ? (
-          <>
-          <ReviewWrapper {...reviews} />
-          {reviews.totalPages > 1 && ( // ✅ 2페이지 이상일 때만 표시
-            <Pagination
-            currentPage={currentPage}
-            totalPages={reviews.totalPages}
-            onPageChange={setCurrentPage}
-            />
-          )}
-          </>
-        ) : (
-          <p className="py-8 text-center text-gray-500">등록된 리뷰가 없습니다.</p>
-        )}
-      </div>
-
-      <div>
-        <BottomBar
-          isLogin={isLogin}
-          isOwner={isOwner}
-          isParticipated={isParticipated}
-          setIsParticipated={setIsParticipated}
-          isFull={isFull}
-          isCancel={gatheringDetail?.canceledAt}
-          gatheringId={gatheringDetail?.id}
-        />
-      </div>
-    </>
-  );
+  return <DetailPageWrapper initialReviews={initialReviews} gatheringId={gatheringId} />;
 }

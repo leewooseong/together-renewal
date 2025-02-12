@@ -102,7 +102,6 @@ export default function BottomBar({
 
   const handleShareButton = async () => {
     if (isLogin && isOwner) {
-      // 복사 됐다고 모달 띄우기
       if (navigator.clipboard) {
         try {
           await navigator.clipboard.writeText(shareUrl);
