@@ -9,14 +9,17 @@ import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatherings/gat
 import {getGatheringReviews} from '../../apis/reviews/reviewsApi';
 import {gatheringsQueryKey} from '../../queries/common/queryKeys';
 import {useUserQuery} from '../../queries/user/useUserQueries';
+import {Gathering, Locations} from '../../types/common/gatheringFilter.types';
 import {ReviewListType} from '../../types/common/reviews.types';
 import Pagination from '../common/pagination';
 import ReviewListWrapper from '../common/review/reviewListWrapper';
 import BottomBar from '../gatherings/bottomBar';
 
+import {DetailCard} from './detailCard';
+
 type DetailPageWrapperProps = {
   gatheringId: number;
-  initialReviews: ReviewListType; // ✅ 필요하면 ReviewListType으로 수정 가능
+  initialReviews: ReviewListType;
 };
 
 export default function DetailPageWrapper({gatheringId, initialReviews}: DetailPageWrapperProps) {
@@ -27,7 +30,9 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
   const [isDeadlineApproaching, setIsDeadlineApproaching] = useState(false);
   const [deadLine, setDeadline] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
+  const [isFinishedGathering, setIsFinishedGathering] = useState(false);
+  const {data: userInfo} = useUserQuery().getMyInfo();
+  const userId = userInfo?.data?.id as number;
   const {data: gatheringReviewList} = useQuery({
     queryKey: ['gatheringReviews', gatheringId, currentPage],
     queryFn: () =>
@@ -48,21 +53,17 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
     currentPage: 1,
     totalPages: 1,
   };
-
   const {data: gatheringDetail, isError} = useQuery({
     queryKey: gatheringsQueryKey.GatheringDetails(gatheringId),
     queryFn: () => getGatheringDetail(gatheringId),
     staleTime: 0,
   });
-
-  const {data: joinedGatherings} = useQuery({
-    queryKey: gatheringsQueryKey.joinedGatherings(),
-    queryFn: () => getJoinedGatherings(),
-  });
-
-  const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
   const gatheringOwner = gatheringDetail?.createdBy;
+  const {data: joinedGatherings} = useQuery({
+    queryKey: gatheringsQueryKey.joinedGatherings().queryKey,
+    queryFn: () => getJoinedGatherings(),
+    enabled: !!userId,
+  });
 
   const checkFull = () => {
     if (gatheringDetail) {
@@ -95,7 +96,18 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
   useEffect(() => {
     if (!gatheringDetail?.registrationEnd) return;
     const res = getHoursDifference(gatheringDetail.registrationEnd);
-    setIsDeadlineApproaching(res > 0 && res < 24);
+    const checkDeadline = () => {
+      if (res > 0 && res < 24) {
+        setIsDeadlineApproaching(true);
+      } else if (res < 0) {
+        setIsFinishedGathering(true);
+        setIsDeadlineApproaching(false);
+      } else {
+        setIsDeadlineApproaching(false);
+      }
+    };
+
+    checkDeadline();
   }, [gatheringDetail?.registrationEnd]);
 
   if (isError) {
@@ -122,9 +134,26 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
             ''
           )}
         </div>
-        <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
-          건희님 컴포넌트
-        </div>
+        {gatheringDetail ? (
+          <div className="rounded-3xl outline outline-2 outline-gray-200">
+            <DetailCard
+              id={gatheringDetail?.id}
+              name={gatheringDetail?.name}
+              dateTime={gatheringDetail?.dateTime}
+              location={gatheringDetail?.location as Locations}
+              participantCount={gatheringDetail?.participantCount}
+              capacity={gatheringDetail?.capacity}
+              type={gatheringDetail?.type as Gathering}
+              registrationEnd={gatheringDetail?.registrationEnd}
+              image={gatheringDetail?.image}
+              createdBy={gatheringDetail?.createdBy}
+            />
+          </div>
+        ) : (
+          <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
+            <div>로딩중...</div>
+          </div>
+        )}
       </div>
 
       <div className="border-t-2 border-t-gray-200 px-6 pt-6">
@@ -154,6 +183,7 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
           setIsParticipated={setIsParticipated}
           isFull={isFull}
           isCancel={gatheringDetail?.canceledAt}
+          isFinishedGathering={isFinishedGathering}
           gatheringId={gatheringDetail?.id}
         />
       </div>

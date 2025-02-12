@@ -7,7 +7,9 @@ import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
 import {GatheringsFilter} from '../../types/gatherings/filters';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
+import {Filtering} from '../common/filter/filtering';
 import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
+import {CreateGatheringButton} from '../createGatheringModal/createGatheringButton';
 
 import {ListCard} from './listCard';
 
@@ -36,8 +38,17 @@ export default function GatheringsList({initialData}: {initialData: GetGathering
   return (
     <>
       {/* 필터링 */}
-      <div className="border-b-2 border-b-gray-200 pb-4">
+      <div className="relative border-b-2 border-b-gray-200 pb-4">
         <GatheringFilter
+          updateQueryString={updateQueryString}
+          filter={filter}
+          setFilter={setFilter}
+        />
+        <CreateGatheringButton />
+      </div>
+      <div className="mb-4 mt-3 tablet:mb-6 tablet:mt-4">
+        <Filtering
+          pageName="GATHERING"
           updateQueryString={updateQueryString}
           filter={filter}
           setFilter={setFilter}

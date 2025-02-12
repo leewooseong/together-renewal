@@ -1,3 +1,5 @@
+import {Suspense} from 'react';
+
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
 import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
@@ -34,7 +36,9 @@ export default async function Home() {
       </div>
       {/* 무한스크롤 + 필터링 */}
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <GatheringsList initialData={initialData} />
+        <Suspense fallback={<p>...로딩 중</p>}>
+          <GatheringsList initialData={initialData} />
+        </Suspense>
       </HydrationBoundary>
     </div>
   );
