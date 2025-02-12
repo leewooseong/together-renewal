@@ -47,7 +47,7 @@ export default function BottomBar({
     if (gatheringId !== undefined) {
       setIsLoading(false);
     }
-  }, [pathName]);
+  }, [pathName, gatheringId]);
 
   useEffect(() => {
     getCurrentUrl();

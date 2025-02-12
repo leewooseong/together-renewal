@@ -32,7 +32,7 @@ export default function ReviewWrapper({data}: ReviewListType) {
   }, [pathName]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-6">
       {data.map(review => (
         <Review
           key={review.id}
