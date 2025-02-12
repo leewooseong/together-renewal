@@ -8,7 +8,7 @@ import {
   GetReviewsProps,
 } from '../../types/reviews/reviewsApi.types';
 import {buildQueryParams} from '../../utils/buildQueryParamsUtil';
-import {clientInstance} from '../client';
+import {clientInstance, serverInstance} from '../client';
 
 export const getReviews = async (props: GetReviewsProps): Promise<ReviewListType> => {
   const queryParam = buildQueryParams({
@@ -58,14 +58,50 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
 export const getGatheringReviews = async (
   props: GetGatheringReviewsProps,
 ): Promise<ReviewListType> => {
-  const queryParams = buildQueryParams({
-    gatheringId: props.gatheringId,
-    sortOrder: props.sortOrder,
-  });
+  const filteredParams = Object.fromEntries(
+    Object.entries({
+      gatheringId: props.gatheringId,
+      sortOrder: props.sortOrder,
+      limit: props.limit,
+      offset: props.offset,
+    }).filter(([, value]) => value !== undefined),
+  ) as Record<string, string | number>;
+
+  const queryParams = buildQueryParams(filteredParams);
 
   try {
     const response = await clientInstance.get<ReviewListType>({
       path: `/route/reviews?${queryParams.toString()}`,
+    });
+    return response;
+  } catch (error) {
+    console.log('현재 error 객체', error);
+    return {
+      data: [],
+      totalItemCount: 0,
+      currentPage: 0,
+      totalPages: 0,
+    };
+  }
+};
+
+export const getGatheringReviewsInServer = async (
+  props: GetGatheringReviewsProps,
+): Promise<ReviewListType> => {
+  const filteredParams = Object.fromEntries(
+    Object.entries({
+      gatheringId: props.gatheringId,
+      sortOrder: props.sortOrder,
+      limit: props.limit,
+      offset: props.offset,
+    }).filter(([, value]) => value !== undefined),
+  ) as Record<string, string | number>;
+
+  const queryParams = buildQueryParams(filteredParams);
+
+  try {
+    const response = await serverInstance.get<ReviewListType>({
+      path: `/reviews?${queryParams.toString()}`,
     });
     return response;
   } catch (error) {

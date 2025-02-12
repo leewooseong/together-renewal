@@ -1,16 +1,28 @@
+import {getGatheringReviewsInServer} from '../../apis/reviews/reviewsApi';
 import {PageInfo} from '../../components/common/pageInfo';
 import ReviewWrapper from '../../components/common/review/reviewWrapper';
+import {ReviewListType} from '../../types/common/reviews.types';
 
-export default function ReviewsPage() {
-  // Todo: 초기 데이터 패칭 필요 (SSR)
-  // ...
+type ReviewsPageProps = {
+  searchParams: {gatheringId?: string};
+};
+
+export default async function ReviewsPage({searchParams}: ReviewsPageProps) {
+  const gatheringId = searchParams?.gatheringId ? Number(searchParams.gatheringId) : undefined;
+
+  const initialReviews: ReviewListType = await getGatheringReviewsInServer({
+    gatheringId,
+    sortOrder: 'desc',
+    limit: 10,
+    offset: 0,
+  });
 
   return (
     <div>
       <div className="mb-6 tablet:mb-8">
         <PageInfo pageName="reviews" />
       </div>
-      <ReviewWrapper initialData={[]} />
+      <ReviewWrapper initialData={initialReviews} />
     </div>
   );
 }

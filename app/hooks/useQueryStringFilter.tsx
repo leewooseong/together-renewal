@@ -9,13 +9,13 @@ import {buildQueryParams} from '../utils/buildQueryParamsUtil';
 import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
 
 export const useQueryStringFilter = () => {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [filter, setFilter] = useState<GetReviewsProps>({
     type: 'DALLAEMFIT',
   });
 
   useEffect(() => {
+    const searchParams = useSearchParams();
     const deletedEmptyQuery = Object.fromEntries(
       Array.from(searchParams.entries()).filter(([, value]) => value !== '' && value !== null),
     );
@@ -28,11 +28,12 @@ export const useQueryStringFilter = () => {
     const validQueryStringObject = checkQueryStringObject(getUrlObject);
 
     setFilter(validQueryStringObject);
-  }, [searchParams]);
+  }, []);
 
-  const updateQueryString = (newFilter: Partial<typeof filter>) => {
-    const queryString = buildQueryParams(newFilter);
-
+  const updateQueryString = (newFilter: Partial<GetReviewsProps>) => {
+    const updatedFilter = {...filter, ...newFilter};
+    setFilter(updatedFilter);
+    const queryString = buildQueryParams(updatedFilter);
     router.replace(`?${queryString}`);
   };
 
