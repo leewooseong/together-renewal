@@ -105,7 +105,7 @@ export default function Modal({
     if (isOwner) {
       if (gatheringId) {
         putCancelGatheringMutation.mutate(gatheringId);
-        router.replace('/gatherings');
+        router.replace('/');
       }
     }
   };
