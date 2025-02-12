@@ -18,7 +18,7 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({message: '인증 토큰이 없습니다.'}, {status: 401});
     }
     console.log('로그인 성공🥳');
-    const response = await postJoinGatheringInServer(token, id);
+    const response = await postJoinGatheringInServer(token, Number(id));
     console.log('서버에서 받은 응답', response);
 
     return NextResponse.json({message: '모임 참여 성공', data: response}, {status: 200});
@@ -71,7 +71,7 @@ export const PUT = async (request: NextRequest) => {
       return NextResponse.json({message: '인증 토큰이 없습니다.'}, {status: 401});
     }
     console.log('로그인 성공🥳');
-    const response = await putCancelGatheringInServer(token, id);
+    const response = await putCancelGatheringInServer(token, Number(id));
     console.log('서버에서 받은 응답', response);
 
     return NextResponse.json({message: '모임 취소 성공', data: response}, {status: 200});

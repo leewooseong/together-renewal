@@ -1,16 +1,45 @@
-import {Metadata} from 'next';
+import {Suspense} from 'react';
 
-import {CreateGatheringButton} from '../components/createGatheringModal/createGatheringButton';
+import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
-export const metadata: Metadata = {
-  title: '서비스 명',
-  description: '서비스 메인 페이지 설명',
+import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
+import {PageInfo} from '../components/common/pageInfo';
+import GatheringsList from '../components/list/gatheringsList';
+import {GatheringsFilter} from '../types/gatherings/filters';
+import {GetGatherings} from '../types/gatherings/getGatherings.types';
+
+const fetchGatheringsData = async () => {
+  const initialParams: GatheringsFilter = {
+    sortBy: 'dateTime',
+    sortOrder: 'asc',
+    limit: 10,
+    offset: 0,
+  };
+  const initialData: GetGatherings[] = await getGatheringsInServer(initialParams);
+  return initialData;
 };
 
 export default async function Home() {
+  const queryClient = new QueryClient();
+
+  const initialData = await fetchGatheringsData();
+
+  queryClient.setQueryData(['gatherings'], {
+    pages: [initialData],
+    pageParams: [0],
+  });
+
   return (
     <div>
-      <CreateGatheringButton />
+      <div className="mb-6 tablet:mb-8">
+        <PageInfo pageName="gatherings" />
+      </div>
+      {/* 무한스크롤 + 필터링 */}
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense fallback={<p>...로딩 중</p>}>
+          <GatheringsList initialData={initialData} />
+        </Suspense>
+      </HydrationBoundary>
     </div>
   );
 }

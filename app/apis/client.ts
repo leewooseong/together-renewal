@@ -180,7 +180,7 @@ class FetchInstance {
     let formattedBody: BodyInit | undefined;
 
     // body가 있다면 케이스에 맞게 처리
-    if ((contentType === 'json' || contentType === undefined) && body) {
+    if (contentType === 'json' && body) {
       formattedBody = JSON.stringify(body); // json의 경우 처리 해줌
     } else if (contentType === 'formData' && body instanceof FormData) {
       formattedBody = body; // formData는 그대로 사용

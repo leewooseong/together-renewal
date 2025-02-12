@@ -1,4 +1,7 @@
+'use client';
+
 /* eslint-disable no-nested-ternary */
+
 import {useEffect, useRef, useState} from 'react';
 
 import {motion} from 'motion/react';
