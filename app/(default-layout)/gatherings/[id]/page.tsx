@@ -45,21 +45,12 @@ export default function GatheringPage() {
 
   const gatheringOwner = gatheringDetail?.createdBy;
 
-  console.log('userInfo:', userInfo);
-  console.log('userID:', userId);
-
   const checkFull = () => {
     if (gatheringDetail) {
       const {capacity, participantCount} = gatheringDetail;
       if (capacity === participantCount) {
-        console.log('예약 풀');
-        console.log('총 인원: ', capacity);
-        console.log('참여 인원: ', participantCount);
         setIsFull(true);
       } else {
-        console.log('예약 가능');
-        console.log('총 인원: ', capacity);
-        console.log('참여 인원: ', participantCount);
         setIsFull(false);
       }
     }
@@ -74,17 +65,14 @@ export default function GatheringPage() {
 
   useEffect(() => {
     if (!userId) {
-      console.log('로그인해라');
       return;
     }
     checkFull();
     checkParticipated();
     if (userId === gatheringOwner) {
-      console.log('유저 주인임');
       setIsOwner(true);
       setIsLogin(true);
     } else {
-      console.log('일반유저임');
       setIsOwner(false);
       setIsLogin(true);
     }
@@ -98,9 +86,7 @@ export default function GatheringPage() {
       setDeadline(String(EndDate.getHours()));
     }
     const currentDate = new Date();
-    console.log(EndDate.getHours());
-    console.log('🕒 마감시간 (UTC 기준):', EndDate.getUTCHours());
-    console.log('🕒 마감시간 (로컬 기준):', EndDate.getHours());
+
     const diffMs = EndDate.getTime() - currentDate.getTime();
     return diffMs / (1000 * 60 * 60);
   };
@@ -111,15 +97,12 @@ export default function GatheringPage() {
     }
 
     const EndTime = gatheringDetail.registrationEnd;
-    console.log('📌 마감 시간 (UTC):', EndTime);
 
     const checkDeadline = () => {
       const res = getHoursDifference(EndTime);
-      console.log('⏳ 남은 시간:', res);
 
       if (res > 0 && res < 24) {
         setIsDeadlineApproaching(true);
-        console.log('⏳ 마감임박!');
       } else {
         setIsDeadlineApproaching(false);
       }
@@ -135,28 +118,6 @@ export default function GatheringPage() {
 
   return (
     <>
-      {/* <div>
-        현재 참여중인 모임:
-        {joinedGatherings && joinedGatherings.length > 0
-          ? joinedGatherings.map(item => (
-              <div key={item.id}>
-                <div>{item.name}</div>
-                <div>{item.id}</div>
-              </div>
-            ))
-          : '참여한 모임 없음'}
-      </div>
-      <div>현재 로그인한 유저 id: {userId}</div>
-
-      <div>모임 id: {gatheringDetail?.id}</div>
-      <div>모임 이름: {gatheringDetail?.name}</div>
-      <div>모임 owner: {gatheringDetail?.createdBy}</div>
-      <div>참여 가능 인원: {gatheringDetail?.capacity}</div>
-      <div>현재 참여한 인원: {gatheringDetail?.participantCount}</div>
-      <div>
-        현재 모임 상태: {gatheringDetail?.canceledAt ? '취소된 모임임' : '아직 취소 안 된 모임임'}
-      </div>
-      <div>{isParticipated ? '이미 참여중임' : '아직 참여안함'}</div> */}
       <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
       <div>마감시간 시간만(로컬): {deadLine}</div>
       <div className="mb-4 flex flex-col items-center gap-4 md:mb-[21px] md:flex-row md:justify-center md:gap-[14px] lg:mb-6 lg:gap-6">

@@ -60,7 +60,6 @@ export default function Modal({
       queryClient.invalidateQueries({
         queryKey: gatheringsQueryKey.GatheringDetails(gatheringId!),
       });
-      // 로그인된 사용자가 참석한 모임 목록 조회 api 쿼리키 무효화하기기
       queryClient.invalidateQueries({queryKey: gatheringsQueryKey.joinedGatherings()});
       setIsLoading(false);
       setIsParticipated(false);
@@ -100,8 +99,7 @@ export default function Modal({
       if (gatheringId) {
         deleteLeaveGatheringMutation.mutate(gatheringId);
       }
-      console.log('모임 참여 취소요청 보내면 된다.');
-      // 모임 참여 취소하고 어떻게 할까... 그냥 상세페이지에 냅두기? or 메인 페이지로 보내버리기
+      // 모임 참여 취소하면 메인페이지로 감
       return;
     }
     if (isOwner) {
@@ -109,9 +107,7 @@ export default function Modal({
         putCancelGatheringMutation.mutate(gatheringId);
         router.replace('/gatherings');
       }
-      console.log('모임 취소 요청 보내면 된다.');
     }
-    // api요청 보내면 된다.
   };
 
   return (
