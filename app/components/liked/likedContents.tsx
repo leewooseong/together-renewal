@@ -1,17 +1,17 @@
 import {useEffect, useState} from 'react';
 
-import {useQuery} from '@tanstack/react-query';
-
+import {useInfiniteLikedGatherings} from '../../hooks/useInfiniteGatherings';
+import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-import {gatheringsQueryKey} from '../../queries/common/queryKeys';
 import {Gathering} from '../../types/common/gatheringFilter.types';
+import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {EmptyMessage} from '../common/emptyMessage';
 import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../common/pageInfo';
 import {TextRender} from '../common/textRender';
 import {ListCard} from '../list/listCard';
 
-export function LikedContents() {
+export function LikedContents({initialData}: {initialData: GetGatherings[]}) {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();
   const [storedIds, setStoredIds] = useState<string[]>([]);
 
@@ -22,14 +22,16 @@ export function LikedContents() {
     }
   }, []);
 
-  const id: string = storedIds.join(',');
   const gatheringType = filter.type as Gathering;
 
-  const {
-    data: gatheringList,
-    isLoading,
-    isError,
-  } = useQuery(gatheringsQueryKey.likedGatherings(gatheringType, id));
+  const {data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError} =
+    useInfiniteLikedGatherings(initialData, gatheringType, storedIds);
+
+  const observerRef = useInfiniteObserver(() => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  });
 
   return (
     <div>
@@ -50,13 +52,26 @@ export function LikedContents() {
 
         {!isLoading && !isError && (
           <div className="mt-4 flex flex-col items-center justify-between gap-6 tablet:mt-6">
-            {gatheringList && gatheringList.length > 0 ? (
-              gatheringList.map(gathering => <ListCard key={gathering.id} {...gathering} />)
+            {data?.pages.flat().length > 0 ? (
+              data.pages.flat().map(gathering => <ListCard key={gathering.id} {...gathering} />)
             ) : (
               <EmptyMessage message="찜한 모임이 없어요." />
             )}
           </div>
         )}
+
+        {isFetchingNextPage && (
+          <TextRender effect="bounce" text="찜한 모임을 불러오는 중입니다..." />
+        )}
+
+        {!hasNextPage && data?.pages.flat().length > 0 && (
+          <TextRender
+            effect="shake"
+            text={`모든 찜한 모임을 불러왔습니다. (${data.pages.flat().length}개)`}
+          />
+        )}
+
+        <div ref={observerRef} />
       </div>
     </div>
   );

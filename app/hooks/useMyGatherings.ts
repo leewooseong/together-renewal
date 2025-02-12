@@ -1,7 +1,9 @@
-import {useQuery} from '@tanstack/react-query';
+import {useEffect, useRef} from 'react';
 
-import {gatheringsQueryKey, reviewListQuery} from '../queries/common/queryKeys';
 import {useUserQuery} from '../queries/user/useUserQueries';
+
+import {useInfiniteJoinedGatherings} from './useInfiniteGatherings';
+import {useInfiniteReviews} from './useInfiniteReviews';
 
 export function useMyGatheringsData() {
   const {getMyInfo} = useUserQuery();
@@ -11,21 +13,58 @@ export function useMyGatheringsData() {
 
   const {
     data: joinedGatherings,
+    fetchNextPage: fetchNextJoinedPage,
+    hasNextPage: hasNextJoinedPage,
+    isFetchingNextPage: isFetchingNextJoinedPage,
     isLoading: isLoadingGatherings,
     isError: isErrorGatherings,
-  } = useQuery(gatheringsQueryKey.joinedGatherings());
+  } = useInfiniteJoinedGatherings(userId);
 
   const {
     data: reviewedGatherings,
+    fetchNextPage: fetchNextReviewPage,
+    hasNextPage: hasNextReviewPage,
+    isFetchingNextPage: isFetchingNextReviewPage,
     isLoading: isLoadingReviews,
     isError: isErrorReviews,
-  } = useQuery({
-    ...reviewListQuery.getMyReviewList({userId, sortOrder: 'desc'}),
-    enabled: !!userInfo || userId === 0,
-  });
+  } = useInfiniteReviews(userId);
 
   const isLoading = isLoadingGatherings || isLoadingReviews;
   const isError = isErrorGatherings || isErrorReviews;
 
-  return {joinedGatherings, reviewedGatherings, isLoading, isError, userInfo};
+  const observerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!observerRef.current || !hasNextJoinedPage) {
+      return () => {};
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        if (entries[0].isIntersecting) {
+          fetchNextJoinedPage();
+        }
+      },
+      {threshold: 1},
+    );
+
+    observer.observe(observerRef.current);
+
+    return () => observer.disconnect();
+  }, [hasNextJoinedPage, fetchNextJoinedPage]);
+
+  return {
+    joinedGatherings: joinedGatherings?.pages?.flat() ?? [],
+    fetchNextJoinedPage,
+    hasNextJoinedPage,
+    isFetchingNextJoinedPage,
+    reviewedGatherings: reviewedGatherings?.pages.flat() ?? [],
+    fetchNextReviewPage,
+    hasNextReviewPage,
+    isFetchingNextReviewPage,
+    isLoading,
+    isError,
+    userInfo,
+    observerRef,
+  };
 }

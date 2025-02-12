@@ -1,76 +1,32 @@
-// 'use client';
+'use client';
 
-// import {useEffect, useState} from 'react';
+import {Suspense} from 'react';
 
-// import {useQuery} from '@tanstack/react-query';
+import {getGatheringsInServer} from '../../apis/gatherings/gatheringApi';
+import {TextRender} from '../../components/common/textRender';
+import {LikedContents} from '../../components/liked/likedContents';
+import {GatheringsFilter} from '../../types/gatherings/filters';
+import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
-// import {getGatherings} from '../../apis/gatherings/gatheringApi';
-// import {EmptyMessage} from '../../components/common/emptyMessage';
-// import {GatheringFilter} from '../../components/common/gatheringFilter/gatheringFilter';
-// import {PageInfo} from '../../components/common/pageInfo';
-// import {TextRender} from '../../components/common/textRender';
-// import {ListCard} from '../../components/list/listCard';
-// import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-// import {Gathering} from '../../types/common/gatheringFilter.types';
-// import {GetGatherings} from '../../types/gatherings/getGatherings.types';
+// TODO: fetchGatheringsData 분리
+const fetchGatheringsData = async () => {
+  const initialParams: GatheringsFilter = {
+    id: '0',
+    sortBy: 'dateTime',
+    sortOrder: 'asc',
+    limit: 10,
+    offset: 0,
+  };
+  const initialData: GetGatherings[] = await getGatheringsInServer(initialParams);
+  return initialData;
+};
 
-// export default function Home() {
-//   // const {gatheringType, setGatheringType} = useGatheringFilter();
-//   const {filter, setFilter, updateQueryString} = useQueryStringFilter();
-//   const [storedIds, setStoredIds] = useState<string[]>([]);
+export default async function likedPage() {
+  const initialData = await fetchGatheringsData();
 
-//   useEffect(() => {
-//     const stored = localStorage.getItem('likedGatherings');
-//     if (stored) {
-//       setStoredIds(JSON.parse(stored));
-//     }
-//   }, []);
-//   const id: string = storedIds.join(',');
-//   // TODO: 타입 개선 필요
-//   const gatheringType = filter.type as Gathering;
-//   const {
-//     data: gatheringList,
-//     isLoading,
-//     isError,
-//   } = useQuery<GetGatherings[]>({
-//     queryKey: ['likedGatherings', gatheringType, id],
-//     queryFn: () => getGatherings({id, type: gatheringType || ''}),
-//   });
-
-//   return (
-//     <div>
-//       <div className="mb-6 tablet:mb-8">
-//         <PageInfo pageName="liked" />
-//       </div>
-//       <div className="border-b-2 border-b-gray-200 pb-4">
-//         <GatheringFilter
-//           updateQueryString={updateQueryString}
-//           filter={filter}
-//           setFilter={setFilter}
-//         />
-//       </div>
-
-//       <div>
-//         {isLoading && <TextRender effect="bounce" text="로딩중..." />}
-//         {isError && <TextRender effect="shake" text="참여자 정보를 불러오지 못했습니다." />}
-
-//         {!isLoading && !isError && (
-//           <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
-//             {gatheringList && gatheringList.length > 0 ? (
-//               gatheringList.map(gathering => <ListCard key={gathering.id} {...gathering} />)
-//             ) : (
-//               <EmptyMessage message="찜한 모임이 없어요." />
-//             )}
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// }
-
-import LikedPageWrapper from '../../components/liked/likedPageWrapper';
-
-// Todo: 초기 데이터 패칭 필요 (SSR)
-export default function Home() {
-  return <LikedPageWrapper />;
+  return (
+    <Suspense fallback={<TextRender effect="bounce" text="페이지 로딩 중..." />}>
+      <LikedContents initialData={initialData} />
+    </Suspense>
+  );
 }
