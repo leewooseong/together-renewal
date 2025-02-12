@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {toast} from 'react-toastify';
 
 import Image from 'next/image';
 
@@ -18,20 +19,20 @@ export function WriteReviewModal({
   const handleSubmit = async () => {
     try {
       if (!comment.trim()) {
-        alert('리뷰를 입력해주세요!');
+        toast.warn('리뷰를 입력해주세요!');
         return;
       }
       if (rating <= 0) {
-        alert('별점을 선택해주세요!');
+        toast.warn('별점을 선택해주세요!');
         return;
       }
 
       await writeReview(gatheringId, rating, comment);
-      alert('리뷰가 등록되었습니다.');
+      toast.success('리뷰가 등록되었습니다.');
 
       onClose();
     } catch (error) {
-      alert('리뷰 등록에 실패했습니다.');
+      toast.error('리뷰 등록에 실패했습니다.');
     }
   };
   return (

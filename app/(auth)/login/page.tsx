@@ -15,7 +15,7 @@ import {useUserMutation} from '../../queries/user/useUserMutaions';
 import {useUserQuery} from '../../queries/user/useUserQuries';
 import {LoginInputsType} from '../../types/auth.types';
 import {CodeitError} from '../../types/error.types';
-import {LoginSchema} from '../../utils/schema';
+import {LoginSchema} from '../../utils/validation';
 
 export default function LoginPage() {
   const {

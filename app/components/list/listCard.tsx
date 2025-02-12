@@ -28,20 +28,8 @@ export function ListCard({
 }: GetGatherings) {
   const {data: userInfo} = useUserQuery().getMyInfo();
   const userId = userInfo?.data?.id as number;
-  // const userId = userInfo?.data?.id ?? 0;
 
   const route = useRouter();
-
-  // function isClose() {
-  //   if (isClosedUtil(registrationEnd, participantCount, capacity)) {
-  //     return <RenderOverlay message="모집 마감" height="full" gatheringId={id} userId={userId} />;
-  //   }
-  //   if (canceledAt)
-  //     return (
-  //       <RenderOverlay message="모집 취소" height="[328px]" gatheringId={id} userId={userId} />
-  //     );
-  //   return null;
-  // }
 
   const isClose = useMemo(() => {
     if (isClosedUtil(registrationEnd, participantCount, capacity)) {
@@ -61,18 +49,13 @@ export function ListCard({
 
   return (
     <div className="relative flex h-[316px] w-[343px] max-w-[996px] flex-col overflow-hidden rounded-3xl border-2 border-gray-100 bg-white sm:h-[156px] sm:w-full sm:flex-row">
-      {/* 마감 오버레이 */}
       {isClose}
-
-      {/* 모임 이미지 */}
       <div className="relative flex h-[156px] w-[343px] items-center justify-center overflow-hidden sm:w-[280px]">
         <Image src={image || ''} alt="모임 대표 이미지" className="object-cover" fill />
         <CloseTag registrationEnd={registrationEnd} />
       </div>
 
-      {/* 모임 정보 */}
       <div className="relative h-[156px] w-full pl-2 sm:w-[716px] sm:pl-6">
-        {/* 찜하기 버튼 */}
         <LikeButton gatheringId={id} />
 
         <div className="flex h-[96px] items-center">
@@ -88,7 +71,6 @@ export function ListCard({
           </div>
         </div>
 
-        {/* 모임 인원 정보 */}
         <div className="h-[60px] max-w-[calc(100%-120px)]">
           <div className="flex h-1/2 w-full">
             <span className="mt-1 flex gap-[4px]">
@@ -109,7 +91,6 @@ export function ListCard({
           </div>
         </div>
 
-        {/* 클릭 하면 상세페이지로 이동 */}
         <button
           type="button"
           className="absolute bottom-5 right-5 flex font-semibold text-orange-600"

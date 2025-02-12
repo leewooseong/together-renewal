@@ -4,6 +4,7 @@ import {getUserInfo} from '../../apis/user/userApi';
 import {userQueryKey} from '../common/queryKeys';
 
 // userInfo Query
+// Todo: createGathering 참고해서 코드 개선하기
 export const useUserQuery = () => {
   const getMyInfo = () => {
     return useQuery({

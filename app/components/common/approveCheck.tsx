@@ -2,7 +2,6 @@ import Image from 'next/image';
 
 import {MIN_PARTICIPANT_COUNT} from '../../constants/commonConstants';
 
-/** 5인 이상 개설 확정 */
 export function ApproveCheck(participantCount: number): React.ReactNode {
   if (participantCount >= MIN_PARTICIPANT_COUNT) {
     return (

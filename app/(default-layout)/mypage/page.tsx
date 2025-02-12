@@ -5,7 +5,7 @@ import {useState} from 'react';
 import {FilterTab} from '../../components/mypage/filterTab';
 import {MyGatherings} from '../../components/mypage/myGatherings';
 import {TabNavigation} from '../../components/mypage/tabNavigation';
-import {ProfileLayout} from '../../components/profile/profileLayout';
+import {ProfileLayout} from '../../components/profile/profileCard';
 import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
 
 export default function MyPage() {

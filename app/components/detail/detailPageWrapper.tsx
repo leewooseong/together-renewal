@@ -35,7 +35,7 @@ export default function DetailPageWrapper() {
   });
 
   const {data: joinedGatherings} = useQuery({
-    queryKey: gatheringsQueryKey.joinedGatherings(),
+    queryKey: gatheringsQueryKey.joinedGatherings().queryKey,
     queryFn: () => getJoinedGatherings(),
   });
 
