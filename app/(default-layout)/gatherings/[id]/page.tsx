@@ -7,7 +7,7 @@ import Image from 'next/image';
 import {useParams} from 'next/navigation';
 
 import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatherings/gatheringApi';
-import ReviewWrapper from '../../../components/common/review/reviewWrapper';
+import ReviewListWrapper from '../../../components/common/review/reviewListWrapper';
 import BottomBar from '../../../components/gatherings/bottomBar';
 import {gatheringsQueryKey, reviewListQuery} from '../../../queries/common/queryKeys';
 import {useUserQuery} from '../../../queries/user/useUserQuries';
@@ -138,7 +138,7 @@ export default function Gathering() {
         <div className="mb-[10px] font-semibold text-gray-900 tablet:text-lg md:mb-4">
           이용자들은 이 프로그램을 이렇게 느꼈어요!
         </div>
-        {gatheringReviewList && <ReviewWrapper {...gatheringReviewList} />}
+        {gatheringReviewList && <ReviewListWrapper {...gatheringReviewList} />}
       </div>
       <div>
         <BottomBar
