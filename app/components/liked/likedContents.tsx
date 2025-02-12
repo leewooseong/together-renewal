@@ -52,8 +52,8 @@ export function LikedContents({initialData}: {initialData: GetGatherings[]}) {
 
         {!isLoading && !isError && (
           <div className="mt-4 flex flex-col items-center justify-between gap-6 tablet:mt-6">
-            {gatheringList && gatheringList.length > 0 ? (
-              gatheringList.map(gathering => <ListCard key={gathering.id} {...gathering} />)
+            {data?.pages.flat().length > 0 ? (
+              data.pages.flat().map(gathering => <ListCard key={gathering.id} {...gathering} />)
             ) : (
               <EmptyMessage message="찜한 모임이 없어요." />
             )}
