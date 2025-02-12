@@ -16,16 +16,25 @@ export function AverageScores({
   const sum = scoreArray.reduce((acc, num) => acc + num, 0);
 
   const ratio: string[] = scoreArray.map(item => `${Math.floor((item / sum) * 100)}%`);
+  let averageScoreFormat = '';
+  if (averageScore % 1 > 0) {
+    averageScoreFormat = `${Math.trunc(averageScore * 10) / 10}`;
+  } else {
+    averageScoreFormat = `${averageScore}.0`;
+  }
+  console.log(averageScoreFormat);
 
   return (
     <div className="flex h-[180px] w-full items-center justify-between border-y-2 border-y-gray-200 bg-white px-6 py-8 sm:px-[73px]">
       <div className="flex w-32 flex-col items-center gap-2">
         <div>
-          <span className="text-xl font-semibold text-gray-900 sm:text-2xl">{`${averageScore}.0 `}</span>
-          <span className="text-xl font-semibold text-gray-400 sm:text-2xl">/5</span>
+          <span className="text-xl font-semibold text-gray-900 tablet:text-2xl">
+            {averageScoreFormat}
+          </span>
+          <span className="text-xl font-semibold text-gray-400 tablet:text-2xl">/5</span>
         </div>
         <div>
-          <ReviewScore score={averageScore} isAverage />
+          <ReviewScore score={Number(averageScoreFormat)} isAverage />
         </div>
       </div>
       <div>
@@ -37,8 +46,8 @@ export function AverageScores({
               </span>
               <div className="relative h-1 w-[84px] rounded-sm bg-gray-200 sm:w-60">
                 <div
-                  className="absolute h-1 rounded-sm bg-gray-900 sm:w-60"
-                  style={{width: averageScore === 0 ? '0%' : ratio[index]}}
+                  className="absolute h-1 rounded-sm bg-gray-900 tablet:w-60"
+                  style={{width: Number(averageScoreFormat) === 0 ? '0%' : ratio[index]}}
                 />
               </div>
               <span className="text-sm text-gray-400">{score}</span>
