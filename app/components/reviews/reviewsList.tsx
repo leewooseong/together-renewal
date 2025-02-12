@@ -91,7 +91,7 @@ export default function ReviewsList() {
       {/* 리뷰 목록 */}
       <div className="mt-4 flex flex-col justify-between gap-6 tablet:mt-6">
         {reviews.data.length > 0 ? (
-          <ReviewWrapper {...reviews} />
+          <ReviewWrapper initialData={reviews} />
         ) : (
           <p className="py-8 text-center text-gray-500">등록된 리뷰가 없습니다.</p>
         )}
