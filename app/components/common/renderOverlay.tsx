@@ -1,11 +1,12 @@
 'use client';
 
+import {toast} from 'react-toastify';
+
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
 import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 
-/** 모임 취소, 마감 오버레이 */
 export function RenderOverlay({
   message,
   height,
@@ -20,24 +21,30 @@ export function RenderOverlay({
   const route = useRouter();
   const baseStyle = `absolute bg-black bg-opacity-80 z-10 top-0 left-0 flex items-center justify-center h-full w-full rounded-xl sm:rounded-3xl sm:h-${height}`;
 
-  const buttonHandler = async () => {
+  const leaveGatheringButton = async (event: React.MouseEvent) => {
+    event.stopPropagation();
+
     if (!gatheringId || gatheringId === 0) {
       // 모임 찾기 페이지에서는 작동 X
       return;
     }
     try {
       await leaveJoinedGatherings(gatheringId, userId);
+      toast.success('모임에서 성공적으로 탈퇴했습니다.');
 
-      route.push('/mypage'); // 사용되는 곳이 mypage밖에 없어서 mypage로 reDirection
+      route.refresh();
     } catch (error) {
-      throw new Error(error instanceof Error ? error.message : '모임 수정 중 에러 발생');
+      toast.error('모임 탈퇴 중 에러 발생');
+      throw new Error(error instanceof Error ? error.message : '모임 탈퇴 중 에러 발생');
     }
   };
 
+  const detailButton = () => route.push(`/gatherings/${gatheringId}`);
+
   return (
-    <div className={baseStyle}>
+    <button type="button" onClick={detailButton} className={baseStyle}>
       <div className="absolute top-1/2 flex h-9 w-28 items-center justify-center rounded-xl bg-orange-50 text-orange-600 sm:right-5 sm:top-5 sm:size-12 sm:rounded-full">
-        <button type="button" className="flex items-center gap-1" onClick={buttonHandler}>
+        <button type="button" className="flex items-center gap-1" onClick={leaveGatheringButton}>
           <Image src="icons/handIcon.svg" alt="손 아이콘" width={24} height={24} unoptimized />
           <p className="pt-[5px] text-xs font-semibold sm:hidden">모임 보내주기</p>
         </button>
@@ -46,6 +53,6 @@ export function RenderOverlay({
         <p>{`${message}된 챌린지에요,`}</p>
         <p>다음 기회에 만나요🙏</p>
       </div>
-    </div>
+    </button>
   );
 }

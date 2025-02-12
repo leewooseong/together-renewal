@@ -42,6 +42,7 @@ export const getMyReviews = async (props: GetMyReviewsProps): Promise<ReviewList
     const response = await clientInstance.get<ReviewListType>({
       path: `/route/reviews?${queryParams.toString()}`,
     });
+    console.log('//////////////', response);
     return response;
   } catch (error) {
     console.log('현재 error 객체', error);

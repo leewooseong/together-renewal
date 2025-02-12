@@ -6,7 +6,7 @@ import {EmptyMessage} from '../common/emptyMessage';
 import ReviewListWrapper from '../common/review/reviewListWrapper';
 import {TextRender} from '../common/textRender';
 
-import {GatheringList} from './myGatherings/gatheringList';
+import {JoinedGatheringList} from './myGatherings/joinedGatheringList';
 
 export function MyGatherings({
   activeTab,
@@ -44,7 +44,10 @@ export function MyGatherings({
   }
 
   return filteredGatherings.length > 0 ? (
-    <GatheringList gatherings={filteredGatherings} isMyGathering={activeTab === 'myGatherings'} />
+    <JoinedGatheringList
+      gatherings={filteredGatherings}
+      isMyGathering={activeTab === 'myGatherings'}
+    />
   ) : (
     <EmptyMessage message={`${getCommentByTab(activeTab)}모임이 없어요.`} />
   );
