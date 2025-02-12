@@ -3,7 +3,7 @@ import {useMyGatheringsFilter} from '../../hooks/useMyGatheringsFilter';
 import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
 import {getCommentByTab} from '../../utils/getCommentByTab';
 import {EmptyMessage} from '../common/emptyMessage';
-import ReviewWrapper from '../common/review/reviewWrapper';
+import ReviewListWrapper from '../common/review/reviewListWrapper';
 import {TextRender} from '../common/textRender';
 
 import {GatheringList} from './myGatherings/gatheringList';
@@ -17,6 +17,7 @@ export function MyGatherings({
 }) {
   const {joinedGatherings, reviewedGatherings, isLoading, isError, userInfo} =
     useMyGatheringsData();
+
   const filteredGatherings = useMyGatheringsFilter(joinedGatherings ?? [], activeTab, userInfo?.id);
 
   if (isLoading) {
@@ -29,14 +30,14 @@ export function MyGatherings({
 
   if (activeTab === 'myReviews' && reviewed) {
     return reviewedGatherings && reviewedGatherings.data.length > 0 ? (
-      // TODO: response로 totalItemCount, currentPage, totalPages도 받아와야함
-      // <ReviewList reviewsData={reviewedGatherings.data} />
-      <ReviewWrapper
-        data={reviewedGatherings.data}
-        totalItemCount={0}
-        currentPage={0}
-        totalPages={0}
-      />
+      <div className="relative flex h-[352px] w-[311px] max-w-[996px] flex-col justify-between sm:h-[180px] sm:w-full sm:flex-col">
+        <ReviewListWrapper
+          data={reviewedGatherings.data}
+          totalItemCount={reviewedGatherings.totalItemCount}
+          currentPage={reviewedGatherings.currentPage}
+          totalPages={reviewedGatherings.totalPages}
+        />
+      </div>
     ) : (
       <EmptyMessage message="리뷰가 없어요." />
     );
