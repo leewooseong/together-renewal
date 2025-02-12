@@ -10,6 +10,7 @@ export const GET = async (request: NextRequest) => {
   try {
     const response = await serverInstance.get<AverageScoreList>({
       path: `/reviews/scores?${searchParams}`,
+      options: {cache: 'no-store'},
     });
 
     // 응답 데이터가 빈 배열인 경우 처리
