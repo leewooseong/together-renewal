@@ -28,7 +28,6 @@ export default function ReviewWrapper({data}: ReviewListType) {
       .otherwise(() => 'unknown');
 
     setPageName(name);
-    console.log(`이 페이지는 ${name} 관련 페이지입니다.`);
   }, [pathName]);
 
   return (

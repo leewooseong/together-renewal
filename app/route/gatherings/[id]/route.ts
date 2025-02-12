@@ -11,7 +11,7 @@ export const GET = async (request: NextRequest) => {
 
   try {
     const response = await serverInstance.get({
-      path: `/gatherings/${id}`,
+      path: `/gatherings/${Number(id)}`,
       options: {cache: 'no-store'},
     });
 

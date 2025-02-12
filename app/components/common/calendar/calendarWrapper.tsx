@@ -49,7 +49,6 @@ function CalendarWrapper({
     }
     setFilter({...filter, date: formattedDate});
     updateQueryString({...filter, date: formattedDate});
-    console.log('이 값을 보낼거야', formattedDate);
   };
   const handleClickResetButton = () => {
     setFormattedDate('');
