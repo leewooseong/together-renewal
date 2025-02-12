@@ -11,6 +11,11 @@ export class CodeitError extends Error {
     public code?: CodeitErrorCode,
     public parameter?: CodeitErrorParameter,
   ) {
-    super();
+    super(message);
+
+    this.message = message;
+    this.status = status;
+    this.code = code;
+    this.parameter = parameter;
   }
 }

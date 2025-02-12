@@ -4,7 +4,7 @@ import {ReviewType} from '../../../types/common/reviews.types';
 
 import {ReviewScore} from './reviewScore';
 
-// 마이페이지-나의 리뷰는 pageName = "my-page"를 보내야함.
+// 마이페이지-나의 리뷰는 pageName = "mypage"를 보내야함.
 // 모임 상세 페에지는 pageName = "gatherings"을 보내야함.
 
 export function Review({
@@ -47,7 +47,7 @@ export function Review({
           <div className="pt-2.5 text-sm">{`${gatheringType} · ${gatheringLocation}`}</div>
         )}
         <div className="flex items-center pt-2 text-sm">
-          {pageName === 'my-page' ? (
+          {pageName === 'mypage' ? (
             ''
           ) : (
             <div className="flex items-center">
@@ -70,7 +70,7 @@ export function Review({
               <span className="pl-2">{userName}</span>
             </div>
           )}
-          {pageName === 'my-page' ? '' : <div className="pl-2 pr-3">|</div>}
+          {pageName === 'mypage' ? '' : <div className="pl-2 pr-3">|</div>}
           <div className="text-gray-500">{createDate}</div>
         </div>
       </div>

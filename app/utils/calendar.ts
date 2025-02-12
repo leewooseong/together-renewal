@@ -163,9 +163,9 @@ export const formatDateTimeForAPI = (dateTime: TimeInfo): string => {
 };
 
 export const getTimeInfoUI = (timeInfo: TimeInfo): string => {
-  const year = timeInfo.selectedDate.getFullYear();
-  const month = String(timeInfo.selectedDate.getMonth() + 1).padStart(2, '0');
-  const day = String(timeInfo.selectedDate.getDate()).padStart(2, '0');
+  const year = new Date(timeInfo.selectedDate).getFullYear();
+  const month = String(new Date(timeInfo.selectedDate).getMonth() + 1).padStart(2, '0');
+  const day = String(new Date(timeInfo.selectedDate).getDate()).padStart(2, '0');
   return `${year}-${month}-${day} ${timeInfo.selectedHour}:${timeInfo.selectedMinute} ${timeInfo.selectedPeriod}`;
 };
 
