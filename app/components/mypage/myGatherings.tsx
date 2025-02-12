@@ -3,10 +3,10 @@ import {useMyGatheringsFilter} from '../../hooks/useMyGatheringsFilter';
 import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
 import {getCommentByTab} from '../../utils/getCommentByTab';
 import {EmptyMessage} from '../common/emptyMessage';
+import ReviewWrapper from '../common/review/reviewWrapper';
 import {TextRender} from '../common/textRender';
 
 import {GatheringList} from './myGatherings/gatheringList';
-import {ReviewList} from './myGatherings/reviewList';
 
 export function MyGatherings({
   activeTab,
@@ -29,7 +29,14 @@ export function MyGatherings({
 
   if (activeTab === 'myReviews' && reviewed) {
     return reviewedGatherings && reviewedGatherings.data.length > 0 ? (
-      <ReviewList reviewsData={reviewedGatherings.data} />
+      // TODO: response로 totalItemCount, currentPage, totalPages도 받아와야함
+      // <ReviewList reviewsData={reviewedGatherings.data} />
+      <ReviewWrapper
+        data={reviewedGatherings.data}
+        totalItemCount={0}
+        currentPage={0}
+        totalPages={0}
+      />
     ) : (
       <EmptyMessage message="리뷰가 없어요." />
     );

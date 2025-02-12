@@ -13,7 +13,7 @@ export function ReviewList({reviewsData}: {reviewsData: ReviewListType['data']})
       userImg={review.User.image || '/icons/profile-default.svg'}
       userName={review.User.name}
       createdAt={review.createdAt}
-      pageName="my-page"
+      pageName="mypage"
     />
   ));
 }

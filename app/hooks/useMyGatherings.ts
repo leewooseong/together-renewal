@@ -1,8 +1,9 @@
 import {useQuery} from '@tanstack/react-query';
 
 import {getJoinedGatherings} from '../apis/gatherings/gatheringApi';
-import {getReviews} from '../apis/reviews/reviewsApi';
+import {reviewListQuery} from '../queries/common/queryKeys';
 import {useUserQuery} from '../queries/user/useUserQueries';
+import {GetMyReviewsProps} from '../types/reviews/reviewsApi.types';
 import {myGatheringSort} from '../utils/myGatheringSort';
 
 export function useMyGatheringsData() {
@@ -19,16 +20,24 @@ export function useMyGatheringsData() {
     queryFn: async () => myGatheringSort(await getJoinedGatherings()),
   });
 
+  // const {
+  //   data: reviewedGatherings,
+  //   isLoading: isLoadingReviews,
+  //   isError: isErrorReviews,
+  // } = useQuery({
+  //   queryKey: ['reviewList', userInfo?.id],
+  //   queryFn: () => getMyReviews({userId: userInfo!.id, sortOrder: 'desc'}),
+  //   enabled: !!userInfo, // userInfo가 있을 때만 실행
+  // });
+  const userId: number | undefined = userInfo?.id;
   const {
     data: reviewedGatherings,
     isLoading: isLoadingReviews,
     isError: isErrorReviews,
   } = useQuery({
-    queryKey: ['reviewedGatherings', userInfo?.id],
-    queryFn: () => getReviews({userId: userInfo?.id}),
+    ...reviewListQuery.getMyReviewList({userId, sortOrder: 'desc'} as GetMyReviewsProps),
     enabled: !!userInfo, // userInfo가 있을 때만 실행
   });
-
   const isLoading = isLoadingGatherings || isLoadingReviews;
   const isError = isErrorGatherings || isErrorReviews;
 
