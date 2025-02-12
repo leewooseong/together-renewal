@@ -124,7 +124,7 @@ export default function GatheringPage() {
     <>
       {/* <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
       <div>마감시간 시간만(로컬): {deadLine}</div> */}
-      <div>마감시간 확인필욧욧: {gatheringDetail?.dateTime}</div>
+
       <div className="mb-4 flex flex-col items-center gap-4 md:mb-[21px] md:flex-row md:justify-center md:gap-[14px] lg:mb-6 lg:gap-6">
         <div className="relative h-[180px] w-[343px] rounded-3xl border-2 border-gray-200 md:h-60 md:w-[340px] lg:h-[270px] lg:w-[486px] lg:gap-6">
           {gatheringDetail?.image ? (
