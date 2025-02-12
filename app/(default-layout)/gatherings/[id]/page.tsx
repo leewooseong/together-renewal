@@ -24,6 +24,7 @@ export default function GatheringPage() {
   const [isFull, setIsFull] = useState(false);
   const [isDeadlineApproaching, setIsDeadlineApproaching] = useState(false);
   const [deadLine, setDeadline] = useState('');
+  const [isFinishedGathering, setIsFinishedGathering] = useState(false);
 
   const {data: userInfo} = useUserQuery().getMyInfo();
   const userId = userInfo?.data?.id as number;
@@ -103,6 +104,9 @@ export default function GatheringPage() {
 
       if (res > 0 && res < 24) {
         setIsDeadlineApproaching(true);
+      } else if (res < 0) {
+        setIsFinishedGathering(true);
+        setIsDeadlineApproaching(false);
       } else {
         setIsDeadlineApproaching(false);
       }
@@ -118,8 +122,9 @@ export default function GatheringPage() {
 
   return (
     <>
-      <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
-      <div>마감시간 시간만(로컬): {deadLine}</div>
+      {/* <div>마감시간 (UTC기준): {gatheringDetail?.registrationEnd}</div>
+      <div>마감시간 시간만(로컬): {deadLine}</div> */}
+      <div>마감시간 확인필욧욧: {gatheringDetail?.dateTime}</div>
       <div className="mb-4 flex flex-col items-center gap-4 md:mb-[21px] md:flex-row md:justify-center md:gap-[14px] lg:mb-6 lg:gap-6">
         <div className="relative h-[180px] w-[343px] rounded-3xl border-2 border-gray-200 md:h-60 md:w-[340px] lg:h-[270px] lg:w-[486px] lg:gap-6">
           {gatheringDetail?.image ? (
@@ -179,6 +184,7 @@ export default function GatheringPage() {
           setIsParticipated={setIsParticipated}
           isFull={isFull}
           isCancel={gatheringDetail?.canceledAt}
+          isFinishedGathering={isFinishedGathering}
           gatheringId={gatheringDetail?.id}
         />
       </div>
