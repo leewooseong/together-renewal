@@ -167,7 +167,7 @@ export default function GatheringPage() {
           </div>
         ) : (
           <div className="h-60 w-[343px] rounded-3xl border border-gray-600 md:w-[340px] lg:h-[270px] lg:w-[486px]">
-            <div>모임 정보 아직 안 받아옴</div>
+            <div>로딩중...</div>
           </div>
         )}
       </div>
