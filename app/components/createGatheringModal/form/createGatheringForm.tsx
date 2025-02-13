@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
+import {useRouter} from 'next/navigation';
 
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useQueryClient} from '@tanstack/react-query';
@@ -13,6 +14,7 @@ import {formatDateTimeForAPI, getInitialDate} from '../../../utils/calendar';
 import {LOCATION_MAP} from '../../../utils/createGathering';
 import {createGatheringSchema, GatheringFormSchema} from '../../../utils/validation';
 import AuthErrorModal from '../../common/modal/authErrorModal';
+import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter'
 
 import {Capacity} from './capacity';
 import ErrorInfo from './errorInfo';
@@ -29,6 +31,9 @@ type CreateGatheringFormProps = {
 
 export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   const queryClient = useQueryClient();
+  const router = useRouter();
+  const {setFilter, resetFilter} = useQueryStringFilter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
     name: '',
@@ -94,12 +99,26 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   // todo: Suspense 적용해서 응답 대기하는 동안 스피너 보여주도록 수정
   // todo: react-query 에러처리
   const onSubmit = async (data: GatheringFormSchema) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setGatheringFormData(data);
     const gatheringFormDataForApi = getGatheringFormData(data);
 
     createGatheringMutation.mutate(gatheringFormDataForApi, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({queryKey: ['gatheringList']});
+      onSuccess: (newGathering) => {
+        queryClient.setQueryData(['gatheringList'], (oldData: any) => {
+          if (!oldData) return { pages: [[newGathering]], pageParams: [0] };
+
+          return {
+            pages: [[newGathering, ...oldData.pages.flat()]],
+            pageParams: [0],
+          };
+        });
+
+        router.replace('/');
+        setTimeout(() => router.refresh(), 50);
+  
+        setIsSubmitting(false);
         onClose();
       },
       onError: async error => {
@@ -107,6 +126,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
           const {parameter, message, code} = error;
           if (code === 'UNAUTHORIZED') {
             setIsAuthModalOpen(true);
+            setIsSubmitting(false);
             return;
           }
 

@@ -1,12 +1,9 @@
 'use client';
 
-import {useEffect, useState} from 'react';
-
-import {useRouter, useSearchParams} from 'next/navigation';
-
-import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
-import {buildQueryParams} from '../utils/buildQueryParamsUtil';
-import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
+import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { GetReviewsProps } from '../types/reviews/reviewsApi.types';
+import { checkQueryStringObject } from '../utils/checkQueryStringObjectUtil';
 
 export const useQueryStringFilter = () => {
   const searchParams = useSearchParams();
@@ -16,26 +13,27 @@ export const useQueryStringFilter = () => {
   });
 
   useEffect(() => {
-    const deletedEmptyQuery = Object.fromEntries(
-      Array.from(searchParams.entries()).filter(([, value]) => value !== '' && value !== null),
-    );
+    //URL에서 현재 쿼리스트링을 가져와서 필터를 최신화
+    const queryEntries = Object.fromEntries(searchParams.entries());
 
-    const getUrlObject: GetReviewsProps = {
-      ...deletedEmptyQuery,
-      type: (deletedEmptyQuery.type as string) || 'DALLAEMFIT',
-    };
+    const newFilter: GetReviewsProps = checkQueryStringObject({
+      ...queryEntries,
+      type: queryEntries.type || 'DALLAEMFIT', // 기본값 설정
+    });
 
-    const validQueryStringObject = checkQueryStringObject(getUrlObject);
-
-    setFilter(validQueryStringObject);
-  }, []);
+    setFilter(newFilter);
+  }, [searchParams]); //searchParams가 변경될 때마다 필터 업데이트
 
   const updateQueryString = (newFilter: Partial<GetReviewsProps>) => {
-    const updatedFilter = {...filter, ...newFilter};
-    setFilter(updatedFilter);
-    const queryString = buildQueryParams(updatedFilter);
+    const updatedFilter = { ...filter, ...newFilter };
+    const queryString = new URLSearchParams(updatedFilter as any).toString();
     router.replace(`?${queryString}`);
   };
 
-  return {filter, setFilter, updateQueryString};
+  const resetFilter = () => {
+    setFilter({ type: 'DALLAEMFIT' });
+    router.replace('/');
+  };
+
+  return { filter, setFilter, updateQueryString, resetFilter};
 };
