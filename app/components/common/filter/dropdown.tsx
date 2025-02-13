@@ -24,24 +24,26 @@ export function Dropdown({
 
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(defaultValue);
 
-  //URL 변경 시 필터값에 따라 selectedItem 업데이트
   useEffect(() => {
     if (Object.keys(filter).length === 0) {
       setSelectedItem(defaultValue);
       return;
     }
-  
     if (defaultValue === '지역 전체') {
       setSelectedItem(
-        (filter.location && filterList.includes(filter.location as SelectedItem))
+        filter.location && filterList.includes(filter.location as SelectedItem)
           ? (filter.location as SelectedItem)
-          : defaultValue
+          : defaultValue,
       );
-    } else if (defaultValue === '최신 순' || defaultValue === '마감 임박') {
+      return;
+    }
+    if (defaultValue === '최신 순' || defaultValue === '마감 임박') {
+      const sortByMap: Record<string, SelectedItem> = {
+        createdAt: '최신 순',
+        registrationEnd: '마감 임박',
+      };
       setSelectedItem(
-        filter.sortBy === 'createdAt' ? '최신 순' :
-        filter.sortBy === 'registrationEnd' ? '마감 임박' :
-        defaultValue
+        filter.sortBy && sortByMap[filter.sortBy] ? sortByMap[filter.sortBy] : defaultValue,
       );
     }
   }, [filter, defaultValue, filterList]);

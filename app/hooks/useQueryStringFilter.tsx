@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { GetReviewsProps } from '../types/reviews/reviewsApi.types';
-import { checkQueryStringObject } from '../utils/checkQueryStringObjectUtil';
+import {useEffect, useState} from 'react';
+
+import {useRouter, useSearchParams} from 'next/navigation';
+
+import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
+import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
 
 export const useQueryStringFilter = () => {
   const searchParams = useSearchParams();
@@ -13,7 +15,6 @@ export const useQueryStringFilter = () => {
   });
 
   useEffect(() => {
-    //URL에서 현재 쿼리스트링을 가져와서 필터를 최신화
     const queryEntries = Object.fromEntries(searchParams.entries());
 
     const newFilter: GetReviewsProps = checkQueryStringObject({
@@ -22,18 +23,28 @@ export const useQueryStringFilter = () => {
     });
 
     setFilter(newFilter);
-  }, [searchParams]); //searchParams가 변경될 때마다 필터 업데이트
+  }, [searchParams]);
 
   const updateQueryString = (newFilter: Partial<GetReviewsProps>) => {
-    const updatedFilter = { ...filter, ...newFilter };
-    const queryString = new URLSearchParams(updatedFilter as any).toString();
+    const updatedFilter = {...filter, ...newFilter};
+    const queryString = new URLSearchParams(
+      Object.entries(updatedFilter)
+        .filter(([, value]) => value !== undefined && value !== null)
+        .reduce(
+          (acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+    ).toString();
     router.replace(`?${queryString}`);
   };
 
   const resetFilter = () => {
-    setFilter({ type: 'DALLAEMFIT' });
+    setFilter({type: 'DALLAEMFIT'});
     router.replace('/');
   };
 
-  return { filter, setFilter, updateQueryString, resetFilter};
+  return {filter, setFilter, updateQueryString, resetFilter};
 };

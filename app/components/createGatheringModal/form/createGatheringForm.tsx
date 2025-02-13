@@ -1,20 +1,20 @@
 import {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
-import {useRouter} from 'next/navigation';
 
 import {zodResolver} from '@hookform/resolvers/zod';
 import {useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/navigation';
 
 import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
 import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
 import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
 import {ErrorMessageType} from '../../../types/gatherings/createGathering.types';
+import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
 import {formatDateTimeForAPI, getInitialDate} from '../../../utils/calendar';
 import {LOCATION_MAP} from '../../../utils/createGathering';
 import {createGatheringSchema, GatheringFormSchema} from '../../../utils/validation';
 import AuthErrorModal from '../../common/modal/authErrorModal';
-import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter'
 
 import {Capacity} from './capacity';
 import ErrorInfo from './errorInfo';
@@ -32,7 +32,6 @@ type CreateGatheringFormProps = {
 export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const {setFilter, resetFilter} = useQueryStringFilter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
@@ -105,19 +104,22 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
     const gatheringFormDataForApi = getGatheringFormData(data);
 
     createGatheringMutation.mutate(gatheringFormDataForApi, {
-      onSuccess: (newGathering) => {
-        queryClient.setQueryData(['gatheringList'], (oldData: any) => {
-          if (!oldData) return { pages: [[newGathering]], pageParams: [0] };
-
-          return {
-            pages: [[newGathering, ...oldData.pages.flat()]],
-            pageParams: [0],
-          };
-        });
+      onSuccess: newGathering => {
+        queryClient.setQueryData(
+          ['gatheringList'],
+          (oldData: {pages: GetGatherings[][]; pageParams: number[]} | undefined) => {
+            if (!oldData) {
+              return {pages: [[newGathering]], pageParams: [0]};
+            }
+            return {
+              pages: [[newGathering, ...oldData.pages[0]]], // 최신 모임을 첫 페이지에 추가
+              pageParams: oldData.pageParams, // 기존 pageParams 유지
+            };
+          },
+        );
 
         router.replace('/');
         setTimeout(() => router.refresh(), 50);
-  
         setIsSubmitting(false);
         onClose();
       },
