@@ -5,7 +5,10 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 
-import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
+import {
+  useCreateGatheringMutation,
+  useJoinGatheringMutation,
+} from '../../../queries/gathering/useGatheringMutation';
 import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
 import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
@@ -65,6 +68,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   });
   const {createGatheringMutation} =
     useCreateGatheringMutation<ErrorMessageType>(setServerErrorMessage);
+  const {mutate: joinMutate} = useJoinGatheringMutation();
 
   console.log(serverErrorMessage);
 
@@ -105,6 +109,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
 
     createGatheringMutation.mutate(gatheringFormDataForApi, {
       onSuccess: newGathering => {
+        joinMutate(newGathering?.data.id as number);
         queryClient.setQueryData(
           ['gatheringList'],
           (oldData: {pages: GetGatherings[][]; pageParams: number[]} | undefined) => {
