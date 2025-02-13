@@ -12,14 +12,14 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     console.log(formData);
 
-    await serverInstance.post({
+    const response = await serverInstance.post({
       path: `/gatherings`,
       body: formData,
       token,
       contentType: 'formData',
     });
 
-    return NextResponse.json({message: '모임 생성 성공'}, {status: 200});
+    return NextResponse.json({data: response, message: '모임 생성 성공'}, {status: 200});
   } catch (error) {
     // 일반적인 에러인 경우
     if (error instanceof CodeitError) {
