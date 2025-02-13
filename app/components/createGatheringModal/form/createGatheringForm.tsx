@@ -2,12 +2,18 @@ import {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 
 import {zodResolver} from '@hookform/resolvers/zod';
+import {useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/navigation';
 
-import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
+import {
+  useCreateGatheringMutation,
+  useJoinGatheringMutation,
+} from '../../../queries/gathering/useGatheringMutation';
 import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
 import {TimeInfo} from '../../../types/common/time.types';
 import {CodeitError} from '../../../types/error.types';
 import {ErrorMessageType} from '../../../types/gatherings/createGathering.types';
+import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
 import {formatDateTimeForAPI, getInitialDate} from '../../../utils/calendar';
 import {LOCATION_MAP} from '../../../utils/createGathering';
 import {createGatheringSchema, GatheringFormSchema} from '../../../utils/validation';
@@ -27,6 +33,9 @@ type CreateGatheringFormProps = {
 };
 
 export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
     name: '',
@@ -59,6 +68,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   });
   const {createGatheringMutation} =
     useCreateGatheringMutation<ErrorMessageType>(setServerErrorMessage);
+  const {mutate: joinMutate} = useJoinGatheringMutation();
 
   console.log(serverErrorMessage);
 
@@ -92,11 +102,30 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
   // todo: Suspense 적용해서 응답 대기하는 동안 스피너 보여주도록 수정
   // todo: react-query 에러처리
   const onSubmit = async (data: GatheringFormSchema) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setGatheringFormData(data);
     const gatheringFormDataForApi = getGatheringFormData(data);
 
     createGatheringMutation.mutate(gatheringFormDataForApi, {
-      onSuccess: () => {
+      onSuccess: newGathering => {
+        joinMutate(newGathering?.data.id as number);
+        queryClient.setQueryData(
+          ['gatheringList'],
+          (oldData: {pages: GetGatherings[][]; pageParams: number[]} | undefined) => {
+            if (!oldData) {
+              return {pages: [[newGathering]], pageParams: [0]};
+            }
+            return {
+              pages: [[newGathering, ...oldData.pages[0]]], // 최신 모임을 첫 페이지에 추가
+              pageParams: oldData.pageParams, // 기존 pageParams 유지
+            };
+          },
+        );
+
+        router.replace('/');
+        setTimeout(() => router.refresh(), 50);
+        setIsSubmitting(false);
         onClose();
       },
       onError: async error => {
@@ -104,6 +133,7 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
           const {parameter, message, code} = error;
           if (code === 'UNAUTHORIZED') {
             setIsAuthModalOpen(true);
+            setIsSubmitting(false);
             return;
           }
 

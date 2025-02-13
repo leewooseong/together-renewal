@@ -4,7 +4,14 @@ import {toast} from 'react-toastify';
 import {useMutation} from '@tanstack/react-query';
 
 import {createGathering} from '../../apis/gatherings/createGathering';
+import {postJoinGathering} from '../../apis/gatherings/gatheringApi';
 import {CodeitError} from '../../types/error.types';
+
+export const useJoinGatheringMutation = () => {
+  return useMutation({
+    mutationFn: postJoinGathering,
+  });
+};
 
 // eslint-disable-next-line prettier/prettier
 export const useCreateGatheringMutation = <T,>(

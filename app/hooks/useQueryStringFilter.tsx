@@ -5,7 +5,6 @@ import {useEffect, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 
 import {GetReviewsProps} from '../types/reviews/reviewsApi.types';
-import {buildQueryParams} from '../utils/buildQueryParamsUtil';
 import {checkQueryStringObject} from '../utils/checkQueryStringObjectUtil';
 
 export const useQueryStringFilter = () => {
@@ -16,26 +15,36 @@ export const useQueryStringFilter = () => {
   });
 
   useEffect(() => {
-    const deletedEmptyQuery = Object.fromEntries(
-      Array.from(searchParams.entries()).filter(([, value]) => value !== '' && value !== null),
-    );
+    const queryEntries = Object.fromEntries(searchParams.entries());
 
-    const getUrlObject: GetReviewsProps = {
-      ...deletedEmptyQuery,
-      type: (deletedEmptyQuery.type as string) || 'DALLAEMFIT',
-    };
+    const newFilter: GetReviewsProps = checkQueryStringObject({
+      ...queryEntries,
+      type: queryEntries.type || 'DALLAEMFIT', // 기본값 설정
+    });
 
-    const validQueryStringObject = checkQueryStringObject(getUrlObject);
-
-    setFilter(validQueryStringObject);
-  }, []);
+    setFilter(newFilter);
+  }, [searchParams]);
 
   const updateQueryString = (newFilter: Partial<GetReviewsProps>) => {
     const updatedFilter = {...filter, ...newFilter};
-    setFilter(updatedFilter);
-    const queryString = buildQueryParams(updatedFilter);
+    const queryString = new URLSearchParams(
+      Object.entries(updatedFilter)
+        .filter(([, value]) => value !== undefined && value !== null)
+        .reduce(
+          (acc, [key, value]) => {
+            acc[key] = String(value);
+            return acc;
+          },
+          {} as Record<string, string>,
+        ),
+    ).toString();
     router.replace(`?${queryString}`);
   };
 
-  return {filter, setFilter, updateQueryString};
+  const resetFilter = () => {
+    setFilter({type: 'DALLAEMFIT'});
+    router.replace('/');
+  };
+
+  return {filter, setFilter, updateQueryString, resetFilter};
 };

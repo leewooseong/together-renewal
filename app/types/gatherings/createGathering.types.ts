@@ -54,3 +54,21 @@ export type DateTimePickerProps = InputProps<TimeInfo> & {
   label: string;
   error?: FieldError | FieldErrorsImpl<TimeInfo>;
 };
+
+export type CreateGatheringResponseData = {
+  data: {
+    teamId: string; // 팀 ID
+    id: number; // 모임의 고유 ID
+    type: 'OFFICE_STRETCHING' | 'ONLINE' | 'OFFLINE'; // 모임의 유형 (예: 'OFFICE_STRETCHING', 'ONLINE', 'OFFLINE' 등)
+    name: string; // 모임의 이름
+    dateTime: string; // 모임의 날짜 및 시간 (ISO 8601 형식)
+    registrationEnd: string; // 등록 마감 시간 (ISO 8601 형식)
+    location: string; // 모임의 위치
+    participantCount: number; // 참가자 수
+    capacity: number; // 최대 수용 인원
+    image: string | null; // 모임 이미지 URL (null일 수 있음)
+    createdBy: number; // 모임 생성자의 사용자 ID
+    canceledAt: string | null; // 모임 취소 시간 (null일 수 있음)
+  };
+  message: string;
+};
