@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import {DefaultValue, SelectedItem} from '../../../types/dropDown.types';
 import {GetReviewsProps} from '../../../types/reviews/reviewsApi.types';
@@ -23,6 +23,30 @@ export function Dropdown({
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState<SelectedItem>(defaultValue);
+
+  useEffect(() => {
+    if (Object.keys(filter).length === 0) {
+      setSelectedItem(defaultValue);
+      return;
+    }
+    if (defaultValue === '지역 전체') {
+      setSelectedItem(
+        filter.location && filterList.includes(filter.location as SelectedItem)
+          ? (filter.location as SelectedItem)
+          : defaultValue,
+      );
+      return;
+    }
+    if (defaultValue === '최신 순' || defaultValue === '마감 임박') {
+      const sortByMap: Record<string, SelectedItem> = {
+        createdAt: '최신 순',
+        registrationEnd: '마감 임박',
+      };
+      setSelectedItem(
+        filter.sortBy && sortByMap[filter.sortBy] ? sortByMap[filter.sortBy] : defaultValue,
+      );
+    }
+  }, [filter, defaultValue, filterList]);
 
   const convertSortBy = (item: string) => {
     if (item === '최신 순') {

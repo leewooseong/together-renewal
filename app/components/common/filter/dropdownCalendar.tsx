@@ -23,6 +23,16 @@ export default function DropdownCalendar({
   const [displayDate, setDisplayDate] = useState('');
   const [isReset, setIsReset] = useState(false);
 
+  useEffect(() => {
+    if (!filter.date) {
+      setDisplayDate('');
+      setSelectedDate(startOfToday());
+    } else {
+      setFormattedDate(filter.date);
+      setDisplayDate(filter.date.replaceAll('-', '/').slice(2));
+    }
+  }, [filter.date]);
+
   const handleClickToggleCalendarButton = () => {
     if (isReset) {
       setSelectedDate(startOfToday()); // 초기화 후 다시 버튼을 누르면 오늘 날짜로 설정
