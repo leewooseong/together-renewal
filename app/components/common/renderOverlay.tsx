@@ -24,7 +24,7 @@ export function RenderOverlay({
   const leaveGatheringButton = async (event: React.MouseEvent) => {
     event.stopPropagation();
 
-    if (!gatheringId || gatheringId === 0) {
+    if (!gatheringId || gatheringId === 0 || !userId) {
       // 모임 찾기 페이지에서는 작동 X
       return;
     }
@@ -34,7 +34,7 @@ export function RenderOverlay({
 
       route.refresh();
     } catch (error) {
-      toast.error('모임 탈퇴 중 에러 발생');
+      toast.error('모임 탈퇴 실패! 다시 시도해 주세요');
       throw new Error(error instanceof Error ? error.message : '모임 탈퇴 중 에러 발생');
     }
   };

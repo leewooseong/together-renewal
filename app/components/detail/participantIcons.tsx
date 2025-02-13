@@ -12,7 +12,7 @@ export function ParticipantIcons({participants}: {participants: GatheringPartici
           style={{marginLeft: index !== 0 ? '-10px' : '0px', zIndex: 2 + index}}
         >
           <Image
-            src={participant.User.image || 'icons/defaultProfileIcon.svg'}
+            src={participant.User.image || '/icons/defaultProfileIcon.svg'}
             alt="사용자 아이콘"
             layout="fill"
             objectFit="cover"

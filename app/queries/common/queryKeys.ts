@@ -4,7 +4,12 @@ import {
   getJoinedGatherings,
   getUserFromGathering,
 } from '../../apis/gatherings/gatheringApi';
-import {getGatheringReviews, getMyReviews, getReviews} from '../../apis/reviews/reviewsApi';
+import {
+  getGatheringReviews,
+  getMyReviews,
+  getReviews,
+  writeReview,
+} from '../../apis/reviews/reviewsApi';
 import {Gathering} from '../../types/common/gatheringFilter.types';
 import {
   GetGatheringReviewsProps,
@@ -35,6 +40,10 @@ export const reviewListQuery = {
   getGatheringReviewList: (params: GetGatheringReviewsProps) => ({
     queryKey: reviewListQuery.getQueryKey(params),
     queryFn: () => getGatheringReviews(params),
+  }),
+  writeReview: (params: {gatheringId: number; score: number; comment: string}) => ({
+    queryKey: reviewListQuery.getQueryKey(params),
+    queryFn: () => writeReview(params.gatheringId, params.score, params.comment),
   }),
 };
 

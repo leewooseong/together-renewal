@@ -7,7 +7,7 @@ export function ApproveCheck(participantCount: number): React.ReactNode {
     return (
       <div className="ml-3 flex items-center font-medium text-orange-500">
         <Image
-          src="icons/orangeCheckIcon.svg"
+          src="/icons/orangeCheckIcon.svg"
           alt="확정 아이콘"
           width={24}
           height={24}
