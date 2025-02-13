@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useQueryClient} from '@tanstack/react-query';
 
 import {useCreateGatheringMutation} from '../../../queries/gathering/useCreateGatheringMutation';
 import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
@@ -28,7 +27,6 @@ type CreateGatheringFormProps = {
 };
 
 export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
-  const queryClient = useQueryClient();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [serverErrorMessage, setServerErrorMessage] = useState<ErrorMessageType>({
     name: '',
@@ -99,7 +97,6 @@ export function CreateGatheringForm({onClose}: CreateGatheringFormProps) {
 
     createGatheringMutation.mutate(gatheringFormDataForApi, {
       onSuccess: () => {
-        queryClient.invalidateQueries({queryKey: ['gatheringList']});
         onClose();
       },
       onError: async error => {

@@ -1,6 +1,4 @@
-import {useRouter} from 'next/navigation';
-
-import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
+import {useLeaveGatheringMutation} from '../../queries/gathering/useLeaveGatheringMutation';
 
 export function ActionButton({
   isCompleted,
@@ -16,7 +14,8 @@ export function ActionButton({
   userId: number;
 }) {
   const baseStyle = 'w-[120px] h-[40px] rounded-xl font-semibold text-sm';
-  const router = useRouter();
+  const {leaveGatheringMutation} = useLeaveGatheringMutation();
+
   if (isCompleted && isReviewed) {
     return null;
   }
@@ -27,8 +26,7 @@ export function ActionButton({
       if (isCompleted) {
         onOpenModal();
       } else {
-        await leaveJoinedGatherings(gatheringId, userId);
-        router.push('/mypage');
+        await leaveGatheringMutation.mutateAsync({gatheringId, userId});
       }
     } catch (error) {
       throw new Error(error instanceof Error ? error.message : '모임 참여 취소 중 에러 발생');

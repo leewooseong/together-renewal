@@ -158,8 +158,11 @@ export const formatDateTimeForAPI = (dateTime: TimeInfo): string => {
   newDate.setSeconds(0);
   newDate.setMilliseconds(0);
 
+  // KST(UTC+9) → UTC 변환 (add() 함수로 -9시간 적용)
+  const utcDate = add(newDate, {hours: -9});
+
   // return newDate;
-  return format(newDate, "yyyy-MM-dd'T'HH:mm");
+  return format(utcDate, "yyyy-MM-dd'T'HH:mm");
 };
 
 export const getTimeInfoUI = (timeInfo: TimeInfo): string => {
@@ -184,7 +187,7 @@ export const getInitialGatheringDate = (): TimeInfo => ({
 });
 
 export const getInitialDueDate = (): TimeInfo => ({
-  selectedDate: getTodayStart(),
+  selectedDate: add(getTodayStart(), {hours: -9}),
   selectedHour: '12',
   selectedMinute: '00',
   selectedPeriod: 'AM',

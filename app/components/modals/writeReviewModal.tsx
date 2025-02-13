@@ -3,7 +3,7 @@ import {toast} from 'react-toastify';
 
 import Image from 'next/image';
 
-import {writeReview} from '../../apis/reviews/reviewsApi';
+import {useWriteReviewMutation} from '../../queries/reviews/useWriteReviewMutation';
 import {InputTextBox} from '../common/inputText';
 
 export function WriteReviewModal({
@@ -15,25 +15,31 @@ export function WriteReviewModal({
 }) {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
+  const {writeReviewMutation} = useWriteReviewMutation();
+  const {mutate} = writeReviewMutation;
 
   const handleSubmit = async () => {
-    try {
-      if (!comment.trim()) {
-        toast.warn('리뷰를 입력해주세요!');
-        return;
-      }
-      if (rating <= 0) {
-        toast.warn('별점을 선택해주세요!');
-        return;
-      }
-
-      await writeReview(gatheringId, rating, comment);
-      toast.success('리뷰가 등록되었습니다.');
-
-      onClose();
-    } catch (error) {
-      toast.error('리뷰 등록에 실패했습니다.');
+    if (!comment.trim()) {
+      toast.warn('리뷰를 입력해주세요!');
+      return;
     }
+    if (rating <= 0) {
+      toast.warn('별점을 선택해주세요!');
+      return;
+    }
+
+    mutate(
+      {gatheringId, rating, comment},
+      {
+        onSuccess: () => {
+          toast.success('리뷰가 등록되었습니다.');
+          onClose();
+        },
+        onError: () => {
+          toast.error('리뷰 등록에 실패했습니다.');
+        },
+      },
+    );
   };
   return (
     <div className="absolute z-50 flex size-full items-center justify-center">

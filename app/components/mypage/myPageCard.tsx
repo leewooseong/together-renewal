@@ -33,7 +33,8 @@ export function MyPageCard({
 }: MyPageCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {data: userInfo} = useUserQuery().getMyInfo();
+  const {getMyInfo} = useUserQuery();
+  const {data: userInfo} = getMyInfo();
   const userId = userInfo?.data?.id as number;
 
   const route = useRouter();
