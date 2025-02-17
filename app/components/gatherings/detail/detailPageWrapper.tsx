@@ -12,7 +12,7 @@ import {useUserQuery} from '../../../queries/user/useUserQuries';
 import {Gathering, Locations} from '../../../types/gatherings/gatheringOptions.types';
 import {ReviewListType} from '../../../types/reviews/reviews.types';
 import Pagination from '../../common/pagination';
-import ReviewListWrapper from '../../reviews/review/reviewListWrapper';
+import ReviewListWrapper from '../../reviews/reviewCardList';
 import BottomBar from '../bottomBar';
 
 import {DetailCard} from './detailCard';

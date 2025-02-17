@@ -3,11 +3,11 @@ import {useEffect, useState} from 'react';
 import {usePathname} from 'next/navigation';
 import {match} from 'ts-pattern';
 
-import {PageName, ReviewListType} from '../../../types/reviews/reviews.types';
+import {PageName, ReviewListType} from '../../types/reviews/reviews.types';
 
-import {Review} from './review';
+import {ReviewCard} from './reviewCard';
 
-export default function ReviewListWrapper({data}: ReviewListType) {
+export default function ReviewCardList({data}: ReviewListType) {
   const pathName = usePathname();
   const [pageName, setPageName] = useState('');
 
@@ -33,7 +33,7 @@ export default function ReviewListWrapper({data}: ReviewListType) {
   return (
     <div className="flex flex-col items-center gap-6">
       {data.map(review => (
-        <Review
+        <ReviewCard
           key={review.id}
           gatheringImg={review.Gathering.image}
           score={review.score}

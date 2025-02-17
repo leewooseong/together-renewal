@@ -14,7 +14,7 @@ import {ReviewListType} from '../../types/reviews/reviews.types';
 import Pagination from '../common/pagination';
 import BottomBar from '../gatherings/bottomBar';
 import {DetailCard} from '../gatherings/detail/detailCard';
-import ReviewListWrapper from '../reviews/review/reviewListWrapper';
+import ReviewListWrapper from '../reviews/reviewCardList';
 
 type DetailPageWrapperProps = {
   gatheringId: number;

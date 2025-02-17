@@ -1,13 +1,13 @@
 import Image from 'next/image';
 
-import {ReviewType} from '../../../types/reviews/reviews.types';
+import {ReviewType} from '../../types/reviews/reviews.types';
 
-import {ReviewScore} from './reviewScore';
+import {Hearts} from './hearts';
 
 // 마이페이지-나의 리뷰는 pageName = "mypage"를 보내야함.
 // 모임 상세 페에지는 pageName = "gatherings"을 보내야함.
 
-export function Review({
+export function ReviewCard({
   gatheringImg,
   score,
   comment,
@@ -39,7 +39,7 @@ export function Review({
           </div>
         ))}
       <div className="flex flex-col border-b-2 border-dashed border-gray-200 pb-5 sm:px-0">
-        <ReviewScore score={score} />
+        <Hearts score={score} />
         <p className="pt-2.5 text-sm">{comment}</p>
         {pageName === 'gatherings' ? (
           ''

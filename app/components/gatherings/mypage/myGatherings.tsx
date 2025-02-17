@@ -5,7 +5,7 @@ import {ReviewedGatheringFilter} from '../../../types/gatherings/gatheringOption
 import {getCommentByTab} from '../../../utils/getCommentByTab';
 import {EmptyMessage} from '../../common/emptyMessage';
 import {TextRender} from '../../common/textRender';
-import ReviewListWrapper from '../../reviews/review/reviewListWrapper';
+import ReviewListWrapper from '../../reviews/reviewCardList';
 
 import {JoinedGatheringList} from './myGatherings/joinedGatheringList';
 
