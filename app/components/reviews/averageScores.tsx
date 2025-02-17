@@ -1,6 +1,6 @@
 import {AverageScore} from '../../types/reviews/averageScores.types';
 
-import {ReviewScore} from './hearts';
+import {Hearts} from './hearts';
 
 /* eslint-disable react/no-array-index-key */
 
@@ -34,7 +34,7 @@ export function AverageScores({
           <span className="text-xl font-semibold text-gray-400 tablet:text-2xl">/5</span>
         </div>
         <div>
-          <ReviewScore score={Number(averageScoreFormat)} isAverage />
+          <Hearts score={Number(averageScoreFormat)} isAverage />
         </div>
       </div>
       <div>

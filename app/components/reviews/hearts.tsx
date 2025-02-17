@@ -4,7 +4,7 @@ import {ReviewScoreprops} from '../../types/reviews/reviewScore.types';
 
 import {HeartSVG} from './heartSvg';
 
-export function ReviewScore({score, isAverage}: ReviewScoreprops) {
+export function Hearts({score, isAverage}: ReviewScoreprops) {
   const fullHearts = Math.floor(score); // 정수 부분
   const decimalPercentage = Math.floor((score % 1) * 100);
 
