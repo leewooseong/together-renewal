@@ -1,4 +1,4 @@
-import formatDateUtil from '../../utils/formatDate';
+import formatDateUtil from '../../utils/date';
 
 export function DateTimeInfoChip({dateTime}: {dateTime: string}) {
   const {date, time} = formatDateUtil(dateTime);

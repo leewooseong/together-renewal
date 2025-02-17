@@ -4,15 +4,15 @@ import {Suspense, useEffect, useState} from 'react';
 
 import {useQuery} from '@tanstack/react-query';
 
+import {getGatherings} from '../../../apis/gatheringApi';
 import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
 import {Gathering} from '../../../types/gatherings/gatheringOptions.types';
 import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
-import {getGatherings} from '../../apis/gatherings/gatheringApi';
 import {EmptyMessage} from '../../common/emptyMessage';
 import {PageInfo} from '../../common/pageInfo';
 import {TextRender} from '../../common/textRender';
-import {ListCard} from '../../list/listCard';
-import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
+import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
+import {ListCard} from '../list/listCard';
 
 function LikedContent() {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();

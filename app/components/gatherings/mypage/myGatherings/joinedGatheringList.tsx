@@ -1,4 +1,4 @@
-import {GetJoinedGatherings} from '../../../types/gatherings/joinedGatherings.types';
+import {GetJoinedGatherings} from '../../../../types/gatherings/joinedGatherings.types';
 import {MyPageCard} from '../myPageCard';
 
 export function JoinedGatheringList({

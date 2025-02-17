@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 
-import {getGatheringsInServer} from '../../../apis/gatherings/gatheringApi';
+import {getGatheringsInServer} from '../../../apis/gatheringApi';
 import {GatheringsFilter} from '../../../types/common/filters.types';
 
 export async function GET(request: NextRequest) {

@@ -2,14 +2,14 @@
 
 import {useCallback, useMemo} from 'react';
 
-import {useInfiniteGatherings} from '../../hooks/useInfiniteGatherings';
-import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
-import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-import {GatheringsFilter} from '../../types/gatherings/filters';
-import {GetGatherings} from '../../types/gatherings/getGatherings.types';
-import {CreateGatheringButton} from '../common/createGatheringModal/createGatheringButton';
-import {Filtering} from '../common/filter/filtering';
-import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
+import {useInfiniteGatherings} from '../../../hooks/useInfiniteGatherings';
+import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
+import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
+import {GatheringsFilter} from '../../../types/common/filters.types';
+import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
+import {Filtering} from '../../common/filter/filtering';
+import {CreateGatheringButton} from '../createGatheringModal/createGatheringButton';
+import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
 
 import {ListCard} from './listCard';
 

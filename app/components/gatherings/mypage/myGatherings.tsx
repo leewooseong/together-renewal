@@ -1,11 +1,11 @@
-import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
-import {useMyGatheringsData} from '../../hooks/useMyGatherings';
-import {useMyGatheringsFilter} from '../../hooks/useMyGatheringsFilter';
-import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
-import {getCommentByTab} from '../../utils/getCommentByTab';
-import {EmptyMessage} from '../common/emptyMessage';
-import ReviewListWrapper from '../common/review/reviewListWrapper';
-import {TextRender} from '../common/textRender';
+import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
+import {useMyGatheringsData} from '../../../hooks/useMyGatherings';
+import {useMyGatheringsFilter} from '../../../hooks/useMyGatheringsFilter';
+import {ReviewedGatheringFilter} from '../../../types/gatherings/gatheringOptions.types';
+import {getCommentByTab} from '../../../utils/getCommentByTab';
+import {EmptyMessage} from '../../common/emptyMessage';
+import {TextRender} from '../../common/textRender';
+import ReviewListWrapper from '../../reviews/review/reviewListWrapper';
 
 import {JoinedGatheringList} from './myGatherings/joinedGatheringList';
 

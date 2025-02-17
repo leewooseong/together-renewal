@@ -1,4 +1,4 @@
-import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
+import {ReviewedGatheringFilter} from '../../../types/gatherings/gatheringOptions.types';
 
 export function FilterTab({
   activeTab,

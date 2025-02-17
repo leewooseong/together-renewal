@@ -7,8 +7,8 @@ import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
 import {reviewListQuery} from '../../../queries/common/queryKeys';
 import {ReviewListType} from '../../../types/reviews/reviews.types';
 import {Filtering} from '../../common/filter/filtering';
+import {GatheringFilter} from '../../gatherings/gatheringFilter/gatheringFilter';
 import AverageScoresWrapper from '../AverageScoresWrapper';
-import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
 
 import ReviewListWrapper from './reviewListWrapper';
 

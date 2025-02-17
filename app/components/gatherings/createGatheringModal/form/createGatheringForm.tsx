@@ -17,7 +17,7 @@ import {GetGatherings} from '../../../../types/gatherings/getGatherings.types';
 import {LOCATION_MAP} from '../../../../utils/createGathering';
 import {formatDateTimeForAPI, getInitialDate} from '../../../../utils/date';
 import {createGatheringSchema, GatheringFormSchema} from '../../../../utils/validation';
-import AuthErrorModal from '../../modal/authErrorModal';
+import AuthErrorModal from '../../../common/modal/authErrorModal';
 
 import {Capacity} from './capacity';
 import ErrorInfo from './errorInfo';

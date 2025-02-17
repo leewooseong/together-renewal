@@ -7,7 +7,7 @@ import {TimeInfo} from '../../../../types/common/time.types';
 import {DateTimePickerProps} from '../../../../types/gatherings/createGathering.types';
 import {ValueOf} from '../../../../types/utils/util.types';
 import {formatDateTimeForAPI, getTimeInfoUI} from '../../../../utils/date';
-import {CreateModalCalendar} from '../../calendar/createModalCalendar';
+import {CreateModalCalendar} from '../../../common/calendar/createModalCalendar';
 
 // Todo: useEffect를 이용해 storage에서 정보가 있다면 받아오기
 export function GatheringDateTimePicker({label, value: timeInfo, onChange}: DateTimePickerProps) {

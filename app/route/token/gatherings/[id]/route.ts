@@ -5,8 +5,8 @@ import {
   leaveJoinedGatheringsInServer,
   postJoinGatheringInServer,
   putCancelGatheringInServer,
-} from '../../../../apis/gatherings/gatheringApi';
-import {AUTH_TOKEN} from '../../../../constants/auth';
+} from '../../../../apis/gatheringApi';
+import {AUTH_TOKEN} from '../../../../constants/service';
 import {CodeitError} from '../../../../types/common/error.types';
 
 export const POST = async (request: NextRequest) => {

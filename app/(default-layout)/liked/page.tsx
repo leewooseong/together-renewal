@@ -2,7 +2,7 @@
 
 import {Suspense} from 'react';
 
-import {getGatheringsInServer} from '../../apis/gatherings/gatheringApi';
+import {getGatheringsInServer} from '../../apis/gatheringApi';
 import {TextRender} from '../../components/common/textRender';
 import {LikedContents} from '../../components/gatherings/liked/likedContents';
 import {GatheringsFilter} from '../../types/common/filters.types';

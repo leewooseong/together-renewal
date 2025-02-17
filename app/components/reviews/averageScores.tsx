@@ -1,4 +1,5 @@
 import {AverageScore} from '../../types/reviews/averageScores.types';
+
 import {ReviewScore} from './review/reviewScore';
 
 /* eslint-disable react/no-array-index-key */

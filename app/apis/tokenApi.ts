@@ -1,4 +1,4 @@
-import {serverInstance} from '../client';
+import {serverInstance} from './client';
 
 export const verifyToken = async (
   token: {name: string; value: string} | undefined,

@@ -1,9 +1,6 @@
 /* eslint-disable prettier/prettier */
-import {
-  getGatherings,
-  getJoinedGatherings,
-  getUserFromGathering,
-} from '../../apis/gatherings/gatheringApi';
+
+import {getGatherings, getJoinedGatherings, getUserFromGathering} from '../../apis/gatheringApi';
 import {getGatheringReviews, getMyReviews, getReviews, writeReview} from '../../apis/reviewsApi';
 import {Gathering} from '../../types/gatherings/gatheringOptions.types';
 import {

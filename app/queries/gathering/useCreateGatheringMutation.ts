@@ -3,7 +3,7 @@ import {toast} from 'react-toastify';
 
 import {useMutation} from '@tanstack/react-query';
 
-import {createGathering, postJoinGathering} from '../../apis/gatherings/gatheringApi';
+import {createGathering, postJoinGathering} from '../../apis/gatheringApi';
 import {CodeitError} from '../../types/common/error.types';
 
 export const useJoinGatheringMutation = () => {

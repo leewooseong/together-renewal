@@ -2,9 +2,9 @@ import {Suspense} from 'react';
 
 import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 
-import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
+import {getGatheringsInServer} from '../apis/gatheringApi';
 import {PageInfo} from '../components/common/pageInfo';
-import GatheringsList from '../components/list/gatheringsList';
+import GatheringsList from '../components/gatherings/list/gatheringsList';
 import {GatheringsFilter} from '../types/common/filters.types';
 import {GetGatherings} from '../types/gatherings/getGatherings.types';
 

@@ -7,11 +7,11 @@ import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
 import {getReviews, getReviewsScore} from '../../apis/reviewsApi';
 import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../common/pageInfo';
-import ReviewWrapper from './review/reviewWrapper';
+import {GatheringFilter} from '../gatherings/gatheringFilter/gatheringFilter';
 
 import {AverageScores} from './averageScores';
+import ReviewWrapper from './review/reviewWrapper';
 
 import type {GatheringWithoutAll} from '../../types/gatherings/gatheringOptions.types';
 import type {AverageScore} from '../../types/reviews/averageScores.types';
@@ -107,7 +107,7 @@ export default function ReviewsList() {
       {/* 로딩 표시기 */}
       {isFetchingNextPage && (
         <div className="py-4 text-center text-gray-500">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-gray-900" />
+          <div className="mx-auto size-8 animate-spin rounded-full border-b-2 border-gray-900" />
           <p className="mt-2">리뷰를 불러오는 중입니다...</p>
         </div>
       )}

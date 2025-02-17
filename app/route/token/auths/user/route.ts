@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 
 import {getUserInfoInServer} from '../../../../apis/userApi';
-import {AUTH_TOKEN} from '../../../../constants/auth';
+import {AUTH_TOKEN} from '../../../../constants/service';
 import {CodeitError} from '../../../../types/common/error.types';
 
 export async function GET(request: NextRequest) {

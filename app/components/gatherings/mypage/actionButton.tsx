@@ -1,4 +1,4 @@
-import {useLeaveGatheringMutation} from '../../queries/gathering/useLeaveGatheringMutation';
+import {useLeaveGatheringMutation} from '../../../queries/gathering/useLeaveGatheringMutation';
 
 export function ActionButton({
   isCompleted,

@@ -3,8 +3,8 @@ import {toast} from 'react-toastify';
 
 import Image from 'next/image';
 
-import {useWriteReviewMutation} from '../../queries/reviews/useWriteReviewMutation';
-import {InputTextBox} from '../common/inputText';
+import {useWriteReviewMutation} from '../../../queries/reviews/useWriteReviewMutation';
+import {InputTextBox} from '../form/inputText';
 
 export function WriteReviewModal({
   onClose,

@@ -3,7 +3,7 @@ import {
   ReservationFinishedChip,
   UpcomingReservationChip,
   WaitingForApproval,
-} from '../common/chips/chip-state';
+} from './chip-state';
 
 export function RenderChips({
   isCompleted,

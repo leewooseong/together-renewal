@@ -6,11 +6,10 @@ import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
 import {reviewListQuery} from '../../../queries/common/queryKeys';
 import {ReviewListType} from '../../../types/reviews/reviews.types';
+import {GatheringFilter} from '../../gatherings/gatheringFilter/gatheringFilter';
 import AverageScoresWrapper from '../../reviews/AverageScoresWrapper';
+import ReviewListWrapper from '../../reviews/review/reviewListWrapper';
 import {Filtering} from '../filter/filtering';
-import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
-
-import ReviewListWrapper from './reviewListWrapper';
 
 type ReviewWrapperProps = {
   initialData: ReviewListType;

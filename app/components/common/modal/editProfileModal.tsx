@@ -3,8 +3,8 @@ import {useState} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 import Image from 'next/image';
 
-import {editProfile} from '../../apis/user/editProfileApi';
-import {InputTextBox} from '../common/inputText';
+import {editProfile} from '../../../apis/userApi';
+import {InputTextBox} from '../form/inputText';
 
 export function EditProfileModal({
   onClose,

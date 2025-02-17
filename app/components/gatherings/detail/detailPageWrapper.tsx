@@ -5,12 +5,12 @@ import {useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import Image from 'next/image';
 
+import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatheringApi';
 import {getGatheringReviews} from '../../../apis/reviewsApi';
 import {gatheringsQueryKey} from '../../../queries/common/queryKeys';
-import {useUserQuery} from '../../../queries/user/useUserQueries';
+import {useUserQuery} from '../../../queries/user/useUserQuries';
 import {Gathering, Locations} from '../../../types/gatherings/gatheringOptions.types';
 import {ReviewListType} from '../../../types/reviews/reviews.types';
-import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatherings/gatheringApi';
 import Pagination from '../../common/pagination';
 import ReviewListWrapper from '../../reviews/review/reviewListWrapper';
 import BottomBar from '../bottomBar';

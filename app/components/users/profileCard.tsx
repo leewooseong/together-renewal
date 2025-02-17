@@ -4,9 +4,9 @@ import {useState} from 'react';
 
 import Image from 'next/image';
 
-import {useUserQuery} from '../../queries/user/useUserQueries';
+import {useUserQuery} from '../../queries/user/useUserQuries';
+import {EditProfileModal} from '../common/modal/editProfileModal';
 import {TextRender} from '../common/textRender';
-import {EditProfileModal} from '../modals/editProfileModal';
 
 export function ProfileLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);

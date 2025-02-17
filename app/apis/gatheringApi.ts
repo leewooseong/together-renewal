@@ -1,16 +1,17 @@
-import {ApiResponse} from '../../types/common/responseApi.types';
-import {CodeitError} from '../../types/error.types';
-import {GatheringParticipant} from '../../types/gatherings/GatheringParticipant';
-import {CreateGatheringResponseData} from '../../types/gatherings/createGathering.types';
-import {GatheringsFilter, JoinedGatheringsFilter} from '../../types/gatherings/filters';
-import {GatheringDetailType} from '../../types/gatherings/getGatheringDetail';
-import {GetGatherings} from '../../types/gatherings/getGatherings.types';
+import {CodeitError} from '../types/common/error.types';
+import {GatheringsFilter, JoinedGatheringsFilter} from '../types/common/filters.types';
+import {ApiResponse} from '../types/common/responseApi.types';
+import {GatheringParticipant} from '../types/gatherings/GatheringParticipant.types';
+import {CreateGatheringResponseData} from '../types/gatherings/createGathering.types';
+import {GatheringDetailType} from '../types/gatherings/getGatheringDetail.types';
+import {GetGatherings} from '../types/gatherings/getGatherings.types';
 import {
   GetJoinedGatherings,
   PostJoinGatheringResponse,
-} from '../../types/gatherings/joinedGatherings.types';
-import createQueryString from '../../utils/createQueryString';
-import {clientInstance, serverInstance} from '../client';
+} from '../types/gatherings/joinedGatherings.types';
+import createQueryString from '../utils/createQueryString';
+
+import {clientInstance, serverInstance} from './client';
 
 // TODO: 에러처리 맞게 수정
 export const getGatherings = async (filters: GatheringsFilter = {}): Promise<GetGatherings[]> => {

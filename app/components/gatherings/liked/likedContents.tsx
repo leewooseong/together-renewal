@@ -8,8 +8,8 @@ import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
 import {EmptyMessage} from '../../common/emptyMessage';
 import {PageInfo} from '../../common/pageInfo';
 import {TextRender} from '../../common/textRender';
-import {ListCard} from '../../list/listCard';
-import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
+import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
+import {ListCard} from '../list/listCard';
 
 export function LikedContents({initialData}: {initialData: GetGatherings[]}) {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();

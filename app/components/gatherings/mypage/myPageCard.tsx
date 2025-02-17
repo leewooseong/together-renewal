@@ -5,11 +5,11 @@ import {useState} from 'react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
-import {useUserQuery} from '../../queries/user/useUserQueries';
-import {GetJoinedGatherings} from '../../types/gatherings/joinedGatherings.types';
-import formatDateUtil from '../../utils/formatDate';
-import {RenderOverlay} from '../common/renderOverlay';
-import {WriteReviewModal} from '../modals/writeReviewModal';
+import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {GetJoinedGatherings} from '../../../types/gatherings/joinedGatherings.types';
+import formatDateUtil from '../../../utils/date';
+import {WriteReviewModal} from '../../common/modal/writeReviewModal';
+import {RenderOverlay} from '../../common/renderOverlay';
 
 import {ActionButton} from './actionButton';
 import {RenderChips} from './chipRender';

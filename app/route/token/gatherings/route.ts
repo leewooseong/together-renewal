@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../../apis/client';
-import {AUTH_TOKEN} from '../../../constants/auth';
+import {AUTH_TOKEN} from '../../../constants/service';
 import {CodeitError} from '../../../types/common/error.types';
 
 export async function POST(request: NextRequest) {

@@ -2,7 +2,7 @@ import {toast} from 'react-toastify';
 
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
+import {leaveJoinedGatherings} from '../../apis/gatheringApi';
 import {gatheringsQueryKey} from '../common/queryKeys';
 
 // eslint-disable-next-line prettier/prettier

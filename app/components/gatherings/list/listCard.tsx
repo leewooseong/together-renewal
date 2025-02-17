@@ -5,15 +5,15 @@ import {useMemo} from 'react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
-import {useUserQuery} from '../../queries/user/useUserQueries';
-import {GetGatherings} from '../../types/gatherings/getGatherings.types';
-import isClosedUtil from '../../utils/isClosed';
-import {ApproveCheck} from '../common/approveCheck';
-import {DateTimeInfoChip} from '../common/chip-info';
-import {LikeButton} from '../common/likeButton';
-import {ProgressBar} from '../common/progressBar';
-import {RenderOverlay} from '../common/renderOverlay';
-import {CloseTag} from '../common/tag';
+import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
+import isClosedUtil from '../../../utils/isClosed';
+import {ApproveCheck} from '../../common/approveCheck';
+import {DateTimeInfoChip} from '../../common/chip-info';
+import {LikeButton} from '../../common/likeButton';
+import {ProgressBar} from '../../common/progressBar';
+import {RenderOverlay} from '../../common/renderOverlay';
+import {CloseTag} from '../../common/tag';
 
 export function ListCard({
   id,

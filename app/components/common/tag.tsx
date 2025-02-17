@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import formatDateUtil from '../../utils/formatDate';
+import formatDateUtil from '../../utils/date';
 
 export function CloseTag({registrationEnd}: {registrationEnd: string}) {
   const {year, date, time} = formatDateUtil(registrationEnd);
