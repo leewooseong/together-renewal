@@ -11,7 +11,7 @@ import {PageInfo} from '../common/pageInfo';
 import {GatheringFilter} from '../gatherings/gatheringFilter/gatheringFilter';
 
 import {AverageScores} from './averageScores';
-import ReviewWrapper from './review/reviewWrapper';
+import ReviewWrapper from './reviewWrapper';
 
 import type {GatheringWithoutAll} from '../../types/gatherings/gatheringOptions.types';
 import type {AverageScore} from '../../types/reviews/averageScores.types';

@@ -1,13 +1,12 @@
 import Image from 'next/image';
 
 import {ReviewType} from '../../../types/reviews/reviews.types';
-
-import {ReviewScore} from './reviewScore';
+import {ReviewScore} from '../hearts';
 
 // 마이페이지-나의 리뷰는 pageName = "mypage"를 보내야함.
 // 모임 상세 페에지는 pageName = "gatherings"을 보내야함.
 
-export function Review({
+export function ReviewCard({
   gatheringImg,
   score,
   comment,

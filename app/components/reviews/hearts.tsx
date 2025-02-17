@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-array-index-key */
 
-import {ReviewScoreprops} from '../../../types/reviews/reviewScore.types';
+import {ReviewScoreprops} from '../../types/reviews/reviewScore.types';
 
 import {HeartSVG} from './heartSvg';
 
