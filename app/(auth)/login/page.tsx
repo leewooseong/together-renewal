@@ -9,12 +9,12 @@ import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 
-import {login} from '../../apis/user/userApi';
+import {login} from '../../apis/userApi';
 import {useDebounce} from '../../hooks/useForm';
 import {useUserMutation} from '../../queries/user/useUserMutaions';
 import {useUserQuery} from '../../queries/user/useUserQuries';
-import {LoginInputsType} from '../../types/auth.types';
-import {CodeitError} from '../../types/error.types';
+import {CodeitError} from '../../types/common/error.types';
+import {LoginInputsType} from '../../types/users/auth.types';
 import {LoginSchema} from '../../utils/validation';
 
 export default function LoginPage() {

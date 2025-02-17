@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../../apis/client';
-import {CodeitError} from '../../../types/error.types';
+import {CodeitError} from '../../../types/common/error.types';
 
 export const GET = async (request: NextRequest) => {
   const id = request.nextUrl.pathname.split('/').pop(); // URL 경로에서 마지막 값(id) 가져오기

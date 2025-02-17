@@ -5,7 +5,7 @@ import {dehydrate, HydrationBoundary, QueryClient} from '@tanstack/react-query';
 import {getGatheringsInServer} from '../apis/gatherings/gatheringApi';
 import {PageInfo} from '../components/common/pageInfo';
 import GatheringsList from '../components/list/gatheringsList';
-import {GatheringsFilter} from '../types/gatherings/filters';
+import {GatheringsFilter} from '../types/common/filters.types';
 import {GetGatherings} from '../types/gatherings/getGatherings.types';
 
 const fetchGatheringsData = async () => {

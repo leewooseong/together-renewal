@@ -1,7 +1,7 @@
 import {useQuery} from '@tanstack/react-query';
 
-import {getReviews} from '../apis/reviews/reviewsApi';
-import {ReviewParams} from '../types/common/reviews.types';
+import {getReviews} from '../apis/reviewsApi';
+import {ReviewParams} from '../types/reviews/reviews.types';
 
 export function useReviews(gatheringId: number) {
   return useQuery({

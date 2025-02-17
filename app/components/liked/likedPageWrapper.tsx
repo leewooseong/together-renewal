@@ -6,7 +6,7 @@ import {useQuery} from '@tanstack/react-query';
 
 import {getGatherings} from '../../apis/gatherings/gatheringApi';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-import {Gathering} from '../../types/common/gatheringFilter.types';
+import {Gathering} from '../../types/gatherings/gatheringOptions.types';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 import {EmptyMessage} from '../common/emptyMessage';
 import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';

@@ -5,11 +5,11 @@ import {useCallback, useMemo} from 'react';
 import {useInfiniteGatherings} from '../../hooks/useInfiniteGatherings';
 import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
-import {GatheringsFilter} from '../../types/gatherings/filters';
+import {GatheringsFilter} from '../../types/common/filters.types';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
+import {CreateGatheringButton} from '../common/createGatheringModal/createGatheringButton';
 import {Filtering} from '../common/filter/filtering';
 import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
-import {CreateGatheringButton} from '../createGatheringModal/createGatheringButton';
 
 import {ListCard} from './listCard';
 

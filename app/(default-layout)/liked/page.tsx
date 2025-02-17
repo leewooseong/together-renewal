@@ -4,8 +4,8 @@ import {Suspense} from 'react';
 
 import {getGatheringsInServer} from '../../apis/gatherings/gatheringApi';
 import {TextRender} from '../../components/common/textRender';
-import {LikedContents} from '../../components/liked/likedContents';
-import {GatheringsFilter} from '../../types/gatherings/filters';
+import {LikedContents} from '../../components/gatherings/liked/likedContents';
+import {GatheringsFilter} from '../../types/common/filters.types';
 import {GetGatherings} from '../../types/gatherings/getGatherings.types';
 
 // TODO: fetchGatheringsData 분리

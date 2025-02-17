@@ -4,18 +4,18 @@ import {useMemo} from 'react';
 
 import {useInfiniteQuery, useQuery} from '@tanstack/react-query';
 
-import {getReviews, getReviewsScore} from '../../apis/reviews/reviewsApi';
+import {getReviews, getReviewsScore} from '../../apis/reviewsApi';
 import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
 import {GatheringFilter} from '../common/gatheringFilter/gatheringFilter';
 import {PageInfo} from '../common/pageInfo';
-import ReviewWrapper from '../common/review/reviewWrapper';
+import ReviewWrapper from './review/reviewWrapper';
 
 import {AverageScores} from './averageScores';
 
-import type {GatheringWithoutAll} from '../../types/common/gatheringFilter.types';
-import type {ReviewListType, ReviewParams} from '../../types/common/reviews.types';
+import type {GatheringWithoutAll} from '../../types/gatherings/gatheringOptions.types';
 import type {AverageScore} from '../../types/reviews/averageScores.types';
+import type {ReviewListType, ReviewParams} from '../../types/reviews/reviews.types';
 
 export default function ReviewsList() {
   const {filter, setFilter, updateQueryString} = useQueryStringFilter();

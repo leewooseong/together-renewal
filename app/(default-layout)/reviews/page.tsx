@@ -1,7 +1,7 @@
-import {getGatheringReviewsInServer} from '../../apis/reviews/reviewsApi';
+import {getGatheringReviewsInServer} from '../../apis/reviewsApi';
 import {PageInfo} from '../../components/common/pageInfo';
-import ReviewWrapper from '../../components/common/review/reviewWrapper';
-import {ReviewListType} from '../../types/common/reviews.types';
+import ReviewWrapper from '../../components/reviews/review/reviewWrapper';
+import {ReviewListType} from '../../types/reviews/reviews.types';
 
 type ReviewsPageProps = {
   searchParams: {gatheringId?: string};

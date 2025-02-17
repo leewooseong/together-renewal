@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import {MIN_PARTICIPANT_COUNT} from '../../constants/commonConstants';
+import {MIN_PARTICIPANT_COUNT} from '../../constants/service';
 
 export function ApproveCheck(participantCount: number): React.ReactNode {
   if (participantCount >= MIN_PARTICIPANT_COUNT) {

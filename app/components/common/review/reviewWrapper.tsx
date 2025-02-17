@@ -5,8 +5,8 @@ import {useInfiniteQuery} from '@tanstack/react-query';
 import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
 import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
 import {reviewListQuery} from '../../../queries/common/queryKeys';
-import {ReviewListType} from '../../../types/common/reviews.types';
-import AverageScoresWrapper from '../../reviewComponent/AverageScoresWrapper';
+import {ReviewListType} from '../../../types/reviews/reviews.types';
+import AverageScoresWrapper from '../../reviews/AverageScoresWrapper';
 import {Filtering} from '../filter/filtering';
 import {GatheringFilter} from '../gatheringFilter/gatheringFilter';
 

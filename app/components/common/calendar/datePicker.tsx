@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 import {colStartClasses} from '../../../constants/calendar';
 import {TimeInfo} from '../../../types/common/time.types';
-import {ValueOf} from '../../../types/util.types';
+import {ValueOf} from '../../../types/utils/util.types';
 import {
   dateComparison,
   formatDate,
@@ -17,7 +17,7 @@ import {
   getNextMonth,
   getPreviousMonth,
   getTodayStart,
-} from '../../../utils/calendar';
+} from '../../../utils/date';
 
 type CalendarProps = {
   selectedDate: Date;

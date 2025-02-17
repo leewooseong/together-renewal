@@ -1,5 +1,5 @@
-import {getGatheringReviewsInServer} from '../../../apis/reviews/reviewsApi';
-import DetailPageWrapper from '../../../components/detail/detailPageWrapper';
+import {getGatheringReviewsInServer} from '../../../apis/reviewsApi';
+import DetailPageWrapper from '../../../components/gatherings/detail/detailPageWrapper';
 
 type GatheringPageProps = {
   params: {id: string};

@@ -1,4 +1,4 @@
-import {ReviewedGatheringFilter} from '../types/common/gatheringFilter.types';
+import {ReviewedGatheringFilter} from '../types/gatherings/gatheringOptions.types';
 
 /**
  * 탭 상태(activeTab)에 따라 적절한 주석(설명 텍스트)을 반환하는 함수

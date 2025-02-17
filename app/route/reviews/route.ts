@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../apis/client';
-import {CodeitError} from '../../types/error.types';
+import {CodeitError} from '../../types/common/error.types';
 
 export const GET = async (request: NextRequest) => {
   const {searchParams} = new URL(request.url);

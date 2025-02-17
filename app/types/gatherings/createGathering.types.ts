@@ -1,9 +1,9 @@
 import {FieldError, FieldErrorsImpl, FieldValues, UseFormRegister} from 'react-hook-form';
 
-import {LOCATIONS, SERVICE_TYPES} from '../../constants/commonConstants';
+import {LOCATIONS, SERVICE_TYPES} from '../../constants/service';
 import {GatheringFormSchema} from '../../utils/validation';
 import {TimeInfo} from '../common/time.types';
-import {ValueOf} from '../util.types';
+import {ValueOf} from '../utils/util.types';
 
 export type ServiceType = ValueOf<typeof SERVICE_TYPES>;
 export type LocationType = (typeof LOCATIONS)[number];
@@ -55,6 +55,7 @@ export type DateTimePickerProps = InputProps<TimeInfo> & {
   error?: FieldError | FieldErrorsImpl<TimeInfo>;
 };
 
+// todo: getGatherings랑 정리 필요
 export type CreateGatheringResponseData = {
   data: {
     teamId: string; // 팀 ID

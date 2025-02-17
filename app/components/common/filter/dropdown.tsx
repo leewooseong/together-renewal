@@ -2,7 +2,7 @@
 
 import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
-import {DefaultValue, SelectedItem} from '../../../types/dropDown.types';
+import {DefaultValue, SelectedItem} from '../../../types/common/dropDown.types';
 import {GetReviewsProps} from '../../../types/reviews/reviewsApi.types';
 
 export type DropdownProps = {

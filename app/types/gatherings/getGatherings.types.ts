@@ -1,4 +1,4 @@
-import {Gathering, Locations} from '../common/gatheringFilter.types';
+import {Gathering, Locations} from './gatheringOptions.types';
 
 export type GetGatherings = {
   id: number; // 모임 ID

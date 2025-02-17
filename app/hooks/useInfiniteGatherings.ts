@@ -2,8 +2,8 @@ import {useInfiniteQuery} from '@tanstack/react-query';
 
 import {getGatherings, getJoinedGatherings} from '../apis/gatherings/gatheringApi';
 import {gatheringsQueryKey} from '../queries/common/queryKeys';
-import {Gathering} from '../types/common/gatheringFilter.types';
-import {GatheringsFilter} from '../types/gatherings/filters';
+import {GatheringsFilter} from '../types/common/filters.types';
+import {Gathering} from '../types/gatherings/gatheringOptions.types';
 import {GetGatherings} from '../types/gatherings/getGatherings.types';
 import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
 import {myGatheringSort} from '../utils/myGatheringSort';

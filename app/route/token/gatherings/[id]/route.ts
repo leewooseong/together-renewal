@@ -7,7 +7,7 @@ import {
   putCancelGatheringInServer,
 } from '../../../../apis/gatherings/gatheringApi';
 import {AUTH_TOKEN} from '../../../../constants/auth';
-import {CodeitError} from '../../../../types/error.types';
+import {CodeitError} from '../../../../types/common/error.types';
 
 export const POST = async (request: NextRequest) => {
   try {

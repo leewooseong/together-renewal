@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import AuthCleaner from '../components/user/authCleaner';
+import AuthCleaner from '../components/users/authCleaner';
 
 function AuthLayout({
   children,
@@ -20,7 +20,7 @@ function AuthLayout({
               이제는 같이 달램과 함께 해보세요.
             </p>
           </div>
-          <div className="relative mt-4 h-64 w-64 tablet:h-80 tablet:w-80 desktop:h-[400px] desktop:w-96">
+          <div className="relative mt-4 size-64 tablet:size-80 desktop:h-[400px] desktop:w-96">
             <Image src="/images/auth.png" fill alt="Login logo" className="object-contain" />
           </div>
         </div>

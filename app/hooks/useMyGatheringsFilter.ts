@@ -1,4 +1,4 @@
-import {ReviewedGatheringFilter} from '../types/common/gatheringFilter.types';
+import {ReviewedGatheringFilter} from '../types/gatherings/gatheringOptions.types';
 import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
 
 /**
