@@ -5,17 +5,16 @@ import {useEffect, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import Image from 'next/image';
 
-import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatherings/gatheringApi';
-import {getGatheringReviews} from '../../apis/reviews/reviewsApi';
+import {getGatheringDetail, getJoinedGatherings} from '../../apis/gatheringApi';
+import {getGatheringReviews} from '../../apis/reviewsApi';
 import {gatheringsQueryKey} from '../../queries/common/queryKeys';
-import {useUserQuery} from '../../queries/user/useUserQueries';
-import {Gathering, Locations} from '../../types/common/gatheringFilter.types';
-import {ReviewListType} from '../../types/common/reviews.types';
+import {useUserQuery} from '../../queries/user/useUserQuries';
+import {Gathering, Locations} from '../../types/gatherings/gatheringOptions.types';
+import {ReviewListType} from '../../types/reviews/reviews.types';
 import Pagination from '../common/pagination';
-import ReviewListWrapper from '../common/review/reviewListWrapper';
 import BottomBar from '../gatherings/bottomBar';
-
-import {DetailCard} from './detailCard';
+import {DetailCard} from '../gatherings/detail/detailCard';
+import ReviewListWrapper from '../reviews/review/reviewListWrapper';
 
 type DetailPageWrapperProps = {
   gatheringId: number;

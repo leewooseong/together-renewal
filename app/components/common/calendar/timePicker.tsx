@@ -5,7 +5,7 @@
 import clsx from 'clsx';
 
 import {TimeInfo} from '../../../types/common/time.types';
-import {ValueOf} from '../../../types/util.types';
+import {ValueOf} from '../../../types/utils/util.types';
 
 type TimePickerProps = {
   dataList: readonly string[];

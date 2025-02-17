@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query';
 
-import {getUserInfo} from '../../apis/user/userApi';
+import {getUserInfo} from '../../apis/userApi';
 import {userQueryKey} from '../common/queryKeys';
 
 // userInfo Query

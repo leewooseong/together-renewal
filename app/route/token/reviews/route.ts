@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../../apis/client';
-import {AUTH_TOKEN} from '../../../constants/auth';
+import {AUTH_TOKEN} from '../../../constants/service';
 
 export async function POST(request: NextRequest) {
   const token = request.cookies.get(AUTH_TOKEN)?.value;

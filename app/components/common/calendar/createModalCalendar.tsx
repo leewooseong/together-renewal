@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import {HOURS, MINUTES, PERIOD} from '../../../constants/calendar';
 import {useClickOutside} from '../../../hooks/useClickOutSide';
 import {TimeInfo} from '../../../types/common/time.types';
-import {ValueOf} from '../../../types/util.types';
+import {ValueOf} from '../../../types/utils/util.types';
 
 import {DatePicker} from './datePicker';
 import {TimePicker} from './timePicker';

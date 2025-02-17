@@ -4,8 +4,8 @@ import {
   getGatherings,
   getJoinedGatheringsInServer,
   leaveJoinedGatheringsInServer,
-} from '../../../../apis/gatherings/gatheringApi';
-import {AUTH_TOKEN} from '../../../../constants/auth';
+} from '../../../../apis/gatheringApi';
+import {AUTH_TOKEN} from '../../../../constants/service';
 
 export async function GET(request: NextRequest) {
   const token = request.cookies.get(AUTH_TOKEN)?.value;

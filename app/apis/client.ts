@@ -1,4 +1,4 @@
-import {CodeitError, CodeitErrorStatus} from '../types/error.types';
+import {CodeitError, CodeitErrorStatus} from '../types/common/error.types';
 
 /** token: 서버 컴포넌트에서 데이터 요청 시 필요한 변수, 서버 컴포넌트에서는 fetch를 요청할 때는  */
 interface FetchOptions extends RequestInit {

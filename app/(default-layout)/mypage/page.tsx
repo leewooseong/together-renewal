@@ -2,11 +2,11 @@
 
 import {useState} from 'react';
 
-import {FilterTab} from '../../components/mypage/filterTab';
-import {MyGatherings} from '../../components/mypage/myGatherings';
-import {TabNavigation} from '../../components/mypage/tabNavigation';
-import {ProfileLayout} from '../../components/profile/profileCard';
-import {ReviewedGatheringFilter} from '../../types/common/gatheringFilter.types';
+import {FilterTab} from '../../components/gatherings/mypage/filterTab';
+import {MyGatherings} from '../../components/gatherings/mypage/myGatherings';
+import {TabNavigation} from '../../components/gatherings/mypage/tabNavigation';
+import {ProfileLayout} from '../../components/users/profileCard';
+import {ReviewedGatheringFilter} from '../../types/gatherings/gatheringOptions.types';
 
 export default function MyPage() {
   const [activeTab, setActiveTab] = useState<ReviewedGatheringFilter>('myGatherings');

@@ -5,7 +5,7 @@ import {useCallback} from 'react';
 import {useQueryClient} from '@tanstack/react-query';
 import {useRouter} from 'next/navigation';
 
-import {deleteCookie} from '../apis/user/userApi';
+import {deleteCookie} from '../apis/userApi';
 import {userQueryKey} from '../queries/common/queryKeys';
 
 // Todo: 실패 시 에러 핸들링 제대로 적용하기

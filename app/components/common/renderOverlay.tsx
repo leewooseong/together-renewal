@@ -5,7 +5,7 @@ import {toast} from 'react-toastify';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
-import {leaveJoinedGatherings} from '../../apis/gatherings/gatheringApi';
+import {leaveJoinedGatherings} from '../../apis/gatheringApi';
 
 export function RenderOverlay({
   message,

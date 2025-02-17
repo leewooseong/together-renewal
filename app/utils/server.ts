@@ -1,5 +1,5 @@
 import {GUEST_ONLY_PATH, PROTECTED_PATH} from '../constants/routing';
-import {PageType, RequestType} from '../types/server.types';
+import {PageType, RequestType} from '../types/common/server.types';
 
 export const getRequestType = (pathname: string): RequestType => {
   const firstPathName = pathname.split('/').filter(Boolean)[0];

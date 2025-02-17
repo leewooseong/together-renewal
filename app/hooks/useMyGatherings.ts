@@ -1,6 +1,6 @@
 import {useEffect, useRef} from 'react';
 
-import {useUserQuery} from '../queries/user/useUserQueries';
+import {useUserQuery} from '../queries/user/useUserQuries';
 
 import {useInfiniteJoinedGatherings} from './useInfiniteGatherings';
 import {useInfiniteReviews} from './useInfiniteReviews';

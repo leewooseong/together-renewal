@@ -1,7 +1,7 @@
 import {cookies} from 'next/headers';
 import {type NextRequest} from 'next/server';
 
-import {AUTH_TOKEN} from './app/constants/auth';
+import {AUTH_TOKEN} from './app/constants/service';
 import {getRequestType, isPageType} from './app/utils/server';
 import {handleApiRequest} from './middlewares/apiHandler';
 import {protectRoute} from './middlewares/routeProtection';

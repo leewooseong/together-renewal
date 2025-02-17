@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from 'next/server';
 
-import {getUserFromGatheringInServer} from '../../../apis/gatherings/gatheringApi';
+import {getUserFromGatheringInServer} from '../../../apis/gatheringApi';
 
 export async function GET(request: NextRequest) {
   try {

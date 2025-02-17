@@ -3,7 +3,7 @@ import {ToastContainer} from 'react-toastify';
 import localFont from 'next/font/local';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {GNB} from './components/common/navigationbar/GNB';
+import {GNB} from './components/GNB/GNB';
 import './globals.css';
 import Providers from './providers';
 

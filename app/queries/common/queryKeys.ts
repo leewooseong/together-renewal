@@ -1,16 +1,8 @@
 /* eslint-disable prettier/prettier */
-import {
-  getGatherings,
-  getJoinedGatherings,
-  getUserFromGathering,
-} from '../../apis/gatherings/gatheringApi';
-import {
-  getGatheringReviews,
-  getMyReviews,
-  getReviews,
-  writeReview,
-} from '../../apis/reviews/reviewsApi';
-import {Gathering} from '../../types/common/gatheringFilter.types';
+
+import {getGatherings, getJoinedGatherings, getUserFromGathering} from '../../apis/gatheringApi';
+import {getGatheringReviews, getMyReviews, getReviews, writeReview} from '../../apis/reviewsApi';
+import {Gathering} from '../../types/gatherings/gatheringOptions.types';
 import {
   GetGatheringReviewsProps,
   GetMyReviewsProps,
@@ -18,6 +10,7 @@ import {
 } from '../../types/reviews/reviewsApi.types';
 import {myGatheringSort} from '../../utils/myGatheringSort';
 
+// Todo: 아래 형식에 맞춰서 통일시켜주기
 // 'info'와 같이 callback 함수로 작성하면 매개변수를 받아 매개변수에 맞는 queryKey를 생성할 수 있다.
 export const userQueryKey = {
   all: ['user'] as const,

@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
-import {writeReview} from '../../apis/reviews/reviewsApi';
+import {writeReview} from '../../apis/reviewsApi';
 import {gatheringsQueryKey, reviewListQuery} from '../common/queryKeys';
 
 export const useWriteReviewMutation = () => {

@@ -1,4 +1,4 @@
-import {PROFILE_DROPDOWN} from './app/constants/style';
+import {PROFILE_DROPDOWN} from './app/constants/mediaQuery';
 
 import type {Config} from 'tailwindcss';
 

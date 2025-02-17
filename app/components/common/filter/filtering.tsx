@@ -1,6 +1,10 @@
 import {Dispatch, SetStateAction} from 'react';
 
-import {GATHERING_SORT_LIST, LOCATION_LIST, REVIEW_SORT_LIST} from '../../../types/dropDown.types';
+import {
+  GATHERING_SORT_LIST,
+  LOCATION_LIST,
+  REVIEW_SORT_LIST,
+} from '../../../types/common/dropDown.types';
 import {GetReviewsProps} from '../../../types/reviews/reviewsApi.types';
 
 import {Dropdown} from './dropdown';
