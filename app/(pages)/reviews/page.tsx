@@ -1,6 +1,6 @@
 import {getGatheringReviewsInServer} from '../../apis/reviewsApi';
 import {PageInfo} from '../../components/common/pageInfo';
-import ReviewWrapper from '../../components/reviews/review/reviewWrapper';
+import ReviewWrapper from '../../components/reviews/reviewWrapper';
 import {ReviewListType} from '../../types/reviews/reviews.types';
 
 type ReviewsPageProps = {

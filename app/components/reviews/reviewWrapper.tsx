@@ -2,14 +2,15 @@
 
 import {useInfiniteQuery} from '@tanstack/react-query';
 
-import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
-import {useQueryStringFilter} from '../../../hooks/useQueryStringFilter';
-import {reviewListQuery} from '../../../queries/common/queryKeys';
-import {ReviewListType} from '../../../types/reviews/reviews.types';
-import {GatheringFilter} from '../../gatherings/gatheringFilter/gatheringFilter';
-import AverageScoresWrapper from '../../reviews/AverageScoresWrapper';
-import ReviewListWrapper from '../../reviews/review/reviewListWrapper';
-import {Filtering} from '../filter/filtering';
+import {useInfiniteObserver} from '../../hooks/useInfiniteObserver';
+import {useQueryStringFilter} from '../../hooks/useQueryStringFilter';
+import {reviewListQuery} from '../../queries/common/queryKeys';
+import {ReviewListType} from '../../types/reviews/reviews.types';
+import {Filtering} from '../common/filter/filtering';
+import {GatheringFilter} from '../gatherings/gatheringFilter/gatheringFilter';
+
+import AverageScoresWrapper from './AverageScoresWrapper';
+import ReviewListWrapper from './reviewCardList';
 
 type ReviewWrapperProps = {
   initialData: ReviewListType;
