@@ -12,7 +12,7 @@ import {GetJoinedGatherings} from '../types/gatherings/joinedGatherings.types';
  *
  * 필터링된 모임 리스트를 반환합니다. 참여한 모임이 없거나 리스트가 비어 있다면 빈 배열([])을 반환합니다.
  */
-export function useMyGatheringsFilter(
+export function myGatheringFilter(
   joinedGatherings: GetJoinedGatherings[] | null,
   activeTab: ReviewedGatheringFilter,
   userId?: number,
