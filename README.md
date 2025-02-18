@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 프로젝트 소개
 
-## Getting Started
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 팀 소개
+김건희                                      |                                  이우성                                      |                                    장은진                                      |                                   한새환                                      |                                    
+| :-----------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| <img src="https://avatars.githubusercontent.com/u/132315752?v=4" height = 100px> | <img src="https://avatars.githubusercontent.com/u/42796944?v=4" height = 100px> | <img src="https://avatars.githubusercontent.com/u/81504945?v=4" height = 100px> | <img src="https://avatars.githubusercontent.com/u/127942524?v=4" height = 100px> |
+|[@gunhee0000](https://github.com/gunhee0000)           |    [@leewooseong](https://github.com/leewooseong)                   |         [@eundin](https://github.com/eundin)         |                [@Sidan00](https://github.com/Sidan00)                |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 기술 스택 및 개발 환경
+| | |
+| --- | --- |
+| **Frameworks** | NextJS 14+, ReactJS 18+ |
+| **Programming Languages** | TypeScript 
+| **State managing Libraries** | Client state: Context Api + zustand <br> Server State: react-query v5+ |
+| **Styling Libraries** | CSS: TailwindCSS <br> Animation: Framer motion |
+| **Deployment Tools** | Github Actions |
+| **Cloud Services** | Vercel |
+| **Version Control** | Git/GitHub |
+| **Collaboration Tools** | Jira |
+| | |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## 주요 기능 및 화면 구성
 
-To learn more about Next.js, take a look at the following resources:
+## 프로젝트 폴더 구조
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## git 브랜치 전략
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 시스템 아키텍쳐
 
-## Deploy on Vercel
+## 회고
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
