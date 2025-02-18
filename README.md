@@ -1,4 +1,12 @@
-<h1 style="border-bottom: none;"> 1. 프로젝트 소개 </h1>
+<!-- # 프로젝트 소개 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1> 1. 프로젝트 소개 </h1>
+    </summary>
+  </ul>
+</div>
+
 
 <div align="center">
   <h2>같이 달램 서비스</h2>
@@ -21,17 +29,20 @@
 <br/>
 <br/>
 
-
-<!-- # 3. 기술 스택 및 개발 환경 -->
-<h1 style="border-bottom: none;"> 기술 스택 및 개발 환경 </h1>
-
-<!-- <h2>기술 스택 및 개발 환경<span style="color:#ea580c">.</span></h2> -->
+<!-- # 기술 스택 및 개발 환경 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>기술 스택 및 개발 환경 </h1>
+    </summary>
+  </ul>
+</div>
 
 <br>
 
 <div align="center">
 
-| | |
+| Category | Skill-Set |
 | --- | --- |
 | **Frameworks** | NextJS 14+, ReactJS 18+ |
 | **Programming Languages** | TypeScript 
@@ -41,20 +52,32 @@
 | **Cloud Services** | Vercel |
 | **Version Control** | Git/GitHub |
 | **Collaboration Tools** | Jira |
-| | |
+
 </div>
 
 <br>
 <br>
 
-<!-- # 4. 주요 기능 및 화면 구성 -->
-<h1 style="border-bottom: none;"> 주요 기능 및 화면 구성 </h1>
+<!-- # 주요 기능 및 화면 구성 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>주요 기능 및 화면 구성</h1>
+    </summary>
+  </ul>
+</div>
 
 <br>
 <br>
 
-<!-- # 5. 프로젝트 폴더 구조 -->
-<h1 style="border-bottom: none;">프로젝트 폴더 구조</h1>
+<!-- # 프로젝트 폴더 구조 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>프로젝트 폴더 구조</h1>
+    </summary>
+  </ul>
+</div>
 
 
 • `gathering`, `reviews`, `user`, `common`으로 도메인 별로 구분하여 작성하였습니다. <br>
@@ -115,8 +138,14 @@
 <br>
 <br>
 
-<!-- # 6. git 브랜치 전략 -->
-<h1 style="border-bottom: none;">git 브랜치 전략</h1>
+<!-- # git 브랜치 전략 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>git 브랜치 전략</h1>
+    </summary>
+  </ul>
+</div>
 
 
 
@@ -127,14 +156,26 @@ Jira를 도입하며 Jira의 애픽, 스토리 단위를 브랜치에 녺여내�
 <br>
 <br>
 
-<!-- # 7. 시스템 아키텍쳐 -->
-<h1 style="border-bottom: none;">시스템 아키텍쳐</h1>
+<!-- # 시스템 아키텍쳐 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>시스템 아키텍쳐</h1>
+    </summary>
+  </ul>
+</div>
 
 <br>
 <br>
 
-<!-- # 8. 회고 -->
-<h1 style="border-bottom: none;">회고</h1>
+<!-- # 회고 -->
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>회고</h1>
+    </summary>
+  </ul>
+</div>
 
 ### **건희** <br>
 ### **우성** <br>
@@ -148,9 +189,13 @@ Jira를 도입하며 Jira의 애픽, 스토리 단위를 브랜치에 녺여내�
 <br>
 <br>
 
-<!-- # 2. 팀 소개 -->
-<h1 style="border-bottom: none;">팀 소개</h1>
-
+<div id="user-content-toc">
+  <ul style="list-style: none;">
+    <summary>
+      <h1>팀 소개</h1>
+    </summary>
+  </ul>
+</div>
 
 <br>
 
