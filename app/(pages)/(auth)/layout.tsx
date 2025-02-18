@@ -1,7 +1,5 @@
 import Image from 'next/image';
 
-import AuthCleaner from '../components/users/authCleaner';
-
 function AuthLayout({
   children,
 }: Readonly<{
@@ -28,7 +26,7 @@ function AuthLayout({
 
       {/* 우측 로그인/회원가입 섹션 */}
       <section className="flex w-full flex-1 items-center justify-center desktop:justify-start">
-        <AuthCleaner>{children}</AuthCleaner>
+        {children}
       </section>
     </main>
   );
