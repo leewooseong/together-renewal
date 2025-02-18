@@ -14,7 +14,7 @@
 
 <div align="center">
 
- 👉 [서비스 확인하러 가기](together-gilt.vercel.app)
+ 👉 [서비스 확인하러 가기](https://together-gilt.vercel.app/)
 
 </div>
 
