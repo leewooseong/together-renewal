@@ -2,8 +2,9 @@
 
 <div align="center">
   <h2>같이 달램 서비스</h2>
-  <video src="README.assets/6팀_같이달램_시연영상.mp4" />
 </div>
+
+  https://github.com/user-attachments/assets/748b134b-b28b-4f4a-bd0b-58fc5d4329b3
 
 <br>
 
@@ -58,7 +59,7 @@
 
 • `gathering`, `reviews`, `user`, `common`으로 도메인 별로 구분하여 작성하였습니다. <br>
 • `route` 폴더는 route-handler를 담당하는 폴더로 사용되었습니다.(기존 apis 폴더와의 혼동을 막기 위한 목적) <br>
-• `queries 부분의 common에선 query key factory pattern이 적용된 방식의 queryKey들이 관리됩니다. <br>
+• `queries` 부분의 common에선 query key factory pattern이 적용된 방식의 queryKey들이 관리됩니다. <br>
 
 <br>
 
@@ -121,7 +122,7 @@
 
 Jira를 도입하며 Jira의 애픽, 스토리 단위를 브랜치에 녺여내려 노력했습니다. 브랜치 관리 전략을 통해 조금이라도 편한 코드 리뷰 작성 환경을 구성하고자 했습니다.
 
-👉 **[브랜치 전략 보러가기](https://scratched-cephalopod-eb9.notion.site/Git-19ee1d6ada4f804c9e9cd9ba37847488?pvs=74)**
+👉 [자세한 브랜치 전략 보러가기](https://scratched-cephalopod-eb9.notion.site/Git-19ee1d6ada4f804c9e9cd9ba37847488?pvs=74)
 
 <br>
 <br>
