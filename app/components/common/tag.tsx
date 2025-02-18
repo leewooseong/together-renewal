@@ -1,9 +1,9 @@
 import Image from 'next/image';
 
-import formatDateUtil from '../../utils/date';
+import {formatISODate} from '../../utils/date';
 
 export function CloseTag({registrationEnd}: {registrationEnd: string}) {
-  const {year, date, time} = formatDateUtil(registrationEnd);
+  const {year, date, time} = formatISODate(registrationEnd);
 
   const getToday = new Date();
   const today = `${getToday.getFullYear()}년 ${getToday.getMonth() + 1}월 ${getToday.getDate()}일`;

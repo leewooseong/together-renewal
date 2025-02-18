@@ -8,7 +8,7 @@
  *   - 참가자가 정원을 초과한 경우 `true` 반환
  *   - 현재 시간이 신청 마감 시간을 초과한 경우 `true` 반환
  */
-export default function isClosedUtil(
+export function isClosed(
   registrationEnd: string,
   participantCount: number,
   capacity: number,

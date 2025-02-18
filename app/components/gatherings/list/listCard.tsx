@@ -7,7 +7,7 @@ import {useRouter} from 'next/navigation';
 
 import {useUserQuery} from '../../../queries/user/useUserQuries';
 import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
-import isClosedUtil from '../../../utils/isClosed';
+import {isClosed} from '../../../utils/isClosed';
 import {ApproveCheck} from '../../common/approveCheck';
 import {DateTimeInfoChip} from '../../common/chip-info';
 import {LikeButton} from '../../common/likeButton';
@@ -32,7 +32,7 @@ export function ListCard({
   const route = useRouter();
 
   const isClose = useMemo(() => {
-    if (isClosedUtil(registrationEnd, participantCount, capacity)) {
+    if (isClosed(registrationEnd, participantCount, capacity)) {
       return <RenderOverlay message="모집 마감" height="full" gatheringId={id} userId={userId} />;
     }
     if (canceledAt) {

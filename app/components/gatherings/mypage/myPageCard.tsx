@@ -7,7 +7,7 @@ import {useRouter} from 'next/navigation';
 
 import {useUserQuery} from '../../../queries/user/useUserQuries';
 import {GetJoinedGatherings} from '../../../types/gatherings/joinedGatherings.types';
-import formatDateUtil from '../../../utils/date';
+import {formatISODate} from '../../../utils/date';
 import {WriteReviewModal} from '../../common/modal/writeReviewModal';
 import {RenderOverlay} from '../../common/renderOverlay';
 
@@ -47,7 +47,7 @@ export function MyPageCard({
     return null;
   }
 
-  const dateFormat = formatDateUtil(dateTime);
+  const dateFormat = formatISODate(dateTime);
 
   const handleOpenModal = () => {
     setIsModalOpen(true); // 모달 열기 상태로 변경
