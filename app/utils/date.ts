@@ -202,7 +202,7 @@ export const getInitialDueDate = (): TimeInfo => ({
  *   - date: 날짜 (월과 일, 예: '1월 30일')
  *   - time: 시간 (24시간 형식, 예: '09:00')
  */
-export default function formatDateUtil(dateTime: string) {
+export function formatISODate(dateTime: string) {
   // 입력 받은 dateTime을 Date 객체로 변환
   const date = new Date(dateTime);
 

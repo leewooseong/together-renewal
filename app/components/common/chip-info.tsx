@@ -1,7 +1,7 @@
-import formatDateUtil from '../../utils/date';
+import {formatISODate} from '../../utils/date';
 
 export function DateTimeInfoChip({dateTime}: {dateTime: string}) {
-  const {date, time} = formatDateUtil(dateTime);
+  const {date, time} = formatISODate(dateTime);
 
   return (
     <div className="flex space-x-2">

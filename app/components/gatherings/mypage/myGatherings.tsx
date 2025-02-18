@@ -1,8 +1,8 @@
 import {useInfiniteObserver} from '../../../hooks/useInfiniteObserver';
 import {useMyGatheringsData} from '../../../hooks/useMyGatherings';
-import {useMyGatheringsFilter} from '../../../hooks/useMyGatheringsFilter';
 import {ReviewedGatheringFilter} from '../../../types/gatherings/gatheringOptions.types';
 import {getCommentByTab} from '../../../utils/getCommentByTab';
+import {myGatheringFilter} from '../../../utils/myGatheringFilter';
 import {EmptyMessage} from '../../common/emptyMessage';
 import {TextRender} from '../../common/textRender';
 import ReviewListWrapper from '../../reviews/reviewCardList';
@@ -37,7 +37,7 @@ export function MyGatherings({
   const reviewObserverRef =
     activeTab === 'myReviews' ? useInfiniteObserver(fetchNextReviewPage) : null;
 
-  const filteredGatherings = useMyGatheringsFilter(joinedGatherings ?? [], activeTab, userInfo?.id);
+  const filteredGatherings = myGatheringFilter(joinedGatherings ?? [], activeTab, userInfo?.id);
 
   if (isLoading) {
     return <TextRender effect="bounce" text="로딩중..." />;
