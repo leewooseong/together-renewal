@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# build, lint, test를 차례대로 실행
+npm run build && npm run lint && npm run test
