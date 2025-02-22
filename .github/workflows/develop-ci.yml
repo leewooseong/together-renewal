@@ -1,0 +1,30 @@
+# 워크플로우 이름
+name: Develop-CI
+
+# 워크플로우 트리거 이벤트
+on:
+  push:
+    branches:
+      - "feat/**"
+
+# 워크플로우 트리거 시 수행 동작(job)들
+jobs:
+  run-test:
+    name: Run Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Downloads Codes
+        uses: actions/checkout@v4
+
+      - name: Install Deps
+        run: npm install
+
+      - name: Run Test
+        run: npm run test
+
+      - name: Run Build
+        run: npm run build
+        # SSG 사이트 빌드 시 데이터 패칭을 수행하기 때문에 데이터 패칭을 위한 env 설정 필요
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_TEAM_ID: ${{ secrets.NEXT_PUBLIC_TEAM_ID }}
