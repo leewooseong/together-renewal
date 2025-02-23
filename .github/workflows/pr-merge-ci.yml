@@ -21,13 +21,21 @@ jobs:
           echo "Pull Request: $HEAD_BRANCH -> $BASE_BRANCH"
           
           # feature 브랜치는 base로만 PR 가능
-          if [[ $HEAD_BRANCH == feature/* && $BASE_BRANCH != base ]]; then
+          if [[ $HEAD_BRANCH == feat/*]]; then
+            echo "feature 브랜치 패턴을 잘 인삭함"
+          fi
+          
+          if [[ $BASE_BRANCH == base/*]]; then
+            echo "base 브랜치 패턴을 잘 인삭함"
+          fi
+
+          if [[ $HEAD_BRANCH == feat/* && $BASE_BRANCH != base/* ]]; then
             echo "Error: feature 브랜치는 base 브랜치로만 PR을 생성할 수 있습니다."
             exit 1
           fi
           
           # base 브랜치는 develop이나 main으로만 PR 가능
-          if [[ $HEAD_BRANCH == base && $BASE_BRANCH != develop && $BASE_BRANCH != main ]]; then
+          if [[ $HEAD_BRANCH == base/* && $BASE_BRANCH != develop && $BASE_BRANCH != main ]]; then
             echo "Error: base 브랜치는 develop 또는 main 브랜치로만 PR을 생성할 수 있습니다."
             exit 1
           fi
