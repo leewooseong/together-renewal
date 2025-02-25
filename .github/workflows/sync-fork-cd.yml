@@ -1,0 +1,33 @@
+name: synchronize-to-fork-repo
+
+on: 
+  push: 
+    branches: 
+      - main
+
+jobs:
+  sync:
+    name: Sync forked repo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Deploy
+        uses: actions/checkout@v4
+        with: 
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+          ref: main
+
+      - name: Add remote-url
+        run: | 
+          git remote add forked-repo https://leewooseong:${{ secrets.GH_TOKEN }}@github.com/leewooseong/together-renewal.git
+          git config user.name leewooseong
+          git config user.email sitpo96@naver.com
+        
+      - name: Push changes to forked-repo
+        run: |
+          git push -f forked-repo main
+      
+      - name: Clean up
+        run: | 
+          git remote remove forked-repo
