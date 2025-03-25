@@ -59,8 +59,8 @@ function ProfileSection() {
   };
 
   return (
-    <div className="relative self-center">
-      {userInfo ? (
+    <div className="relative flex items-center self-center">
+      {userInfo?.data ? (
         <button
           type="button"
           ref={profileButtonRef}
@@ -68,11 +68,12 @@ function ProfileSection() {
           className="z-40 size-10"
         >
           <Image
-            src="/images/profile/size=Large, state=Default.svg"
+            src={userInfo.data.image || '/images/profile/size=Large, state=Default.svg'}
             alt="큰 로고 이미지"
             width={73}
             height={35}
             unoptimized
+            className="rounded-full"
           />
         </button>
       ) : (

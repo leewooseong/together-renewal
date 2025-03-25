@@ -20,7 +20,6 @@ function GuestOnlyLayout({children}: {children: React.ReactNode}) {
 
   useEffect(() => {
     queryClient.setQueryData(userQueryKey.myInfo(), null);
-
     return () => {};
   }, [queryClient]);
 
