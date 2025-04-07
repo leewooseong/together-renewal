@@ -1,8 +1,8 @@
 import {NextRequest, NextResponse} from 'next/server';
 
 import {serverInstance} from '../../../apis/client';
-import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '../../../constants/auth';
-import {CodeitError} from '../../../types/error.types';
+import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '../../../constants/service';
+import {CodeitError} from '../../../types/common/error.types';
 
 type LoginResponse = {
   token: string;
@@ -26,7 +26,6 @@ export async function POST(request: NextRequest) {
     //     body: JSON.stringify(body),
     //   },
     // );
-
     return Response.json(
       {message: '로그인 성공'},
       {
@@ -41,7 +40,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     // 일반적인 에러인 경우
     if (error instanceof CodeitError) {
-      console.log('현재 error 객체', error.code);
+      console.log('현재 error 객체', error.code, error.status);
       return NextResponse.json(
         {message: error.message || '로그인 실패', code: error.code, parameter: error.parameter},
         {status: error.status},

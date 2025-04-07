@@ -1,4 +1,4 @@
-import {DESKTOP, PROFILE_DROPDOWN, TABLET} from './app/constants/style';
+import {PROFILE_DROPDOWN} from './app/constants/mediaQuery';
 
 import type {Config} from 'tailwindcss';
 
@@ -15,18 +15,32 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    screens: {
-      xs: '375px',
-      tablet: TABLET, // navbar font 깨짐 때문에 405px 기준 추가
-      desktop: DESKTOP,
-    },
     extend: {
+      screens: {
+        tablet: '405px', // navbar font 깨짐 때문에 405px 기준 추가
+        desktop: '1200px',
+      },
       colors: COLOR_PALLETTE,
       fontFamily: {
         pretendard: ['var(--font-pretendard)'],
       },
       width: {
         profileDropdown: PROFILE_DROPDOWN,
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': {transform: 'translateY(0)'},
+          '50%': {transform: 'translateY(-10px)'},
+        },
+        shake: {
+          '0%, 100%': {transform: 'translateX(0)'},
+          '25%': {transform: 'translateX(-5px)'},
+          '75%': {transform: 'translateX(5px)'},
+        },
+      },
+      animation: {
+        bounce: 'bounce 0.8s ease-in-out infinite',
+        shake: 'shake 0.2s ease-in-out 2', // 5회 반복(1초)
       },
     },
   },

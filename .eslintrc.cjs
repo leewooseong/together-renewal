@@ -70,4 +70,12 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ['*.svg'],
+      rules: {
+        'prettier/prettier': ['error', {semi: false}],
+      },
+    },
+  ],
 };

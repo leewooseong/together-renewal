@@ -1,4 +1,4 @@
-import {CodeitError, CodeitErrorStatus} from '../types/error.types';
+import {CodeitError, CodeitErrorStatus} from '../types/common/error.types';
 
 /** token: 서버 컴포넌트에서 데이터 요청 시 필요한 변수, 서버 컴포넌트에서는 fetch를 요청할 때는  */
 interface FetchOptions extends RequestInit {
@@ -29,10 +29,10 @@ class FetchInstance {
     };
   }
 
+  // 최종 fetch 요청을 보내는 부분
   private async fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), this.timeout);
-    console.log(url);
     try {
       const response = await fetch(url, {
         ...options,
@@ -46,18 +46,22 @@ class FetchInstance {
     }
   }
 
+  // token, contentType에 따라 맞춤 Header 추가
   private getHeaders(): Headers {
     const requestHeaders = new Headers(this.defaultHeaders);
     if (this.token) {
       requestHeaders.set('Authorization', `Bearer ${this.token}`);
     }
-    if (this.contentType) {
-      const contentType = this.contentType === 'json' ? 'application/json' : 'multipart/form-data';
-      requestHeaders.set('Content-type', contentType);
+
+    // FormData의 경우에는 브라우저에서 Content-Type 자동 설정
+    // JSON 데이터일 경우에만 Content-Type 설정
+    if (this.contentType === 'json') {
+      requestHeaders.set('Content-Type', 'application/json');
     }
     return requestHeaders;
   }
 
+  // 각 메소드(GET, POST, DELETE, PUT) method 내부에서 호출되는 fetch 수행 method
   async request<T>(
     method: string,
     path?: string,
@@ -77,6 +81,8 @@ class FetchInstance {
         headers: requestHeaders,
       });
 
+      console.log('fetch 응답 결과 status', response.status);
+
       if (!response.ok) {
         throw await FetchInstance.handleError(response);
       }
@@ -92,15 +98,15 @@ class FetchInstance {
     }
   }
 
-  private static async handleError(response: Response): Promise<Error> {
-    console.log(response);
+  // 에러 처리를 담당하는 로직
+  private static async handleError(response: Response): Promise<Error | CodeitError> {
     try {
       const data = await response.json();
       return new CodeitError(
         data.message,
         response.status as CodeitErrorStatus,
         data.code,
-        data?.parameter,
+        data.parameter,
       );
     } catch (error) {
       return new Error();
@@ -135,12 +141,22 @@ class FetchInstance {
     token?: string | undefined;
     contentType?: 'json' | 'formData';
   }): Promise<T> {
+    // body가 없다면 undefined로 넘어갈 것
+    let formattedBody: BodyInit | undefined;
+
+    // body가 있다면 케이스에 맞게 처리
+    if ((contentType === 'json' || contentType === undefined) && body) {
+      formattedBody = JSON.stringify(body); // json의 경우 처리 해줌
+    } else if (contentType === 'formData' && body instanceof FormData) {
+      formattedBody = body; // formData는 그대로 사용
+    }
+
     return this.request<T>(
       'POST',
       path,
       {
         ...options,
-        body: JSON.stringify(body),
+        body: formattedBody,
       },
       token,
       contentType,
@@ -160,12 +176,22 @@ class FetchInstance {
     token?: string | undefined;
     contentType?: 'json' | 'formData';
   }): Promise<T> {
+    // body가 없다면 undefined로 넘어갈 것
+    let formattedBody: BodyInit | undefined;
+
+    // body가 있다면 케이스에 맞게 처리
+    if (contentType === 'json' && body) {
+      formattedBody = JSON.stringify(body); // json의 경우 처리 해줌
+    } else if (contentType === 'formData' && body instanceof FormData) {
+      formattedBody = body; // formData는 그대로 사용
+    }
+
     return this.request<T>(
       'PUT',
       path,
       {
         ...options,
-        body: JSON.stringify(body),
+        body: formattedBody,
       },
       token,
       contentType,

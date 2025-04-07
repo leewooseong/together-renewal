@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server';
 
-import {verifyToken} from '../app/apis/server/tokenApi';
-import {RequestType} from '../app/types/server.types';
+import {verifyToken} from '../app/apis/tokenApi';
+import {RequestType} from '../app/types/common/server.types';
 
 export const protectRoute = async (
   token: {name: string; value: string} | undefined,

@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server';
 
-import {RequestType} from '../app/types/server.types';
+import {RequestType} from '../app/types/common/server.types';
 
 export const handleApiRequest = async (
   token: {name: string; value: string} | undefined,

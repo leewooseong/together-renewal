@@ -29,6 +29,12 @@ module.exports = {
         printWidth: 200,
       },
     },
+    {
+      files: '*.svg',
+      options: {
+        semi: false,
+      },
+    },
   ],
   plugins: ['prettier-plugin-tailwindcss'],
   tailwindFunctions: ['clsx'], // clsx를 사용하고 있으므로 추가

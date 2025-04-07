@@ -1,6 +1,6 @@
 // Todo: 배포 환경에 따라 쿠키 설정 및 env 파일 적용 다르게 처리
 
-import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '../../constants/auth';
+import {AUTH_TOKEN, TOKEN_EXPIRE_TIME} from '../../constants/service';
 
 // Cookie 생성
 export async function GET(request: Request) {
