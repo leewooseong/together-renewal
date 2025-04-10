@@ -5,7 +5,7 @@ import {useMemo} from 'react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
-import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {useUserQuery} from '../../../queries/user/useUserQueries';
 import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
 import {isClosed} from '../../../utils/isClosed';
 import {ApproveCheck} from '../../common/approveCheck';

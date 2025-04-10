@@ -9,10 +9,10 @@ import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 
-import {signupUser} from '../../../../apis/userApi';
-import InputField from '../../../../components/common/form/InputField';
-import {CodeitError} from '../../../../types/common/error.types';
-import {SignupSchema} from '../../../../utils/validation';
+import {signupUser} from '../../../apis/userApi';
+import InputField from '../../../components/common/form/InputField';
+import {CodeitError} from '../../../types/common/error.types';
+import {SignupSchema} from '../../../utils/validation';
 
 type SignupInputs = z.infer<typeof SignupSchema>;
 

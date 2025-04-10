@@ -2,7 +2,7 @@
 
 import {useState} from 'react';
 
-import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {useUserQuery} from '../../../queries/user/useUserQueries';
 import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
 
 import {CreateGatheringModal} from './createGatheringModal';

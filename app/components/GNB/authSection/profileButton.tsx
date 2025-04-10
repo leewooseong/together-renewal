@@ -1,25 +1,23 @@
-'use client';
-
 import {useEffect, useRef, useState} from 'react';
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 
-import {PROFILE_DROPDOWN} from '../../constants/mediaQuery';
-import {useUserMutation} from '../../queries/user/useUserMutaions';
-import {useUserQuery} from '../../queries/user/useUserQuries';
+import {PROFILE_DROPDOWN} from '../../../constants/mediaQuery';
+import {useUserMutation} from '../../../queries/user/useUserMutations';
+import {User} from '../../../types/users/user.types';
 
-function ProfileSection() {
-  const router = useRouter();
+type ProfileButtonProps = {
+  profileInfo: User;
+};
+function ProfileButton({profileInfo}: ProfileButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [hasDropdownSpace, setHasDropdownSpace] = useState(true);
   const profileButtonRef = useRef<HTMLButtonElement>(null);
-  const {getMyInfo} = useUserQuery();
-  const {logout} = useUserMutation();
+  const router = useRouter();
 
-  const {data: userInfo} = getMyInfo();
+  const {logout} = useUserMutation();
   const {mutate} = logout();
 
   useEffect(() => {
@@ -59,32 +57,22 @@ function ProfileSection() {
   };
 
   return (
-    <div className="relative flex items-center self-center">
-      {userInfo?.data ? (
-        <button
-          type="button"
-          ref={profileButtonRef}
-          onClick={handleDropDownClick}
-          className="z-40 size-10"
-        >
-          <Image
-            src={userInfo.data.image || '/images/profile/size=Large, state=Default.svg'}
-            alt="큰 로고 이미지"
-            width={73}
-            height={35}
-            unoptimized
-            className="rounded-full"
-          />
-        </button>
-      ) : (
-        <Link
-          href="/login"
-          className="flex items-center gap-6 self-center text-sm font-semibold text-white tablet:text-base"
-        >
-          로그인
-        </Link>
-      )}
-
+    <>
+      <button
+        type="button"
+        ref={profileButtonRef}
+        onClick={handleDropDownClick}
+        className="z-40 size-10"
+      >
+        <Image
+          src={profileInfo.image || '/images/profile/size=Large, state=Default.svg'}
+          alt="큰 로고 이미지"
+          width={73}
+          height={35}
+          unoptimized
+          className="rounded-full"
+        />
+      </button>
       {isOpen && (
         <>
           <ul
@@ -120,8 +108,8 @@ function ProfileSection() {
           />
         </>
       )}
-    </div>
+    </>
   );
 }
 
-export default ProfileSection;
+export default ProfileButton;

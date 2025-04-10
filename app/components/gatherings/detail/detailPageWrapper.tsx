@@ -8,7 +8,7 @@ import Image from 'next/image';
 import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatheringApi';
 import {getGatheringReviews} from '../../../apis/reviewsApi';
 import {gatheringsQueryKey} from '../../../queries/common/queryKeys';
-import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {useUserQuery} from '../../../queries/user/useUserQueries';
 import {Gathering, Locations} from '../../../types/gatherings/gatheringOptions.types';
 import {ReviewListType} from '../../../types/reviews/reviews.types';
 import Pagination from '../../common/pagination';

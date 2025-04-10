@@ -1,6 +1,6 @@
-import LogoImage from './LogoImage';
+import AuthSection from './authSection';
+import LogoImage from './logoImage';
 import NavItemList from './navItemList';
-import ProfileSection from './profileSection';
 
 export function GNB() {
   return (
@@ -8,7 +8,7 @@ export function GNB() {
       <nav className="mx-auto flex h-14 max-w-screen-desktop px-4 tablet:px-6 desktop:p-0">
         <LogoImage />
         <NavItemList />
-        <ProfileSection />
+        <AuthSection />
       </nav>
     </section>
   );
