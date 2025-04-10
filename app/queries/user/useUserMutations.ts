@@ -1,22 +1,39 @@
 'use client';
 
-import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useCallback} from 'react';
 
-import {useClearAuth} from '../../hooks/useAuth';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/navigation';
+
+import {deleteCookie} from '../../apis/userApi';
+import {PROFILE_INFO} from '../../constants/service';
 import {userQueryKey} from '../common/queryKeys';
 
-export const useUserMutation = () => {
+export const useAuthMutation = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
-  const logout = () => {
-    const {clearAuth} = useClearAuth();
-    return useMutation({
-      mutationFn: clearAuth,
-      onSuccess: () => {
-        queryClient.setQueryData(userQueryKey.myInfo(), null);
-      },
-    });
-  };
+  const deleteAuthData = useCallback(async () => {
+    await deleteCookie();
+    queryClient.setQueryData(userQueryKey.myInfo(), null);
+    sessionStorage.removeItem(PROFILE_INFO);
+  }, [queryClient]);
 
-  return {logout};
+  const deleteAuth = useCallback(async () => {
+    await deleteAuthData();
+    router.push('/login');
+  }, [router]);
+
+  const {mutate: logout, mutateAsync: clearAuth} = useMutation({
+    mutationFn: deleteAuth,
+    onError: error => {
+      console.error('로그아웃 오류:', error);
+    },
+  });
+
+  const {mutateAsync: clearAuthData} = useMutation({
+    mutationFn: deleteAuthData,
+  });
+
+  return {logout, clearAuth, clearAuthData};
 };

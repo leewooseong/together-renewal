@@ -11,12 +11,9 @@ import ProfileButton from './profileButton';
 
 function AuthSection() {
   // UserInfo
-  // - cache userInfo
   const {userInfo: cachedUserInfo} = useUserInfoQuery();
-  // - storage userInfo
   const storageUserInfoString = sessionStorage.getItem(PROFILE_INFO) || '';
   const storageUserInfo = storageUserInfoString ? JSON.parse(storageUserInfoString) : null;
-  // - final userInfo
   const userInfo = storageUserInfo || cachedUserInfo;
 
   const {pageType} = useCustomRouter();

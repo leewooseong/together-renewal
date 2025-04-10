@@ -11,8 +11,8 @@ import {z} from 'zod';
 
 import {login} from '../../../apis/userApi';
 import {useDebounce} from '../../../hooks/useForm';
-import {useUserMutation} from '../../../queries/user/useUserMutations';
-import {useUserQuery} from '../../../queries/user/useUserQueries';
+import {useAuthMutation} from '../../../queries/user/useUserMutations';
+import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
 import {CodeitError} from '../../../types/common/error.types';
 import {LoginInputsType} from '../../../types/users/auth.types';
 import {LoginSchema} from '../../../utils/validation';
@@ -36,12 +36,10 @@ export default function LoginPage() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
-  const {getMyInfo} = useUserQuery();
-  const {logout} = useUserMutation();
+  const {refetch: userInfoRefetch} = useUserInfoQuery();
+  const {logout} = useAuthMutation();
   const {debounceValidate} = useDebounce();
   const router = useRouter();
-
-  const {refetch: userInfoRefetch} = getMyInfo();
 
   // Form Event
   const onSubmit = async (data: LoginInputsType) => {

@@ -5,23 +5,13 @@ import {PROFILE_INFO} from '../../constants/service';
 import {userQueryKey} from '../common/queryKeys';
 
 // userInfo Query
-// Todo: createGathering 참고해서 코드 개선하기
-export const useUserQuery = () => {
-  const getMyInfo = () => {
-    return useQuery({
-      queryKey: userQueryKey.myInfo(),
-      queryFn: getUserInfo,
-    });
-  };
-
-  return {getMyInfo};
-};
-
 export const useUserInfoQuery = () => {
   const {
     data: userInfoRes,
     isLoading,
     isFetched,
+    isError,
+    refetch,
   } = useQuery({
     queryKey: userQueryKey.myInfo(),
     queryFn: getUserInfo,
@@ -35,5 +25,5 @@ export const useUserInfoQuery = () => {
     }
   }
 
-  return {userInfo: userInfoRes?.data, isLoading, isFetched};
+  return {userInfo: userInfoRes?.data, isLoading, isFetched, refetch, isError};
 };

@@ -2,13 +2,13 @@
 
 import {useState} from 'react';
 
-import {useUserQuery} from '../../../queries/user/useUserQueries';
+import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
 import {useGatheringFormDataStore} from '../../../store/gathering/useCreateGathering';
 
 import {CreateGatheringModal} from './createGatheringModal';
 
 export function CreateGatheringButton() {
-  const {data: userInfo} = useUserQuery().getMyInfo();
+  const {userInfo} = useUserInfoQuery();
 
   const [isOpen, setIsOpen] = useState(false);
   const resetGatheringFormData = useGatheringFormDataStore(state => state.resetGatheringFormData);

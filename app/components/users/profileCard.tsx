@@ -4,17 +4,14 @@ import {useState} from 'react';
 
 import Image from 'next/image';
 
-import {useUserQuery} from '../../queries/user/useUserQueries';
+import {useUserInfoQuery} from '../../queries/user/useUserQueries';
 import {EditProfileModal} from '../common/modal/editProfileModal';
 import {TextRender} from '../common/textRender';
 
 export function ProfileLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {getMyInfo} = useUserQuery();
-  const {data: userInfoResponse, isLoading, isError} = getMyInfo();
-
-  const userInfo = userInfoResponse?.data;
+  const {userInfo, isLoading, isError} = useUserInfoQuery();
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);

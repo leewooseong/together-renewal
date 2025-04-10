@@ -4,7 +4,7 @@ import {createPortal} from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {useClearAuth} from '../../../hooks/useAuth';
+import {useAuthMutation} from '../../../queries/user/useUserMutations';
 
 export type ModalPropsType = {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,7 +13,7 @@ export type ModalPropsType = {
 // todo: gatherings/modal.tsx와 병합 과정 필요
 export default function AuthErrorModal({setIsModalOpen}: ModalPropsType) {
   const [isLoading, setIsLoading] = useState(false);
-  const {clearAuth} = useClearAuth();
+  const {clearAuth} = useAuthMutation();
 
   const handleCloseButton = () => {
     setIsModalOpen(prev => !prev);

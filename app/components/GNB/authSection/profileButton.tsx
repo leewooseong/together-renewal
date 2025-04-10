@@ -5,7 +5,7 @@ import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
 import {PROFILE_DROPDOWN} from '../../../constants/mediaQuery';
-import {useUserMutation} from '../../../queries/user/useUserMutations';
+import {useAuthMutation} from '../../../queries/user/useUserMutations';
 import {User} from '../../../types/users/user.types';
 
 type ProfileButtonProps = {
@@ -17,8 +17,7 @@ function ProfileButton({profileInfo}: ProfileButtonProps) {
   const profileButtonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
-  const {logout} = useUserMutation();
-  const {mutate} = logout();
+  const {logout} = useAuthMutation();
 
   useEffect(() => {
     if (!isOpen || !profileButtonRef.current) return undefined;
@@ -52,7 +51,7 @@ function ProfileButton({profileInfo}: ProfileButtonProps) {
   };
 
   const handleLogout = async () => {
-    mutate();
+    logout();
     setIsOpen(false);
   };
 

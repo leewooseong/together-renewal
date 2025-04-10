@@ -1,14 +1,12 @@
 import {useEffect, useRef} from 'react';
 
-import {useUserQuery} from '../queries/user/useUserQueries';
+import {useUserInfoQuery} from '../queries/user/useUserQueries';
 
 import {useInfiniteJoinedGatherings} from './useInfiniteGatherings';
 import {useInfiniteReviews} from './useInfiniteReviews';
 
 export function useMyGatheringsData() {
-  const {getMyInfo} = useUserQuery();
-  const {data: userInfoResponse} = getMyInfo();
-  const userInfo = userInfoResponse?.data;
+  const {userInfo} = useUserInfoQuery();
   const userId = userInfo?.id ?? 0;
 
   const {

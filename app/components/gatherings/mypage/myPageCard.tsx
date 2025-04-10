@@ -5,7 +5,7 @@ import {useState} from 'react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
-import {useUserQuery} from '../../../queries/user/useUserQueries';
+import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
 import {GetJoinedGatherings} from '../../../types/gatherings/joinedGatherings.types';
 import {formatISODate} from '../../../utils/date';
 import {WriteReviewModal} from '../../common/modal/writeReviewModal';
@@ -33,9 +33,8 @@ export function MyPageCard({
 }: MyPageCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const {getMyInfo} = useUserQuery();
-  const {data: userInfo} = getMyInfo();
-  const userId = userInfo?.data?.id as number;
+  const {userInfo} = useUserInfoQuery();
+  const userId = userInfo?.id as number;
 
   const route = useRouter();
 

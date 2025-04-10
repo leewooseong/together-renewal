@@ -5,7 +5,7 @@ import {useMemo} from 'react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
 
-import {useUserQuery} from '../../../queries/user/useUserQueries';
+import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
 import {GetGatherings} from '../../../types/gatherings/getGatherings.types';
 import {isClosed} from '../../../utils/isClosed';
 import {ApproveCheck} from '../../common/approveCheck';
@@ -26,8 +26,8 @@ export function ListCard({
   dateTime,
   canceledAt,
 }: GetGatherings) {
-  const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
+  const {userInfo} = useUserInfoQuery();
+  const userId = userInfo?.id as number;
 
   const route = useRouter();
 
