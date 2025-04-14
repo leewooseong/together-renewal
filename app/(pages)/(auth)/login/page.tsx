@@ -12,7 +12,6 @@ import {z} from 'zod';
 import {login} from '../../../apis/userApi';
 import {useDebounce} from '../../../hooks/useForm';
 import {useAuthMutation} from '../../../queries/user/useUserMutations';
-import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
 import {CodeitError} from '../../../types/common/error.types';
 import {LoginInputsType} from '../../../types/users/auth.types';
 import {LoginSchema} from '../../../utils/validation';
@@ -36,7 +35,6 @@ export default function LoginPage() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
-  const {refetch: userInfoRefetch} = useUserInfoQuery();
   const {logout} = useAuthMutation();
   const {debounceValidate} = useDebounce();
   const router = useRouter();
@@ -46,7 +44,6 @@ export default function LoginPage() {
     try {
       await login(data.email, data.password);
       setServerErrorMessage({email: '', password: ''}); // Todo: 불필요한 코드로 판단됨, 제거 예정
-      userInfoRefetch();
       router.push('/');
     } catch (error) {
       if (error instanceof CodeitError) {

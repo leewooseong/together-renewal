@@ -2,35 +2,32 @@
 
 import Link from 'next/link';
 
-import {PROFILE_INFO} from '../../../constants/service';
 import {useClearAuthByPageType} from '../../../hooks/useAuth';
 import {useCustomRouter} from '../../../hooks/useRouter';
-import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
+import {useUserInfoWithStorage} from '../../../hooks/useUser';
+import {ClientOnly} from '../../common/clientOnly';
 
 import ProfileButton from './profileButton';
 
 function AuthSection() {
-  // UserInfo
-  const {userInfo: cachedUserInfo} = useUserInfoQuery();
-  const storageUserInfoString = sessionStorage.getItem(PROFILE_INFO) || '';
-  const storageUserInfo = storageUserInfoString ? JSON.parse(storageUserInfoString) : null;
-  const userInfo = storageUserInfo || cachedUserInfo;
-
+  const {userInfo} = useUserInfoWithStorage();
   const {pageType} = useCustomRouter();
   useClearAuthByPageType();
 
   return (
     <div className="relative flex items-center self-center">
-      {pageType !== 'guestOnly' && userInfo ? (
-        <ProfileButton profileInfo={userInfo} />
-      ) : (
-        <Link
-          href="/login"
-          className="flex items-center gap-6 self-center text-sm font-semibold text-white tablet:text-base"
-        >
-          로그인
-        </Link>
-      )}
+      <ClientOnly>
+        {pageType !== 'guestOnly' && userInfo ? (
+          <ProfileButton profileInfo={userInfo} />
+        ) : (
+          <Link
+            href="/login"
+            className="flex items-center gap-6 self-center text-sm font-semibold text-white tablet:text-base"
+          >
+            로그인
+          </Link>
+        )}
+      </ClientOnly>
     </div>
   );
 }
