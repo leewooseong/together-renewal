@@ -1,4 +1,4 @@
-import LogoImage from './LogoImage';
+import LogoImage from './logoImage';
 import NavItemList from './navItemList';
 import ProfileSection from './profileSection';
 
