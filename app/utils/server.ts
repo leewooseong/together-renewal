@@ -26,3 +26,9 @@ export const isPageType = (typeName: RequestType): typeName is PageType => {
   if (typeName !== 'tokenApi') return true;
   return false;
 };
+
+export const getPageType = (currentPath: string): PageType => {
+  if (GUEST_ONLY_PATH.includes(currentPath)) return 'guestOnly';
+  if (PROTECTED_PATH.includes(currentPath)) return 'protected';
+  return 'public';
+};
