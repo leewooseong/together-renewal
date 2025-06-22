@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 
+import LogoImage from './LogoImage';
 import AuthSection from './authSection';
-import LogoImage from './logoImage';
 import NavItemList from './navItemList';
 
 export function GNB() {
