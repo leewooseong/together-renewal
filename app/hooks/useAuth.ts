@@ -1,27 +1,22 @@
 'use client';
 
-import {useCallback} from 'react';
+import {useLayoutEffect} from 'react';
 
-import {useQueryClient} from '@tanstack/react-query';
-import {useRouter} from 'next/navigation';
+import {usePathname, useSearchParams} from 'next/navigation';
 
-import {deleteCookie} from '../apis/userApi';
-import {userQueryKey} from '../queries/common/queryKeys';
+import {useAuthMutation} from '../queries/user/useUserMutations';
+import {getPageType} from '../utils/server';
 
-// Todo: 실패 시 에러 핸들링 제대로 적용하기
-export const useClearAuth = () => {
-  const router = useRouter();
-  const queryClient = useQueryClient();
+export const useClearAuthByPageType = () => {
+  const path = usePathname();
+  const params = useSearchParams();
+  const {clearAuthData} = useAuthMutation();
 
-  const clearAuth = useCallback(async () => {
-    // 1. Cookie 삭제
-    await deleteCookie();
-
-    // 2. 로그인 페이지로 리다이렉트
-    router.push('/login');
-
-    queryClient.setQueryData(userQueryKey.myInfo(), null);
-  }, [router]);
-
-  return {clearAuth};
+  // 페이지에 따라 인증 정보 처리
+  useLayoutEffect(() => {
+    const currentPageType = getPageType(path);
+    if (currentPageType === 'guestOnly') {
+      clearAuthData();
+    }
+  }, [path, params]);
 };

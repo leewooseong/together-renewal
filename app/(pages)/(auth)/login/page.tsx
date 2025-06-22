@@ -9,13 +9,12 @@ import {Eye, EyeOff} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {z} from 'zod';
 
-import {login} from '../../../../apis/userApi';
-import {useDebounce} from '../../../../hooks/useForm';
-import {useUserMutation} from '../../../../queries/user/useUserMutaions';
-import {useUserQuery} from '../../../../queries/user/useUserQuries';
-import {CodeitError} from '../../../../types/common/error.types';
-import {LoginInputsType} from '../../../../types/users/auth.types';
-import {LoginSchema} from '../../../../utils/validation';
+import {login} from '../../../apis/userApi';
+import {useDebounce} from '../../../hooks/useForm';
+import {useAuthMutation} from '../../../queries/user/useUserMutations';
+import {CodeitError} from '../../../types/common/error.types';
+import {LoginInputsType} from '../../../types/users/auth.types';
+import {LoginSchema} from '../../../utils/validation';
 
 export default function LoginPage() {
   const {
@@ -36,19 +35,15 @@ export default function LoginPage() {
     password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
-  const {getMyInfo} = useUserQuery();
-  const {logout} = useUserMutation();
+  const {logout} = useAuthMutation();
   const {debounceValidate} = useDebounce();
   const router = useRouter();
-
-  const {refetch: userInfoRefetch} = getMyInfo();
 
   // Form Event
   const onSubmit = async (data: LoginInputsType) => {
     try {
       await login(data.email, data.password);
       setServerErrorMessage({email: '', password: ''}); // Todo: 불필요한 코드로 판단됨, 제거 예정
-      userInfoRefetch();
       router.push('/');
     } catch (error) {
       if (error instanceof CodeitError) {

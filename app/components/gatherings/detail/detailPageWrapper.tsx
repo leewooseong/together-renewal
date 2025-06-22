@@ -8,7 +8,7 @@ import Image from 'next/image';
 import {getGatheringDetail, getJoinedGatherings} from '../../../apis/gatheringApi';
 import {getGatheringReviews} from '../../../apis/reviewsApi';
 import {gatheringsQueryKey} from '../../../queries/common/queryKeys';
-import {useUserQuery} from '../../../queries/user/useUserQuries';
+import {useUserInfoQuery} from '../../../queries/user/useUserQueries';
 import {Gathering, Locations} from '../../../types/gatherings/gatheringOptions.types';
 import {ReviewListType} from '../../../types/reviews/reviews.types';
 import Pagination from '../../common/pagination';
@@ -31,8 +31,8 @@ export default function DetailPageWrapper({gatheringId, initialReviews}: DetailP
   const [deadLine, setDeadline] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [isFinishedGathering, setIsFinishedGathering] = useState(false);
-  const {data: userInfo} = useUserQuery().getMyInfo();
-  const userId = userInfo?.data?.id as number;
+  const {userInfo} = useUserInfoQuery();
+  const userId = userInfo?.id as number;
   const {data: gatheringReviewList} = useQuery({
     queryKey: ['gatheringReviews', gatheringId, currentPage],
     queryFn: () =>
